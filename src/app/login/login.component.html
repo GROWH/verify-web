@@ -7,25 +7,33 @@
     </div>
     <form nz-form [formGroup]="form" class="login-form" (ngSubmit)="submitForm()">
       <nz-form-item>
-        <nz-form-control nzErrorTip="Please input your username!">
-          <nz-input-group nzPrefixIcon="user">
-            <input type="text" nz-input formControlName="userName" placeholder="账户" />
+        <nz-form-control>
+          <nz-input-group [nzPrefix]="prefixUser">
+            <input type="text" nz-input formControlName="userName" placeholder="账号" />
           </nz-input-group>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-control nzErrorTip="Please input your Password!">
-          <nz-input-group nzPrefixIcon="lock">
-            <input type="password" nz-input formControlName="password" placeholder="密码" />
-          </nz-input-group>
+          <nz-form-explain *ngIf="form.get('userName')?.dirty && form.get('userName')?.errors"
+            >请输入账号!</nz-form-explain
+          >
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
         <nz-form-control>
-          <button nz-button class="login-form-button" [nzType]="'primary'">登录</button>
+          <nz-input-group [nzPrefix]="prefixLock">
+            <input type="password" nz-input formControlName="password" placeholder="密码" />
+          </nz-input-group>
+          <nz-form-explain *ngIf="form.get('password')?.dirty && form.get('password')?.errors"
+            >请输入密码!</nz-form-explain
+          >
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control>
+          <button nz-button class="login-form-button" [nzType]="'primary'">Log in</button>
         </nz-form-control>
       </nz-form-item>
     </form>
+    <ng-template #prefixUser><i nz-icon type="user"></i></ng-template>
+    <ng-template #prefixLock><i nz-icon type="lock"></i></ng-template>
   </div>
   <div class="footer">技术支持:西安朝前智能科技有限公司</div>
 </div>

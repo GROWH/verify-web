@@ -5,13 +5,18 @@ import { RouterModule } from '@angular/router';
 import { NavComponent } from './nav/nav.component';
 import { HomeComponent } from './home/home.component'
 
+import { NgZorroAntdModule } from 'ng-zorro-antd';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+
 @NgModule({
   declarations: [
     NavComponent,
     HomeComponent
   ],
   imports: [
+    NgZorroAntdModule,
     CommonModule,
+    NzIconModule,
     RouterModule.forChild([
       {
         path: '',

@@ -1,0 +1,12 @@
+.wrapper {
+  display: flex;
+  min-height: 500px;
+  // flex-direction: column;
+  .left {
+    flex: 100px 1 1;
+  }
+  .right {
+    flex: 330px 0 0;
+    background-color: #F4F4F4;
+  }
+}

@@ -5,8 +5,7 @@ import { RouterModule } from '@angular/router';
 import { NavComponent } from './nav/nav.component';
 import { HomeComponent } from './home/home.component'
 
-import { NgZorroAntdModule } from 'ng-zorro-antd';
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import { SharedModule } from '@/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -14,9 +13,8 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     HomeComponent
   ],
   imports: [
-    NgZorroAntdModule,
+    SharedModule,
     CommonModule,
-    NzIconModule,
     RouterModule.forChild([
       {
         path: '',

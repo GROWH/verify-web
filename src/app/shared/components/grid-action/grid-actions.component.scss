@@ -1,0 +1,27 @@
+:host {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  height: 60px;
+}
+
+//按钮组
+.c-line-btns {
+  position: absolute;
+  left: 0;
+  white-space: nowrap;
+  transition: left 0.4s ease-out;
+  height: 100%;
+  margin-right: -8px;
+  .action-btn {
+      margin-right: 8px;
+  }
+}
+
+nz-dropdown.primary {
+  .ant-btn.ant-dropdown-trigger {
+    background-color: #1890ff;
+    border-color: #1890ff;
+    color: #fff;
+  }
+}

@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NavComponent } from './nav/nav.component';
+import { RouterModule } from '@angular/router';
 
-import { RouterModule } from '@angular/router'
+import { NavComponent } from './nav/nav.component';
+import { HomeComponent } from './home/home.component'
 
 @NgModule({
   declarations: [
-    NavComponent
+    NavComponent,
+    HomeComponent
   ],
   imports: [
     CommonModule,
@@ -14,7 +16,21 @@ import { RouterModule } from '@angular/router'
       {
         path: '',
         component: NavComponent,
-        children: []
+        children: [
+          {
+            path: '',
+            pathMatch: 'full',
+            redirectTo: 'home',
+          },
+          {
+            path: 'home',
+            component: HomeComponent,
+          },
+          {
+            path: 'system',
+            loadChildren: './system/system.module#SystemModule'
+          }
+        ]
       }
     ])
   ]

@@ -1,5 +1,23 @@
 <p>
   菜单树区域
 </p>
-
+<table>
+  <thead>
+    <tr>
+      <th>一级模块</th>
+      <th>二级模块</th>
+      <th>路由</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>系统管理</td>
+      <td>系统模块</td>
+      <td>
+        <a [routerLink]="[ '/manage/system/module' ]">link</a>
+      </td>
+    </tr>
+  </tbody>
+  
+</table>
 <router-outlet></router-outlet>

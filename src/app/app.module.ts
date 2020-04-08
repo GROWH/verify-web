@@ -5,12 +5,25 @@ import { NgZorroAntdModule, NZ_I18N, zh_CN } from 'ng-zorro-antd';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TongchangLibModule } from 'tongchang-lib'
 
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import zh from '@angular/common/locales/zh';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 registerLocaleData(zh);
+
+import * as AllIcons from '@ant-design/icons-angular/icons'
+import { IconDefinition } from '@ant-design/icons-angular';
+
+
+registerLocaleData(zh);
+
+const antDesignIcons = AllIcons as {
+  [key: string]: IconDefinition;
+};
+const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesignIcons[key])
 
 @NgModule({
   declarations: [
@@ -22,6 +35,8 @@ registerLocaleData(zh);
     AppRoutingModule,
     NgZorroAntdModule,
     BrowserAnimationsModule,
+    FormsModule,
+    ReactiveFormsModule,
     TongchangLibModule.forRoot({
       apiBase: '/',
       fileApi: '/api/file',

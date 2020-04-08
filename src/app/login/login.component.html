@@ -1,7 +1,35 @@
-<p>
-  login works!
-</p>
+<div class="container">
+
+  <div class="content">
+    <div class="title">
+      <img class="logo" src="../../assets/imgs/logo_sm.jpeg" alt="">
+      湿温度监测&冷链验证管理系统
+    </div>
+    <form nz-form [formGroup]="form" class="login-form" (ngSubmit)="submitForm()">
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Please input your username!">
+          <nz-input-group nzPrefixIcon="user">
+            <input type="text" nz-input formControlName="userName" placeholder="账户" />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Please input your Password!">
+          <nz-input-group nzPrefixIcon="lock">
+            <input type="password" nz-input formControlName="password" placeholder="密码" />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control>
+          <button nz-button class="login-form-button" [nzType]="'primary'">登录</button>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </div>
+  <div class="footer">技术支持:西安朝前智能科技有限公司</div>
+</div>
 
 <!-- <router-link to="manage"></router-link> -->
 
-<a routerLink="/manage">tomanage</a>
+<!-- <a routerLink="/manage">tomanage</a> -->

@@ -1,3 +1,67 @@
-<p>
-  module-manage-form works!
-</p>
+<form nz-form [formGroup]="form">
+  <div nz-row>
+    <nz-form-label nzSpan="7" nzRequired>父模块ID</nz-form-label>
+    <nz-form-control nzSpan="14">
+      <span>{{ form.get('parent_id').value }}</span>
+    </nz-form-control>
+  </div>
+
+  <div nz-row>
+    <nz-form-label nzSpan="7" nzRequired>模块名</nz-form-label>
+    <nz-form-control nzSpan="14">
+      <input nz-input formControlName="module_name" placeholder="请输入">
+    </nz-form-control>
+  </div>
+
+  <div nz-row>
+    <nz-form-label nzSpan="7" nzRequired>关键字</nz-form-label>
+    <nz-form-control nzSpan="14">
+      <input nz-input formControlName="key_word" placeholder="请输入">
+    </nz-form-control>
+  </div>
+
+  <div nz-row>
+    <nz-form-label nzSpan="7" nzRequired>Code</nz-form-label>
+    <nz-form-control nzSpan="14">
+      <input nz-input formControlName="module_code" placeholder="请输入">
+    </nz-form-control>
+  </div>
+
+  <div nz-row>
+    <nz-form-label nzSpan="7">路由</nz-form-label>
+    <nz-form-control nzSpan="14">
+      <input nz-input formControlName="module_url" placeholder="请输入">
+    </nz-form-control>
+  </div>
+
+  <div nz-row>
+    <nz-form-label nzSpan="7" nzRequired>顺序号</nz-form-label>
+    <nz-form-control nzSpan="14">
+      <nz-input-number
+        formControlName="order_number"
+        placeholder="请输入"
+        [nzMin]="1"
+        [nzStep]="1"
+        [nzPrecision]="0"
+      ></nz-input-number>
+    </nz-form-control>
+  </div>
+
+  <div nz-row>
+    <nz-form-label nzSpan="7" nzRequired>类型</nz-form-label>
+    <nz-form-control nzSpan="14">
+      <nz-radio-group formControlName="type" >
+        <label nz-radio [nzValue]="1">一级菜单</label>
+        <label nz-radio [nzValue]="2">二级菜单</label>
+        <label nz-radio [nzValue]="3">按钮</label>
+      </nz-radio-group>
+    </nz-form-control>
+  </div>
+
+  <div nz-row>
+    <nz-form-label nzSpan="7" nzRequired>系统菜单</nz-form-label>
+    <nz-form-control nzSpan="1-24">
+      <label nz-checkbox formControlName="is_menu"></label>
+    </nz-form-control>
+  </div>
+</form>

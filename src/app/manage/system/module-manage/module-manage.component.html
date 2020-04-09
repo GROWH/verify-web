@@ -5,6 +5,9 @@
   </div>
   
   <div class="right">
-  
+    <nz-tree
+      [nzData]="nodes"
+      (nzClick)="onTreeNodeClick($event.node)"
+    ></nz-tree>
   </div>
 </div>

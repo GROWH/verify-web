@@ -1,0 +1,11 @@
+{
+  "/api": {
+    "target": "http://192.168.10.169:49912",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true,
+    "headers": {
+      "user": "admin123"
+    }
+  }
+}

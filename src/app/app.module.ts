@@ -10,11 +10,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import zh from '@angular/common/locales/zh';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 import * as AllIcons from '@ant-design/icons-angular/icons'
 import { IconDefinition } from '@ant-design/icons-angular';
+import { SharedModule } from './shared/shared.module';
 
 registerLocaleData(zh);
 
@@ -33,10 +33,9 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
     AppRoutingModule,
     NgZorroAntdModule,
     BrowserAnimationsModule,
-    FormsModule,
-    ReactiveFormsModule,
+    SharedModule,
     TongchangLibModule.forRoot({
-      apiBase: '/',
+      apiBase: '/api',
       fileApi: '/api/file',
       headers: {},
       authRequireCode: -9,

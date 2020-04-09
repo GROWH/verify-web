@@ -1,0 +1,40 @@
+<div style="height: 100%;">
+  <div class="btns">
+    <button class="mr8" nz-button nzType="primary" (click)="paramAdd($event)"><i nz-icon type="plus"></i>新增</button>
+    <button class="mr8" nz-button nzType="default" (click)="paramEdit($event)"><i nz-icon type="edit"></i>修改</button>
+    <button class="mr8" nz-button nzType="danger" (click)="paramDelete($event)"><i nz-icon type="delete"></i>删除</button>
+    <button class="mr8" nz-button nzType="default" (click)="paramQuery($event)"><i nz-icon type="redo"></i>刷新</button>
+  </div>
+  <nz-table
+  style="height: 800px;"
+  #rowSelectionTable
+  nzShowSizeChanger
+  [nzData]="listOfAllData"
+  [nzPaginationPosition]="position"
+  (nzCurrentPageDataChange)="currentPageDataChange($event)"
+>
+  <thead>
+    <tr>
+      <th
+        nzShowCheckbox
+        [(nzChecked)]="isAllDisplayDataChecked"
+        [nzIndeterminate]="isIndeterminate"
+        (nzCheckedChange)="checkAll($event)"
+      ></th>
+      <th>参数值</th>
+      <th>参数名称描述</th>
+      <th>创建时间</th>
+      <th>更新时间</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of rowSelectionTable.data">
+      <td nzShowCheckbox [(nzChecked)]="mapOfCheckedId[data.id]" (nzCheckedChange)="refreshStatus()"></td>
+      <td>{{ data.name }}</td>
+      <td>{{ data.age }}</td>
+      <td>{{ data.address }}</td>
+      <td>{{ data.address }}</td>
+    </tr>
+  </tbody>
+</nz-table>
+</div>

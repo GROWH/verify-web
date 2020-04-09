@@ -12,10 +12,10 @@
       </a>
     </div>
     <ul nz-menu [nzMode]="'inline'" nzTheme="dark" [nzInlineCollapsed]="isCollapsed">
-      <li nz-menu-item nz-tooltip nzPlacement="right" [nzTitle]="isCollapsed ? 'Navigation One' : ''">
+      <li nz-menu-item nz-tooltip nzPlacement="right" [nzTitle]="isCollapsed ? '首页' : ''">
         <span title>
           <i nz-icon type="home"></i>
-          <a routerLink="/welcome">首页</a>
+          <a routerLink="/manage/home">首页</a>
         </span>
       </li>
       <li nz-submenu>
@@ -26,7 +26,9 @@
         <ul>
           <li nz-menu-item>模块管理</li>
           <li nz-menu-item>管理员权限管理</li>
-          <li nz-menu-item>系统参数设定</li>
+          <li nz-menu-item>
+            <a routerLink="/manage/system/param">系统参数设定</a>
+          </li>
           <li nz-menu-item>相关法律法规</li>
           <li nz-menu-item>审批流程设置</li>
         </ul>

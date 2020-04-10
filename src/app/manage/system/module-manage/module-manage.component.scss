@@ -4,11 +4,14 @@
   min-height: 500px;
   // flex-direction: column;
   .left {
+    padding: 20px;
     flex: 100px 1 1;
     align-items: stretch;
+    overflow: auto;
   }
   .right {
-    flex: 330px 0 0;
+    padding: 20px 5px;
+    flex: 300px 0 0;
     align-items: stretch;
     background-color: #F4F4F4;
     overflow: auto;

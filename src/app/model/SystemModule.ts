@@ -14,5 +14,6 @@ export class SystemModule extends DataBase {
   order_number:  number;     // 顺序号
   parent_id:     number;     // 父模块 ID
   type:          number;     // 类型
-  is_menu:        boolean;    // 是否为系统菜单
+  is_menu:       boolean;    // 是否为系统菜单
+  children:      SystemModule[];
 }

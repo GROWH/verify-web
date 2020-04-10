@@ -26,14 +26,8 @@ export class ModuleManageFormComponent extends UniversalForm {
       module_url:   [ data.module_url,   [  ] ],
       order_number: [ data.order_number, [ Validators.required ] ],
       parent_id:    [ data.parent_id,    [ Validators.required ] ],
-      type:         [
-        { value: data.type, disabled: true },
-        [ Validators.required ]
-      ],
-      is_menu:      [
-        { value: data.is_menu, disabled: data.type > 2 },
-        [ Validators.required ]
-      ],
+      type:         [ data.type,         [ Validators.required ] ],
+      is_menu:      [ data.is_menu,      [ Validators.required ] ],
     })
   }
   

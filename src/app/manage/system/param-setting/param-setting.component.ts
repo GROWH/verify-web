@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NzModalService, NzModalRef, NzMessageService } from 'ng-zorro-antd';
 import { ParamFormComponent } from './param-form/param-form.component';
+import { TongchangHttpService } from 'tongchang-lib';
 
 @Component({
   selector: 'app-param-setting',
@@ -12,58 +13,56 @@ export class ParamSettingComponent implements OnInit {
   isAllDisplayDataChecked = false;
   isIndeterminate = false;
   position:string = 'bottom'
-  listOfDisplayData: any[] = [];
-  listOfAllData: any[] = [];
+  listOfDisplayData:params[] = [];
+  page = 1;
+  size = 10;
+  loading = true;
+  total = 1;
+  listOfAllData:params[] = []
   mapOfCheckedId: { [key: string]: boolean } = {};
+  selectItems = []
+  baseUrl='/params'
 
   constructor(
     private modal: NzModalService,
     private msg: NzMessageService,
+    private http: TongchangHttpService,
   ) { }
 
   ngOnInit() {
-    for (let i = 0; i < 100; i++) {
-      this.listOfAllData.push({
-        id: i,
-        name: `Edward King ${i}`,
-        age: 32,
-        address: `London, Park Lane no. ${i}`
-      });
-    }
-  }
-  currentPageDataChange($event: Array<{ id: number; name: string; age: number; address: string }>): void {
-    this.listOfDisplayData = $event;
-    this.refreshStatus();
+    this.getData()
   }
 
   refreshStatus(): void {
+    this.isAllDisplayDataChecked = this.listOfDisplayData.every((item) => this.mapOfCheckedId[item.id]);
     let checkId = this.mapOfCheckedId
-    const selectItem = this.listOfDisplayData.map((item,index) => {
+    this.selectItems = this.listOfDisplayData.map((item) => {
       for(let key in checkId) {
-        if(Number(key) === index) {
+        if(checkId[key] && Number(key) === item.id) {
           return item
         }
       }
     }).filter(item => item)
-    console.log(selectItem)
-    this.isAllDisplayDataChecked = this.listOfDisplayData.every(item => this.mapOfCheckedId[item.id]);
-
-    this.isIndeterminate =
+    this.isIndeterminate = 
       this.listOfDisplayData.some(item => this.mapOfCheckedId[item.id]) && !this.isAllDisplayDataChecked;
-      console.log(this.isAllDisplayDataChecked)
-      console.log(this.isIndeterminate)
   }
 
   checkAll(value: boolean): void {
     this.listOfDisplayData.forEach(item => (this.mapOfCheckedId[item.id] = value));
     this.refreshStatus();
   }
+  //新增操作
   paramAdd() {
+    const param = {
+      name:"",
+      value:"",
+      code:""
+    }
     let modalRef:NzModalRef = this.modal.create({
       nzTitle:"参数配置",
       nzContent:ParamFormComponent,
       nzWidth:700,
-      nzComponentParams:{},
+      nzComponentParams:{param},
       nzFooter:[
         {
           label:'取消',
@@ -73,8 +72,24 @@ export class ParamSettingComponent implements OnInit {
           label:'确定',
           type:'primary',
           disabled:comp => !comp.validateForm.valid,
-          onClick:() => {
-            console.log(122);
+          onClick:(comp) => {
+            let formVal = comp.validateForm.getRawValue()
+            console.log(formVal);
+            this.modal.confirm({
+              nzTitle: '提交',
+              nzContent: '确认提交?',
+              nzOnOk: () => {
+                const params = formVal;
+                this.http.post(this.baseUrl,params).subscribe(res => {
+                  if(res.code !==0) {
+                    this.msg.error(res.message);
+                    return
+                  }
+                  this.msg.success(res.message);
+                  this.getData();
+                })
+              }
+            })
             modalRef.close()
           }
         }
@@ -82,15 +97,105 @@ export class ParamSettingComponent implements OnInit {
       nzWrapClassName: 'modal-vertical-center'
     })
   }
+  //修改操作
   paramEdit() {
-    const selectedItems = this.listOfDisplayData
+    const param = this.selectItems[0]
+    if(this.selectItems.length !== 1 ) {
+      this.msg.warning('请选择一项数据进行操作!')
+      return;
+    }
+    let modalRef:NzModalRef = this.modal.create({
+      nzTitle:"参数配置",
+      nzContent:ParamFormComponent,
+      nzWidth:700,
+      nzComponentParams:{param},
+      nzFooter:[
+        {
+          label:'取消',
+          onClick:() => modalRef.close()
+        },
+        {
+          label:'确定',
+          type:'primary',
+          disabled:comp => !comp.validateForm.valid,
+          onClick:(comp) => {
+            let formVal = comp.validateForm.getRawValue()
+            this.modal.confirm({
+              nzTitle: '提交',
+              nzContent: '确认提交?',
+              nzOnOk: () => {
+                const params = {
+                  ...param,
+                  ...formVal
+                };
+                this.http.put(this.baseUrl,params).subscribe(res => {
+                  if(res.code !==0) {
+                    this.msg.error(res.message);
+                    return
+                  }
+                  this.msg.success(res.message);
+                  this.getData();
+                })
+              }
+            })
+            modalRef.close()
+          }
+        }
+      ],
+      nzWrapClassName: 'modal-vertical-center'
+    })
     
   }
+  //删除操作
   paramDelete() {
-    
+    if(this.selectItems.length === 0 ) {
+      this.msg.warning('请先选择数据进行操作!')
+      return;
+    }
+    const selectedIds = this.selectItems.map(it => it.id) + ''
+    this.http.delete(`${this.baseUrl}/${selectedIds}`).subscribe(res => {
+      if(res.code !==0) {
+        this.msg.error(res.message);
+        return
+      }
+      this.msg.success(res.message);
+      this.getData();
+    })
   }
+  //刷新
   paramQuery() {
-    
+    this.getData()
   }
 
+  //初始出请求
+  getData() {
+    this.mapOfCheckedId = {}
+    this.loading = true;
+    this.http.get<any>(`${this.baseUrl}?page=${this.page}&size=${this.size}`).subscribe(res => {
+      this.loading = false;
+      if(res.code === 0) {
+        this.listOfDisplayData = res.data.list;
+        this.refreshStatus()
+      }
+    })
+  }
+
+  changePageIndex(pageIndex) {
+    this.page = pageIndex;
+    this.getData()
+  }
+  changePageSize (pageSize) {
+    this.size = pageSize
+    this.getData()
+  }
+
+}
+class params {
+  name:string;
+  code:string;
+  value:string;
+  id:number;
+  create_time:string;
+  update_time:string;
+  version:number;
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -7,6 +7,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
   styleUrls: ['./param-form.component.css']
 })
 export class ParamFormComponent implements OnInit {
+  @Input() param:{};
 
   validateForm: FormGroup;
   constructor(
@@ -14,7 +15,7 @@ export class ParamFormComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.creatForm();
+    this.creatForm(this.param);
   }
   submitForm(): void {
     for (const i in this.validateForm.controls) {
@@ -23,10 +24,11 @@ export class ParamFormComponent implements OnInit {
     }
   }
 
-  creatForm() {
+  creatForm(param) {
     this.validateForm = this.fb.group({
-      value: [null],
-      name: [null],
+      value: [param.value,[ Validators.required ]],
+      code: [param.code,[ Validators.required ]],
+      name: [param.name],
     });
   }
 

@@ -1,12 +1,21 @@
 <div>
   <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
     <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24"  nzFor="value">参数值</nz-form-label>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="code">参数编号</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="code" id="code" />
+        <nz-form-explain *ngIf="validateForm.get('code')?.dirty && validateForm.get('code')?.errors">
+          请输入参数编号
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="value">参数值</nz-form-label>
       <nz-form-control [nzSm]="14" [nzXs]="24">
         <input nz-input formControlName="value" id="value" />
-        <!-- <nz-form-explain *ngIf="validateForm.get('email')?.dirty && validateForm.get('email')?.errors">
-          The input is not valid E-mail!
-        </nz-form-explain> -->
+        <nz-form-explain *ngIf="validateForm.get('value')?.dirty && validateForm.get('value')?.errors">
+          请输入参数值
+        </nz-form-explain>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>

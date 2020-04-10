@@ -1,3 +1,4 @@
+import { AccountComponent } from './account/account.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -6,13 +7,16 @@ import { ModuleManageFormComponent } from './module-manage-form/module-manage-fo
 import { SharedModule } from '@shared/shared.module';
 import { ParamSettingComponent } from './param-setting/param-setting.component';
 import { ParamFormComponent } from './param-setting/param-form/param-form.component';
+import { AccountFormComponent } from './account/account-form/account-form.component';
 
 @NgModule({
   declarations: [
     ModuleManageComponent,
     ModuleManageFormComponent,
     ParamSettingComponent,
-    ParamFormComponent
+    ParamFormComponent,
+    AccountComponent,
+    AccountFormComponent,
   ],
   imports: [
     CommonModule,
@@ -25,12 +29,17 @@ import { ParamFormComponent } from './param-setting/param-form/param-form.compon
       {
         path:'param',
         component:ParamSettingComponent
+      },
+      {
+        path:'account',
+        component:AccountComponent
       }
     ])
   ],
   entryComponents: [
     ModuleManageFormComponent,
     ParamFormComponent,
+    AccountFormComponent,
   ]
 })
 export class SystemModule { }

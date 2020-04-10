@@ -1,0 +1,15 @@
+.btns {
+  height: 55px;
+  line-height: 55px;
+  // padding: 0 50px;
+  text-align: right;
+  .mr8 {
+    margin-right: 8px;
+  }
+
+}
+:host ::ng-deep {
+  .ant-table {
+    height: 750px;
+  }
+}

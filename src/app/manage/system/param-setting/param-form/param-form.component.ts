@@ -4,7 +4,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 @Component({
   selector: 'app-param-form',
   templateUrl: './param-form.component.html',
-  styleUrls: ['./param-form.component.css']
+  styleUrls: ['./param-form.component.scss']
 })
 export class ParamFormComponent implements OnInit {
   @Input() param:{};

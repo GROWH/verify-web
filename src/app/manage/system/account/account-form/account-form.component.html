@@ -1,3 +1,105 @@
-<p>
-  account-form works!
-</p>
+<div>
+  <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="account">账号</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="account" id="account" />
+        <nz-form-explain *ngIf="validateForm.get('account')?.dirty && validateForm.get('account')?.errors">
+          请输入账号
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="pass">登录密码</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input type='password' nz-input formControlName="pass" id="pass" />
+        <nz-form-explain *ngIf="validateForm.get('pass')?.dirty && validateForm.get('pass')?.errors">
+          请输入登录密码
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="name">姓名</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="name" id="name" />
+        <nz-form-explain *ngIf="validateForm.get('name')?.dirty && validateForm.get('name')?.errors">
+          请输入姓名
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="unit_id">所属单位</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-select
+        nzShowSearch
+        nzAllowClear
+        nzPlaceHolder="请选择所选单位"
+        formControlName='unit_id'
+      >
+        <nz-option *ngFor="let item of listOptions" [nzLabel]="item.name" [nzValue]="item.code"></nz-option>
+      </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="phone">联系电话</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input type='phone' nz-input formControlName="phone" id="phone" />
+        <nz-form-explain *ngIf="validateForm.get('phone')?.dirty && validateForm.get('phone')?.errors">
+          请输入联系电话
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="email">邮箱</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="email" id="email" />
+        <nz-form-explain *ngIf="validateForm.get('email')?.dirty && validateForm.get('email')?.errors">
+          请输入邮箱
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="super">是否为管理员</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-radio-group formControlName="super">
+          <label nz-radio nzValue="true">是</label>
+          <label nz-radio nzValue="false">否</label>
+        </nz-radio-group>
+        <nz-form-explain *ngIf="validateForm.get('super')?.dirty && validateForm.get('super')?.errors">
+          请选择
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="role_id">角色</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="role_id" id="role_id" />
+        <nz-form-explain *ngIf="validateForm.get('role_id')?.dirty && validateForm.get('role_id')?.errors">
+          请输入登录密码
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="on_trial">是否试用</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-radio-group formControlName="on_trial">
+          <label nz-radio nzValue="true">是</label>
+          <label nz-radio nzValue="false">否</label>
+        </nz-radio-group>
+        <nz-form-explain *ngIf="validateForm.get('on_trial')?.dirty && validateForm.get('on_trial')?.errors">
+          请输入登录密码
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzFor="trial_end">使用到期时间</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-date-picker formControlName="trial_end" (ngModelChange)="onChange($event)"></nz-date-picker>
+        <nz-form-explain *ngIf="validateForm.get('trial_end')?.dirty && validateForm.get('trial_end')?.errors">
+          请选择到期时间
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</div>

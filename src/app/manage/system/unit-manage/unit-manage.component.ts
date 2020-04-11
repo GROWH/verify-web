@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { NzModalService, NzModalRef, NzMessageService } from 'ng-zorro-antd';
 import { TongchangHttpService } from 'tongchang-lib';
-import { AccountFormComponent } from './account-form/account-form.component';
+import { ManageFormComponent } from './manage-form/manage-form.component';
+
 @Component({
-  selector: 'app-account',
-  templateUrl: './account.component.html',
-  styleUrls: ['./account.component.scss']
+  selector: 'app-unit-manage',
+  templateUrl: './unit-manage.component.html',
+  styleUrls: ['./unit-manage.component.scss']
 })
 
-export class AccountComponent implements OnInit {
+export class UnitManageComponent implements OnInit {
 
   isAllDisplayDataChecked = false;
   isIndeterminate = false;
@@ -22,8 +23,8 @@ export class AccountComponent implements OnInit {
   mapOfCheckedId: { [key: string]: boolean } = {};
   selectItems = []
   baseUrl='/account'
-  checkUrl='/account/enable/' //启用
-  stopUrl='/account/stop/' //停用
+  checkUrl:'/account/enable' //启用
+  stopUrl:'/account/stop' //停用
 
   constructor(
     private modal: NzModalService,
@@ -69,7 +70,7 @@ export class AccountComponent implements OnInit {
     }
     let modalRef:NzModalRef = this.modal.create({
       nzTitle:"参数配置",
-      nzContent:AccountFormComponent,
+      nzContent:ManageFormComponent,
       nzWidth:700,
       nzComponentParams:{param},
       nzFooter:[
@@ -115,7 +116,7 @@ export class AccountComponent implements OnInit {
     }
     let modalRef:NzModalRef = this.modal.create({
       nzTitle:"参数配置",
-      nzContent:AccountFormComponent,
+      nzContent:ManageFormComponent,
       nzWidth:700,
       nzComponentParams:{param},
       nzFooter:[
@@ -177,13 +178,13 @@ export class AccountComponent implements OnInit {
       this.msg.warning('请先选择数据进行操作!')
       return;
     }
-    const checkStatus = this.selectItems.every(it => !it.enable)
+    const checkStatus = this.selectItems.every(it => it.enable)
     if(!checkStatus) {
       this.msg.warning('请选择禁用状态的数据进行操作')
       return;
     }
     const selectedIds = this.selectItems.map(it => it.id) + ''
-    this.http.get(`${this.checkUrl}?ids=${selectedIds}`).subscribe(res => {
+    this.http.post(`${this.checkUrl}?ids=${selectedIds}`).subscribe(res => {
       if(res.code !== 0) {
         this.msg.error(res.message);
         return
@@ -198,13 +199,13 @@ export class AccountComponent implements OnInit {
       this.msg.warning('请先选择数据进行操作!')
       return;
     }
-    const checkStatus = this.selectItems.every(it => it.enable)
+    const checkStatus = this.selectItems.every(it => !it.enable)
     if(!checkStatus) {
       this.msg.warning('请选择启用状态的数据进行操作')
       return;
     }
     const selectedIds = this.selectItems.map(it => it.id) + ''
-    this.http.get(`${this.stopUrl}?ids=${selectedIds}`).subscribe(res => {
+    this.http.post(`${this.stopUrl}?ids=${selectedIds}`).subscribe(res => {
       if(res.code !== 0) {
         this.msg.error(res.message);
         return

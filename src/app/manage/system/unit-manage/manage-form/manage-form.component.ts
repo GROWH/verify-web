@@ -2,12 +2,12 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 
 @Component({
-  selector: 'app-account-form',
-  templateUrl: './account-form.component.html',
-  styleUrls: ['./account-form.component.scss']
+  selector: 'app-manage-form',
+  templateUrl: './manage-form.component.html',
+  styleUrls: ['./manage-form.component.scss']
 })
 
-export class AccountFormComponent implements OnInit {
+export class ManageFormComponent implements OnInit {
   @Input() param:{};
   listOptions = [
     {
@@ -65,4 +65,3 @@ export function telValidator(nameRe: RegExp): ValidatorFn {
     return notPhone ? null : {'notPhone': {value: control.value}};
   };
 }
-

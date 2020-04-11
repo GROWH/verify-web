@@ -8,6 +8,10 @@ import { SharedModule } from '@shared/shared.module';
 import { ParamSettingComponent } from './param-setting/param-setting.component';
 import { ParamFormComponent } from './param-setting/param-form/param-form.component';
 import { AccountFormComponent } from './account/account-form/account-form.component';
+import { UnitManageComponent } from './unit-manage/unit-manage.component';
+import { UnitAuditComponent } from './unit-audit/unit-audit.component';
+import { ManageFormComponent } from './unit-manage/manage-form/manage-form.component';
+import { AuditFormComponent } from './unit-audit/audit-form/audit-form.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +21,10 @@ import { AccountFormComponent } from './account/account-form/account-form.compon
     ParamFormComponent,
     AccountComponent,
     AccountFormComponent,
+    UnitManageComponent,
+    ManageFormComponent,
+    UnitAuditComponent,
+    AuditFormComponent
   ],
   imports: [
     CommonModule,
@@ -33,6 +41,14 @@ import { AccountFormComponent } from './account/account-form/account-form.compon
       {
         path:'account',
         component:AccountComponent
+      },
+      {
+        path:'unitmanage',
+        component:UnitManageComponent
+      },
+      {
+        path:'unitaudit',
+        component:UnitAuditComponent
       }
     ])
   ],
@@ -40,6 +56,8 @@ import { AccountFormComponent } from './account/account-form/account-form.compon
     ModuleManageFormComponent,
     ParamFormComponent,
     AccountFormComponent,
+    ManageFormComponent,
+    AuditFormComponent
   ]
 })
 export class SystemModule { }

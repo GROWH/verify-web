@@ -1,6 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NzTreeNodeOptions, NzModalService, NzModalRef, NzTreeNode, NzMessageService, isTemplateRef, NzTreeComponent } from 'ng-zorro-antd';
+import {
+  NzTreeNodeOptions,
+  NzModalService,
+  NzModalRef,
+  NzTreeNode,
+  NzMessageService,
+  NzTreeComponent,
+} from 'ng-zorro-antd';
 
+import { Apis } from '@/shared/urls.const';
 import { GridAction } from '@/model/GridAction';
 import { SystemModule } from '@/model/SystemModule';
 
@@ -115,7 +123,7 @@ export class ModuleManageComponent implements OnInit {
 
   async getModuleTree() {
     const { messageId: msgId } = this.msg.loading('请求中', { nzDuration: 0 })
-    const res = await this.http.get<SystemModule[]>('/module/tree').toPromise()
+    const res = await this.http.get<SystemModule[]>(Apis.moduleTree).toPromise()
     
     this.msg.remove(msgId)
 
@@ -172,7 +180,7 @@ export class ModuleManageComponent implements OnInit {
 
     await this.util.submitConfirm(null, '确定删除?')
 
-    const res = await this.http.delete('/module/'+module.id).toPromise()
+    const res = await this.http.delete(`${Apis.module}/${module.id}`).toPromise()
 
     if (res.code === 0) {
       this.msg.success(res.message)
@@ -188,6 +196,8 @@ export class ModuleManageComponent implements OnInit {
       let children: NzTreeNodeOptions[] = []
       if (item.children && item.children.length > 0) {
         children = this.convertNodes(item.children)
+      } else if (!item.children) {
+        item.children = []
       }
 
       return {
@@ -215,7 +225,7 @@ export class ModuleManageComponent implements OnInit {
 
   private async onAddSubmit(modalRef: NzModalRef, formVal: SystemModule) {
     await this.util.submitConfirm()
-    const res = await this.http.post<SystemModule>('/module', formVal).toPromise()
+    const res = await this.http.post<SystemModule>(Apis.module, formVal).toPromise()
     if (res.code === 0) {
       this.msg.success(res.message)
       modalRef.close()
@@ -225,7 +235,7 @@ export class ModuleManageComponent implements OnInit {
     
   private async onEditSubmit(modalRef: NzModalRef, formVal: SystemModule) {
     await this.util.submitConfirm()
-    const res = await this.http.put<SystemModule>('/module', formVal).toPromise()
+    const res = await this.http.put<SystemModule>(Apis.module, formVal).toPromise()
     if (res.code === 0) {
       this.msg.success(res.message)
       modalRef.close()
@@ -273,6 +283,7 @@ export class ModuleManageComponent implements OnInit {
   }
 
   private addModule(mo: SystemModule) {
+    mo.children = []
 
     /** 节点 Map 更新 */
     if (mo.parent_id !== 0) {

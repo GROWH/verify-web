@@ -15,6 +15,7 @@ import zh from '@angular/common/locales/zh';
 import * as AllIcons from '@ant-design/icons-angular/icons'
 import { IconDefinition } from '@ant-design/icons-angular';
 import { SharedModule } from './shared/shared.module';
+import { environment } from 'src/environments/environment';
 
 registerLocaleData(zh);
 
@@ -22,6 +23,11 @@ const antDesignIcons = AllIcons as {
   [key: string]: IconDefinition;
 };
 const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesignIcons[key])
+
+
+if (!environment.production) {
+  localStorage.setItem('debug', 'TongchangLib*')
+}
 
 @NgModule({
   declarations: [

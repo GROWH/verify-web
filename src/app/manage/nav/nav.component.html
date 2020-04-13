@@ -35,8 +35,12 @@
           <span>系统设置</span>
         </span>
         <ul>
-          <li nz-menu-item>模块管理</li>
-          <li nz-menu-item>管理员权限管理</li>
+          <li nz-menu-item>
+            <a [routerLink]="[ '/manage/system/module' ]">模块管理</a>
+          </li>
+          <li nz-menu-item>
+            <a [routerLink]="[ '/manage/system/admin-right' ]">管理员权限管理</a>
+          </li>
           <li nz-menu-item>
             <a routerLink="/manage/system/param">系统参数设定</a>
           </li>

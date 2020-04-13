@@ -1,107 +1,132 @@
 <div>
   <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
     <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="account">账号</nz-form-label>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="unit_name">单位名称</nz-form-label>
       <nz-form-control [nzSm]="14" [nzXs]="24">
-        <input nz-input formControlName="account" id="account" />
-        <nz-form-explain *ngIf="validateForm.get('account')?.dirty && validateForm.get('account')?.errors">
-          请输入账号
+        <input nz-input formControlName="unit_name" id="unit_name" />
+        <nz-form-explain *ngIf="validateForm.get('unit_name')?.dirty && validateForm.get('unit_name')?.errors">
+          请输入单位名称
         </nz-form-explain>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="pass">登录密码</nz-form-label>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="social_code">统一社会信用码</nz-form-label>
       <nz-form-control [nzSm]="14" [nzXs]="24">
-        <input type='password' nz-input formControlName="pass" id="pass" />
-        <nz-form-explain *ngIf="validateForm.get('pass')?.dirty && validateForm.get('pass')?.errors">
-          请输入登录密码
+        <input nz-input formControlName="social_code" id="social_code" />
+        <nz-form-explain *ngIf="validateForm.get('social_code')?.dirty && validateForm.get('social_code')?.errors">
+          请输入统一社会信用码
         </nz-form-explain>
       </nz-form-control>
     </nz-form-item>
-    <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="name">姓名</nz-form-label>
+    <!-- <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="parent_id">上级单位</nz-form-label>
       <nz-form-control [nzSm]="14" [nzXs]="24">
-        <input nz-input formControlName="name" id="name" />
-        <nz-form-explain *ngIf="validateForm.get('name')?.dirty && validateForm.get('name')?.errors">
-          请输入姓名
+        <input  nz-input formControlName="parent_id" id="parent_id" />
+        <nz-form-explain *ngIf="validateForm.get('parent_id')?.dirty && validateForm.get('parent_id')?.errors">
+          上级单位
         </nz-form-explain>
       </nz-form-control>
-    </nz-form-item>
+    </nz-form-item> -->
+    <!-- <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="state">状态</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="state" id="state" />
+        <nz-form-explain *ngIf="validateForm.get('state')?.dirty && validateForm.get('state')?.errors">
+          请输入状态
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item> -->
     <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="unit_id">所属单位</nz-form-label>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="unit_type">单位类型</nz-form-label>
       <nz-form-control [nzSm]="14" [nzXs]="24">
         <nz-select
         nzShowSearch
         nzAllowClear
-        nzPlaceHolder="请选择所选单位"
-        formControlName='unit_id'
+        nzPlaceHolder="请选择单位类型"
+        formControlName='unit_type'
       >
-        <nz-option *ngFor="let item of listOptions" [nzLabel]="item.name" [nzValue]="item.code"></nz-option>
+        <nz-option *ngFor="let item of listOptions" [nzLabel]="item.name" [nzValue]="item.name"></nz-option>
       </nz-select>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="phone">联系电话</nz-form-label>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="fixed_phone">单位固话</nz-form-label>
       <nz-form-control [nzSm]="14" [nzXs]="24">
-        <input type='phone' nz-input formControlName="phone" id="phone" />
-        <nz-form-explain *ngIf="validateForm.get('phone')?.dirty && validateForm.get('phone')?.errors">
-          请输入联系电话
+        <input  nz-input formControlName="fixed_phone" id="fixed_phone" />
+        <nz-form-explain *ngIf="validateForm.get('fixed_phone')?.dirty && validateForm.get('fixed_phone')?.errors">
+          请输入单位固话
         </nz-form-explain>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="email">邮箱</nz-form-label>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="unit_email">邮箱</nz-form-label>
       <nz-form-control [nzSm]="14" [nzXs]="24">
-        <input nz-input formControlName="email" id="email" />
-        <nz-form-explain *ngIf="validateForm.get('email')?.dirty && validateForm.get('email')?.errors">
+        <input nz-input formControlName="unit_email" id="unit_email" />
+        <nz-form-explain *ngIf="validateForm.get('unit_email')?.dirty && validateForm.get('unit_email')?.errors">
           请输入邮箱
         </nz-form-explain>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="is_super">是否为管理员</nz-form-label>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="linkman">联系人</nz-form-label>
       <nz-form-control [nzSm]="14" [nzXs]="24">
-        <nz-radio-group formControlName="is_super">
-          <label nz-radio [nzValue]="true">是</label>
-          <label nz-radio [nzValue]="false">否</label>
-        </nz-radio-group>
-        <nz-form-explain *ngIf="validateForm.get('is_super')?.dirty && validateForm.get('is_super')?.errors">
-          请选择是否为管理员
+        <input  nz-input formControlName="linkman" id="linkman" />
+        <nz-form-explain *ngIf="validateForm.get('linkman')?.dirty && validateForm.get('linkman')?.errors">
+          联系人
         </nz-form-explain>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="role_id">角色</nz-form-label>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="cell_phone">联系人手机</nz-form-label>
       <nz-form-control [nzSm]="14" [nzXs]="24">
-        <nz-select
-        nzShowSearch
-        nzAllowClear
-        nzPlaceHolder="请选择所选角色"
-        formControlName='role_id'
-      >
-        <nz-option *ngFor="let item of listOptions" [nzLabel]="item.name" [nzValue]="item.code"></nz-option>
-      </nz-select>
-      </nz-form-control>
-    </nz-form-item>
-
-    <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="on_trial">是否试用</nz-form-label>
-      <nz-form-control [nzSm]="14" [nzXs]="24">
-        <nz-radio-group formControlName="on_trial">
-          <label nz-radio [nzValue]="true">是</label>
-          <label nz-radio [nzValue]="false">否</label>
-        </nz-radio-group>
-        <nz-form-explain *ngIf="validateForm.get('on_trial')?.dirty && validateForm.get('on_trial')?.errors">
-          请选择是否使用
+        <input  nz-input formControlName="cell_phone" id="cell_phone" />
+        <nz-form-explain *ngIf="validateForm.get('cell_phone')?.dirty && validateForm.get('cell_phone')?.errors">
+          联系人手机
         </nz-form-explain>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24"  nzFor="trial_end">使用到期时间</nz-form-label>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="unit_address">单位地址</nz-form-label>
       <nz-form-control [nzSm]="14" [nzXs]="24">
-        <nz-date-picker formControlName="trial_end" (ngModelChange)="onChange($event)"></nz-date-picker>
-        <nz-form-explain *ngIf="validateForm.get('trial_end')?.dirty && validateForm.get('trial_end')?.errors">
-          请选择到期时间
+        <input  nz-input formControlName="unit_address" id="unit_address" />
+        <nz-form-explain *ngIf="validateForm.get('unit_address')?.dirty && validateForm.get('unit_address')?.errors">
+          单位地址
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="fax">传真</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input  nz-input formControlName="fax" id="fax" />
+        <nz-form-explain *ngIf="validateForm.get('fax')?.dirty && validateForm.get('fax')?.errors">
+          传真
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="bank">开户银行</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input  nz-input formControlName="bank" id="bank" />
+        <nz-form-explain *ngIf="validateForm.get('bank')?.dirty && validateForm.get('bank')?.errors">
+          开户银行
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="bank_account">银行账户</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input  nz-input formControlName="bank_account" id="bank_account" />
+        <nz-form-explain *ngIf="validateForm.get('bank_account')?.dirty && validateForm.get('bank_account')?.errors">
+          银行账户
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"   nzFor="mark">备注</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <textarea   nz-input formControlName="mark" id="mark"></textarea>
+        <nz-form-explain *ngIf="validateForm.get('mark')?.dirty && validateForm.get('mark')?.errors">
+          请输入备注
         </nz-form-explain>
       </nz-form-control>
     </nz-form-item>

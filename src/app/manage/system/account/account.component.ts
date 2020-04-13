@@ -55,18 +55,7 @@ export class AccountComponent implements OnInit {
   }
   //新增操作
   Add() {
-    const param = {
-      account:"",
-      pass:"",
-      name:"",
-      unit_id:'',
-      phone:'',
-      email:'',
-      on_trial:'',
-      trial_end:'',
-      role_id:'',
-      is_super:'',
-    }
+    const param = new params;
     let modalRef:NzModalRef = this.modal.create({
       nzTitle:"参数配置",
       nzContent:AccountFormComponent,

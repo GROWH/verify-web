@@ -2,8 +2,7 @@
   <div class="btns">
     <button class="mr8" nz-button nzType="primary" (click)="Add()"><i nz-icon type="plus"></i>新增</button>
     <button class="mr8" nz-button nzType="default" (click)="Edit()"><i nz-icon type="edit"></i>修改</button>
-    <button class="mr8" nz-button nzType="default" (click)="Check()"><i nz-icon type="check-circle"></i>启用</button>
-    <button class="mr8" nz-button nzType="default" (click)="Stop()"><i nz-icon type="stop"></i>停用</button>
+    <button class="mr8" nz-button nzType="default" (click)="submitCheck()"><i nz-icon type="check-circle"></i>提交审核</button>
     <button class="mr8" nz-button nzType="danger" (click)="Delete()"><i nz-icon type="delete"></i>删除</button>
     <button class="mr8" nz-button nzType="default" (click)="Query()"><i nz-icon type="redo"></i>刷新</button>
   </div>
@@ -15,7 +14,6 @@
   [nzTotal]="total"
   (nzPageIndexChange)="changePageIndex($event)"   
   (nzPageSizeChange)="changePageSize($event)"
-
 >
   <thead>
     <tr>
@@ -25,33 +23,43 @@
         [nzIndeterminate]="isIndeterminate"
         (nzCheckedChange)="checkAll($event)"
       ></th>
-      <th>账号</th>
-      <th>登录密码</th>
-      <th>姓名</th>
-      <th>所属单位</th>
-      <th>联系电话</th>
+      <th>单位名称</th>
+      <th>统一社会信用码</th>
+      <th>单位类型</th>
+      <th>单位固话</th>
+      <th>状态</th>
+      <th>联系人</th>
+      <th>联系人手机</th>
+      <th>单位地址</th>
       <th>邮箱</th>
-      <th>是否启用</th>
-      <th>是否试用</th>
-      <th>试用到期时间</th>
-      <th>角色</th>
-      <th>是否为管理员</th>
+      <th>传真</th>
+      <th>开户银行</th>
+      <th>创建账号</th>
+      <th>审核备注</th>
+      <th>审核人</th>
+      <th>审核时间</th>
+      <th>备注</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let data of rowSelectionTable.data">
       <td nzShowCheckbox [(nzChecked)]="mapOfCheckedId[data.id]" (nzCheckedChange)="refreshStatus()"></td>
-      <td>{{ data.account }}</td>
-      <td>{{ data.pass }}</td>
-      <td>{{ data.name }}</td>
-      <td>{{ data.unit_id }}</td>
-      <td>{{ data.phone }}</td>
-      <td>{{ data.email }}</td>
-      <td>{{ yesOrno(data.enable) }}</td>
-      <td>{{ yesOrno(data.on_trial) }}</td>
-      <td>{{ data.trial_end }}</td>
-      <td>{{ data.role_id }}</td>
-      <td>{{ yesOrno(data.is_super)}}</td>
+      <td>{{ data.unit_name }}</td>
+      <td>{{ data.social_code }}</td>
+      <td>{{ data.unit_type }}</td>
+      <td>{{ data.fixed_phone }}</td>
+      <td>{{ data.state }}</td>
+      <td>{{ data.linkman }}</td>
+      <td>{{ data.cell_phone }}</td>
+      <td>{{ data.unit_address }}</td>
+      <td>{{ data.unit_email }}</td>
+      <td>{{ data.fax }}</td>
+      <td>{{ data.bank}}</td>
+      <td>{{ data.bank_account }}</td>
+      <td>{{ data.audit_mark }}</td>
+      <td>{{ data.auditor }}</td>
+      <td>{{ data.audit_time }}</td>
+      <td>{{ data.mark }}</td>
     </tr>
   </tbody>
 </nz-table>

@@ -10,17 +10,18 @@ import { FormBuilder, FormControl, FormGroup, Validators, ValidatorFn, AbstractC
 export class ManageFormComponent implements OnInit {
   @Input() param:{};
   listOptions = [
+
     {
-      name:'保密局',
-      code:110
+      name:"验证平台",
+      id:1
     },
     {
-      name:"国务院",
-      code:111
+      name:"验证实施单位",
+      id:2
     },
     {
-      name:"行政中心",
-      code:113
+      name:"验证公司客户",
+      id:3
     }
   ]
   validateForm: FormGroup;
@@ -40,16 +41,18 @@ export class ManageFormComponent implements OnInit {
 
   creatForm(param) {
     this.validateForm = this.fb.group({
-      account: [param.account ,[ Validators.required ]],
-      pass: [param.pass, [ Validators.required ]],
-      name: [param.name, [ Validators.required ]],
-      unit_id: [param.unit_id, [ Validators.required ]],
-      phone: [param.phone, [ Validators.required, telValidator(/^(?:(?:\+|00)86)?1[3-9]\d{9}$/)]],
-      email: [param.email, [ Validators.required, Validators.email]],
-      on_trial: [param.on_trial ,[ Validators.required ]],
-      trial_end: [param.trial_end],
-      role_id: [param.role_id ,[ Validators.required ]],
-      is_super: [param.is_super ,[ Validators.required ]],
+      unit_name: [param.unit_name ,[ Validators.required ]],
+      social_code: [param.social_code, [ Validators.required ]],
+      unit_type: [param.unit_type, [ Validators.required ]],
+      cell_phone: [param.cell_phone, [ Validators.required, telValidator(/^(?:(?:\+|00)86)?1[3-9]\d{9}$/)]],
+      unit_email: [param.unit_email, [ Validators.required, Validators.email]],
+      fixed_phone: [param.fixed_phone],
+      linkman: [param.linkman ,[ Validators.required ]],
+      unit_address: [param.unit_address ,[ Validators.required ]],
+      fax: [param.fax ,[ Validators.required ]],
+      bank: [param.bank ,[ Validators.required ]],
+      bank_account: [param.bank_account ,[ Validators.required ]],
+      mark: [param.mark],
     });
   }
   

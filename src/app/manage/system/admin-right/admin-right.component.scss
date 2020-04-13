@@ -1,0 +1,27 @@
+.wrapper {
+  height: 100%;
+  display: flex;
+  .tree-wrapper {
+    padding-left: 30px;
+    flex: 300px 1 1;
+    align-items: stretch;
+    position: relative;
+    overflow: auto;
+    border-left: 1px dashed lightgray;
+    &:first-child {
+      margin-left: 0;
+      border-left: none;
+    }
+    .title {
+      height: 80px;
+      line-height: 80px;
+      margin: 0px;
+      line-height: 4;
+    }
+    .save {
+      position: absolute;
+      top: 60px;
+      right: 10px;
+    }
+  }
+}

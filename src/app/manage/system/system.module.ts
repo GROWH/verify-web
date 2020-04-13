@@ -12,6 +12,7 @@ import { UnitAuditComponent } from './unit-audit/unit-audit.component';
 import { ManageFormComponent } from './unit-manage/manage-form/manage-form.component';
 import { AuditFormComponent } from './unit-audit/audit-form/audit-form.component';
 import { UnitManageComponent } from './unit-manage/unit-manage.component';
+import { AdminRightComponent } from './admin-right/admin-right.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { UnitManageComponent } from './unit-manage/unit-manage.component';
     UnitManageComponent,
     ManageFormComponent,
     UnitAuditComponent,
-    AuditFormComponent
+    AuditFormComponent,
+    AdminRightComponent,
   ],
   imports: [
     CommonModule,
@@ -49,6 +51,10 @@ import { UnitManageComponent } from './unit-manage/unit-manage.component';
       {
         path:'unitaudit',
         component:UnitAuditComponent
+      },
+      {
+        path: 'admin-right',
+        component: AdminRightComponent,
       }
     ])
   ],

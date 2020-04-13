@@ -1,0 +1,24 @@
+<div class="wrapper">
+  <div class="tree-wrapper" *ngFor="let conf of treesConf">
+    <h2 class="title">
+      {{ conf.title }}:
+    </h2>
+    <div class="save" *ngIf="conf.showSaveBt">
+      <button
+        nz-button
+        nzType="primary"
+        (click)="onSave(conf, nzTree)"
+      >
+        <i nz-icon spin type="save"></i>
+        保存
+      </button>
+    </div>
+    <nz-tree
+      #nzTree
+      [nzData]="conf.nodesOptions"
+      [nzCheckable]="true"
+      [nzExpandAll]="true"
+      (nzCheckBoxChange)="conf.showSaveBt = true"
+    ></nz-tree>
+  </div>
+</div>

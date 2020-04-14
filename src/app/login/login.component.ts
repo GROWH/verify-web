@@ -10,7 +10,10 @@ import {Router} from '@angular/router';
 export class LoginComponent implements OnInit {
 
   form: FormGroup;
+  isSpinning = false;
   submitForm(): void {
+    this.isSpinning = true;
+
     for (const i in this.form.controls) {
       this.form.controls[i].markAsDirty();
       this.form.controls[i].updateValueAndValidity();
@@ -18,7 +21,12 @@ export class LoginComponent implements OnInit {
     if(this.form.invalid) {
       return
     } else {
-      this.router.navigateByUrl('/manage')
+      let _this =this
+      setTimeout(function () {
+        _this.isSpinning = false;
+        _this.router.navigateByUrl('/manage')
+      },500)
+  
     }
   }
   constructor(

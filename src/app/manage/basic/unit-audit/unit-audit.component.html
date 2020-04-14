@@ -1,0 +1,65 @@
+<div style="height: 100%;padding: 10px;">
+  <div class="btns">
+    <button class="mr8" nz-button nzType="default" (click)="audit()"><i nz-icon type="check"></i>审核</button>
+    <button class="mr8" nz-button nzType="default" (click)="Query()"><i nz-icon type="redo"></i>刷新</button>
+  </div>
+  <div style="width: 1510px;">
+    <nz-table
+    #rowSelectionTable
+    nzShowSizeChanger
+    [nzData]="listOfDisplayData"
+    [nzTotal]="total"
+    (nzPageIndexChange)="changePageIndex($event)"   
+    (nzPageSizeChange)="changePageSize($event)"
+    [nzScroll]="{ x: '1800px'}"
+  >
+    <thead>
+      <tr>
+        <th
+          nzShowCheckbox
+          [(nzChecked)]="isAllDisplayDataChecked"
+          [nzIndeterminate]="isIndeterminate"
+          (nzCheckedChange)="checkAll($event)"
+        ></th>
+        <th nzWidth="100px">单位名称</th>
+        <th nzWidth="150px">统一社会信用码</th>
+        <th nzWidth="100px">单位类型</th>
+        <th nzWidth="100px">单位固话</th>
+        <th nzWidth="100px">状态</th>
+        <th nzWidth="100px">联系人</th>
+        <th nzWidth="150px">联系人手机</th>
+        <th nzWidth="100px">单位地址</th>
+        <th nzWidth="100px">邮箱</th>
+        <th nzWidth="100px">传真</th>
+        <th nzWidth="100px">开户银行</th>
+        <th nzWidth="100px">创建账号</th>
+        <th nzWidth="100px">审核备注</th>
+        <th nzWidth="100px">审核人</th>
+        <th nzWidth="200px">审核时间</th>
+        <th nzWidth="100px">备注</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of rowSelectionTable.data">
+        <td nzShowCheckbox [(nzChecked)]="mapOfCheckedId[data.id]" (nzCheckedChange)="refreshStatus()"></td>
+        <td>{{ data.unit_name }}</td>
+        <td>{{ data.social_code }}</td>
+        <td>{{ data.unit_type }}</td>
+        <td>{{ data.fixed_phone }}</td>
+        <td>{{ data.state }}</td>
+        <td>{{ data.linkman }}</td>
+        <td>{{ data.cell_phone }}</td>
+        <td>{{ data.unit_address }}</td>
+        <td>{{ data.unit_email }}</td>
+        <td>{{ data.fax }}</td>
+        <td>{{ data.bank}}</td>
+        <td>{{ data.bank_account }}</td>
+        <td>{{ data.audit_mark }}</td>
+        <td>{{ data.auditor }}</td>
+        <td>{{ data.audit_time }}</td>
+        <td>{{ data.mark }}</td>
+      </tr>
+    </tbody>
+  </nz-table>
+  </div>
+</div>

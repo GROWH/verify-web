@@ -8,10 +8,6 @@ import { ModuleManageComponent } from './module-manage/module-manage.component';
 import { ModuleManageFormComponent } from './module-manage-form/module-manage-form.component';
 import { ParamSettingComponent } from './param-setting/param-setting.component';
 import { ParamFormComponent } from './param-setting/param-form/param-form.component';
-import { UnitAuditComponent } from './unit-audit/unit-audit.component';
-import { ManageFormComponent } from './unit-manage/manage-form/manage-form.component';
-import { AuditFormComponent } from './unit-audit/audit-form/audit-form.component';
-import { UnitManageComponent } from './unit-manage/unit-manage.component';
 import { AdminRightComponent } from './admin-right/admin-right.component';
 
 @NgModule({
@@ -20,10 +16,6 @@ import { AdminRightComponent } from './admin-right/admin-right.component';
     ModuleManageFormComponent,
     ParamSettingComponent,
     ParamFormComponent,
-    UnitManageComponent,
-    ManageFormComponent,
-    UnitAuditComponent,
-    AuditFormComponent,
     AdminRightComponent,
   ],
   imports: [
@@ -39,14 +31,6 @@ import { AdminRightComponent } from './admin-right/admin-right.component';
         component:ParamSettingComponent
       },
       {
-        path:'unitmanage',
-        component:UnitManageComponent
-      },
-      {
-        path:'unitaudit',
-        component:UnitAuditComponent
-      },
-      {
         path: 'admin-right',
         component: AdminRightComponent,
       }
@@ -55,8 +39,6 @@ import { AdminRightComponent } from './admin-right/admin-right.component';
   entryComponents: [
     ModuleManageFormComponent,
     ParamFormComponent,
-    ManageFormComponent,
-    AuditFormComponent
   ]
 })
 export class SystemModule { }

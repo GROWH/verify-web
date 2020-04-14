@@ -36,6 +36,10 @@ import { SharedModule } from '@/shared/shared.module';
           {
             path: 'safe',
             loadChildren: './safe/safe.module#SafeModule'
+          },
+          {
+            path:'basic',
+            loadChildren:'./basic/basic.module#BasicModule'
           }
         ]
       }

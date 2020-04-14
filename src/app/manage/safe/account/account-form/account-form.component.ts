@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
+import { TongchangHttpService } from 'tongchang-lib';
 
 @Component({
   selector: 'app-account-form',
@@ -9,24 +10,18 @@ import { FormBuilder, FormControl, FormGroup, Validators, ValidatorFn, AbstractC
 
 export class AccountFormComponent implements OnInit {
   @Input() param:{};
-  listOptions = [
-    {
-      name:'保密局',
-      code:110
-    },
-    {
-      name:"国务院",
-      code:111
-    },
-    {
-      name:"行政中心",
-      code:113
-    }
-  ]
+  roleUrl ='/role' //角色接口
+  auditUrl = '/unit/queryAuditPass' //查询审核通过
+  roleOptions = [];
+  auditOptions = [];
   validateForm: FormGroup;
   constructor(
-    private fb: FormBuilder
-  ) { }
+    private fb: FormBuilder,
+    private http: TongchangHttpService,
+  ) {
+    this.getRoles();
+    this.getAudits();
+   }
 
   ngOnInit() {
     this.creatForm(this.param);
@@ -53,8 +48,19 @@ export class AccountFormComponent implements OnInit {
     });
   }
   
-  onChange(result: Date): void {
-    console.log('onChange: ', result);
+  getRoles() {
+    this.http.get<any>(this.roleUrl).subscribe(res => {
+      if(res.code === 0) {
+        this.roleOptions = res.data
+      }
+    })
+  }
+  getAudits() {
+    this.http.get<any>(this.auditUrl).subscribe(res => {
+      if(res.code ===0 ) {
+        this.auditOptions = res.data
+      }
+    })
   }
 
 

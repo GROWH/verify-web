@@ -151,13 +151,19 @@ export class AccountComponent implements OnInit {
       return;
     }
     const selectedIds = this.selectItems.map(it => it.id) + ''
-    this.http.delete(`${this.baseUrl}/${selectedIds}`).subscribe(res => {
-      if(res.code !==0) {
-        this.msg.error(res.message);
-        return
+    this.modal.confirm({
+      nzTitle:'删除',
+      nzContent:'确认删除?',
+      nzOnOk:() => {
+        this.http.delete(`${this.baseUrl}/${selectedIds}`).subscribe(res => {
+          if(res.code !==0) {
+            this.msg.error(res.message);
+            return
+          }
+          this.msg.success(res.message);
+          this.getData();
+        })
       }
-      this.msg.success(res.message);
-      this.getData();
     })
   }
   //启用

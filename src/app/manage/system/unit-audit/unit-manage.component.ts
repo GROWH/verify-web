@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { NzModalService, NzModalRef, NzMessageService } from 'ng-zorro-antd';
-import { ParamFormComponent } from './param-form/param-form.component';
 import { TongchangHttpService } from 'tongchang-lib';
+import { ManageFormComponent } from '../../basic/unit-manage/manage-form/manage-form.component';
 
 @Component({
-  selector: 'app-param-setting',
-  templateUrl: './param-setting.component.html',
-  styleUrls: ['./param-setting.component.scss']
+  selector: 'app-unit-manage',
+  templateUrl: './unit-manage.component.html',
+  styleUrls: ['./unit-manage.component.scss']
 })
-export class ParamSettingComponent implements OnInit {
+
+export class UnitManageComponent implements OnInit {
 
   isAllDisplayDataChecked = false;
   isIndeterminate = false;
@@ -21,7 +22,8 @@ export class ParamSettingComponent implements OnInit {
   listOfAllData:params[] = []
   mapOfCheckedId: { [key: string]: boolean } = {};
   selectItems = []
-  baseUrl='/params'
+  baseUrl='/unit'
+  submitAudit='/unit/submitAudit'
 
   constructor(
     private modal: NzModalService,
@@ -52,15 +54,11 @@ export class ParamSettingComponent implements OnInit {
     this.refreshStatus();
   }
   //新增操作
-  paramAdd() {
-    const param = {
-      name:"",
-      value:"",
-      code:""
-    }
+  Add() {
+    const param = new params;
     let modalRef:NzModalRef = this.modal.create({
       nzTitle:"参数配置",
-      nzContent:ParamFormComponent,
+      nzContent:ManageFormComponent,
       nzWidth:700,
       nzComponentParams:{param},
       nzFooter:[
@@ -97,15 +95,16 @@ export class ParamSettingComponent implements OnInit {
     })
   }
   //修改操作
-  paramEdit() {
+  Edit() {
     const param = this.selectItems[0]
     if(this.selectItems.length !== 1 ) {
       this.msg.warning('请选择一项数据进行操作!')
       return;
     }
+    if(this.selectItems[0].state === '待审核' || this.selectItems[0].state ==='审核通过') {   this.msg.warning("请选择状态为'草稿'或'审核不通过'的数据项进行操作!");return;}
     let modalRef:NzModalRef = this.modal.create({
       nzTitle:"参数配置",
-      nzContent:ParamFormComponent,
+      nzContent:ManageFormComponent,
       nzWidth:700,
       nzComponentParams:{param},
       nzFooter:[
@@ -146,29 +145,47 @@ export class ParamSettingComponent implements OnInit {
     
   }
   //删除操作
-  paramDelete() {
+  Delete() {
     if(this.selectItems.length === 0 ) {
       this.msg.warning('请先选择数据进行操作!')
       return;
     }
+    const flag = this.selectItems.every(item => item.state !== '待审核' && item.state !== '审核通过')
+    if( !flag) {this.msg.warning("请选择状态为'草稿'或'审核不通过'的数据项进行操作!"); return;}
     const selectedIds = this.selectItems.map(it => it.id) + ''
-    this.modal.confirm({
-      nzTitle:'删除',
-      nzContent:'确认删除?',
-      nzOnOk:() => {
-        this.http.delete(`${this.baseUrl}/${selectedIds}`).subscribe(res => {
-          if(res.code !==0) {
-            this.msg.error(res.message);
-            return
-          }
-          this.msg.success(res.message);
-          this.getData();
-        })
+    this.http.delete(`${this.baseUrl}/${selectedIds}`).subscribe(res => {
+      if(res.code !==0) {
+        this.msg.error(res.message);
+        return
       }
+      this.msg.success(res.message);
+      this.getData();
     })
   }
+  //提交审核
+  submitCheck() {
+    if(this.selectItems.length === 0 ) {
+      this.msg.warning('请先选择数据进行操作!')
+      return;
+    }
+    const flag = this.selectItems.every(it => it.state === '草稿')
+    if(!flag) {
+      this.msg.warning('请选择草稿状态的数据项进行操作')
+      return;
+    }
+    const selectedIds = this.selectItems.map(it => it.id) + ''
+    this.http.get(`${this.submitAudit}?ids=${selectedIds}`).subscribe(res => {
+      if(res.code !== 0) {
+        this.msg.error(res.message);
+        return
+      }
+      this.msg.success(res.message);
+      this.getData();
+    })
+  }
+
   //刷新
-  paramQuery() {
+  Query() {
     this.getData()
   }
 
@@ -193,14 +210,28 @@ export class ParamSettingComponent implements OnInit {
     this.size = pageSize
     this.getData()
   }
+  yesOrno(value) {
+    return value === 'true' || value === true || value === '是' ? '是' : '否'
+  }
 
 }
 class params {
-  name:string;
-  code:string;
-  value:string;
-  id:number;
-  create_time:string;
-  update_time:string;
-  version:number;
+  id:number        //编号
+  unit_name:string;  //单位名称
+  social_code:string;     //统一社会信用代码
+  parent_id:string;    //上级单位
+  unit_type:number;  //单位类型
+  state:string;     //状态
+  fixed_phone:string;     //单位固话
+  linkman:boolean;  //联系人
+  cell_phone:boolean;  //联系人手机
+  unit_address	:string;  //单位地址
+  unit_email:string;  //邮箱
+  fax:boolean;  //传真
+  bank?:string;  //开户银行
+  bank_account?:string;  //银行账号
+  auditor?:string;  //审核人
+  audit_mark?:string;  //审核备注
+  audit_time?:string;  //审核时间
+  mark?:string;  //备注
 }

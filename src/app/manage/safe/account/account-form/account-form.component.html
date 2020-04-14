@@ -36,7 +36,7 @@
         nzPlaceHolder="请选择所选单位"
         formControlName='unit_id'
       >
-        <nz-option *ngFor="let item of listOptions" [nzLabel]="item.name" [nzValue]="item.code"></nz-option>
+        <nz-option *ngFor="let item of auditOptions" [nzLabel]="item.unit_name" [nzValue]="item.id"></nz-option>
       </nz-select>
       </nz-form-control>
     </nz-form-item>
@@ -79,7 +79,7 @@
         nzPlaceHolder="请选择所选角色"
         formControlName='role_id'
       >
-        <nz-option *ngFor="let item of listOptions" [nzLabel]="item.name" [nzValue]="item.code"></nz-option>
+        <nz-option *ngFor="let item of roleOptions" [nzLabel]="item.role_name" [nzValue]="item.id"></nz-option>
       </nz-select>
       </nz-form-control>
     </nz-form-item>

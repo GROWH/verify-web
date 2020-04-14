@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { NzModalService, NzModalRef, NzMessageService } from 'ng-zorro-antd';
 import { TongchangHttpService } from 'tongchang-lib';
-import { ManageFormComponent } from './manage-form/manage-form.component';
+import { AuditFormComponent } from './audit-form/audit-form.component';
 
 @Component({
-  selector: 'app-unit-manage',
-  templateUrl: './unit-manage.component.html',
-  styleUrls: ['./unit-manage.component.scss']
+  selector: 'app-unit-audit',
+  templateUrl: './unit-audit.component.html',
+  styleUrls: ['./unit-audit.component.scss']
 })
 
-export class UnitManageComponent implements OnInit {
+export class UnitAuditComponent implements OnInit {
 
   isAllDisplayDataChecked = false;
   isIndeterminate = false;
@@ -22,8 +22,8 @@ export class UnitManageComponent implements OnInit {
   listOfAllData:params[] = []
   mapOfCheckedId: { [key: string]: boolean } = {};
   selectItems = []
-  baseUrl='/unit'
-  submitAudit='/unit/submitAudit'
+  baseUrl='/unit/unaudit'
+  auditUrl='/unit/audit'
 
   constructor(
     private modal: NzModalService,
@@ -53,60 +53,18 @@ export class UnitManageComponent implements OnInit {
     this.listOfDisplayData.forEach(item => (this.mapOfCheckedId[item.id] = value));
     this.refreshStatus();
   }
-  //新增操作
-  Add() {
-    const param = new params;
-    let modalRef:NzModalRef = this.modal.create({
-      nzTitle:"参数配置",
-      nzContent:ManageFormComponent,
-      nzWidth:700,
-      nzComponentParams:{param},
-      nzFooter:[
-        {
-          label:'取消',
-          onClick:() => modalRef.close()
-        },
-        {
-          label:'确定',
-          type:'primary',
-          disabled:comp => !comp.validateForm.valid,
-          onClick:(comp) => {
-            let formVal = comp.validateForm.getRawValue()
-            this.modal.confirm({
-              nzTitle: '提交',
-              nzContent: '确认提交?',
-              nzOnOk: () => {
-                const params = formVal;
-                this.http.post(this.baseUrl,params).subscribe(res => {
-                  if(res.code !==0) {
-                    this.msg.error(res.message);
-                    return
-                  }
-                  this.msg.success(res.message);
-                  this.getData();
-                })
-              }
-            })
-            modalRef.close()
-          }
-        }
-      ],
-      nzWrapClassName: 'modal-vertical-center'
-    })
-  }
-  //修改操作
-  Edit() {
-    const param = this.selectItems[0]
+
+  //审核操作
+
+  audit() {
     if(this.selectItems.length !== 1 ) {
       this.msg.warning('请选择一项数据进行操作!')
       return;
     }
-    if(this.selectItems[0].state === '待审核' || this.selectItems[0].state ==='审核通过') {   this.msg.warning("请选择状态为'草稿'或'审核不通过'的数据项进行操作!");return;}
     let modalRef:NzModalRef = this.modal.create({
-      nzTitle:"参数配置",
-      nzContent:ManageFormComponent,
+      nzTitle:"单位审核",
+      nzContent:AuditFormComponent,
       nzWidth:700,
-      nzComponentParams:{param},
       nzFooter:[
         {
           label:'取消',
@@ -118,15 +76,16 @@ export class UnitManageComponent implements OnInit {
           disabled:comp => !comp.validateForm.valid,
           onClick:(comp) => {
             let formVal = comp.validateForm.getRawValue()
+            const params = {
+              id:this.selectItems[0].id,
+              state:formVal.state,
+              audit_mark:formVal.audit_mark ? formVal.audit_mark : ''
+            }
             this.modal.confirm({
               nzTitle: '提交',
               nzContent: '确认提交?',
               nzOnOk: () => {
-                const params = {
-                  ...param,
-                  ...formVal
-                };
-                this.http.put(this.baseUrl,params).subscribe(res => {
+                this.http.get(this.auditUrl,params).subscribe(res => {
                   if(res.code !==0) {
                     this.msg.error(res.message);
                     return
@@ -142,48 +101,7 @@ export class UnitManageComponent implements OnInit {
       ],
       nzWrapClassName: 'modal-vertical-center'
     })
-    
   }
-  //删除操作
-  Delete() {
-    if(this.selectItems.length === 0 ) {
-      this.msg.warning('请先选择数据进行操作!')
-      return;
-    }
-    const flag = this.selectItems.every(item => item.state !== '待审核' && item.state !== '审核通过')
-    if( !flag) {this.msg.warning("请选择状态为'草稿'或'审核不通过'的数据项进行操作!"); return;}
-    const selectedIds = this.selectItems.map(it => it.id) + ''
-    this.http.delete(`${this.baseUrl}/${selectedIds}`).subscribe(res => {
-      if(res.code !==0) {
-        this.msg.error(res.message);
-        return
-      }
-      this.msg.success(res.message);
-      this.getData();
-    })
-  }
-  //提交审核
-  submitCheck() {
-    if(this.selectItems.length === 0 ) {
-      this.msg.warning('请先选择数据进行操作!')
-      return;
-    }
-    const flag = this.selectItems.every(it => it.state === '草稿')
-    if(!flag) {
-      this.msg.warning('请选择草稿状态的数据项进行操作')
-      return;
-    }
-    const selectedIds = this.selectItems.map(it => it.id) + ''
-    this.http.get(`${this.submitAudit}?ids=${selectedIds}`).subscribe(res => {
-      if(res.code !== 0) {
-        this.msg.error(res.message);
-        return
-      }
-      this.msg.success(res.message);
-      this.getData();
-    })
-  }
-
   //刷新
   Query() {
     this.getData()

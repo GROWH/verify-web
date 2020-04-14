@@ -44,13 +44,13 @@
       <td>{{ data.account }}</td>
       <td>{{ data.pass }}</td>
       <td>{{ data.name }}</td>
-      <td>{{ data.unit_id }}</td>
+      <td>{{ data.unit?.unit_name }}</td>
       <td>{{ data.phone }}</td>
       <td>{{ data.email }}</td>
       <td>{{ yesOrno(data.enable) }}</td>
       <td>{{ yesOrno(data.on_trial) }}</td>
       <td>{{ data.trial_end }}</td>
-      <td>{{ data.role_id }}</td>
+      <td>{{ data.role?.role_name }}</td>
       <td>{{ yesOrno(data.is_super)}}</td>
     </tr>
   </tbody>

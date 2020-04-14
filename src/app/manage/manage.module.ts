@@ -32,6 +32,10 @@ import { SharedModule } from '@/shared/shared.module';
           {
             path: 'system',
             loadChildren: './system/system.module#SystemModule'
+          },
+          {
+            path: 'safe',
+            loadChildren: './safe/safe.module#SafeModule'
           }
         ]
       }

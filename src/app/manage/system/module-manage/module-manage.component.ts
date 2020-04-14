@@ -250,13 +250,15 @@ export class ModuleManageComponent implements OnInit {
        * 更新其父节点children属性的引用
        */
       const parentNode = this.moduleMap.get(`${mo.parent_id}`)
-      const index = parentNode.children.findIndex(it => it.id === mo.id)
-      const parentChildren = parentNode.children
-      parentNode.children = [
-        ...parentChildren.slice(0, index),
-        mo,
-        ...parentChildren.slice(index + 1)
-      ]
+      if (parentNode) {
+        const index = parentNode.children.findIndex(it => it.id === mo.id)
+        const parentChildren = parentNode.children
+        parentNode.children = [
+          ...parentChildren.slice(0, index),
+          mo,
+          ...parentChildren.slice(index + 1)
+        ]
+      }
   
       /**
        * 原节点children引用接入接口返回的节点上

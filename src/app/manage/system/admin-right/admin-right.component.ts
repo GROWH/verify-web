@@ -4,10 +4,11 @@ import { SystemModule } from '@/model/SystemModule';
 import { Apis } from '@/shared/urls.const';
 import { CommonService } from '@/core/common.service';
 import { NzModalService, NzTreeNodeOptions, NzTreeComponent, NzTreeNode, NzMessageService } from 'ng-zorro-antd';
-
-const PLATFORM_RIGHTS_KEY    = 'PLATFORM_RIGHTS_KEY'
-const VERIFY_COMP_RIGHTS_KEY = 'VERIFY_COMP_RIGHTS_KEY'
-const VERIFY_CUSM_RIGHTS_KEY = 'VERIFY_CUSM_RIGHTS_KEY'
+import {
+  PLATFORM_RIGHTS_KEY,
+  VERIFY_COMP_RIGHTS_KEY,
+  VERIFY_CUSM_RIGHTS_KEY,
+} from '@/config.const'
 
 const AllTypesKey = [
   PLATFORM_RIGHTS_KEY,

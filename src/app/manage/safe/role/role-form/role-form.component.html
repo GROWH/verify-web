@@ -1,0 +1,15 @@
+<form nz-form [formGroup]="form">
+  <div>
+    <nz-form-label nzRequired>角色名</nz-form-label>
+    <nz-form-control>
+      <input nz-input formControlName="role_name" placeholder="请输入">
+    </nz-form-control>
+  </div>
+  <div>
+    <nz-form-label nzRequired>权限</nz-form-label>
+    <app-role-select-control
+      formControlName="resource"
+      [roleType]="originData.type"
+    ></app-role-select-control>
+  </div>
+</form>

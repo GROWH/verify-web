@@ -1,0 +1,58 @@
+
+<div class="wrapper">
+  <grid-action [actions]="gridActions"></grid-action>
+
+  <nz-table
+    #nzTable
+    class="table"
+    [nzData]="uniSer.data"
+    libClientRect
+    [libHeightMinus]="54"
+    (libHeightChange)="tableHeight = $event + 'px'"
+    [nzScroll]="{y: tableHeight, x: '800px'}"
+    [nzShowPagination]="false"
+    [nzFrontPagination]="false"
+  >
+    <thead>
+      <tr>
+        <th nzWidth="200px">角色名称</th>
+        <th>授权模块ID</th>
+        <th nzWidth="240px">操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let i of nzTable.data">
+        <td>{{ i.role_name }}</td>
+        <td>{{ i.resource }}</td>
+        <td>
+          <a (click)="view(i)">查看</a>
+          <nz-divider nzType="vertical"></nz-divider>
+          <a (click)="edit(i)">修改</a>
+          <nz-divider nzType="vertical"></nz-divider>
+          <a (click)="del(i)">删除</a>         
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+  
+  <nz-pagination
+    class="pagination"
+    [ngClass]="{ blur: uniSer.loading }"
+    [nzTotal]="uniSer.totalCount"
+    [nzShowTotal]="totalTemplate"
+    [nzShowSizeChanger]="true"
+    [nzPageSizeOptions]="[10, 50, 100, 500]"
+    [(nzPageIndex)]    ="uniSer.page"
+    [(nzPageSize)]     ="uniSer.size"
+    (nzPageIndexChange)="uniSer.pageParamsCh$.next()"
+    (nzPageSizeChange) ="uniSer.pageParamsCh$.next(true)"
+  ></nz-pagination>
+</div>
+
+
+<ng-template #totalTemplate let-total>
+  共计 {{ total || 0 }} 项数据
+</ng-template>
+
+<ng-template #indicatorTemplate><i nz-icon type="loading" [spin]="true" style="font-size: 60px;"></i>
+</ng-template>

@@ -8,7 +8,6 @@
     <button class="mr8" nz-button nzType="default" (click)="Query()"><i nz-icon type="redo"></i>刷新</button>
   </div>
   <nz-table
-  style="height: 800px;"
   #rowSelectionTable
   nzShowSizeChanger
   [nzData]="listOfDisplayData"
@@ -26,7 +25,6 @@
         (nzCheckedChange)="checkAll($event)"
       ></th>
       <th>账号</th>
-      <th>登录密码</th>
       <th>姓名</th>
       <th>所属单位</th>
       <th>联系电话</th>
@@ -42,7 +40,6 @@
     <tr *ngFor="let data of rowSelectionTable.data">
       <td nzShowCheckbox [(nzChecked)]="mapOfCheckedId[data.id]" (nzCheckedChange)="refreshStatus()"></td>
       <td>{{ data.account }}</td>
-      <td>{{ data.pass }}</td>
       <td>{{ data.name }}</td>
       <td>{{ data.unit?.unit_name }}</td>
       <td>{{ data.phone }}</td>

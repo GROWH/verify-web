@@ -8,7 +8,7 @@
     <div class="sidebar-logo">
       <a href="javascript:(0)">
         <!-- <img src="https://ng.ant.design/assets/img/logo.svg" alt="logo"> -->
-        <h1>温湿度监测冷链验证管理系统</h1>
+        <h1 *ngIf="!isCollapsed">温湿度监测冷链验证管理系统</h1>
       </a>
     </div>
     <ul nz-menu [nzMode]="'inline'" nzTheme="dark" [nzInlineCollapsed]="isCollapsed">
@@ -97,12 +97,18 @@
   <nz-layout>
     <nz-header>
       <div class="app-header">
-        <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
+        <span class="header-trigger" (click)="navScaling()">
             <i class="trigger"
                nz-icon
                [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
             ></i>
         </span>
+      <span class="notice" (click)="noticeClick()">  
+        <span class="bellStyle" title="新的通知">
+          <i nz-icon nzType="bell" nzTheme="outline"></i>
+        </span>
+        <span class="count">998</span>
+      </span>
       </div>
     </nz-header>
     <nz-content>

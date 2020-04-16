@@ -18,24 +18,6 @@
         </nz-form-explain>
       </nz-form-control>
     </nz-form-item>
-    <!-- <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="parent_id">上级单位</nz-form-label>
-      <nz-form-control [nzSm]="14" [nzXs]="24">
-        <input  nz-input formControlName="parent_id" id="parent_id" />
-        <nz-form-explain *ngIf="validateForm.get('parent_id')?.dirty && validateForm.get('parent_id')?.errors">
-          上级单位
-        </nz-form-explain>
-      </nz-form-control>
-    </nz-form-item> -->
-    <!-- <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="state">状态</nz-form-label>
-      <nz-form-control [nzSm]="14" [nzXs]="24">
-        <input nz-input formControlName="state" id="state" />
-        <nz-form-explain *ngIf="validateForm.get('state')?.dirty && validateForm.get('state')?.errors">
-          请输入状态
-        </nz-form-explain>
-      </nz-form-control>
-    </nz-form-item> -->
     <nz-form-item>
       <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="unit_type">单位类型</nz-form-label>
       <nz-form-control [nzSm]="14" [nzXs]="24">
@@ -45,7 +27,7 @@
         nzPlaceHolder="请选择单位类型"
         formControlName='unit_type'
       >
-        <nz-option *ngFor="let item of listOptions" [nzLabel]="item.name" [nzValue]="item.name"></nz-option>
+        <nz-option *ngFor="let item of listOptions" [nzLabel]="item.name" [nzValue]="item.id"></nz-option>
       </nz-select>
       </nz-form-control>
     </nz-form-item>

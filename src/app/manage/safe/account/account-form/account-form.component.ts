@@ -14,6 +14,7 @@ export class AccountFormComponent implements OnInit {
   auditUrl = '/unit/queryAuditPass' //查询审核通过
   roleOptions = [];
   auditOptions = [];
+  isTrail = false;
   validateForm: FormGroup;
   constructor(
     private fb: FormBuilder,
@@ -34,6 +35,7 @@ export class AccountFormComponent implements OnInit {
   }
 
   creatForm(param) {
+    this.isTrail = param.on_trial;
     this.validateForm = this.fb.group({
       account: [param.account ,[ Validators.required ]],
       pass: [param.pass, [ Validators.required ]],
@@ -46,6 +48,9 @@ export class AccountFormComponent implements OnInit {
       role_id: [param.role_id ,[ Validators.required ]],
       is_super: [param.is_super ,[ Validators.required ]],
     });
+    this.validateForm.get('on_trial').valueChanges.subscribe(change=> { 
+      this.isTrail = change;
+     });
   }
   
   getRoles() {

@@ -84,11 +84,12 @@ export class AccountComponent implements OnInit {
                     return
                   }
                   this.msg.success(res.message);
+                  modalRef.close()
                   this.getData();
                 })
               }
             })
-            modalRef.close()
+      
           }
         }
       ],
@@ -132,11 +133,11 @@ export class AccountComponent implements OnInit {
                     return
                   }
                   this.msg.success(res.message);
+                  modalRef.close()
                   this.getData();
                 })
               }
             })
-            modalRef.close()
           }
         }
       ],

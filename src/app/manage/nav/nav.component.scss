@@ -79,6 +79,32 @@ nz-content {
   height: 100%;
   overflow: auto;
 }
+.notice:hover {
+  cursor: pointer;
+} 
+ .bellStyle {
+  position: absolute;
+  font-size:20px;
+  display: inline-block;
+  right: 60px;
+  // width: 60px;
+}
+.bellStyle:hover {
+  color:blue
+}
+.count {
+  position: absolute;
+  color: #fff;
+  font-size: 12px;
+  right: 53px;
+  top:13px;
+  width: 20px;
+  height: 20px;
+  background-color: red;
+  line-height: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
 
 // [nz-menu] {
 //   width: 240px;

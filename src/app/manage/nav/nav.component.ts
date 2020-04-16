@@ -11,5 +11,10 @@ export class NavComponent implements OnInit {
 
   ngOnInit() {
   }
-
+  navScaling () {
+    this.isCollapsed = !this.isCollapsed
+  }
+  noticeClick() {
+    alert("您有一个新的提示")
+  }
 }

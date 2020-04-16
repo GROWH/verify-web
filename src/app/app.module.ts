@@ -1,9 +1,11 @@
+import { DefaultInterceptor } from './core/http-interceptors/default-interceptor';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { registerLocaleData } from '@angular/common';
 import { NgZorroAntdModule, NZ_I18N, zh_CN } from 'ng-zorro-antd';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TongchangLibModule } from 'tongchang-lib'
+import { HTTP_INTERCEPTORS  } from '@angular/common/http';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -47,7 +49,10 @@ if (!environment.production) {
       authRequireCode: -9,
     })
   ],
-  providers: [{ provide: NZ_I18N, useValue: zh_CN }],
+  providers: [
+    { provide: NZ_I18N, useValue: zh_CN },
+    { provide: HTTP_INTERCEPTORS, useClass: DefaultInterceptor, multi:true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -12,7 +12,7 @@
     <nz-form-item>
       <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="pass">登录密码</nz-form-label>
       <nz-form-control [nzSm]="14" [nzXs]="24">
-        <input type='password' nz-input formControlName="pass" id="pass" />
+        <input  nz-input formControlName="pass" id="pass" />
         <nz-form-explain *ngIf="validateForm.get('pass')?.dirty && validateForm.get('pass')?.errors">
           请输入登录密码
         </nz-form-explain>
@@ -83,7 +83,6 @@
       </nz-select>
       </nz-form-control>
     </nz-form-item>
-
     <nz-form-item>
       <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="on_trial">是否试用</nz-form-label>
       <nz-form-control [nzSm]="14" [nzXs]="24">
@@ -96,10 +95,10 @@
         </nz-form-explain>
       </nz-form-control>
     </nz-form-item>
-    <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24"  nzFor="trial_end">使用到期时间</nz-form-label>
+    <nz-form-item *ngIf="isTrail">
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzFor="trial_end">试用到期时间</nz-form-label>
       <nz-form-control [nzSm]="14" [nzXs]="24">
-        <nz-date-picker formControlName="trial_end" (ngModelChange)="onChange($event)"></nz-date-picker>
+        <nz-date-picker formControlName="trial_end"></nz-date-picker>
         <nz-form-explain *ngIf="validateForm.get('trial_end')?.dirty && validateForm.get('trial_end')?.errors">
           请选择到期时间
         </nz-form-explain>

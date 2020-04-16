@@ -10,9 +10,9 @@
       <nz-form-item>
         <nz-form-control>
           <nz-input-group [nzPrefix]="prefixUser">
-            <input type="text" nz-input formControlName="userName" placeholder="账号" />
+            <input type="text" nz-input formControlName="account" placeholder="账号" />
           </nz-input-group>
-          <nz-form-explain *ngIf="form.get('userName')?.dirty && form.get('userName')?.errors"
+          <nz-form-explain *ngIf="form.get('account')?.dirty && form.get('account')?.errors"
             >请输入账号!</nz-form-explain
           >
         </nz-form-control>
@@ -20,9 +20,9 @@
       <nz-form-item>
         <nz-form-control>
           <nz-input-group [nzPrefix]="prefixLock">
-            <input type="password" nz-input formControlName="password" placeholder="密码" />
+            <input type="password" nz-input formControlName="pass" placeholder="密码" />
           </nz-input-group>
-          <nz-form-explain *ngIf="form.get('password')?.dirty && form.get('password')?.errors"
+          <nz-form-explain *ngIf="form.get('pass')?.dirty && form.get('pass')?.errors"
             >请输入密码!</nz-form-explain
           >
         </nz-form-control>

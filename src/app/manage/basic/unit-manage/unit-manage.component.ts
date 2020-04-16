@@ -11,6 +11,20 @@ import { ManageFormComponent } from './manage-form/manage-form.component';
 
 export class UnitManageComponent implements OnInit {
 
+  listOptions = [
+    {
+      name:"验证平台",
+      id:1
+    },
+    {
+      name:"验证实施单位",
+      id:2
+    },
+    {
+      name:"验证公司客户",
+      id:3
+    }
+  ]
   isAllDisplayDataChecked = false;
   isIndeterminate = false;
   position:string = 'bottom'
@@ -29,7 +43,10 @@ export class UnitManageComponent implements OnInit {
     private modal: NzModalService,
     private msg: NzMessageService,
     private http: TongchangHttpService,
-  ) { }
+  ) {
+    // this.http.addHeader('account_id','14');
+    // this.http.addHeader('unit_id','10');
+   }
 
   ngOnInit() {
     this.getData()
@@ -83,11 +100,12 @@ export class UnitManageComponent implements OnInit {
                     return
                   }
                   this.msg.success(res.message);
+                  modalRef.close()
                   this.getData();
                 })
               }
             })
-            modalRef.close()
+ 
           }
         }
       ],
@@ -219,7 +237,9 @@ export class UnitManageComponent implements OnInit {
   yesOrno(value) {
     return value === 'true' || value === true || value === '是' ? '是' : '否'
   }
-
+  typeTrans(value) {
+    return this.listOptions.filter(item => item.id === value)[0].name
+  }
 }
 class params {
   id:number        //编号

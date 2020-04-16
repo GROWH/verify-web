@@ -10,7 +10,6 @@ import { FormBuilder, FormControl, FormGroup, Validators, ValidatorFn, AbstractC
 export class ManageFormComponent implements OnInit {
   @Input() param:{};
   listOptions = [
-
     {
       name:"验证平台",
       id:1
@@ -55,12 +54,10 @@ export class ManageFormComponent implements OnInit {
       mark: [param.mark],
     });
   }
-  
-  onChange(result: Date): void {
-    console.log('onChange: ', result);
+
+  trailChange(event) {
+      console.log(event)
   }
-
-
 }
 export function telValidator(nameRe: RegExp): ValidatorFn {
   return (control: AbstractControl): {[key: string]: any} | null => {

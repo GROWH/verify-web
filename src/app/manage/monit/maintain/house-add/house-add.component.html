@@ -1,0 +1,327 @@
+<div class="wrapper">
+  <div class="title">库房新增</div>
+  <div class="steps">
+    <nz-steps
+      [(nzCurrent)]="step"
+      nzSize="small"
+      nzDirection="horizontal"
+    >
+      <nz-step nzTitle="添加监控点位"></nz-step>
+      <nz-step nzTitle="温度计绑定"></nz-step>
+      <nz-step nzTitle="参数设定"></nz-step>
+      <nz-step nzTitle="完成"></nz-step>
+    </nz-steps>
+  </div>
+  <div class="steps-content">
+    <div class="panel first" *ngIf="step < 2">
+      <input type="file" (change)="fileCh($event)" #fileInput [hidden]="true">
+      <ng-container *ngTemplateOutlet="HouseMap"></ng-container>
+      
+      <div class="buttons" *ngIf="step === 0">
+        <button
+          nz-button
+          nzType="primary"
+          title="更新库房图"
+          (click)="onFileSelect()"
+        >
+          <i nz-icon type="reload"></i>
+        </button>
+        <button
+          nz-button
+          [title]="pointAdding ? '结束添加' : '添加点位'"
+          [nzType]="pointAdding ? 'default' : 'primary'"
+          (click)="onPointAdd()"
+        >
+          <i nz-icon [type]="pointAdding ? 'check' : 'plus'"></i>
+        </button>
+        <button
+          nz-button
+          [title]="pointRemoving ? '完成' : '删除点位'"
+          [nzType]="pointRemoving ? 'default' : 'primary'"
+          (click)="onPointRemove()"
+        >
+          <i nz-icon  [type]="pointRemoving ? 'check' : 'delete'"></i>
+        </button>
+      </div>
+
+      <div class="binding" *ngIf="step === 1">
+        <ng-container *ngTemplateOutlet="devTableWrap; context: { body: pointsEdit }"></ng-container>
+        <ng-template #pointsEdit>
+          <tr *ngFor="let point of points; index as i">
+            <td>{{ i+1 }}</td>
+            <td>
+              <input
+                nz-input
+                [(ngModel)]="point.name"
+                [name]="'name' + i"
+                placeholder="请输入"
+              >
+            </td>
+            <td>
+              <input
+                nz-input
+                [(ngModel)]="point.code"
+                [name]="'code' + i"
+                placeholder="请输入"
+              >
+            </td>
+          </tr>
+        </ng-template>
+      </div>
+    </div>
+
+    <div class="panel third" *ngIf="step === 2">
+      <form nz-form [formGroup]="paramsForm">
+        <div class="title">基本参数</div>
+
+        <div nz-row nzGutter="8">
+          <nz-form-label nzSpan="5" nzRequired>库房名称</nz-form-label>
+          <nz-form-control nzSpan="7">
+            <input nz-input formControlName="name" placeholder="请输入">
+          </nz-form-control>
+        </div>
+
+        <div nz-row nzGutter="8">
+          <nz-form-label nzSpan="5" nzRequired>温度范围</nz-form-label>
+          <nz-form-control nzSpan="18">
+            <nz-slider
+              [nzRange]="true"
+              [nzMin]="-50"
+              [nzMax]="50"
+              [nzStep]=".5"
+              [nzMarks]="tempMarks"
+              formControlName="temp"
+            ></nz-slider>
+          </nz-form-control>
+        </div>
+
+        <div nz-row nzGutter="8">
+          <nz-form-label nzSpan="5" nzRequired>湿度范围</nz-form-label>
+          <nz-form-control nzSpan="18">
+            <nz-slider
+              [nzRange]="true"
+              [nzMin]="0"
+              [nzMax]="100"
+              [nzStep]=".5"
+              [nzMarks]="humiMarks"
+              formControlName="humi"
+            ></nz-slider>
+          </nz-form-control>
+        </div>
+        
+        <nz-divider></nz-divider>
+        <div class="title">短信告警</div>
+
+        <ng-container 
+          *ngTemplateOutlet="warnForm; context: { group: 'phone_warn' }"
+        ></ng-container>
+
+        <nz-divider></nz-divider>
+        <div class="title">电话告警</div>
+
+        <ng-container 
+          *ngTemplateOutlet="warnForm; context: { group: 'message_warn' }"
+        ></ng-container>
+
+        <ng-template let-group="group" #warnForm>
+          <ng-container [formGroupName]="group">
+            <div nz-row nzGutter="8">
+              <nz-form-label nzSpan="5" nzRequired>告警类型</nz-form-label>
+              <nz-form-control nzSpan="19">
+                <nz-select
+                  nzAllowClear
+                  nzMode="multiple"
+                  nzPlaceHolder="可多选"
+                  formControlName="types"
+                >
+                  <nz-option
+                    *ngFor="let item of warnTypes"
+                    [nzLabel]="item.label"
+                    [nzValue]="item.value"
+                  >
+                  </nz-option>
+                </nz-select>
+              </nz-form-control>
+            </div>
+
+            <div nz-row nzGutter="8">
+              <nz-form-label nzSpan="5" nzRequired>告警延时</nz-form-label>
+              <nz-form-control nzSpan="7">
+                <nz-input-number
+                  class="full-width"
+                  formControlName="delay"
+                  [nzMin]="0"
+                  [nzStep]="1"
+                  [nzPrecision]="0"
+                  [nzPlaceHolder]="'单位: 秒'"
+                ></nz-input-number>
+              </nz-form-control>
+              <nz-form-label nzSpan="5" nzRequired>告警间隔</nz-form-label>
+              <nz-form-control nzSpan="7">
+                <nz-input-number
+                  class="full-width"
+                  formControlName="span"
+                  [nzMin]="0"
+                  [nzStep]="1"
+                  [nzPrecision]="0"
+                  [nzPlaceHolder]="'单位: 秒'"
+                ></nz-input-number>
+              </nz-form-control>
+            </div>
+
+            <div nz-row nzGutter="8">
+              <nz-form-label nzSpan="5" nzRequired>告警电话</nz-form-label>
+              <nz-form-control nzSpan="19">
+                <div>
+                  <nz-tag
+                    nzColor="#108ee9"
+                    nzMode="closeable"
+                    *ngFor="let num of getPhoneNums(group); index as i"
+                    (nzOnClose)="onPhoneRemove(group, i)"
+                  >{{ num }}</nz-tag>
+                </div>
+                <div>
+                  <input
+                    nz-input
+                    placeholder="输入回车键添加手机号, 请至少添加三个告警电话"
+                    (keyup.enter)="onPhoneAdd(group, $event.target)"
+                  >
+                </div>
+              </nz-form-control>
+            </div>
+          </ng-container>
+        </ng-template>
+      </form>
+    </div>
+    
+    <div class="panel fourth" *ngIf="step === 3">
+      <ng-container
+        *ngTemplateOutlet="HouseParams; context: {
+          data: paramsForm.value,
+          warns: [
+            {
+              title: '短信告警',
+              data:  warnConfForShow('message_warn')
+            },
+            {
+              title: '电话告警',
+              data: warnConfForShow('phone_warn')
+            }
+          ]
+        }"
+      ></ng-container>
+      
+      <ng-template #HouseParams let-data="data" let-warns="warns">
+        <nz-descriptions [nzTitle]="data.name" [nzBordered]="true">
+          <nz-descriptions-item nzTitle="最低温度">{{ data.temp[0] }}</nz-descriptions-item>
+          <nz-descriptions-item nzTitle="最高温度">{{ data.temp[1] }}</nz-descriptions-item>
+          <nz-descriptions-item nzTitle="最低湿度">{{ data.humi[0] }}</nz-descriptions-item>
+          <nz-descriptions-item nzTitle="最高湿度">{{ data.humi[1] }}</nz-descriptions-item>
+          <nz-descriptions-item [nzTitle]="warn.title" *ngFor="let warn of warns">
+            电话:     {{ warn.data.nums  }}<br />
+            类型:     {{ warn.data.types }}<br />
+            报警延时: {{ warn.data.delay }}<br />
+            报警间隔: {{ warn.data.span  }}<br />
+          </nz-descriptions-item>
+        </nz-descriptions>
+      </ng-template>
+      
+
+      <ng-container *ngTemplateOutlet="HouseMap"></ng-container>
+      <ng-container *ngTemplateOutlet="devTableWrap; context: { body: pointsView }"></ng-container>
+      <ng-template #pointsView>
+        <tr *ngFor="let point of points; index as i">
+          <td>{{ i + 1 }}</td>
+          <td>{{ point.name }}</td>
+          <td>{{ point.code }}</td>
+        </tr>
+      </ng-template>
+      
+    </div>
+  </div>
+
+  <div class="actions">
+    <button
+      *ngIf="step === 3"
+      nz-button
+      nzType="primary"
+    >完成</button>
+    <button
+      *ngIf="step < 2"
+      nz-button
+      nzType="primary"
+      (click)="onNext()"
+    >下一步</button>
+    <button
+      *ngIf="step === 2"
+      nz-button
+      nzType="primary"
+      [disabled]="!paramsForm.valid"
+      (click)="onNext()"
+    >下一步</button>
+    <button
+      nz-button
+      nzType="primary"
+      [disabled]="step === 0"
+      (click)="onPrev()"
+    >上一步</button>
+  </div>
+</div>
+
+<ng-template #HouseMap>
+  <div class="img-area">
+    <ng-container *ngIf="houseImageUrl; else uploadBt">
+      <div 
+        class="img-wrapper"
+        [ngClass]="{'adding': pointAdding, 'removing': pointRemoving}"
+      >
+        <img
+          libClientRect
+          #clientRect="libClientRect"
+          (libWidthChange)="wrapperSizeCh(clientRect.width, clientRect.height)"
+          [src]="houseImageUrl"
+          (click)="imgClick($event)"
+        >
+        <span
+          class="monit-icon"
+          *ngFor="let p of points; index as i"
+          [ngStyle]="{'left': p.x + '%', 'top': p.y + '%'}"
+          (click)="removePoint(i)"
+        >{{ i + 1 }}</span>
+      </div>
+    </ng-container>
+
+    <ng-template #uploadBt>
+      <div class="add-bt" (click)="onFileSelect()">
+        <div class="icon">
+          <!-- <i nz-icon nzType="plus-square" nzTheme="outline"></i> -->
+          <i nz-icon spin type="plus"></i>
+        </div>
+        <div class="desc">
+          添加库房平面图
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</ng-template>
+
+<ng-template let-body="body" #devTableWrap>
+  <nz-table
+    #nzTable
+    nzSize="small"
+    [nzData]="points"
+    [nzShowPagination]="false"
+    [nzFrontPagination]="false"
+  >
+    <thead>
+      <tr>
+        <th>温度计序号</th>
+        <th>设备名称</th>
+        <th>设备编码</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngTemplateOutlet="body"></ng-container>
+    </tbody>
+  </nz-table>
+</ng-template>

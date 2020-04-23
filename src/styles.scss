@@ -6,22 +6,26 @@
   justify-content: center;
   align-items: center;
   .ant-modal {
-      top: 0 !important;
-      .ant-modal-content {
-          .ant-modal-body {
-              max-height: 70vh;
-              overflow-y: auto;
-          }
-      }    
+    top: 0 !important;
+    .ant-modal-content {
+      .ant-modal-body {
+        max-height: 70vh;
+        overflow-y: auto;
+      }
+    }
   }
 }
 
 .modal-vertical-center.height-fixed {
   .ant-modal {
-      .ant-modal-content {
-          .ant-modal-body {
-              height: 70vh;
-          }
+    .ant-modal-content {
+      .ant-modal-body {
+        height: 70vh;
       }
+    }
   }
+}
+
+.full-width {
+  width: 100%;
 }

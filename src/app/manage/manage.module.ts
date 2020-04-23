@@ -40,7 +40,11 @@ import { SharedModule } from '@/shared/shared.module';
           {
             path:'basic',
             loadChildren:'./basic/basic.module#BasicModule'
-          }
+          },
+          {
+            path: 'monit',
+            loadChildren: './monit/monit.module#MonitModule'
+          },
         ]
       }
     ])

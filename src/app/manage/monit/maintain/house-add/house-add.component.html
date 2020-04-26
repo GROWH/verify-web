@@ -82,30 +82,40 @@
         </div>
 
         <div nz-row nzGutter="8">
-          <nz-form-label nzSpan="5" nzRequired>温度范围</nz-form-label>
-          <nz-form-control nzSpan="18">
-            <nz-slider
-              [nzRange]="true"
-              [nzMin]="-50"
-              [nzMax]="50"
-              [nzStep]=".5"
-              [nzMarks]="tempMarks"
-              formControlName="temp"
-            ></nz-slider>
+          <nz-form-label nzSpan="5" nzRequired>温度下限</nz-form-label>
+          <nz-form-control nzSpan="7">
+            <nz-input-number
+              class="full-width"
+              formControlName="temp_down"
+              [nzPlaceHolder]="'请输入'"
+            ></nz-input-number>
+          </nz-form-control>
+          <nz-form-label nzSpan="5" nzRequired>温度上限</nz-form-label>
+          <nz-form-control nzSpan="7">
+            <nz-input-number
+              class="full-width"
+              formControlName="temp_up"
+              [nzPlaceHolder]="'请输入'"
+            ></nz-input-number>
           </nz-form-control>
         </div>
 
         <div nz-row nzGutter="8">
-          <nz-form-label nzSpan="5" nzRequired>湿度范围</nz-form-label>
-          <nz-form-control nzSpan="18">
-            <nz-slider
-              [nzRange]="true"
-              [nzMin]="0"
-              [nzMax]="100"
-              [nzStep]=".5"
-              [nzMarks]="humiMarks"
-              formControlName="humi"
-            ></nz-slider>
+          <nz-form-label nzSpan="5" nzRequired>湿度下限</nz-form-label>
+          <nz-form-control nzSpan="7">
+            <nz-input-number
+              class="full-width"
+              formControlName="humi_down"
+              [nzPlaceHolder]="'请输入'"
+            ></nz-input-number>
+          </nz-form-control>
+          <nz-form-label nzSpan="5" nzRequired>湿度上限</nz-form-label>
+          <nz-form-control nzSpan="7">
+            <nz-input-number
+              class="full-width"
+              formControlName="humi_up"
+              [nzPlaceHolder]="'请输入'"
+            ></nz-input-number>
           </nz-form-control>
         </div>
         
@@ -213,10 +223,10 @@
       
       <ng-template #HouseParams let-data="data" let-warns="warns">
         <nz-descriptions [nzTitle]="data.name" [nzBordered]="true">
-          <nz-descriptions-item nzTitle="最低温度">{{ data.temp[0] }}</nz-descriptions-item>
-          <nz-descriptions-item nzTitle="最高温度">{{ data.temp[1] }}</nz-descriptions-item>
-          <nz-descriptions-item nzTitle="最低湿度">{{ data.humi[0] }}</nz-descriptions-item>
-          <nz-descriptions-item nzTitle="最高湿度">{{ data.humi[1] }}</nz-descriptions-item>
+          <nz-descriptions-item nzTitle="最低温度">{{ data.temp_up }}</nz-descriptions-item>
+          <nz-descriptions-item nzTitle="最高温度">{{ data.temp_down }}</nz-descriptions-item>
+          <nz-descriptions-item nzTitle="最低湿度">{{ data.humi_up }}</nz-descriptions-item>
+          <nz-descriptions-item nzTitle="最高湿度">{{ data.humi_down }}</nz-descriptions-item>
           <nz-descriptions-item [nzTitle]="warn.title" *ngFor="let warn of warns">
             电话:     {{ warn.data.nums  }}<br />
             类型:     {{ warn.data.types }}<br />
@@ -245,6 +255,7 @@
       *ngIf="step === 3"
       nz-button
       nzType="primary"
+      (click)="onSubmit()"
     >完成</button>
     <button
       *ngIf="step < 2"

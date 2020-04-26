@@ -2,20 +2,17 @@ import { Component, OnInit, ViewChild, ElementRef, ViewContainerRef } from '@ang
 import { NzMessageService } from 'ng-zorro-antd';
 import { TongchangLibService, ClientRectDirective, DebugLog, SimpPhoneValidator } from 'tongchang-lib';
 import { FormBuilder, FormGroup, FormControl, Validators, ValidatorFn } from '@angular/forms';
+import { HouseAddData, WarnConf, MonitPoint } from '@/model/HouseMonit';
 
-interface Point {
-  x: number;
-  y: number;
-  code?: string;
-  name?: string;
-}
 
-interface WarnFormGroup {
-  types: string[];
-  nums:  string[];
-  delay: number;
-  span:  number;
-
+interface ParamsForm {
+  name: string;
+  temp_up: number;
+  temp_down: number;
+  humi_up: number;
+  humi_down: number;
+  phone_warn: WarnConf;
+  message_warn: WarnConf;
 }
 
 @Component({
@@ -48,7 +45,7 @@ export class HouseAddComponent implements OnInit {
 
   paramsForm: FormGroup
 
-  points: Point[] = []
+  points: MonitPoint[] = []
 
   warnTypes = [
     { label: '温度', value: 'temp' },
@@ -141,9 +138,11 @@ export class HouseAddComponent implements OnInit {
 
 
     this.paramsForm = this.fb.group({
-      name: [ null, [ Validators.required ]],
-      temp: [ [-20, 0 ] ],
-      humi: [ [ 20, 40] ],
+      name:      [ null, [ Validators.required ]],
+      temp_up:   [ null, [ Validators.required ] ],
+      temp_down: [ null, [ Validators.required ] ],
+      humi_up:   [ null, [ Validators.required ] ],
+      humi_down: [ null, [ Validators.required ] ],
       phone_warn:   this.fb.group(warnGroupConf),
       message_warn: this.fb.group(warnGroupConf),
     })
@@ -153,7 +152,7 @@ export class HouseAddComponent implements OnInit {
    * 告警信息显示用
    */
   warnConfForShow(groupName: string) {
-    const data: WarnFormGroup = this.paramsForm.get(groupName).value
+    const data: WarnConf = this.paramsForm.get(groupName).value
     return {
       types: data.types.map(it => this.warnCodeMap[it]).join(','),
       nums:  data.nums.join(','),
@@ -214,6 +213,16 @@ export class HouseAddComponent implements OnInit {
       case 1:
         if (!this.points.every(it => !!it.code && !!it.name)) return this.msg.error('请完整填写温度计信息')
         break;
+      case 2:
+        const {
+          temp_up,
+          temp_down,
+          humi_up,
+          humi_down
+        } = this.paramsForm.value
+
+        if (temp_up <= temp_down) return this.msg.error('温度上限应大于下限')
+        if (humi_up <= humi_down) return this.msg.error('湿度上限应大于下限')
       default:
         break;
     }
@@ -264,13 +273,29 @@ export class HouseAddComponent implements OnInit {
       return Math.round(float * ratio) / ratio
     }
 
-    const pos = {
+    const pos: MonitPoint = {
       x: precent(e.offsetX * 100 / this.imgWidth),
       y: precent(e.offsetY * 100 / this.imgHeight),
+      code: '',
+      name: '',
     }
 
     this.points.push(pos)
     DebugLog(JSON.stringify(pos))
+  }
+
+  onSubmit() {
+    DebugLog(this.getSubmitData())
+  }
+
+  private getSubmitData(): HouseAddData {
+    const formVal: ParamsForm = this.paramsForm.getRawValue()
+
+    return {
+      ...formVal,
+      map:         this.houseImageUrl,
+      thermometer: this.points,
+    }
   }
 
   private triggerResize() {

@@ -1,0 +1,106 @@
+<div>
+  <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="thermometer_code">温度计编号</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="thermometer_code" id="thermometer_code" />
+        <nz-form-explain *ngIf="validateForm.get('thermometer_code')?.dirty && validateForm.get('thermometer_code')?.errors">
+          请输入参数编号
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="unit_id">温度计所属单位</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-select formControlName="unit_id"   >
+          <nz-option *ngFor="let item of unitList" [nzValue]="item.id" [nzLabel]="item.unit_name"></nz-option>
+        </nz-select>
+        <nz-form-explain *ngIf="validateForm.get('unit_id')?.dirty && validateForm.get('unit_id')?.errors">
+          请选择单位
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="buy_time">购买时间</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-date-picker formControlName="buy_time"></nz-date-picker>
+        <nz-form-explain *ngIf="validateForm.get('buy_time')?.dirty && validateForm.get('buy_time')?.errors">
+          请输入参数值
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="factory">厂家</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="factory" id="factory" />
+        <nz-form-explain *ngIf="validateForm.get('factory')?.dirty && validateForm.get('factory')?.errors">
+          请输入厂家
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="use_location">使用位置</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="use_location" id="use_location" />
+        <nz-form-explain *ngIf="validateForm.get('use_location')?.dirty && validateForm.get('use_location')?.errors">
+          请输入使用位置
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="purpose">用途</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-select formControlName="purpose"   >
+          <nz-option *ngFor="let item of purposeList" [nzValue]="item.label" [nzLabel]="item.label"></nz-option>
+        </nz-select>
+        <nz-form-explain *ngIf="validateForm.get('purpose')?.dirty && validateForm.get('purpose')?.errors">
+          请输入用途
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="usage_state">使用状态</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-select formControlName="usage_state"   >
+          <nz-option *ngFor="let item of usageList" [nzValue]="item.label" [nzLabel]="item.label"></nz-option>
+        </nz-select>
+        <nz-form-explain *ngIf="validateForm.get('usage_state')?.dirty && validateForm.get('usage_state')?.errors">
+          请输入使用状态
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="model">型号</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="model" id="model" />
+        <nz-form-explain *ngIf="validateForm.get('model')?.dirty && validateForm.get('model')?.errors">
+          请输入参数值
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="supplier">供应商</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="supplier" id="supplier" />
+        <nz-form-explain *ngIf="validateForm.get('supplier')?.dirty && validateForm.get('supplier')?.errors">
+          请输入参数值
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="purchase_price">采购价格</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="purchase_price" id="purchase_price" />
+        <nz-form-explain *ngIf="validateForm.get('purchase_price')?.dirty && validateForm.get('purchase_price')?.errors">
+          请输入参数值
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzFor="mark">备注</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <textarea nz-input formControlName="mark" id="mark" ></textarea>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</div>

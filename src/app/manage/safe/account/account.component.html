@@ -1,55 +1,66 @@
-<div style="height: 100%;padding: 10px;">
-  <div class="btns">
-    <button class="mr8" nz-button nzType="primary" (click)="Add()"><i nz-icon type="plus"></i>新增</button>
-    <button class="mr8" nz-button nzType="default" (click)="Edit()"><i nz-icon type="edit"></i>修改</button>
-    <button class="mr8" nz-button nzType="default" (click)="Check()"><i nz-icon type="check-circle"></i>启用</button>
-    <button class="mr8" nz-button nzType="default" (click)="Stop()"><i nz-icon type="stop"></i>停用</button>
-    <button class="mr8" nz-button nzType="danger" (click)="Delete()"><i nz-icon type="delete"></i>删除</button>
-    <button class="mr8" nz-button nzType="default" (click)="Query()"><i nz-icon type="redo"></i>刷新</button>
+<div class="container">
+  <div class="treeLeft">
+    <nz-tree
+    #nzTreeComponent
+    [nzData]="trees"
+    [nzExpandAll]="true"
+    (nzClick)="nzClick($event)"
+  >
+  </nz-tree>
   </div>
-  <nz-table
-  #rowSelectionTable
-  nzShowSizeChanger
-  [nzData]="listOfDisplayData"
-  [nzTotal]="total"
-  (nzPageIndexChange)="changePageIndex($event)"   
-  (nzPageSizeChange)="changePageSize($event)"
-
->
-  <thead>
-    <tr>
-      <th
-        nzShowCheckbox
-        [(nzChecked)]="isAllDisplayDataChecked"
-        [nzIndeterminate]="isIndeterminate"
-        (nzCheckedChange)="checkAll($event)"
-      ></th>
-      <th>账号</th>
-      <th>姓名</th>
-      <th>所属单位</th>
-      <th>联系电话</th>
-      <th>邮箱</th>
-      <th>是否启用</th>
-      <th>是否试用</th>
-      <th>试用到期时间</th>
-      <th>角色</th>
-      <th>是否为管理员</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let data of rowSelectionTable.data">
-      <td nzShowCheckbox [(nzChecked)]="mapOfCheckedId[data.id]" (nzCheckedChange)="refreshStatus()"></td>
-      <td>{{ data.account }}</td>
-      <td>{{ data.name }}</td>
-      <td>{{ data.unit?.unit_name }}</td>
-      <td>{{ data.phone }}</td>
-      <td>{{ data.email }}</td>
-      <td>{{ yesOrno(data.enable) }}</td>
-      <td>{{ yesOrno(data.on_trial) }}</td>
-      <td>{{ data.trial_end }}</td>
-      <td>{{ data.role?.role_name }}</td>
-      <td>{{ yesOrno(data.is_super)}}</td>
-    </tr>
-  </tbody>
-</nz-table>
+  <div class="contentright">
+    <div class="btns">
+      <button class="mr8" nz-button nzType="primary" (click)="Add()"><i nz-icon type="plus"></i>新增</button>
+      <button class="mr8" nz-button nzType="default" (click)="Edit()"><i nz-icon type="edit"></i>修改</button>
+      <button class="mr8" nz-button nzType="default" (click)="Check()"><i nz-icon type="check-circle"></i>启用</button>
+      <button class="mr8" nz-button nzType="default" (click)="Stop()"><i nz-icon type="stop"></i>停用</button>
+      <button class="mr8" nz-button nzType="danger" (click)="Delete()"><i nz-icon type="delete"></i>删除</button>
+      <button class="mr8" nz-button nzType="default" (click)="Query()"><i nz-icon type="redo"></i>刷新</button>
+    </div>
+    <nz-table
+    #rowSelectionTable
+    nzShowSizeChanger
+    [nzData]="listOfDisplayData"
+    [nzTotal]="total"
+    (nzPageIndexChange)="changePageIndex($event)"   
+    (nzPageSizeChange)="changePageSize($event)"
+  
+  >
+    <thead>
+      <tr>
+        <th
+          nzShowCheckbox
+          [(nzChecked)]="isAllDisplayDataChecked"
+          [nzIndeterminate]="isIndeterminate"
+          (nzCheckedChange)="checkAll($event)"
+        ></th>
+        <th>账号</th>
+        <th>姓名</th>
+        <th>所属单位</th>
+        <th>联系电话</th>
+        <th>邮箱</th>
+        <th>是否启用</th>
+        <th>是否试用</th>
+        <th>试用到期时间</th>
+        <th>角色</th>
+        <th>是否为管理员</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of rowSelectionTable.data">
+        <td nzShowCheckbox [(nzChecked)]="mapOfCheckedId[data.id]" (nzCheckedChange)="refreshStatus()"></td>
+        <td>{{ data.account }}</td>
+        <td>{{ data.name }}</td>
+        <td>{{ data.unit?.unit_name }}</td>
+        <td>{{ data.phone }}</td>
+        <td>{{ data.email }}</td>
+        <td>{{ yesOrno(data.enable) }}</td>
+        <td>{{ yesOrno(data.on_trial) }}</td>
+        <td>{{ data.trial_end }}</td>
+        <td>{{ data.role?.role_name }}</td>
+        <td>{{ yesOrno(data.is_super)}}</td>
+      </tr>
+    </tbody>
+  </nz-table>
+  </div>
 </div>

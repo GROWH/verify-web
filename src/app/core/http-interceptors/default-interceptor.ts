@@ -32,15 +32,13 @@ export class DefaultInterceptor  implements HttpInterceptor {
       const newReq = req.clone({
         setHeaders: baseHeader
     });
-      return next.handle(newReq).pipe( mergeMap((event: any) => {
-        // 正常返回，处理具体返回参数
-        if (event instanceof HttpResponse && event.status === 200)
-            return this.handleData(event);//具体处理请求返回数据
-            return of(event);
-          
+    return next.handle(newReq).pipe( mergeMap((event: any) => {
+      // 正常返回，处理具体返回参数
+      if (event instanceof HttpResponse && event.status === 200)
+          return this.handleData(event);//具体处理请求返回数据
+          return of(event);    
     }),
     catchError((err: HttpErrorResponse) => this.handleData(err)))
- 
     }
     
 

@@ -23,6 +23,7 @@
         [nzIndeterminate]="isIndeterminate"
         (nzCheckedChange)="checkAll($event)"
       ></th>
+      <th>温度计名称</th>
       <th>温度计编号</th>
       <th>温度计所属单位</th>
       <th>购买时间</th>
@@ -40,6 +41,7 @@
   <tbody>
     <tr *ngFor="let data of rowSelectionTable.data">
       <td nzShowCheckbox [(nzChecked)]="mapOfCheckedId[data.id]" (nzCheckedChange)="refreshStatus()"></td>
+      <td>{{ data.name }}</td>
       <td>{{ data.thermometer_code }}</td>
       <td>{{ data.unit_id }}</td>
       <td>{{ data.buy_time }}</td>

@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { NzModalService, NzModalRef, NzMessageService, NzTreeNodeOptions, NzTreeComponent } from 'ng-zorro-antd';
 import { TongchangHttpService } from 'tongchang-lib';
-import { AccountFormComponent } from './account-form/account-form.component';
+import { ThermManageFormComponent } from './therm-manage-form/therm-manage-form.component';
 
 @Component({
-  selector: 'app-account',
-  templateUrl: './account.component.html',
-  styleUrls: ['./account.component.scss']
+  selector: 'app-therm-manage',
+  templateUrl: './therm-manage.component.html',
+  styleUrls: ['./therm-manage.component.scss']
 })
 
-export class AccountComponent implements OnInit {
+export class ThermManageComponent implements OnInit {
 
   isAllDisplayDataChecked = false;
   isIndeterminate = false;
@@ -22,36 +22,11 @@ export class AccountComponent implements OnInit {
   listOfAllData:params[] = []
   mapOfCheckedId: { [key: string]: boolean } = {};
   selectItems = []
-  baseUrl='/account'
-  checkUrl='/account/enable/' //启用
-  stopUrl='/account/stop/' //停用
-  treeUrl='/account/queryUnit' //停用
+  thermometeList = [] //温度计列表
+  baseUrl='/thermometerRecord'
+  thermometerUrl='/thermometerManage' //查询温度计
+  selectedItem:params
 
-  trees: NzTreeNodeOptions[] = [
-    {
-      title: 'parent 1',
-      key: '100',
-      children: [
-        {
-          title: 'parent 1-0',
-          key: '1001',
-          disabled: true,
-          children: [
-            { title: 'leaf 1-0-0', key: '10010', disableCheckbox: true, isLeaf: true },
-            { title: 'leaf 1-0-1', key: '10011', isLeaf: true }
-          ]
-        },
-        {
-          title: 'parent 1-1',
-          key: '1002',
-          children: [
-            { title: 'leaf 1-1-0', key: '10020', isLeaf: true },
-            { title: 'leaf 1-1-1', key: '10021', isLeaf: true }
-          ]
-        }
-      ]
-    }
-  ];
 
   constructor(
     private modal: NzModalService,
@@ -60,8 +35,7 @@ export class AccountComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getData()
-    this.getTree()
+    this.getthermomete()
   }
 
   refreshStatus(): void {
@@ -84,11 +58,10 @@ export class AccountComponent implements OnInit {
   }
   //新增操作
   Add() {
-    debugger
     const param = new params;
     let modalRef:NzModalRef = this.modal.create({
       nzTitle:"参数配置",
-      nzContent:AccountFormComponent,
+      nzContent:ThermManageFormComponent,
       nzWidth:700,
       nzComponentParams:{param},
       nzFooter:[
@@ -107,8 +80,12 @@ export class AccountComponent implements OnInit {
               nzTitle: '提交',
               nzContent: '确认提交?',
               nzOnOk: () => {
-                const params = formVal;
-                this.http.post(this.baseUrl,params).subscribe(res => {
+                let date = new Date(JSON.parse(JSON.stringify(formVal.aline_tine)));
+                const params = {
+                  ...formVal,
+                  aline_expire_time: date.setFullYear(date.getFullYear()+1)
+                };
+                this.http.post(`${this.baseUrl}?tid=${this.selectedItem.id}`,params).subscribe(res => {
                   if(res.code !==0) {
                     this.msg.error(res.message);
                     return
@@ -135,7 +112,7 @@ export class AccountComponent implements OnInit {
     }
     let modalRef:NzModalRef = this.modal.create({
       nzTitle:"参数配置",
-      nzContent:AccountFormComponent,
+      nzContent:ThermManageFormComponent,
       nzWidth:700,
       nzComponentParams:{param},
       nzFooter:[
@@ -197,48 +174,6 @@ export class AccountComponent implements OnInit {
       }
     })
   }
-  //启用
-  Check() {
-    if(this.selectItems.length === 0 ) {
-      this.msg.warning('请先选择数据进行操作!')
-      return;
-    }
-    const checkStatus = this.selectItems.every(it => !it.enable)
-    if(!checkStatus) {
-      this.msg.warning('请选择禁用状态的数据进行操作')
-      return;
-    }
-    const selectedIds = this.selectItems.map(it => it.id) + ''
-    this.http.get(`${this.checkUrl}?ids=${selectedIds}`).subscribe(res => {
-      if(res.code !== 0) {
-        this.msg.error(res.message);
-        return
-      }
-      this.msg.success(res.message);
-      this.getData();
-    })
-  }
-  //停用
-  Stop () {
-    if(this.selectItems.length === 0 ) {
-      this.msg.warning('请先选择数据进行操作!')
-      return;
-    }
-    const checkStatus = this.selectItems.every(it => it.enable)
-    if(!checkStatus) {
-      this.msg.warning('请选择启用状态的数据进行操作')
-      return;
-    }
-    const selectedIds = this.selectItems.map(it => it.id) + ''
-    this.http.get(`${this.stopUrl}?ids=${selectedIds}`).subscribe(res => {
-      if(res.code !== 0) {
-        this.msg.error(res.message);
-        return
-      }
-      this.msg.success(res.message);
-      this.getData();
-    })
-  }
   //刷新
   Query() {
     this.getData()
@@ -268,34 +203,42 @@ export class AccountComponent implements OnInit {
   yesOrno(value) {
     return value === 'true' || value === true || value === '是' ? '是' : '否'
   }
-  //账号目录树查询
-  getTree() {
-    this.loading = true;
-    this.http.get<any>(`${this.treeUrl}`).subscribe(res => {
-      this.loading = false;
+
+
+  getthermomete () {
+    this.http.get<any>(this.thermometerUrl).subscribe(res => {
       if(res.code === 0) {
-        console.log(res)
+        this.thermometeList = res.data
+        this.selectedItem = res.data[0]
+        this.nodeClick(this.selectedItem)
       }
     })
   }
-
-  nzClick(value){
-    console.log(value);
+  nodeClick(node){
+    this.selectedItem = node;
+    //查询选中温度计的校准记录
+    this.http.get<any>(`${this.thermometerUrl}/${node.id}`).subscribe(res => {
+      if(res.code === 0 ) {
+        this.listOfDisplayData = res.data.records;
+        this.refreshStatus()
+      }
+    })
   }
 
 }
 class params {
   id:number        //编号
-  account:string;  //账号
-  pass:string;     //登录密码
-  name:string;    //姓名
-  unit_id:number;  //所属单位
-  phone:string;     //联系电话
-  email:string;     //邮箱
-  enable:boolean;  //是否启用
-  on_trial:boolean;  //是否试用
-  trial_end	:string;  //试用到期时间
-  role_id:string;  //角色
-  super:boolean;  //是否为管理员
-  manage_host?:string;  //管理主机授权
+  thermometer_code:string;  //温度计编号
+  thermometer_id:string;     //温度计id
+  info_record_time:string;    //信息记录时间
+  manage_type:string;  // 管理类型 (使用中、未使用、维修中、报损、丢失、校准中、停用、转让)
+  exp_person:string;     // 经手人
+  mark:string;     // 备注
+  aline_cer_code:number;  // 校准证书编号
+  aline_unit:string;  // 校准单位
+  inspect_time	:string;  // 送检时间
+  inspect_person:string;  // 送检人
+  aline_tine:boolean;  // 校准时间
+  aline_expire_time:string;  // 校准到期时间
+  next_aline_remind_time:string;  // 下次校准预警提醒时间
 }

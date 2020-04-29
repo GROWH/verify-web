@@ -1,0 +1,95 @@
+<div>
+  <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="info_record_time">信息记录时间</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="info_record_time" id="info_record_time" />
+        <nz-form-explain *ngIf="validateForm.get('info_record_time')?.dirty && validateForm.get('info_record_time')?.errors">
+          信息记录时间
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="manage_type">管理类型</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input  nz-input formControlName="manage_type" id="manage_type" />
+        <nz-form-explain *ngIf="validateForm.get('manage_type')?.dirty && validateForm.get('manage_type')?.errors">
+          请输入管理类型
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="exp_person">经手人</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="exp_person" id="exp_person" />
+        <nz-form-explain *ngIf="validateForm.get('exp_person')?.dirty && validateForm.get('exp_person')?.errors">
+          请输入经手人
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="mark">备注</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input  nz-input formControlName="mark" id="mark" />
+        <nz-form-explain *ngIf="validateForm.get('mark')?.dirty && validateForm.get('mark')?.errors">
+          请输入备注
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="aline_cer_code">校准证书编号</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input  nz-input formControlName="aline_cer_code" id="aline_cer_code" />
+        <nz-form-explain *ngIf="validateForm.get('aline_cer_code')?.dirty && validateForm.get('aline_cer_code')?.errors">
+          请输入校准证书编号
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="aline_unit">校准单位</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input  nz-input formControlName="aline_unit" id="aline_unit" />
+        <nz-form-explain *ngIf="validateForm.get('aline_unit')?.dirty && validateForm.get('aline_unit')?.errors">
+          请输校准单位
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item >
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzFor="inspect_time">送检时间</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-date-picker formControlName="inspect_time"></nz-date-picker>
+        <nz-form-explain *ngIf="validateForm.get('inspect_time')?.dirty && validateForm.get('inspect_time')?.errors">
+          请选择送检时间
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="inspect_person">送检人</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input  nz-input formControlName="inspect_person" id="inspect_person" />
+        <nz-form-explain *ngIf="validateForm.get('inspect_person')?.dirty && validateForm.get('inspect_person')?.errors">
+          请输入送检人
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item >
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzFor="aline_tine">校准时间</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-date-picker formControlName="aline_tine"></nz-date-picker>
+        <nz-form-explain *ngIf="validateForm.get('aline_tine')?.dirty && validateForm.get('aline_tine')?.errors">
+          请选择校准时间
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item >
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzFor="next_aline_remind_time">下次校准预警提醒时间</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-date-picker formControlName="next_aline_remind_time"></nz-date-picker>
+        <nz-form-explain *ngIf="validateForm.get('next_aline_remind_time')?.dirty && validateForm.get('next_aline_remind_time')?.errors">
+          请选择下次校准预警提醒时间
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</div>

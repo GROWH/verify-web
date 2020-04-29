@@ -1,6 +1,15 @@
 <div>
   <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
     <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="name">温度计名称</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="name" id="name" />
+        <nz-form-explain *ngIf="validateForm.get('name')?.dirty && validateForm.get('name')?.errors">
+          请输入参数编号
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
       <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="thermometer_code">温度计编号</nz-form-label>
       <nz-form-control [nzSm]="14" [nzXs]="24">
         <input nz-input formControlName="thermometer_code" id="thermometer_code" />

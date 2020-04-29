@@ -72,6 +72,7 @@ export class ThermometerFormComponent implements OnInit {
 
   creatForm(param) {
     this.validateForm = this.fb.group({
+      name: [param.name,[ Validators.required ]],
       buy_time: [param.buy_time,[ Validators.required ]],
       thermometer_code: [param.thermometer_code,[ Validators.required ]],
       unit_id: [param.unit_id,[ Validators.required ]],

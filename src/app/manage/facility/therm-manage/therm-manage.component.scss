@@ -1,0 +1,54 @@
+.container {
+  display: flex;
+  height: 100%;
+  min-height: 500px;
+  .treeLeft {
+    width: 280px;
+    overflow: auto;
+    border-left: 1px dotted #ccc;
+    border-right: 1px dotted #ccc;
+    .title {
+      text-align: center;
+      font-weight: bold;
+      background-color: #1890ff;
+      padding: 10px;
+    }
+    ul  {
+      list-style: none;
+      margin:0;
+      padding: 0;
+      li {
+        height: 30px;
+        line-height: 25px;
+        padding: 3px;
+        font-weight: 500;
+        color: rgba(0, 0, 0, 0.85);
+        border-bottom: 1px dotted rgba(100, 94, 100, 0.8);
+      }
+      li:hover {
+        cursor: pointer;
+      }
+      .checked {
+        background-color:lightblue;
+      }
+    }
+  }
+  .contentright {
+    flex:1;
+    .btns {
+      height: 55px;
+      line-height: 55px;
+      text-align: right;
+      .mr8 {
+        margin-right: 8px;
+      }
+    
+    }
+  }
+
+  :host ::ng-deep {
+    .ant-table {
+      height: 730px;
+    }
+  }
+}

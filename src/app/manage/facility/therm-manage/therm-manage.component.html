@@ -1,0 +1,65 @@
+<div class="container">
+  <div class="treeLeft">
+    <div class="title">温度计列表</div>
+    <ul *ngFor="let item of thermometeList">
+      <li [ngClass]="{'checked':selectedItem.id === item.id}" (click)="nodeClick(item)">{{item.name}}</li>
+    </ul>
+  </div>
+  <div class="contentright">
+    <div class="btns">
+      <button class="mr8" nz-button nzType="primary" (click)="Add()"><i nz-icon type="plus"></i>新增</button>
+      <button class="mr8" nz-button nzType="default" (click)="Edit()"><i nz-icon type="edit"></i>修改</button>
+      <button class="mr8" nz-button nzType="danger" (click)="Delete()"><i nz-icon type="delete"></i>删除</button>
+      <button class="mr8" nz-button nzType="default" (click)="Query()"><i nz-icon type="redo"></i>刷新</button>
+    </div>
+    <nz-table
+    #rowSelectionTable
+    nzShowSizeChanger
+    [nzData]="listOfDisplayData"
+    [nzTotal]="total"
+    (nzPageIndexChange)="changePageIndex($event)"   
+    (nzPageSizeChange)="changePageSize($event)"
+  
+  >
+    <thead>
+      <tr>
+        <th
+          nzShowCheckbox
+          [(nzChecked)]="isAllDisplayDataChecked"
+          [nzIndeterminate]="isIndeterminate"
+          (nzCheckedChange)="checkAll($event)"
+        ></th>
+        <th>信息记录时间</th>
+        <th>管理类型</th>
+        <th>经手人</th>
+        <th>备注</th>
+        <th>校准证书编号</th>
+        <th>校准单位</th>
+        <th>送检时间</th>
+        <th>送检人</th>
+        <th>校准时间</th>
+        <th>校准到期时间</th>
+        <th>下次校准预警提醒时间</th>
+        <th>校准备注</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of rowSelectionTable.data">
+        <td nzShowCheckbox [(nzChecked)]="mapOfCheckedId[data.id]" (nzCheckedChange)="refreshStatus()"></td>
+        <td>{{ data.info_record_time }}</td>
+        <td>{{ data.manage_type }}</td>
+        <td>{{ data.exp_person }}</td>
+        <td>{{ data.mark }}</td>
+        <td>{{ data.aline_cer_code }}</td>
+        <td>{{ data.aline_unit }}</td>
+        <td>{{ data.inspect_time }}</td>
+        <td>{{ data.inspect_person}}</td>
+        <td>{{ data.aline_tine}}</td>
+        <td>{{ data.aline_expire_time}}</td>
+        <td>{{ data.next_aline_remind_time}}</td>
+        <td>{{ data.aline_mark}}</td>
+      </tr>
+    </tbody>
+  </nz-table>
+  </div>
+</div>

@@ -4,7 +4,8 @@ import { MaintainComponent } from './maintain/maintain/maintain.component';
 import { HouseAddComponent } from './maintain/house-add/house-add.component';
 import { HouseDetailComponent } from './maintain/house-detail/house-detail.component';
 import { HandRecordComponent } from './maintain/hand-record/hand-record.component';
-import { MaintainSerToken, HandRecordSerToken } from './monit.routing.token';
+import { MaintainSerToken, HandRecordSerToken, MyHouseSerToken } from './monit.routing.token';
+import { MyHouseComponent } from './my-house/my-house/my-house.component';
 
 const routes: Routes = [
   {
@@ -21,15 +22,40 @@ const routes: Routes = [
   {
     path: 'maintain/detail/:hosid',
     component: HouseDetailComponent,
+    data: { maintainMode: true },
     children: [
       {
         path: '',
         component: HandRecordComponent,
         data: {
           REQUIRED_SERCVICE: HandRecordSerToken,
+          data: { maintainMode: true }
         }
       }
     ]
+  },
+  {
+    path: 'my-house',
+    component: MyHouseComponent,
+    data: {
+      REQUIRED_SERCVICE: MyHouseSerToken,
+    },
+  },
+  {
+    path: 'my-house/detail/:hosid',
+    component: HouseDetailComponent,
+    data: { maintainMode: false },
+    children: [
+      {
+        path: '',
+        component: HandRecordComponent,
+        data: {
+          REQUIRED_SERCVICE: HandRecordSerToken,
+          maintainMode: false,
+        }
+      }
+    ]
+
   }
 ];
 

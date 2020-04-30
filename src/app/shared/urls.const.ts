@@ -69,6 +69,13 @@ export const Apis = {
 
   /**
    * GET
+   * 单位名下授权库房查看
+   * @param uid
+   */
+  storehouseDownUnit: '/storehouse/queryAuditUnit',
+
+  /**
+   * GET
    * 通过审核单位模糊查询
    * @param page
    * @param size

@@ -34,7 +34,10 @@ export class HouseDetailComponent implements OnInit {
     private util: TongchangLibService,
     @Inject(MaintainSerToken) private uniSer: MaintainService,
     @Inject(DOCUMENT) private document: Document,
-  ) { }
+  ) {
+    const maintainMode: boolean = route.snapshot.data['maintainMode']
+    this.maintainMode = maintainMode
+  }
 
   ngOnInit() {
     const hosid = this.route.snapshot.paramMap.get('hosid')
@@ -54,6 +57,11 @@ export class HouseDetailComponent implements OnInit {
     this.destroy$.next()
   }
   
+  /**
+   * 维护模式
+   */
+  maintainMode = false
+
   house: StoreHouse;
   houseUpdateTimeDisplay = ''
   warnTypes = WARN_TYPES
@@ -135,7 +143,7 @@ export class HouseDetailComponent implements OnInit {
    * @param pointConf 
    */
   pointMove(event: MouseEvent, pointConf: MonitPoint) {
-    if (this.pointAdding || this.pointRemoving) return 
+    if (this.pointAdding || this.pointRemoving || !this.maintainMode) return 
 
     const point = event.target as HTMLElement
     const cotin = point.parentElement as HTMLElement

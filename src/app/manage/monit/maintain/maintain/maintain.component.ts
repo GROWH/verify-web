@@ -56,12 +56,6 @@ export class MaintainComponent extends UniversalComponent {
         }
       },
       {
-        name: '修改参数',
-        icon: 'edit',
-        code: 'edit',
-        click: () => 1,
-      },
-      {
         name: '刷新',
         icon: 'reload',
         code: 'reload',

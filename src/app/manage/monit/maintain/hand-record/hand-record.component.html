@@ -7,7 +7,7 @@
     style="min-height: 300px; margin-bottom: 16px;"
     nzSize="middle"
     [nzData]="uniSer.data"
-    [nzScroll]="{y: '500px', x: '600px'}"
+    [nzScroll]="{x: '600px'}"
     [nzShowPagination]="false"
     [nzFrontPagination]="false"
   >
@@ -17,7 +17,7 @@
         <th nzWidth="100px">湿度</th>
         <th>检查位置</th>
         <th nzWidth="200px">检查时间</th>
-        <th nzWidth="120px">操作</th>
+        <th nzWidth="120px" *ngIf="maintainMode">操作</th>
       </tr>
     </thead>
     <tbody>
@@ -26,7 +26,7 @@
         <td>{{ i.humi }}%</td>
         <td>{{ i.position }}</td>
         <td>{{ i.record_time }}</td>
-        <td>
+        <td *ngIf="maintainMode">
           <a (click)="itemEdit(i)">编辑</a>
           <nz-divider nzType="vertical"></nz-divider>
           <a (click)="itemDelete(i)">删除</a>

@@ -1,7 +1,7 @@
 <div class="wrapper" *ngIf="house">
   <div class="header">
     <span class="house-name">{{ house.name }}</span>
-    <nz-dropdown class="authed-corp">
+    <nz-dropdown class="authed-corp" *ngIf="maintainMode">
       <a class="ant-dropdown-link" nz-dropdown>
         已授权单位 <i nz-icon type="down"></i>
       </a>
@@ -32,9 +32,9 @@
   </div>
 
   <div class="title">监控点位</div>
-  <nz-divider style="margin: 0px;"></nz-divider>
+  <nz-divider></nz-divider>
 
-  <div class="point-edit">
+  <div class="point-edit" *ngIf="maintainMode">
     <button
       nz-button
       [title]="pointAdding ? '结束添加' : '添加点位'"
@@ -115,7 +115,7 @@
             <td>{{ point.code }}</td>
             <td>{{ point.name }}</td>
             <td>
-              <a (click)="chDevice(point)">更换设备</a>              
+              <a (click)="chDevice(point)" *ngIf="maintainMode">更换设备</a>              
             </td>
           </tr>
         </tbody>
@@ -124,7 +124,7 @@
   </div>
 
   <div class="warn">
-    <div class="edit-bar">
+    <div class="edit-bar" *ngIf="maintainMode">
       <a (click)="warnSet(house)" title="修改">
         <i nz-icon type="edit"></i>
       </a>  

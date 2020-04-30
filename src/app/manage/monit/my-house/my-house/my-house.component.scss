@@ -1,0 +1,20 @@
+@import 'variables';
+
+
+@include commTable;
+
+
+.table {
+  .point {
+    font-weight: bold;
+    i {
+      transform: scale(.7, 1.3);
+    }
+  }
+  .point-top {
+    color: #EE1717;
+  }
+  .point-down {
+    color: #3470CC;
+  }
+}

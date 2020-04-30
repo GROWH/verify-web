@@ -20,8 +20,15 @@ export class HandRecordComponent extends UniversalComponent implements OnInit {
     @Inject(MaintainSerToken) private maintainSer: MaintainService,
   ) {
     super(injector, route)
+    const maintainMode: boolean = route.snapshot.data['maintainMode']
+    this.maintainMode = maintainMode
   }
 
+  /**
+   * 维护模式
+   */
+  maintainMode = false
+  
   ngOnInit() {
     this.actionInit()
     this.uniSer.gridConf = {
@@ -39,17 +46,22 @@ export class HandRecordComponent extends UniversalComponent implements OnInit {
 
   actionInit() {
     this.gridActions = [
-      {
-        name: '新增',
-        icon: 'plus',
-        code: 'add',
-        type: 'primary',
-        click: () => {
-          this.uniSer.onItemAdd(
-            new HandRecord(this.maintainSer.detailHosId)
-          )
-        }
-      },
+      ...(
+        this.maintainMode ? 
+        [
+          {
+            name: '新增',
+            icon: 'plus',
+            code: 'add',
+            type: 'primary',
+            click: () => {
+              this.uniSer.onItemAdd(
+                new HandRecord(this.maintainSer.detailHosId)
+              )
+            }
+          }
+        ] : []
+      ),
       {
         name: '刷新',
         icon: 'reload',

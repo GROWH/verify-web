@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {Router} from '@angular/router';
 import { TongchangHttpService } from 'tongchang-lib';
+import { LOGINED_USER_UNIT_KEY } from '@/config.const';
 
 @Component({
   selector: 'app-login',
@@ -54,7 +55,7 @@ export class LoginComponent implements OnInit {
         }
         this.msg.success(res.message);
         localStorage.setItem('account',res.data.account.id)
-        localStorage.setItem('unit',res.data.unit.id)
+        localStorage.setItem(LOGINED_USER_UNIT_KEY,res.data.unit.id)
         this.router.navigateByUrl('/manage')
       })
     }

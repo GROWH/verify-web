@@ -45,7 +45,12 @@
       </div>
 
       <div class="binding" *ngIf="step === 1">
-        <ng-container *ngTemplateOutlet="devTableWrap; context: { body: pointsEdit }"></ng-container>
+        <ng-container
+          *ngTemplateOutlet="devTableWrap; context: {
+            body: pointsEdit,
+            showOp: true
+          }"
+        ></ng-container>
         <ng-template #pointsEdit>
           <tr *ngFor="let point of points; index as i">
             <td>{{ i+1 }}</td>
@@ -58,12 +63,10 @@
               >
             </td>
             <td>
-              <input
-                nz-input
-                [(ngModel)]="point.code"
-                [name]="'code' + i"
-                placeholder="请输入"
-              >
+              {{ point.code }}
+            </td>
+            <td>
+              <a (click)="chDevice(point)">选择设备</a>              
             </td>
           </tr>
         </ng-template>
@@ -316,7 +319,7 @@
   </div>
 </ng-template>
 
-<ng-template let-body="body" #devTableWrap>
+<ng-template let-body="body" let-showOp="showOp" #devTableWrap>
   <nz-table
     #nzTable
     nzSize="small"
@@ -326,9 +329,10 @@
   >
     <thead>
       <tr>
-        <th>温度计序号</th>
+        <th>序号</th>
         <th>设备名称</th>
         <th>设备编码</th>
+        <th *ngIf="showOp">操作</th>
       </tr>
     </thead>
     <tbody>

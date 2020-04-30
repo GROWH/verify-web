@@ -42,11 +42,14 @@ export class MaintainService extends UniversalService<HouseAddData> {
     return datas as HouseAddData[]
   }
   
-  deviceSelect() {
+  deviceSelect(filterCode: string[] = []) {
     return new Promise<{ code: string, name: string }>((resolve, reject) => {
       const modalRef: NzModalRef = this.modal.create({
         nzTitle: '请选择监控设备',
         nzContent: DeviceSelectComponent,
+        nzComponentParams: {
+          filterCode: filterCode
+        },
         nzMaskClosable: false,
         nzWrapClassName: 'modal-vertical-center',
         nzWidth: 900,

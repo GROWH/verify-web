@@ -2,7 +2,21 @@
   <nz-form-item>
     <nz-form-label nzRequired>监控设备</nz-form-label>
     <nz-form-control>
-      <input nz-input formControlName="code" placeholder="请输入编码">
+      <nz-select
+        formControlName="code"
+        nzPlaceHolder="请选择"
+        nzAllowClear
+        [nzNotFoundContent]="'无可用设备'"
+      >
+        <nz-option
+          *ngFor="let item of therList"
+          [nzLabel]="item.thermometer_code"
+          [nzValue]="item.thermometer_code"
+        >
+        </nz-option>
+      </nz-select>
+      
+      <!-- <input nz-input formControlName="code" placeholder="请输入编码"> -->
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>

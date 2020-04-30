@@ -13,3 +13,5 @@ export const WARN_CODE_MAP = WARN_TYPES.reduce((acc, it) => {
   acc[it.value] = it.label
   return acc
 }, {})
+
+export const LOGINED_USER_UNIT_KEY = 'LOGINED_USER_UNIT_KEY'

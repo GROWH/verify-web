@@ -201,7 +201,8 @@ export class HouseDetailComponent implements OnInit {
   async chDevice(point: MonitPoint) {
     this.pointEditing = true
     try {
-      const dev = await this.uniSer.deviceSelect()
+      const hasSelect = this.house.thermometer.map(it => it.code)
+      const dev = await this.uniSer.deviceSelect(hasSelect)
       point.code = dev.code
       point.name = dev.name
       this.pointChanged = true

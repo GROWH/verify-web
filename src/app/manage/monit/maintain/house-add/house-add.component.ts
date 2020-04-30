@@ -1,6 +1,6 @@
 import { NzMessageService } from 'ng-zorro-antd';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators, ValidatorFn } from '@angular/forms';
 
 import {
@@ -14,6 +14,8 @@ import {
 import { Apis } from '@/shared/urls.const';
 import { HouseAddData, WarnConf, MonitPoint, StoreHouse } from '@/model/HouseMonit';
 import { WARN_TYPES, WARN_CODE_MAP } from '@/config.const'
+import { MaintainSerToken } from '../../monit.routing.token';
+import { MaintainService } from '../maintain.service';
 
 
 interface ParamsForm {
@@ -43,6 +45,7 @@ export class HouseAddComponent implements OnInit {
     private http: TongchangHttpService,
     private route: ActivatedRoute,
     private router: Router,
+    @Inject(MaintainSerToken) private maintainSer: MaintainService,
   ) { }
 
   ngOnInit() {
@@ -165,6 +168,16 @@ export class HouseAddComponent implements OnInit {
       delay: data.delay + '秒',
       span:  data.delay + '秒',
     }
+  }
+
+  /**
+   * 更换设备
+   */
+  async chDevice(point: MonitPoint) {
+    const hasSelect = this.points.map(it => it.code)
+    const dev = await this.maintainSer.deviceSelect(hasSelect)
+    point.code = dev.code
+    point.name = dev.name
   }
 
   stopAdd() {

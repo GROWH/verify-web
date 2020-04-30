@@ -113,7 +113,19 @@
           <tr *ngFor="let point of house.thermometer; index as i">
             <td>{{ i + 1 }}</td>
             <td>{{ point.code }}</td>
-            <td>{{ point.name }}</td>
+            <ng-container *ngIf="maintainMode; else devNameView">
+              <nz-form-control>
+                <input
+                  nz-input
+                  placeholder="请输入"
+                  [(ngModel)]="point.name"
+                  (ngModelChange)="pointChanged = true"
+                >
+              </nz-form-control>
+            </ng-container>
+            <ng-template #devNameView>
+              <td>{{ point.name }}</td>
+            </ng-template>
             <td>
               <a (click)="chDevice(point)" *ngIf="maintainMode">更换设备</a>              
             </td>

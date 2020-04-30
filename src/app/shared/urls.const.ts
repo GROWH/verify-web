@@ -76,6 +76,13 @@ export const Apis = {
 
   /**
    * GET
+   * 单位名下可用温度计
+   * @param uid
+   */
+  storehouseDownTher: '/storehouse/queryNotUsedTher',
+
+  /**
+   * GET
    * 通过审核单位模糊查询
    * @param page
    * @param size

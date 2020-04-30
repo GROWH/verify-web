@@ -1,0 +1,49 @@
+<div class="wrapper">
+  <div class="search">
+    <nz-form-item  nzFlex>
+      <nz-form-control nzSpan="24">
+        <nz-input-group [nzSuffix]="keywordTpl">
+          <input
+            nz-input
+            name="keyword"
+            autocomplete="off" 
+            placeholder="按回车键搜索"
+            [(ngModel)]="keyword"
+            (keyup.enter)="onSearch()"
+          >
+          <ng-template #keywordTpl>
+            <i nz-icon type="search" (click)="onSearch()"></i>
+          </ng-template>
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+  <div class="table">
+    <nz-table
+      #nzTable
+      nzSize="small"
+      [nzData]="datas"
+      [nzPageSize]="size"
+      [nzFrontPagination]="false"
+    >
+      <thead>
+        <tr>
+          <th>单位名称</th>
+          <th>统一信用代码</th>
+          <th>操作</th>
+          
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let i of nzTable.data">
+          <td>{{ i.unit_name }}</td>
+          <td>{{ i.social_code }}</td>
+          <td>
+            <a (click)="onSelect(i)">选择</a>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+

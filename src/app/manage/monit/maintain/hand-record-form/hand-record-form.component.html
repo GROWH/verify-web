@@ -1,0 +1,55 @@
+<form nz-form [formGroup]="form">
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzSpan="6">温度</nz-form-label>
+        <nz-form-control nzSpan="14">
+          <nz-input-number
+            class="full-width"
+            formControlName="temp"
+            [nzPlaceHolder]="'请输入'"
+          ></nz-input-number>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzSpan="6">湿度</nz-form-label>
+        <nz-form-control nzSpan="14">
+          <nz-input-number
+            class="full-width"
+            formControlName="humi"
+            [nzPlaceHolder]="'请输入'"
+          ></nz-input-number>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+
+  <div nz-row nzGutter="8">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzSpan="6">检查位置</nz-form-label>
+        <nz-form-control nzSpan="14">
+          <input nz-input formControlName="position" placeholder="请输入">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label nzSpan="6">检查时间</nz-form-label>
+        <nz-form-control nzSpan="14">
+          <nz-date-picker
+            class="full-width"
+            formControlName="record_time"
+            nzPlaceHolder="请选择"
+            [nzFormat]="'yyyy-MM-dd HH:mm'"
+            [nzShowTime]="{ nzFormat: 'HH:mm' }"
+          ></nz-date-picker>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+</form>

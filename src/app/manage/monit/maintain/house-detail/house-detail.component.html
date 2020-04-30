@@ -1,0 +1,163 @@
+<div class="wrapper" *ngIf="house">
+  <div class="header">
+    <span class="house-name">{{ house.name }}</span>
+    <nz-dropdown class="authed-corp">
+      <a class="ant-dropdown-link" nz-dropdown>
+        已授权单位 <i nz-icon type="down"></i>
+      </a>
+      <ul nz-menu>
+        <li
+          nz-menu-item
+          *ngFor="let unit of house.units"
+          (click)="authDel(unit)"
+        >
+          {{ unit.unit_name }}
+        </li>
+        <li nz-menu-item>
+          <a (click)="authAdd()">
+            <i nz-icon type="plus"></i>
+            增加
+          </a>
+        </li>
+      </ul>
+    </nz-dropdown>
+
+    <span class="reload">
+      最后上传时间:
+      <span [title]="house.new_uptime">{{ houseUpdateTimeDisplay }}</span>
+      <a (click)="forceReload()" title="刷新">
+        <i nz-icon type="reload"></i>
+      </a>         
+    </span>
+  </div>
+
+  <div class="title">监控点位</div>
+  <nz-divider style="margin: 0px;"></nz-divider>
+
+  <div class="point-edit">
+    <button
+      nz-button
+      [title]="pointAdding ? '结束添加' : '添加点位'"
+      [nzType]="pointAdding ? 'default' : 'primary'"
+      (click)="onPointAdd()"
+    >
+      <i nz-icon [type]="pointAdding ? 'check' : 'plus'"></i>
+    </button>
+    <button
+      nz-button
+      [title]="pointRemoving ? '完成' : '删除点位'"
+      [nzType]="pointRemoving ? 'default' : 'primary'"
+      (click)="onPointRemove()"
+    >
+      <i nz-icon  [type]="pointRemoving ? 'check' : 'delete'"></i>
+    </button>
+    <button
+      *ngIf="pointChanged"
+      nz-button
+      title="保存"
+      nzType="dashed"
+      class="save"
+      (click)="savePointConf()"
+    >
+      <i nz-icon type="save"></i>
+    </button>
+  </div>
+  <div class="points">
+    <div
+      class="map"
+      [ngClass]="{'adding': pointAdding, 'removing': pointRemoving}"
+    >
+      <img
+        alt="hosuse map"
+        draggable="false"
+        [src]="house.map"
+        (click)="addPoint($event)"
+      >
+      <div
+        class="point"
+        style="z-index: 1;"
+        *ngFor="let point of house.thermometer; index as i"
+        [ngStyle]="{left: point.x + '%', top: point.y + '%'}"
+        (click)="removePoint(i)"
+        (mousedown)="pointMove($event, point)"
+      >
+        {{ i + 1 }}
+        <div class="point-detail">
+          <div class="name">{{ point.name }}</div>
+          <div class="temp">当前温度: <b>{{ point.curr_temp || 'N/A' }}</b>℃</div>
+          <div class="humi">当前湿度: <b>{{ point.curr_humi || 'N/A' }}</b>%</div>
+          <div class="time">最后上传时间: <b>{{ point.last_uptime || 'N/A' }}</b></div>
+          <div class="view-rate">
+            <a (click)="edit(i)">查看监控曲线</a>         
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="table">
+      <nz-table 
+        #nzTable 
+        nzSize="small"
+        [nzData]="house.thermometer"
+        [nzShowPagination]="false"
+        [nzFrontPagination]="false"
+      >
+        <thead>
+          <tr>
+            <th nzWidth="width">编号</th>
+            <th>设备编码</th>
+            <th>设备名称</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let point of house.thermometer; index as i">
+            <td>{{ i + 1 }}</td>
+            <td>{{ point.code }}</td>
+            <td>{{ point.name }}</td>
+            <td>
+              <a (click)="chDevice(point)">更换设备</a>              
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+
+  <div class="warn">
+    <div class="edit-bar">
+      <a (click)="warnSet(house)" title="修改">
+        <i nz-icon type="edit"></i>
+      </a>  
+    </div>
+    <div nz-row nzGutter="48" class="items">
+      <div nz-col nzSpan="12">
+        <div class="title">短信告警</div>
+        <ng-container *ngTemplateOutlet="warnShow; context: {
+          conf: warnConfForShow(house.message_warn)
+        }"></ng-container>        
+      </div>
+      <div nz-col nzSpan="12">
+        <div class="title">电话告警</div>
+        <ng-container *ngTemplateOutlet="warnShow; context: {
+          conf: warnConfForShow(house.phone_warn)
+        }"></ng-container>        
+      </div>
+    </div>
+  </div>
+
+  <div class="record">
+    <div class="title">人工记录</div>
+    <nz-divider></nz-divider>
+
+    <router-outlet></router-outlet>
+    
+  </div>
+</div>
+
+<ng-template #warnShow let-conf="conf">
+  <nz-divider></nz-divider>
+  <div class="types">告警类型: {{ conf.types }}</div>
+  <div class="delay">告警延时: {{ conf.delay }}</div>
+  <div class="span">告警间隔:  {{ conf.span }} </div>
+  <div class="phone">告警电话: {{ conf.nums }}</div>
+</ng-template>

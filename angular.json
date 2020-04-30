@@ -52,6 +52,11 @@
               "src/styles.scss"
             ],
             "scripts": [],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/app/shared/scss"
+              ]
+            },
             "es5BrowserSupport": true
           },
           "configurations": {

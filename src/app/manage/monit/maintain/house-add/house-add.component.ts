@@ -1,8 +1,19 @@
-import { Component, OnInit, ViewChild, ElementRef, ViewContainerRef } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
-import { TongchangLibService, ClientRectDirective, DebugLog, SimpPhoneValidator } from 'tongchang-lib';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators, ValidatorFn } from '@angular/forms';
-import { HouseAddData, WarnConf, MonitPoint } from '@/model/HouseMonit';
+
+import {
+  TongchangLibService,
+  ClientRectDirective,
+  DebugLog,
+  SimpPhoneValidator,
+  TongchangHttpService,
+} from 'tongchang-lib';
+
+import { Apis } from '@/shared/urls.const';
+import { HouseAddData, WarnConf, MonitPoint, StoreHouse } from '@/model/HouseMonit';
+import { WARN_TYPES, WARN_CODE_MAP } from '@/config.const'
 
 
 interface ParamsForm {
@@ -29,6 +40,9 @@ export class HouseAddComponent implements OnInit {
     private fb: FormBuilder,
     private msg: NzMessageService,
     private util: TongchangLibService,
+    private http: TongchangHttpService,
+    private route: ActivatedRoute,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -47,17 +61,9 @@ export class HouseAddComponent implements OnInit {
 
   points: MonitPoint[] = []
 
-  warnTypes = [
-    { label: '温度', value: 'temp' },
-    { label: '湿度', value: 'humi' },
-    { label: '断电', value: 'power' },
-    { label: '断网', value: 'network' },
-  ]
+  warnTypes = WARN_TYPES
+  warnCodeMap = WARN_CODE_MAP
 
-  warnCodeMap = this.warnTypes.reduce((acc, it) => {
-    acc[it.value] = it.label
-    return acc
-  }, {})
 
   tempMarks = {
     [-50]: '-50°C',
@@ -284,8 +290,20 @@ export class HouseAddComponent implements OnInit {
     DebugLog(JSON.stringify(pos))
   }
 
-  onSubmit() {
+  async onSubmit() {
     DebugLog(this.getSubmitData())
+    const { messageId } = this.msg.loading('数据提交中...', { nzDuration: 0 })
+    const res = await this.http.post<StoreHouse>(
+      Apis.storehouse, 
+      this.getSubmitData()
+    ).toPromise()
+
+    this.msg.remove(messageId)
+
+    if (res.code === 0) {
+      this.msg.success(res.message)
+      this.router.navigate(['..'], { relativeTo: this.route })
+    }
   }
 
   private getSubmitData(): HouseAddData {

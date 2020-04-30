@@ -1,0 +1,46 @@
+<form nz-form [formGroup]="form">
+  <div nz-row nzGutter="8">
+    <nz-form-label nzSpan="5" nzRequired>库房名称</nz-form-label>
+    <nz-form-control nzSpan="7">
+      <input nz-input formControlName="name" placeholder="请输入">
+    </nz-form-control>
+  </div>
+
+  <div nz-row nzGutter="8">
+    <nz-form-label nzSpan="5" nzRequired>温度下限</nz-form-label>
+    <nz-form-control nzSpan="7">
+      <nz-input-number
+        class="full-width"
+        formControlName="temp_down"
+        [nzPlaceHolder]="'请输入'"
+      ></nz-input-number>
+    </nz-form-control>
+    <nz-form-label nzSpan="5" nzRequired>温度上限</nz-form-label>
+    <nz-form-control nzSpan="7">
+      <nz-input-number
+        class="full-width"
+        formControlName="temp_up"
+        [nzPlaceHolder]="'请输入'"
+      ></nz-input-number>
+    </nz-form-control>
+  </div>
+
+  <div nz-row nzGutter="8">
+    <nz-form-label nzSpan="5" nzRequired>湿度下限</nz-form-label>
+    <nz-form-control nzSpan="7">
+      <nz-input-number
+        class="full-width"
+        formControlName="humi_down"
+        [nzPlaceHolder]="'请输入'"
+      ></nz-input-number>
+    </nz-form-control>
+    <nz-form-label nzSpan="5" nzRequired>湿度上限</nz-form-label>
+    <nz-form-control nzSpan="7">
+      <nz-input-number
+        class="full-width"
+        formControlName="humi_up"
+        [nzPlaceHolder]="'请输入'"
+      ></nz-input-number>
+    </nz-form-control>
+  </div>
+</form>

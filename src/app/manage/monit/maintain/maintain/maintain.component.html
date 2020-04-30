@@ -1,3 +1,84 @@
-<a [routerLink]="[ 'add' ]">新增</a>
-<button nz-button>
-</button>
+
+<div class="wrapper">
+  <grid-action [actions]="gridActions"></grid-action>
+
+  <nz-table
+    #nzTable
+    class="table"
+    [nzData]="uniSer.data"
+    libClientRect
+    [libHeightMinus]="54"
+    (libHeightChange)="tableHeight = $event + 'px'"
+    [nzScroll]="{y: tableHeight, x: '1220px'}"
+    [nzShowPagination]="false"
+    [nzFrontPagination]="false"
+  >
+    <thead>
+      <tr>
+        <th nzWidth="200px">库房名称</th>
+        <th nzWidth="320px">监控范围</th>
+        <th nzWidth="100px">探头数量</th>
+        <th nzWidth="120px">状态</th>
+        <th>最后上传时间</th>
+        <th nzWidth="240px">操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let i of nzTable.data">
+        <td>{{ i.name }}</td>
+        <td>
+          T:
+          <span class="point point-top">
+            <i nz-icon nzType="arrow-up" nzTheme="outline"></i>
+            {{ i.temp_up }} ℃
+          </span>
+          <span class="point point-down">
+            <i nz-icon nzType="arrow-down" nzTheme="outline"></i>
+            {{ i.temp_down }} ℃
+          </span>
+          &nbsp;&nbsp;
+          RH:
+          <span class="point point-top">
+            <i nz-icon nzType="arrow-up" nzTheme="outline"></i>
+            {{ i.humi_up }} %
+          </span>
+          <span class="point point-down">
+            <i nz-icon nzType="arrow-down" nzTheme="outline"></i>
+            {{ i.humi_down }} %
+          </span>
+        </td>
+        <td>{{ i.thermometer.length }}</td>
+        <td>{{ i.state || 'N/A' }}</td>
+        <td>{{ i.new_uptime || 'N/A' }}</td>
+        <td>
+          <a (click)="houseEdit(i)">编辑</a>
+          <nz-divider nzType="vertical"></nz-divider>
+          <a (click)="viewDetail(i)">详情</a>
+          <nz-divider nzType="vertical"></nz-divider>
+          <a (click)="warnSet(i)">告警设定</a>         
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+  
+  <nz-pagination
+    class="pagination"
+    [ngClass]="{ blur: uniSer.loading }"
+    [nzTotal]="uniSer.totalCount"
+    [nzShowTotal]="totalTemplate"
+    [nzShowSizeChanger]="true"
+    [nzPageSizeOptions]="[10, 50, 100, 500]"
+    [(nzPageIndex)]    ="uniSer.page"
+    [(nzPageSize)]     ="uniSer.size"
+    (nzPageIndexChange)="uniSer.pageParamsCh$.next()"
+    (nzPageSizeChange) ="uniSer.pageParamsCh$.next(true)"
+  ></nz-pagination>
+</div>
+
+
+<ng-template #totalTemplate let-total>
+  共计 {{ total || 0 }} 项数据
+</ng-template>
+
+<ng-template #indicatorTemplate><i nz-icon type="loading" [spin]="true" style="font-size: 60px;"></i>
+</ng-template>

@@ -29,3 +29,10 @@
 .full-width {
   width: 100%;
 }
+
+.full-width.ant-calendar-picker {
+  width: 100%;
+  .ant-calendar-picker {
+      width: 100% !important;
+  }
+}

@@ -2,18 +2,19 @@ import { NzModalService, NzModalRef, NzMessageService } from 'ng-zorro-antd';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit, Inject } from '@angular/core';
 import { merge, timer, Subject, fromEvent, from } from 'rxjs';
+import { map, takeUntil, filter, take } from 'rxjs/operators';
 import { TongchangHttpService, TongchangLibService, DebugLog } from 'tongchang-lib';
 import * as moment from 'moment';
 
 import { WARN_TYPES, WARN_CODE_MAP } from '@/config.const'
 import { Apis, Precent } from '@/shared/urls.const';
-import { StoreHouse, WarnConf, MonitPoint } from '@/model/HouseMonit';
-import { map, takeUntil, filter, take } from 'rxjs/operators';
+import { StoreHouse, WarnConf, MonitPointConf, MonitPoint } from '@/model/HouseMonit';
 import { WarnEditFormComponent } from '../warn-edit-form/warn-edit-form.component';
 import { DOCUMENT } from '@angular/common';
 import { MaintainService } from '../maintain.service';
 import { MaintainSerToken } from '../../monit.routing.token';
 import { Unit } from '@/model/Unit';
+import { PointRecordComponent } from '../point-record/point-record.component';
 
 moment.locale('zh-cn')
 
@@ -100,7 +101,7 @@ export class HouseDetailComponent implements OnInit {
 
     const dev = await this.uniSer.deviceSelect()
 
-    const pos: MonitPoint = {
+    const pos: MonitPointConf = {
       x: Precent(e.offsetX * 100 / imgElRect.width),
       y: Precent(e.offsetY * 100 / imgElRect.height),
       ...dev,
@@ -142,7 +143,7 @@ export class HouseDetailComponent implements OnInit {
    * @param event 
    * @param pointConf 
    */
-  pointMove(event: MouseEvent, pointConf: MonitPoint) {
+  pointMove(event: MouseEvent, pointConf: MonitPointConf) {
     if (this.pointAdding || this.pointRemoving || !this.maintainMode) return 
 
     const point = event.target as HTMLElement
@@ -198,7 +199,7 @@ export class HouseDetailComponent implements OnInit {
   /**
    * 更换设备
    */
-  async chDevice(point: MonitPoint) {
+  async chDevice(point: MonitPointConf) {
     this.pointEditing = true
     try {
       const hasSelect = this.house.thermometer.map(it => it.code)
@@ -287,6 +288,19 @@ export class HouseDetailComponent implements OnInit {
     }
   }
 
+  showWarnRec(point: MonitPoint) {
+    const modalRef: NzModalRef = this.modal.create({
+      nzTitle: point.name,
+      nzContent: PointRecordComponent,
+      nzComponentParams: {
+        posId: point.id
+      },
+      nzMaskClosable: false,
+      nzWrapClassName: 'modal-vertical-center',
+      nzWidth: 900,
+      nzFooter: null,      
+    })
+  }
 
   warnSet(house: StoreHouse) {
     const modalRef: NzModalRef = this.modal.create({

@@ -88,7 +88,7 @@
           <div class="humi">当前湿度: <b>{{ point.curr_humi || 'N/A' }}</b>%</div>
           <div class="time">最后上传时间: <b>{{ point.last_uptime || 'N/A' }}</b></div>
           <div class="view-rate">
-            <a (click)="edit(i)">查看监控曲线</a>         
+            <a (click)="showWarnRec(point)">查看监控曲线</a>         
           </div>
         </div>
       </div>

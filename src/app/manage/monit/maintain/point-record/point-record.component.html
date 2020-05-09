@@ -1,0 +1,17 @@
+<div class="wrapper">
+  <div class="range">
+    <nz-range-picker
+      [nzRanges]="ranges"
+      [nzDisabledDate]="rangeDisableDate"
+      [(ngModel)]="datas"
+      (ngModelChange)="dateCh$.next()"
+    ></nz-range-picker>
+  </div>
+  <div
+    echarts
+    class="charts"
+    [options]="chartOption"
+    (chartInit)="chartInit($event)"
+  ></div>
+</div>
+

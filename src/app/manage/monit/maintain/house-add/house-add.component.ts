@@ -12,7 +12,7 @@ import {
 } from 'tongchang-lib';
 
 import { Apis } from '@/shared/urls.const';
-import { HouseAddData, WarnConf, MonitPoint, StoreHouse } from '@/model/HouseMonit';
+import { HouseAddData, WarnConf, MonitPointConf, StoreHouse } from '@/model/HouseMonit';
 import { WARN_TYPES, WARN_CODE_MAP } from '@/config.const'
 import { MaintainSerToken } from '../../monit.routing.token';
 import { MaintainService } from '../maintain.service';
@@ -62,7 +62,7 @@ export class HouseAddComponent implements OnInit {
 
   paramsForm: FormGroup
 
-  points: MonitPoint[] = []
+  points: MonitPointConf[] = []
 
   warnTypes = WARN_TYPES
   warnCodeMap = WARN_CODE_MAP
@@ -173,7 +173,7 @@ export class HouseAddComponent implements OnInit {
   /**
    * 更换设备
    */
-  async chDevice(point: MonitPoint) {
+  async chDevice(point: MonitPointConf) {
     const hasSelect = this.points.map(it => it.code)
     const dev = await this.maintainSer.deviceSelect(hasSelect)
     point.code = dev.code
@@ -292,7 +292,7 @@ export class HouseAddComponent implements OnInit {
       return Math.round(float * ratio) / ratio
     }
 
-    const pos: MonitPoint = {
+    const pos: MonitPointConf = {
       x: precent(e.offsetX * 100 / this.imgWidth),
       y: precent(e.offsetY * 100 / this.imgHeight),
       code: '',

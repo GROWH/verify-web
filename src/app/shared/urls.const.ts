@@ -107,7 +107,22 @@ export const Apis = {
    * 库房下人工记录查询
    * @param sid
    */
-  handRecordDownHouse: '/auditRecord/queryRecord'
+  handRecordDownHouse: '/auditRecord/queryRecord',
+
+  /**
+   * GET
+   * 库房点位温湿度记录查询
+   * @param pid 点位ID
+   * @param start_time 开始时间
+   * @param end_time 结束时间
+   */
+  pointRecord: '/position/queryInTime',
+  
+  /**
+   * POST
+   * 保温箱温度上传接口
+   */
+  zeroDataUpload: '/thermometerManage/dataUpload',
 }
 
 export function ResTrans<T>(res: Pagination<T>) {

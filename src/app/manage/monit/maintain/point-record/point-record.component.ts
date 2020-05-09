@@ -7,6 +7,7 @@ import { DebugLog, TongchangHttpService, TongchangLibService } from 'tongchang-l
 import { Apis } from '@/shared/urls.const';
 import { PointRecord } from '@/model/HouseMonit';
 import { delayWhen } from 'rxjs/operators';
+import { NzMessageService } from 'ng-zorro-antd';
 
 const rangeCount = (offset: number) => {
   const end = new Date()
@@ -29,6 +30,7 @@ export class PointRecordComponent implements OnInit {
   @Input() posId: number = -1
 
   constructor(
+    private msg: NzMessageService,
     private http: TongchangHttpService,
     private util: TongchangLibService,
   ) { }
@@ -89,6 +91,14 @@ export class PointRecordComponent implements OnInit {
     },
     toolbox: {
       feature: {
+        myTool1: {
+          show: true,
+          title: '刷新数据',
+          icon: 'path://M7 9h-7v-7h1v5.2c1.853-4.237 6.083-7.2 11-7.2 6.623 0 12 5.377 12 12s-5.377 12-12 12c-6.286 0-11.45-4.844-11.959-11h1.004c.506 5.603 5.221 10 10.955 10 6.071 0 11-4.929 11-11s-4.929-11-11-11c-4.66 0-8.647 2.904-10.249 7h5.249v1z',
+          onclick: () => {
+            this.dateCh$.next()
+          }
+        },
         saveAsImage: {
           backgroundColor: "#fff",
         }
@@ -177,14 +187,17 @@ export class PointRecordComponent implements OnInit {
 
     start.setHours(0, 0, 0, 0)
     end.setHours(23, 59, 59, 999)
-
+    
+    const { messageId: msgID } = this.msg.loading('数据加载中...', {nzDuration: 0})
     const res = await this.http.get<PointRecord[]>(Apis.pointRecord, {
       pid: this.posId + '',
       start_time: format(start, 'YYYY-MM-DD HH:mm:ss.SSS'),
       end_time:   format(end,   'YYYY-MM-DD HH:mm:ss.SSS'),
     }).toPromise()
+    this.msg.remove(msgID)
 
     if (res.code !== 0) return
+    this.msg.success('数据已加载')
 
     const [time, temp, humi] = res.data.reduce((acc, it) => {
       const time = acc[0]
@@ -216,6 +229,5 @@ export class PointRecordComponent implements OnInit {
         }
       ]
     })
-
   }
 }

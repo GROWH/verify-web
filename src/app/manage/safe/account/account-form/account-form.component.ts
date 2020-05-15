@@ -40,7 +40,7 @@ export class AccountFormComponent implements OnInit {
       account: [param.account ,[ Validators.required ]],
       pass: [param.pass, [ Validators.required ]],
       name: [param.name, [ Validators.required ]],
-      unit_id: [param.unit_id, [ Validators.required ]],
+      unit_id: [param.unit_id],
       phone: [param.phone, [ Validators.required, telValidator(/^(?:(?:\+|00)86)?1[3-9]\d{9}$/)]],
       email: [param.email, [ Validators.required, Validators.email]],
       on_trial: [param.on_trial ,[ Validators.required ]],

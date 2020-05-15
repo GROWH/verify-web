@@ -1,0 +1,35 @@
+<div>
+  <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="re_start_time">重传开始时间</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-date-picker
+        formControlName="re_start_time"
+        nzShowTime
+        >
+        </nz-date-picker>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="re_end_time">重传结束时间</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-date-picker
+        formControlName="re_end_time"
+        nzShowTime
+        >
+        </nz-date-picker>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="reset">是否重启</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-radio-group formControlName="reset">
+          <label nz-radio nzValue="是">是</label>
+          <label nz-radio nzValue="否">否</label>
+        </nz-radio-group>
+      </nz-form-control>
+    </nz-form-item>
+
+  </form>
+</div>

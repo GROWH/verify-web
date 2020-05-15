@@ -10,6 +10,17 @@ import { TongchangHttpService } from 'tongchang-lib';
 
 export class ThermManageFormComponent implements OnInit {
   @Input() param:{};
+  manageTypes = [
+    {name:'使用中'},
+    {name:'未使用'},
+    {name:'维修中'},
+    {name:'报损'},
+    {name:'丢失'},
+    {name:'校准中'},
+    {name:'停用'},
+    {name:'转让'},
+    {name:'使用中'},
+  ]
   roleUrl ='/role' //角色接口
   auditUrl = '/unit/queryAuditPass' //查询审核通过
   roleOptions = [];
@@ -25,6 +36,7 @@ export class ThermManageFormComponent implements OnInit {
 
   ngOnInit() {
     this.creatForm(this.param);
+    this.getAudits();
   }
   submitForm(): void {
     for (const i in this.validateForm.controls) {

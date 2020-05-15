@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
     } else {
       this.isSpinning = true;
       const params = this.form.getRawValue();
-      this.http.get<any>(this.loginUrl,params).subscribe(res => {
+      this.http.get<any>(this.loginUrl,params).toPromise().then(res => {
         this.isSpinning = false;
         if(res.code !== 0) {
           this.msg.error(res.message);
@@ -57,6 +57,9 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('account',res.data.account.id)
         localStorage.setItem(LOGINED_USER_UNIT_KEY,res.data.unit.id)
         this.router.navigateByUrl('/manage')
+      }).catch((err) => {
+        this.isSpinning = false;
+        console.log(err)
       })
     }
   }

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { NzModalService, NzModalRef, NzMessageService } from 'ng-zorro-antd';
 import { TongchangHttpService } from 'tongchang-lib';
 import { ThermometerFormComponent } from './thermometer-form/thermometer-form.component';
+import { ParamDesginFormComponent } from './param-desgin-form/param-desgin-form.component';
+import { ReuploadFormComponent } from './reupload-form/reupload-form.component';
 
 @Component({
   selector: 'app-thermometer',
@@ -23,6 +25,8 @@ export class ThermometerComponent implements OnInit {
   mapOfCheckedId: { [key: string]: boolean } = {};
   selectItems = []
   baseUrl='/thermometerManage'
+  configUrl='/thermometerManage/updateConfigure'
+  uploadUrl='/thermometerManage/reUploadData'
 
   constructor(
     private modal: NzModalService,
@@ -171,6 +175,100 @@ export class ThermometerComponent implements OnInit {
   //刷新
   paramQuery() {
     this.getData()
+  }
+  paramsDesign() {
+    const param = this.selectItems[0]
+    if(this.selectItems.length !== 1 ) {
+      this.msg.warning('请选择一项数据进行操作!')
+      return;
+    }
+    let modalRef:NzModalRef = this.modal.create({
+      nzTitle:"参数配置",
+      nzContent:ParamDesginFormComponent,
+      nzWidth:900,
+      nzComponentParams:{param},
+      nzFooter:[
+        {
+          label:'取消',
+          onClick:() => modalRef.close()
+        },
+        {
+          label:'确定',
+          type:'primary',
+          disabled:comp => !comp.validateForm.valid,
+          onClick:(comp) => {
+            let formVal = comp.validateForm.getRawValue()
+            this.modal.confirm({
+              nzTitle: '提交',
+              nzContent: '确认提交?',
+              nzOnOk: () => {
+                const params = {
+                  ...param,
+                  ...formVal
+                };
+                this.http.put(this.configUrl,params).subscribe(res => {
+                  if(res.code !==0) {
+                    this.msg.error(res.message);
+                    return
+                  }
+                  this.msg.success(res.message);
+                  this.getData();
+                })
+              }
+            })
+            modalRef.close()
+          }
+        }
+      ],
+      nzWrapClassName: 'modal-vertical-center'
+    })
+  }
+  reUpload() {
+    const param = this.selectItems[0]
+    if(this.selectItems.length !== 1 ) {
+      this.msg.warning('请选择一项数据进行操作!')
+      return;
+    }
+    let modalRef:NzModalRef = this.modal.create({
+      nzTitle:"参数配置",
+      nzContent:ReuploadFormComponent,
+      nzWidth:600,
+      nzComponentParams:{param},
+      nzFooter:[
+        {
+          label:'取消',
+          onClick:() => modalRef.close()
+        },
+        {
+          label:'确定',
+          type:'primary',
+          disabled:comp => !comp.validateForm.valid,
+          onClick:(comp) => {
+            let formVal = comp.validateForm.getRawValue()
+            this.modal.confirm({
+              nzTitle: '提交',
+              nzContent: '确认提交?',
+              nzOnOk: () => {
+                const params = {
+                  ...param,
+                  ...formVal
+                };
+                this.http.put(this.uploadUrl,params).subscribe(res => {
+                  if(res.code !==0) {
+                    this.msg.error(res.message);
+                    return
+                  }
+                  this.msg.success(res.message);
+                  this.getData();
+                })
+              }
+            })
+            modalRef.close()
+          }
+        }
+      ],
+      nzWrapClassName: 'modal-vertical-center'
+    })
   }
 
   //初始出请求

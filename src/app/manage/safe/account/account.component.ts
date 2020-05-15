@@ -26,32 +26,9 @@ export class AccountComponent implements OnInit {
   checkUrl='/account/enable/' //启用
   stopUrl='/account/stop/' //停用
   treeUrl='/account/queryUnit' //停用
+  selectNode
 
-  trees: NzTreeNodeOptions[] = [
-    {
-      title: 'parent 1',
-      key: '100',
-      children: [
-        {
-          title: 'parent 1-0',
-          key: '1001',
-          disabled: true,
-          children: [
-            { title: 'leaf 1-0-0', key: '10010', disableCheckbox: true, isLeaf: true },
-            { title: 'leaf 1-0-1', key: '10011', isLeaf: true }
-          ]
-        },
-        {
-          title: 'parent 1-1',
-          key: '1002',
-          children: [
-            { title: 'leaf 1-1-0', key: '10020', isLeaf: true },
-            { title: 'leaf 1-1-1', key: '10021', isLeaf: true }
-          ]
-        }
-      ]
-    }
-  ];
+  trees
 
   constructor(
     private modal: NzModalService,
@@ -60,7 +37,7 @@ export class AccountComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getData()
+    // this.getData()
     this.getTree()
   }
 
@@ -84,7 +61,6 @@ export class AccountComponent implements OnInit {
   }
   //新增操作
   Add() {
-    debugger
     const param = new params;
     let modalRef:NzModalRef = this.modal.create({
       nzTitle:"参数配置",
@@ -101,8 +77,12 @@ export class AccountComponent implements OnInit {
           type:'primary',
           disabled:comp => !comp.validateForm.valid,
           onClick:(comp) => {
-            let formVal = comp.validateForm.getRawValue()
-            console.log(formVal);
+            console.log(this.selectNode)
+            let formVal = {
+              ...comp.validateForm.getRawValue(),
+              unit_id:this.selectNode.key
+            }
+            
             this.modal.confirm({
               nzTitle: '提交',
               nzContent: '确认提交?',
@@ -115,7 +95,7 @@ export class AccountComponent implements OnInit {
                   }
                   this.msg.success(res.message);
                   modalRef.close()
-                  this.getData();
+                  this.getTree()
                 })
               }
             })
@@ -192,7 +172,7 @@ export class AccountComponent implements OnInit {
             return
           }
           this.msg.success(res.message);
-          this.getData();
+          this.getTree();
         })
       }
     })
@@ -215,7 +195,7 @@ export class AccountComponent implements OnInit {
         return
       }
       this.msg.success(res.message);
-      this.getData();
+      this.getTree();
     })
   }
   //停用
@@ -236,12 +216,12 @@ export class AccountComponent implements OnInit {
         return
       }
       this.msg.success(res.message);
-      this.getData();
+      this.getTree();
     })
   }
   //刷新
   Query() {
-    this.getData()
+    this.getTree()
   }
 
   //初始出请求
@@ -257,14 +237,14 @@ export class AccountComponent implements OnInit {
     })
   }
 
-  changePageIndex(pageIndex) {
-    this.page = pageIndex;
-    this.getData()
-  }
-  changePageSize (pageSize) {
-    this.size = pageSize
-    this.getData()
-  }
+  // changePageIndex(pageIndex) {
+  //   this.page = pageIndex;
+  //   this.getData()
+  // }
+  // changePageSize (pageSize) {
+  //   this.size = pageSize
+  //   this.getData()
+  // }
   yesOrno(value) {
     return value === 'true' || value === true || value === '是' ? '是' : '否'
   }
@@ -274,13 +254,44 @@ export class AccountComponent implements OnInit {
     this.http.get<any>(`${this.treeUrl}`).subscribe(res => {
       this.loading = false;
       if(res.code === 0) {
-        console.log(res)
+        let childrenUnits =  res.data.childrenUnits;
+        this.listOfDisplayData = res.data.accounts
+        let children =  childrenUnits.map(item => {
+          return {
+            title:item.unit_name,
+            key:item.id,
+            accounts:item.account,
+            isLeaf:true,
+            selected:this.selectNode && item.id === this.selectNode.key ? true : false,
+          }
+        })
+        let extra = [{
+          title:res.data.unit_name,
+          key:res.data.id,
+          accounts:res.data.accounts,
+          selected:!this.selectNode || this.selectNode.key === res.data.id ? true : false,
+          children:children
+        }]
+        this.trees = extra;
+        if(this.selectNode) {
+          const node = this.trees[0].children.filter(item => item.key === this.selectNode.key)[0]
+          this.selectNode  = node ? node : this.trees[0]
+        } else {
+          this.selectNode = this.trees[0]
+        }
+        this.nzClick(this.selectNode)
       }
     })
   }
 
-  nzClick(value){
-    console.log(value);
+  nzClick(nodeItem){
+    const node = Array.isArray(nodeItem) ? nodeItem[0] : nodeItem
+    this.selectNode = node.accounts ? node : node.node.origin
+    this.listOfDisplayData = this.selectNode.accounts;
+
+    // this.selectNode = nodeItem.node.key
+    // const accounts = nodeItem.node.origin.accounts
+    // this.listOfDisplayData = accounts;
   }
 
 }

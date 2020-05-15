@@ -36,7 +36,7 @@ export class UnitAuditComponent implements OnInit {
   }
 
   refreshStatus(): void {
-    this.isAllDisplayDataChecked = this.listOfDisplayData.every((item) => this.mapOfCheckedId[item.id]);
+    this.isAllDisplayDataChecked = this.listOfDisplayData.length !== 0 && this.listOfDisplayData.every((item) => this.mapOfCheckedId[item.id]);
     let checkId = this.mapOfCheckedId
     this.selectItems = this.listOfDisplayData.map((item) => {
       for(let key in checkId) {

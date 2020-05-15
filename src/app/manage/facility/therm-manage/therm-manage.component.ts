@@ -92,7 +92,7 @@ export class ThermManageComponent implements OnInit {
                   }
                   this.msg.success(res.message);
                   modalRef.close()
-                  this.getData();
+                  this.nodeClick(this.selectedItem);
                 })
               }
             })
@@ -141,7 +141,7 @@ export class ThermManageComponent implements OnInit {
                   }
                   this.msg.success(res.message);
                   modalRef.close()
-                  this.getData();
+                  this.nodeClick(this.selectedItem);
                 })
               }
             })
@@ -169,14 +169,14 @@ export class ThermManageComponent implements OnInit {
             return
           }
           this.msg.success(res.message);
-          this.getData();
+          this.nodeClick(this.selectedItem);
         })
       }
     })
   }
   //刷新
   Query() {
-    this.getData()
+    this.nodeClick(this.selectedItem)
   }
 
   //初始出请求
@@ -220,7 +220,8 @@ export class ThermManageComponent implements OnInit {
     this.http.get<any>(`${this.thermometerUrl}/${node.id}`).subscribe(res => {
       if(res.code === 0 ) {
         this.listOfDisplayData = res.data.records;
-        this.refreshStatus()
+        this.isAllDisplayDataChecked = false;
+        this.mapOfCheckedId = {};
       }
     })
   }

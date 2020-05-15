@@ -25,8 +25,8 @@ export class DefaultInterceptor  implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler):
     Observable<HttpEvent<any>> {
       let baseHeader = this.confg.headers
-      if (localStorage.getItem('unit') && localStorage.getItem('account')) {
-        this.http.addHeader('unit_id',localStorage.getItem('unit'));
+      if (localStorage.getItem('LOGINED_USER_UNIT_KEY') && localStorage.getItem('account')) {
+        this.http.addHeader('unit_id',localStorage.getItem('LOGINED_USER_UNIT_KEY'));
         this.http.addHeader('account_id',localStorage.getItem('account'));
       }
       const newReq = req.clone({

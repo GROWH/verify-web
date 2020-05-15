@@ -1,15 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { NzModalService, NzModalRef, NzMessageService } from 'ng-zorro-antd';
 import { TongchangHttpService } from 'tongchang-lib';
-import { ManageFormComponent } from '../../basic/unit-manage/manage-form/manage-form.component';
+import { FacilityBaseFormComponent } from './facility-base-form/facility-base-form.component';
+
 
 @Component({
-  selector: 'app-unit-manage',
-  templateUrl: './unit-manage.component.html',
-  styleUrls: ['./unit-manage.component.scss']
+  selector: 'app-facility-base',
+  templateUrl: './facility-base.component.html',
+  styleUrls: ['./facility-base.component.scss']
 })
 
-export class UnitManageComponent implements OnInit {
+
+export class FacilityBaseComponent implements OnInit {
 
   isAllDisplayDataChecked = false;
   isIndeterminate = false;
@@ -22,14 +24,17 @@ export class UnitManageComponent implements OnInit {
   listOfAllData:params[] = []
   mapOfCheckedId: { [key: string]: boolean } = {};
   selectItems = []
-  baseUrl='/unit'
+  baseUrl='/infrastructure'
   submitAudit='/unit/submitAudit'
 
   constructor(
     private modal: NzModalService,
     private msg: NzMessageService,
     private http: TongchangHttpService,
-  ) { }
+  ) {
+    // this.http.addHeader('account_id','14');
+    // this.http.addHeader('unit_id','10');
+   }
 
   ngOnInit() {
     this.getData()
@@ -58,7 +63,7 @@ export class UnitManageComponent implements OnInit {
     const param = new params;
     let modalRef:NzModalRef = this.modal.create({
       nzTitle:"参数配置",
-      nzContent:ManageFormComponent,
+      nzContent:FacilityBaseFormComponent,
       nzWidth:700,
       nzComponentParams:{param},
       nzFooter:[
@@ -83,11 +88,12 @@ export class UnitManageComponent implements OnInit {
                     return
                   }
                   this.msg.success(res.message);
+                  modalRef.close()
                   this.getData();
                 })
               }
             })
-            modalRef.close()
+ 
           }
         }
       ],
@@ -104,7 +110,7 @@ export class UnitManageComponent implements OnInit {
     if(this.selectItems[0].state === '待审核' || this.selectItems[0].state ==='审核通过') {   this.msg.warning("请选择状态为'草稿'或'审核不通过'的数据项进行操作!");return;}
     let modalRef:NzModalRef = this.modal.create({
       nzTitle:"参数配置",
-      nzContent:ManageFormComponent,
+      nzContent:FacilityBaseFormComponent,
       nzWidth:700,
       nzComponentParams:{param},
       nzFooter:[
@@ -153,36 +159,22 @@ export class UnitManageComponent implements OnInit {
     const flag = this.selectItems.every(item => item.state !== '待审核' && item.state !== '审核通过')
     if( !flag) {this.msg.warning("请选择状态为'草稿'或'审核不通过'的数据项进行操作!"); return;}
     const selectedIds = this.selectItems.map(it => it.id) + ''
-    this.http.delete(`${this.baseUrl}/${selectedIds}`).subscribe(res => {
-      if(res.code !==0) {
-        this.msg.error(res.message);
-        return
+    this.modal.confirm({
+      nzTitle:'删除',
+      nzContent:'确认删除?',
+      nzOnOk:() => {
+        this.http.delete(`${this.baseUrl}/${selectedIds}`).subscribe(res => {
+          if(res.code !==0) {
+            this.msg.error(res.message);
+            return
+          }
+          this.msg.success(res.message);
+          this.getData();
+        })
       }
-      this.msg.success(res.message);
-      this.getData();
     })
   }
   //提交审核
-  submitCheck() {
-    if(this.selectItems.length === 0 ) {
-      this.msg.warning('请先选择数据进行操作!')
-      return;
-    }
-    const flag = this.selectItems.every(it => it.state === '草稿')
-    if(!flag) {
-      this.msg.warning('请选择草稿状态的数据项进行操作')
-      return;
-    }
-    const selectedIds = this.selectItems.map(it => it.id) + ''
-    this.http.get(`${this.submitAudit}?ids=${selectedIds}`).subscribe(res => {
-      if(res.code !== 0) {
-        this.msg.error(res.message);
-        return
-      }
-      this.msg.success(res.message);
-      this.getData();
-    })
-  }
 
   //刷新
   Query() {
@@ -213,25 +205,19 @@ export class UnitManageComponent implements OnInit {
   yesOrno(value) {
     return value === 'true' || value === true || value === '是' ? '是' : '否'
   }
-
 }
 class params {
   id:number        //编号
-  unit_name:string;  //单位名称
-  social_code:string;     //统一社会信用代码
-  parent_id:string;    //上级单位
-  unit_type:number;  //单位类型
-  state:string;     //状态
-  fixed_phone:string;     //单位固话
-  linkman:boolean;  //联系人
-  cell_phone:boolean;  //联系人手机
-  unit_address	:string;  //单位地址
-  unit_email:string;  //邮箱
-  fax:boolean;  //传真
-  bank?:string;  //开户银行
-  bank_account?:string;  //银行账号
-  auditor?:string;  //审核人
-  audit_mark?:string;  //审核备注
-  audit_time?:string;  //审核时间
+  goods_no:string;  //货号
+  name:string;     //名称
+  product_busi:string;    //生产企业
+  norms:number;  // 规格
+  model_num:string;  // 型号
+  quality_period:string;   //保质期
+  price:string;  //采购金额
+  curing	:string;  // 养护事项
+  curing_cycle:string;  // 养护周期
+  aline?:string;  //校准/校正事项
+  aline_cycle?:string;  // 校准/校正周期 
   mark?:string;  //备注
 }

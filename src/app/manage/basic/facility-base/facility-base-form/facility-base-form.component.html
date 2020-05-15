@@ -1,0 +1,112 @@
+<div>
+  <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="goods_no">货号</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="goods_no" id="goods_no" />
+        <nz-form-explain *ngIf="validateForm.get('goods_no')?.dirty && validateForm.get('goods_no')?.errors">
+          请输入货号
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="name">名称</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="name" id="name" />
+        <nz-form-explain *ngIf="validateForm.get('name')?.dirty && validateForm.get('name')?.errors">
+          请输入名称
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="product_busi">生产企业</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input  nz-input formControlName="product_busi" id="product_busi" />
+        <nz-form-explain *ngIf="validateForm.get('product_busi')?.dirty && validateForm.get('product_busi')?.errors">
+          请输入生产企业
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="norms">规格</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="norms" id="norms" />
+        <nz-form-explain *ngIf="validateForm.get('norms')?.dirty && validateForm.get('norms')?.errors">
+          请输入规格
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="model_num">型号</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input  nz-input formControlName="model_num" id="model_num" />
+        <nz-form-explain *ngIf="validateForm.get('model_num')?.dirty && validateForm.get('model_num')?.errors">
+          型号
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="quality_period">保质期</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input  nz-input formControlName="quality_period" id="quality_period" />
+        <nz-form-explain *ngIf="validateForm.get('quality_period')?.dirty && validateForm.get('quality_period')?.errors">
+          保质期
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="price">采购金额</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input  nz-input formControlName="price" id="price" />
+        <nz-form-explain *ngIf="validateForm.get('price')?.dirty && validateForm.get('price')?.errors">
+          采购金额
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="curing">养护事项</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input  nz-input formControlName="curing" id="curing" />
+        <nz-form-explain *ngIf="validateForm.get('curing')?.dirty && validateForm.get('curing')?.errors">
+          养护事项
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="curing_cycle">养护周期</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input  nz-input formControlName="curing_cycle" id="curing_cycle" />
+        <nz-form-explain *ngIf="validateForm.get('curing_cycle')?.dirty && validateForm.get('curing_cycle')?.errors">
+          养护周期
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="aline">校准/校正事项</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input  nz-input formControlName="aline" id="aline" />
+        <nz-form-explain *ngIf="validateForm.get('aline')?.dirty && validateForm.get('aline')?.errors">
+          校准/校正事项
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="aline_cycle">校准/校正周期</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input  nz-input formControlName="aline_cycle" id="aline_cycle" />
+        <nz-form-explain *ngIf="validateForm.get('aline_cycle')?.dirty && validateForm.get('aline_cycle')?.errors">
+          校准/校正周期
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"   nzFor="mark">备注</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <textarea   nz-input formControlName="mark" id="mark"></textarea>
+        <nz-form-explain *ngIf="validateForm.get('mark')?.dirty && validateForm.get('mark')?.errors">
+          请输入备注
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</div>

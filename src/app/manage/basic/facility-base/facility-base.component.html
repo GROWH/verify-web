@@ -1,0 +1,58 @@
+<div style="height: 100%;padding: 10px;">
+  <div class="btns">
+    <button class="mr8" nz-button nzType="primary" (click)="Add()"><i nz-icon type="plus"></i>新增</button>
+    <button class="mr8" nz-button nzType="default" (click)="Edit()"><i nz-icon type="edit"></i>修改</button>
+    <button class="mr8" nz-button nzType="danger" (click)="Delete()"><i nz-icon type="delete"></i>删除</button>
+    <button class="mr8" nz-button nzType="default" (click)="Query()"><i nz-icon type="redo"></i>刷新</button>
+  </div>
+  <div style="width: 1510px;">
+    <nz-table
+    #rowSelectionTable
+    nzShowSizeChanger
+    [nzData]="listOfDisplayData"
+    [nzTotal]="total"
+    (nzPageIndexChange)="changePageIndex($event)"   
+    (nzPageSizeChange)="changePageSize($event)"
+  >
+    <thead>
+      <tr>
+        <th
+          nzShowCheckbox
+          [(nzChecked)]="isAllDisplayDataChecked"
+          [nzIndeterminate]="isIndeterminate"
+          (nzCheckedChange)="checkAll($event)"
+        ></th>
+        <th>货号</th>
+        <th>名称</th>
+        <th>生产企业</th>
+        <th>规格</th>
+        <th>型号</th>
+        <th>保质期</th>
+        <th>采购金额</th>
+        <th>养护事项</th>
+        <th>养护周期</th>
+        <th>校准/校正事项</th>
+        <th>校准/校正周期</th>
+        <th>备注</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of rowSelectionTable.data">
+        <td nzShowCheckbox [(nzChecked)]="mapOfCheckedId[data.id]" (nzCheckedChange)="refreshStatus()"></td>
+        <td>{{ data.goods_no }}</td>
+        <td>{{ data.name }}</td>
+        <td>{{ data.product_busi }}</td>
+        <td>{{ data.norms }}</td>
+        <td>{{ data.model_num }}</td>
+        <td>{{ data.quality_period }}</td>
+        <td>{{ data.price }}</td>
+        <td>{{ data.curing }}</td>
+        <td>{{ data.curing_cycle }}</td>
+        <td>{{ data.aline }}</td>
+        <td>{{ data.aline_cycle}}</td>
+        <td>{{ data.mark }}</td>
+      </tr>
+    </tbody>
+  </nz-table>
+  </div>
+</div>

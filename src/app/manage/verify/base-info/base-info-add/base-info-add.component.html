@@ -1,0 +1,134 @@
+<div class="wrapper">
+  <div class="content">
+    <div class="tips" *ngIf="currStp === 0">
+      <div class="left">
+
+      </div>
+      <div class="right">
+        <div class="title">欢迎使用验证对象基础资料创建向导</div>
+        <p>本向导将引导您创建验证任务基础资料, 向导分别为以下步骤: </p>
+        <p *ngFor="let stepItem of steps; index as i">
+          {{i + 1}}. {{stepItem}}
+        </p>
+      </div>
+    </div>
+    <div class="base" *ngIf="currStp === 1">
+      <div class="title">
+        基础信息
+      </div>
+      <nz-divider style="margin: 0;"></nz-divider>
+      <form
+        nz-form
+        [formGroup]="form"
+      >
+        <div nz-row>
+          <nz-form-label nzSpan="4" nzRequired>验证对象单位</nz-form-label>
+          <nz-form-control nzSpan="18">
+            <nz-input-number
+              class="full-width"
+              formControlName="client_id"
+              [nzPlaceHolder]="'请输入'"
+            ></nz-input-number>
+          </nz-form-control>
+        </div>
+        
+        <div nz-row>
+          <nz-form-label nzSpan="4" nzRequired>单位类型</nz-form-label>
+          <nz-form-control nzSpan="18">
+            <nz-radio-group formControlName="client_type">
+              <label
+                *ngFor="let item of client_types"
+                nz-radio
+                [nzValue]="item"
+              >{{item}}</label>
+            </nz-radio-group>
+          </nz-form-control>          
+        </div>
+        
+        <div nz-row>
+          <nz-form-label nzSpan="4" nzRequired>验证对象类别</nz-form-label>
+          <nz-form-control nzSpan="18">
+            <nz-radio-group formControlName="target_type">
+              <label
+                *ngFor="let item of types"
+                nz-radio
+                [nzValue]="item"
+              >{{item}}</label>
+            </nz-radio-group>
+          </nz-form-control>          
+        </div>
+
+        <div nz-row>
+          <nz-form-label nzSpan="4" nzRequired>验证时间</nz-form-label>
+          <nz-form-control nzSpan="7">
+            <nz-date-picker
+              class="full-width"
+              formControlName="verify_time"
+              nzPlaceHolder="请选择"
+            ></nz-date-picker>
+          </nz-form-control>
+
+          <nz-form-label nzSpan="4" nzRequired>验证到期时间</nz-form-label>
+          <nz-form-control nzSpan="7">
+            <nz-date-picker
+              class="full-width"
+              formControlName="verify_invalid_time"
+              nzPlaceHolder="请选择"
+            ></nz-date-picker>
+          </nz-form-control>
+        </div>
+
+        <div nz-row>
+          <nz-form-label nzSpan="4" nzRequired>预警天数</nz-form-label>
+          <nz-form-control nzSpan="7">
+            <nz-input-number
+              class="full-width"
+              formControlName="warn_before"
+              [nzMin]="1"
+              [nzStep]="1"
+              [nzPrecision]="0"
+              [nzPlaceHolder]="'下次验证预警时间(天数)'"
+            ></nz-input-number>
+          </nz-form-control>
+        </div>
+      </form>
+    </div>
+
+    <ng-container *ngIf="currStp > 1" [ngSwitch]="target_type">
+      <ng-container *ngSwitchCase="'库房'">
+        <app-base-info-add-stock
+          [baseInfo]="form.getRawValue()"
+          (outerPrev)="prev()"
+        ></app-base-info-add-stock>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="'保温箱'">
+        <app-base-info-add-incubator
+          [baseInfo]="form.getRawValue()"
+          (outerPrev)="prev()"
+        ></app-base-info-add-incubator>
+      </ng-container>
+      
+    </ng-container>
+    
+  </div>
+  <div class="footer" *ngIf="currStp <= 1">
+    <button
+      nz-button
+      nzType="primary"
+      [disabled]="currStp === 0"
+      (click)="prev()"
+    >上一步</button>
+    <button
+      nz-button
+      nzType="primary"
+      *ngIf="currStp !== steps.length"
+      (click)="next(currStp)"
+    >下一步</button>
+    <button
+      nz-button
+      nzType="primary"
+      *ngIf="currStp === steps.length"
+    >完成</button>
+  </div>
+</div>

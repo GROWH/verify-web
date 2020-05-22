@@ -1,0 +1,53 @@
+@import "variables";
+
+.wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  .params, .points, .view {
+    flex: 200px 1 1;
+    overflow: auto;
+    padding: $ContainerPadding;
+    .title {
+      @include title;
+    }
+    form {
+      padding: $ContainerPadding;
+    }
+  }
+
+  .points {
+    form {
+      .other-add {
+        margin-top: 10px;
+      }
+      .other-del {
+        margin-top: 2px;
+        text-align: right;
+      }
+    }
+  }
+
+  .view {
+    .key {
+      font-size: 16px;
+      line-height: 2;
+      font-weight: bold;
+      color: #000;
+      &::after {
+        content: ":";
+      }
+    }
+  }
+
+  .footer {
+    border-top: 1px solid lightgray;
+    flex: auto 0 0;
+    padding: 10px;
+    display: flex;
+    justify-content: flex-end;
+    > * {
+      margin-left: 8px;
+    }
+  }
+}

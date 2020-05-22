@@ -46,6 +46,10 @@ import { SharedModule } from '@/shared/shared.module';
             loadChildren: './monit/monit.module#MonitModule'
           },
           {
+            path: 'verify',
+            loadChildren: './verify/verify.module#VerifyModule'
+          },
+          {
             path:'facility',
             loadChildren:'./facility/facility.module#FacilityModule'
           }

@@ -26,6 +26,16 @@
   }
 }
 
+.modal-vertical-center.no-padding {
+  .ant-modal {
+    .ant-modal-content {
+      .ant-modal-body {
+        padding: 0;
+      }
+    }
+  }
+}
+
 .full-width {
   width: 100%;
 }

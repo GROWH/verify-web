@@ -108,6 +108,41 @@
           (outerPrev)="prev()"
         ></app-base-info-add-incubator>
       </ng-container>
+
+      <ng-container *ngSwitchCase="'冷藏车'">
+        <app-base-info-add-car
+          [baseInfo]="form.getRawValue()"
+          (outerPrev)="prev()"
+        ></app-base-info-add-car>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="'冷柜'">
+        <app-base-info-add-freezer
+          [baseInfo]="form.getRawValue()"
+          (outerPrev)="prev()"
+        ></app-base-info-add-freezer>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="'车载冰箱'">
+        <app-base-info-add-car-freezer
+          [baseInfo]="form.getRawValue()"
+          (outerPrev)="prev()"
+        ></app-base-info-add-car-freezer>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="'温度监测系统'">
+        <app-base-info-add-system
+          [baseInfo]="form.getRawValue()"
+          (outerPrev)="prev()"
+        ></app-base-info-add-system>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="'其他'">
+        <app-base-info-add-others
+          [baseInfo]="form.getRawValue()"
+          (outerPrev)="prev()"
+        ></app-base-info-add-others>
+      </ng-container>
       
     </ng-container>
     

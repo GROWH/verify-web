@@ -1,0 +1,488 @@
+<div class="wrapper">
+  <div class="params" *ngIf="step === 0" >
+    <div class="title">参数设定</div>
+    <nz-divider style="margin: 0;"></nz-divider>
+    <form nz-form [formGroup]="form">
+      <div nz-row>
+        <nz-form-label nzSpan="4" nzRequired>温度上限</nz-form-label>
+        <nz-form-control nzSpan="7">
+          <nz-input-number
+            class="full-width"
+            formControlName="temp_up"
+            [nzStep]="1"
+            [nzPlaceHolder]="'请输入'"
+          ></nz-input-number>
+        </nz-form-control>
+  
+        <nz-form-label nzSpan="4" nzRequired>温度下限</nz-form-label>
+        <nz-form-control nzSpan="7">
+          <nz-input-number
+            class="full-width"
+            formControlName="temp_down"
+            [nzStep]="1"
+            [nzPlaceHolder]="'请输入'"
+          ></nz-input-number>
+        </nz-form-control>
+      </div>
+  
+      <div nz-row>
+        <nz-form-label nzSpan="4" nzRequired>面积</nz-form-label>
+        <nz-form-control nzSpan="7">
+          <nz-input-number
+            class="full-width"
+            formControlName="car_area"
+            [nzStep]="1"
+            [nzPlaceHolder]="'请输入'"
+          ></nz-input-number>
+        </nz-form-control>
+        
+        <nz-form-label nzSpan="4" nzRequired>体积</nz-form-label>
+        <nz-form-control nzSpan="7">
+          <nz-input-number
+            class="full-width"
+            formControlName="car_vol"
+            [nzStep]="1"
+            [nzPlaceHolder]="'请输入'"
+          ></nz-input-number>
+        </nz-form-control>
+      </div>
+  
+      <div nz-row>
+        <nz-form-label nzSpan="4" nzRequired>出入口数量</nz-form-label>
+        <nz-form-control nzSpan="7">
+          <nz-input-number
+            class="full-width"
+            formControlName="door"
+            [nzMin]="0"
+            [nzStep]="1"
+            [nzPrecision]="0"
+            [nzPlaceHolder]="'请输入'"
+          ></nz-input-number>
+        </nz-form-control>
+        
+        <nz-form-label nzSpan="4" nzRequired>死角数量</nz-form-label>
+        <nz-form-control nzSpan="7">
+          <nz-input-number
+            class="full-width"
+            formControlName="blind_point"
+            [nzMin]="0"
+            [nzStep]="1"
+            [nzPrecision]="0"
+            [nzPlaceHolder]="'请输入'"
+          ></nz-input-number>
+        </nz-form-control>
+      </div>
+  
+      <div nz-row>
+        <nz-form-label nzSpan="4" nzRequired>监控探头数量</nz-form-label>
+        <nz-form-control nzSpan="7">
+          <nz-input-number
+            class="full-width"
+            formControlName="monit_point"
+            [nzMin]="0"
+            [nzStep]="1"
+            [nzPrecision]="0"
+            [nzPlaceHolder]="'请输入'"
+          ></nz-input-number>
+        </nz-form-control>
+        
+        <nz-form-label nzSpan="4" nzRequired>风机数量</nz-form-label>
+        <nz-form-control nzSpan="7">
+          <nz-input-number
+            class="full-width"
+            formControlName="fan"
+            [nzMin]="0"
+            [nzStep]="1"
+            [nzPrecision]="0"
+            [nzPlaceHolder]="'请输入'"
+          ></nz-input-number>
+        </nz-form-control>
+      </div>
+      
+      <ng-container formArrayName="fan_conf">
+        <div
+          nz-row
+          *ngFor="let ctrl of fanConfCtrls; index as i"
+          [formGroupName]="i"
+        >
+          <nz-form-label nzSpan="4" nzRequired>
+            {{ i + 1 }} 号风机
+          </nz-form-label>
+          <nz-form-control nzSpan="18">
+            <nz-radio-group formControlName="type">
+              <label nz-radio [nzValue]="'主风机'">主风机</label>
+              <label nz-radio [nzValue]="'备用风机'">备用风机</label>
+              <label nz-radio [nzValue]="'联动风机'">联动风机</label>
+            </nz-radio-group>
+          </nz-form-control>
+        </div>
+      </ng-container>
+    </form>
+  </div>
+  
+  <div class="points" *ngIf="step === 1">
+    <div class="title">布点数量配置</div>
+    <nz-divider style="margin: 0;"></nz-divider>
+    <form nz-form [formGroup]="pointsForm">
+      <div nz-row>
+        <nz-form-label nzSpan="4" nzRequired>环境测点</nz-form-label>
+        <nz-form-control nzSpan="7">
+          <nz-input-number
+            class="full-width"
+            formControlName="env"
+            [nzMin]="0"
+            [nzStep]="1"
+            [nzPrecision]="0"
+            [nzPlaceHolder]="'请输入'"
+          ></nz-input-number>
+        </nz-form-control>
+
+        <nz-form-label nzSpan="4" nzRequired>均匀性测点</nz-form-label>
+        <nz-form-control nzSpan="7">
+          <nz-input-number
+            class="full-width"
+            formControlName="matrix"
+            [nzMin]="0"
+            [nzStep]="1"
+            [nzPrecision]="0"
+            [nzPlaceHolder]="'请输入'"
+          ></nz-input-number>
+        </nz-form-control>
+      </div>
+      
+      <div nz-row>
+        <nz-form-label nzSpan="4" nzRequired>监测探头</nz-form-label>
+        <nz-form-control nzSpan="7">
+          <nz-input-number
+            class="full-width"
+            formControlName="monit"
+            [nzMin]="0"
+            [nzStep]="1"
+            [nzPrecision]="0"
+            [nzPlaceHolder]="'请输入'"
+          ></nz-input-number>
+        </nz-form-control>
+      </div>
+      
+      <ng-container
+        formArrayName="door"
+        *ngIf="pointsForm.get('door').controls.length > 0"
+      >
+        <nz-divider nzText="出入口"></nz-divider>
+        <ng-container *ngFor="let ctrl of pointsForm.get('door').controls; index as i">
+          <div nz-row [formGroupName]="i">
+            <nz-form-label nzSpan="4" nzRequired>测点名称</nz-form-label>
+            <nz-form-control nzSpan="7">
+              <input nz-input formControlName="name" placeholder="请输入">
+            </nz-form-control>
+            
+            <nz-form-label nzSpan="4" nzRequired>测点数量</nz-form-label>
+            <nz-form-control nzSpan="7">
+              <nz-input-number
+                class="full-width"
+                formControlName="count"
+                [nzMin]="0"
+                [nzStep]="1"
+                [nzPrecision]="0"
+                [nzPlaceHolder]="'请输入'"
+              ></nz-input-number>
+            </nz-form-control>
+          </div>
+        </ng-container>
+      </ng-container>
+      
+      <ng-container
+        formArrayName="fan_out"
+        *ngIf="pointsForm.get('fan_out').controls.length > 0"
+      >
+        <nz-divider nzText="风机出风口"></nz-divider>
+        <ng-container *ngFor="let ctrl of pointsForm.get('fan_out').controls; index as i">
+          <div nz-row [formGroupName]="i">
+            <nz-form-label nzSpan="4" nzRequired>测点名称</nz-form-label>
+            <nz-form-control nzSpan="7">
+              <input nz-input formControlName="name" placeholder="请输入">
+            </nz-form-control>
+            
+            <nz-form-label nzSpan="4" nzRequired>测点数量</nz-form-label>
+            <nz-form-control nzSpan="7">
+              <nz-input-number
+                class="full-width"
+                formControlName="count"
+                [nzMin]="0"
+                [nzStep]="1"
+                [nzPrecision]="0"
+                [nzPlaceHolder]="'请输入'"
+              ></nz-input-number>
+              
+            </nz-form-control>
+          </div>
+        </ng-container>
+      </ng-container>
+      
+      <ng-container
+        formArrayName="fan_in"
+        *ngIf="pointsForm.get('fan_in').controls.length > 0"
+      >
+        <nz-divider nzText="风机回风口"></nz-divider>
+        <ng-container *ngFor="let ctrl of pointsForm.get('fan_in').controls; index as i">
+          <div nz-row [formGroupName]="i">
+            <nz-form-label nzSpan="4" nzRequired>测点名称</nz-form-label>
+            <nz-form-control nzSpan="7">
+              <input nz-input formControlName="name" placeholder="请输入">
+            </nz-form-control>
+            
+            <nz-form-label nzSpan="4" nzRequired>测点数量</nz-form-label>
+            <nz-form-control nzSpan="7">
+              <nz-input-number
+                class="full-width"
+                formControlName="count"
+                [nzMin]="0"
+                [nzStep]="1"
+                [nzPrecision]="0"
+                [nzPlaceHolder]="'请输入'"
+              ></nz-input-number>
+              
+            </nz-form-control>
+          </div>
+        </ng-container>
+      </ng-container>
+      
+      <ng-container
+        formArrayName="bland"
+        *ngIf="pointsForm.get('bland').controls.length > 0"
+      >
+        <nz-divider nzText="死角"></nz-divider>
+        <ng-container *ngFor="let ctrl of pointsForm.get('bland').controls; index as i">
+          <div nz-row [formGroupName]="i">
+            <nz-form-label nzSpan="4" nzRequired>测点名称</nz-form-label>
+            <nz-form-control nzSpan="7">
+              <input nz-input formControlName="name" placeholder="请输入">
+            </nz-form-control>
+            
+            <nz-form-label nzSpan="4" nzRequired>测点数量</nz-form-label>
+            <nz-form-control nzSpan="7">
+              <nz-input-number
+                class="full-width"
+                formControlName="count"
+                [nzMin]="0"
+                [nzStep]="1"
+                [nzPrecision]="0"
+                [nzPlaceHolder]="'请输入'"
+              ></nz-input-number>
+              
+            </nz-form-control>
+          </div>
+        </ng-container>
+      </ng-container>
+      
+      <ng-container formArrayName="others">
+        <nz-divider nzText="其他"></nz-divider>
+        <ng-container *ngFor="let ctrl of pointsForm.get('others').controls; index as i">
+          <div nz-row [formGroupName]="i">
+            <nz-form-label nzSpan="4" nzRequired>测点名称</nz-form-label>
+            <nz-form-control nzSpan="7">
+              <input nz-input formControlName="name" placeholder="请输入">
+            </nz-form-control>
+            
+            <nz-form-label nzSpan="4" nzRequired>测点数量</nz-form-label>
+            <nz-form-control nzSpan="7">
+              <nz-input-number
+                class="full-width"
+                formControlName="count"
+                [nzMin]="0"
+                [nzStep]="1"
+                [nzPrecision]="0"
+                [nzPlaceHolder]="'请输入'"
+              ></nz-input-number>
+            </nz-form-control>
+
+            <div nz-col nzSpan="2" class="other-del">
+              <button
+                nz-button
+                nzType="primary"
+                nzShape="circle"
+                (click)="onOtherDel(i)"
+              >
+                <i nz-icon nzType="minus-circle" nzTheme="outline"></i>
+              </button>
+            </div>
+
+          </div>
+        </ng-container>
+        <div nz-row class="other-add">
+          <button
+            nz-button
+            nzType="primary"
+            nzBlock
+            (click)="onOtherAdd()"
+          >
+            <i nz-icon type="plus"></i> 新增
+          </button>
+        </div>
+      </ng-container>
+    </form>
+  </div>
+  
+  <div class="view" *ngIf="step === 2">
+    <div class="title">验证对象基础资料信息确认</div>
+    <nz-divider style="margin: 0;"></nz-divider>
+    <nz-card nzTitle="基础信息" nzBordered="false">
+      <div nz-row nzGutter="32">
+        <div nz-col nzSpan="8">
+          <div class="key">客户单位</div>
+          <div class="value"></div>
+        </div>
+        <div nz-col nzSpan="8">
+          <div class="key">单位类型</div>
+          <div class="value">{{ baseInfo.client_type }}</div>
+        </div>
+        <div nz-col nzSpan="8">
+          <div class="key">实施单位</div>
+          <div class="value"></div>
+        </div>
+      </div>
+      <div nz-row nzGutter="32">
+        <div nz-col nzSpan="8">
+          <div class="key">验证对象类别</div>
+          <div class="value">{{ baseInfo.target_type }}</div>
+        </div>
+        <div nz-col nzSpan="8">
+          <div class="key">验证时间</div>
+          <div class="value">{{ baseInfo.verify_time }}</div>
+        </div>
+        <div nz-col nzSpan="8">
+          <div class="key">验证到期时间</div>
+          <div class="value">{{ baseInfo.verify_invalid_time }}</div>
+        </div>
+      </div>
+      <div nz-row nzGutter="32">
+        <div nz-col nzSpan="8">
+          <div class="key">预警天数</div>
+          <div class="value">{{ baseInfo.warn_before }}</div>
+        </div>
+        <div nz-col nzSpan="8">
+          
+        </div>
+        <div nz-col nzSpan="8">
+          
+        </div>
+      </div>
+    </nz-card>
+    <nz-card nzTitle="库房参数" nzBordered="false">
+      <div nz-row nzGutter="32">
+        <div nz-col nzSpan="8">
+          <div class="key">温度上限</div>
+          <div class="value">{{ params.temp_up }}</div>
+        </div>
+        <div nz-col nzSpan="8">
+          <div class="key">温度下限</div>
+          <div class="value">{{ params.temp_down }}</div>
+        </div>
+        <div nz-col nzSpan="8">
+          
+        </div>
+      </div>
+      <div nz-row nzGutter="32">
+        <div nz-col nzSpan="8">
+          <div class="key">车厢面积</div>
+          <div class="value">{{ params.car_area }}</div>
+        </div>
+        <div nz-col nzSpan="8">
+          <div class="key">车厢体积</div>
+          <div class="value">{{ params.car_vol }}</div>
+        </div>
+        <div nz-col nzSpan="8">
+          <div class="key">风机数量</div>
+          <div class="value">{{ params.fan }}</div>
+        </div>
+      </div>
+      <div nz-row nzGutter="32">
+        <div nz-col nzSpan="8">
+          <div class="key">出入口数量</div>
+          <div class="value">{{ params.door }}</div>
+        </div>
+        <div nz-col nzSpan="8">
+          <div class="key">死角数量</div>
+          <div class="value">{{ params.blind_point }}</div>
+        </div>
+        <div nz-col nzSpan="8">
+          <div class="key">监控探头数量</div>
+          <div class="value">{{ params.monit_point }}</div>
+        </div>
+      </div>
+      <div *ngFor="let fanConf of params.fan_conf; index as i">
+        {{ i + 1 }}: {{ fanConf.type }}
+      </div>
+    </nz-card>
+    <nz-card nzTitle="布点配置" nzBordered="false">
+      <div nz-row nzGutter="32">
+        <div nz-col nzSpan="8">
+          <div class="key">环境测点</div>
+          <div class="value">{{ pointsConf.env }} 个</div>
+        </div>
+        <div nz-col nzSpan="8">
+          <div class="key">均匀性测点</div>
+          <div class="value">{{ pointsConf.matrix }} 个</div>
+        </div>
+        <div nz-col nzSpan="8">
+          <div class="key">监控探头</div>
+          <div class="value">{{ pointsConf.monit }} 个</div>
+        </div>
+      </div>
+
+      <div nz-row nzGutter="32">
+        <div nz-col nzSpan="8">
+          <div class="key">出入口</div>
+          <div class="value" *ngFor="let doorConf of pointsConf.door">
+            {{ doorConf.name }}: {{ doorConf.count }} 个
+          </div>
+        </div>
+        <div nz-col nzSpan="8">
+          <div class="key">出风口</div>
+          <div class="value" *ngFor="let fanOutConf of pointsConf.fan_out">
+            {{ fanOutConf.name }}: {{ fanOutConf.count }} 个
+          </div>
+        </div>
+        <div nz-col nzSpan="8">
+          <div class="key">回风口</div>
+          <div class="value" *ngFor="let fanInConf of pointsConf.fan_in">
+            {{ fanInConf.name }}: {{ fanInConf.count }} 个
+          </div>
+        </div>
+      </div>
+
+      <div nz-row nzGutter="32">
+        <div nz-col nzSpan="8">
+          <div class="key">死角</div>
+          <div class="value" *ngFor="let blandConf of pointsConf.bland">
+            {{ blandConf.name }}: {{ blandConf.count }} 个
+          </div>
+        </div>
+        <div nz-col nzSpan="8">
+          <div class="key">其他测点</div>
+          <div class="value" *ngFor="let otherConf of pointsConf.others">
+            {{ otherConf.name }}: {{ otherConf.count }} 个
+          </div>
+        </div>
+      </div>
+    </nz-card>
+  </div>
+  <div class="footer">
+    <button
+      nz-button
+      nzType="primary"
+      (click)="prev()"
+    >上一步</button>
+    <button
+      nz-button
+      nzType="primary"
+      *ngIf="step !== stepMax"
+      (click)="next()"
+    >下一步</button>
+    <button
+      nz-button
+      nzType="primary"
+      *ngIf="step === stepMax"
+    >完成</button>
+  </div>
+</div>

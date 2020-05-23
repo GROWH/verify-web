@@ -1,0 +1,227 @@
+<div class="wrapper">
+  <div class="params" *ngIf="step === 0" >
+    <div class="title">参数设定</div>
+    <nz-divider style="margin: 0;"></nz-divider>
+    <form nz-form [formGroup]="form">
+      <div nz-row>
+        <nz-form-label nzSpan="4" nzRequired>保温箱数量</nz-form-label>
+        <nz-form-control nzSpan="7">
+          <nz-input-number
+            class="full-width"
+            formControlName="box_count"
+            [nzStep]="1"
+            [nzPlaceHolder]="'请输入'"
+          ></nz-input-number>
+        </nz-form-control>
+      </div>
+    </form>
+  </div>
+  
+  <div class="points" *ngIf="step === 1">
+    <div class="title">布点数量配置</div>
+    <nz-divider style="margin: 0;"></nz-divider>
+    <form nz-form [formGroup]="pointsForm">
+      <div nz-row>
+        <nz-form-label nzSpan="4" nzRequired>模拟保温箱运输环境</nz-form-label>
+        <nz-form-control nzSpan="7">
+          <nz-input-number
+            class="full-width"
+            formControlName="trans_env"
+            [nzMin]="0"
+            [nzStep]="1"
+            [nzPrecision]="0"
+            [nzPlaceHolder]="'请输入'"
+          ></nz-input-number>
+        </nz-form-control>
+      </div>
+      
+      
+      <ng-container
+        formArrayName="boxes"
+        *ngIf="pointsForm.get('boxes').controls.length > 0"
+      >
+        <nz-divider nzText="保温箱"></nz-divider>
+        <ng-container *ngFor="let ctrl of pointsForm.get('boxes').controls; index as i">
+          <div nz-row [formGroupName]="i">
+            <nz-form-label nzSpan="4" nzRequired>测点名称</nz-form-label>
+            <nz-form-control nzSpan="7">
+              <input nz-input formControlName="name" placeholder="请输入">
+            </nz-form-control>
+            
+            <nz-form-label nzSpan="4" nzRequired>测点数量</nz-form-label>
+            <nz-form-control nzSpan="7">
+              <nz-input-number
+                class="full-width"
+                formControlName="count"
+                [nzMin]="0"
+                [nzStep]="1"
+                [nzPrecision]="0"
+                [nzPlaceHolder]="'请输入'"
+              ></nz-input-number>
+            </nz-form-control>
+          </div>
+        </ng-container>
+      </ng-container>
+      
+      <ng-container formArrayName="others">
+        <nz-divider nzText="其他"></nz-divider>
+        <ng-container *ngFor="let ctrl of pointsForm.get('others').controls; index as i">
+          <div nz-row [formGroupName]="i">
+            <nz-form-label nzSpan="4" nzRequired>测点名称</nz-form-label>
+            <nz-form-control nzSpan="7">
+              <input nz-input formControlName="name" placeholder="请输入">
+            </nz-form-control>
+            
+            <nz-form-label nzSpan="4" nzRequired>测点数量</nz-form-label>
+            <nz-form-control nzSpan="7">
+              <nz-input-number
+                class="full-width"
+                formControlName="count"
+                [nzMin]="0"
+                [nzStep]="1"
+                [nzPrecision]="0"
+                [nzPlaceHolder]="'请输入'"
+              ></nz-input-number>
+            </nz-form-control>
+
+            <div nz-col nzSpan="2" class="other-del">
+              <button
+                nz-button
+                nzType="primary"
+                nzShape="circle"
+                (click)="onOtherDel(i)"
+              >
+                <i nz-icon nzType="minus-circle" nzTheme="outline"></i>
+              </button>
+            </div>
+
+          </div>
+        </ng-container>
+        <div nz-row class="other-add">
+          <button
+            nz-button
+            nzType="primary"
+            nzBlock
+            (click)="onOtherAdd()"
+          >
+            <i nz-icon type="plus"></i> 新增
+          </button>
+        </div>
+      </ng-container>
+      
+
+      
+    </form>
+  </div>
+  
+  <div class="view" *ngIf="step === 2">
+    <div class="title">验证对象基础资料信息确认</div>
+    <nz-divider style="margin: 0;"></nz-divider>
+    <nz-card nzTitle="基础信息" nzBordered="false">
+      <div nz-row nzGutter="32">
+        <div nz-col nzSpan="8">
+          <div class="key">客户单位</div>
+          <div class="value"></div>
+        </div>
+        <div nz-col nzSpan="8">
+          <div class="key">单位类型</div>
+          <div class="value">{{ baseInfo.client_type }}</div>
+        </div>
+        <div nz-col nzSpan="8">
+          <div class="key">实施单位</div>
+          <div class="value"></div>
+        </div>
+      </div>
+      <div nz-row nzGutter="32">
+        <div nz-col nzSpan="8">
+          <div class="key">验证对象类别</div>
+          <div class="value">{{ baseInfo.target_type }}</div>
+        </div>
+        <div nz-col nzSpan="8">
+          <div class="key">验证时间</div>
+          <div class="value">{{ baseInfo.verify_time }}</div>
+        </div>
+        <div nz-col nzSpan="8">
+          <div class="key">验证到期时间</div>
+          <div class="value">{{ baseInfo.verify_invalid_time }}</div>
+        </div>
+      </div>
+      <div nz-row nzGutter="32">
+        <div nz-col nzSpan="8">
+          <div class="key">预警天数</div>
+          <div class="value">{{ baseInfo.warn_before }}</div>
+        </div>
+        <div nz-col nzSpan="8">
+          
+        </div>
+        <div nz-col nzSpan="8">
+          
+        </div>
+      </div>
+    </nz-card>
+    <nz-card nzTitle="保温箱参数" nzBordered="false">
+      <div nz-row nzGutter="32">
+        <div nz-col nzSpan="8">
+          <div class="key">保温箱数量</div>
+          <div class="value">{{ params.box_count }}</div>
+        </div>
+        <div nz-col nzSpan="8">
+          
+        </div>
+        <div nz-col nzSpan="8">
+          
+        </div>
+      </div>
+    </nz-card>
+    <nz-card nzTitle="布点配置" nzBordered="false">
+      <div nz-row nzGutter="32">
+        <div nz-col nzSpan="8">
+          <div class="key">模拟保温箱运输环境</div>
+          <div class="value">{{ pointsConf.trans_env }} 个</div>
+        </div>
+        <div nz-col nzSpan="8">
+          
+        </div>
+        <div nz-col nzSpan="8">
+          
+        </div>
+      </div>
+
+      <div nz-row nzGutter="32">
+        <div nz-col nzSpan="8">
+          <div class="key">保温箱</div>
+          <div class="value" *ngFor="let box of pointsConf.boxes">
+            {{ box.name }}: {{ box.count }} 个
+          </div>
+        </div>
+
+        <div nz-col nzSpan="8">
+          <div class="key">其他测点</div>
+          <div class="value" *ngFor="let otherConf of pointsConf.others">
+            {{ otherConf.name }}: {{ otherConf.count }} 个
+          </div>
+        </div>
+      </div>
+
+    </nz-card>
+  </div>
+
+  <div class="footer">
+    <button
+      nz-button
+      nzType="primary"
+      (click)="prev()"
+    >上一步</button>
+    <button
+      nz-button
+      nzType="primary"
+      *ngIf="step !== stepMax"
+      (click)="next()"
+    >下一步</button>
+    <button
+      nz-button
+      nzType="primary"
+      *ngIf="step === stepMax"
+    >完成</button>
+  </div>
+</div>

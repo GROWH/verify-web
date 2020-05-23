@@ -43,9 +43,9 @@ export class BaseInfoAddComponent implements OnInit {
     '保温箱',
     '冷藏车',
     '冷柜',
-    // '车载冰箱',
-    // '温度监测系统',
-    // '其他',
+    '车载冰箱',
+    '温度监测系统',
+    '其他',
   ]
 
   next(curr: number) {

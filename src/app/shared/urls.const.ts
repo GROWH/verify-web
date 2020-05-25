@@ -123,6 +123,18 @@ export const Apis = {
    * 保温箱温度上传接口
    */
   zeroDataUpload: '/thermometerManage/dataUpload',
+
+  /**
+   * POST
+   * 库房新增
+   * GET
+   * 库房列表查询
+   * PUT
+   * 库房修改
+   * DELETE
+   * 库房删除
+   */
+  verifyBaseInfo: '/validation/',
 }
 
 export function ResTrans<T>(res: Pagination<T>) {

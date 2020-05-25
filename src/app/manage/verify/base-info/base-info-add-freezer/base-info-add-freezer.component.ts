@@ -1,8 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, Inject } from '@angular/core';
 import { Validators, FormArray, FormBuilder, FormGroup } from '@angular/forms';
-import { DebugLog } from 'tongchang-lib';
+import { DebugLog, TongchangLibService, TongchangHttpService } from 'tongchang-lib';
 import { BaseInfo } from '@/model/Verify';
 import { filter } from 'rxjs/operators';
+import { BaseInfoSerToken } from '../../verify.routing.token';
+import { BaseInfoService } from '../base-info.service';
+import { Apis } from '@/shared/urls.const';
 
 @Component({
   selector: 'app-base-info-add-freezer',
@@ -12,10 +15,14 @@ import { filter } from 'rxjs/operators';
 export class BaseInfoAddFreezerComponent implements OnInit {
 
   @Input() baseInfo: BaseInfo;
+  @Input() afterDone: () => void = () => 1
   @Output() outerPrev = new EventEmitter()
 
   constructor(
     private fb: FormBuilder,
+    private util: TongchangLibService,
+    private http: TongchangHttpService,
+    @Inject(BaseInfoSerToken) private baseInfoSer: BaseInfoService,
   ) { }
 
   ngOnInit() {
@@ -27,6 +34,29 @@ export class BaseInfoAddFreezerComponent implements OnInit {
 
   pointsForm: FormGroup;
   form: FormGroup;
+
+  get formVal(): BaseInfo {
+    const params = this.form.getRawValue()
+    const pointsConf = this.pointsForm.getRawValue()
+    return {
+      ...this.baseInfo,
+      ...params,
+      fan_conf: JSON.stringify(params.fan_conf),
+      point_conf: JSON.stringify(pointsConf)
+    }
+  }
+
+  async onSubmit() {
+    DebugLog(this.formVal)
+    await this.util.submitConfirm()
+
+    const res = await this.http.post(Apis.verifyBaseInfo, this.formVal).toPromise()
+
+    if (res.code === 0) {
+      this.afterDone()
+    }
+  }
+
 
   /**
    * 验证对象参数设定
@@ -93,7 +123,7 @@ export class BaseInfoAddFreezerComponent implements OnInit {
     const REC_PER_VOL = 9
     const PER_VOL = 20
 
-    const matrixCount = Math.ceil(stockBaseInfo.car_vol / PER_VOL) * REC_PER_VOL
+    const matrixCount = Math.ceil(stockBaseInfo.cooler_vol / PER_VOL) * REC_PER_VOL
 
     this.pointsForm = this.fb.group({
       env:     [ 1,                         [ Validators.required ] ],

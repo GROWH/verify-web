@@ -4,9 +4,7 @@ import { NzModalService, NzMessageService } from 'ng-zorro-antd';
 import { CommonService } from '@/core/common.service';
 import { ResTrans, Apis } from '@/shared/urls.const';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class BaseInfoService extends UniversalService {
 
   constructor(
@@ -21,6 +19,6 @@ export class BaseInfoService extends UniversalService {
 
   pageMinus = 0
   resTrans = ResTrans
-  crudUrl = Apis.storehouse
+  crudUrl = Apis.verifyBaseInfo
   formComp = null
 }

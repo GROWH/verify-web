@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { merge } from 'rxjs';
 import { filter } from 'rxjs/operators';
+import { LOGINED_USER_UNIT_KEY } from '@/config.const';
 
 @Component({
   selector: 'app-base-info-add',
@@ -62,9 +63,11 @@ export class BaseInfoAddComponent implements OnInit {
 
   form: FormGroup
   baseFormInit() {
+    const uid = localStorage.getItem(LOGINED_USER_UNIT_KEY)
+    
     this.form = this.fb.group({
       client_id:           [ null, [ Validators.required ] ],
-      implement_id:        [ null, [ Validators.required ] ],
+      implement_id:        [ uid,  [ Validators.required ] ],
       client_type:         [ null, [ Validators.required ] ],
       target_type:         [ null, [ Validators.required ] ],
       verify_time:         [ null, [ Validators.required ] ],

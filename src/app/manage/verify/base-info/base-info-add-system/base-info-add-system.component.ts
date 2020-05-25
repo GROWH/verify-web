@@ -1,6 +1,10 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, Inject } from '@angular/core';
 import { BaseInfo } from '@/model/Verify';
 import { FormBuilder, Validators, FormGroup, FormArray } from '@angular/forms';
+import { TongchangLibService, TongchangHttpService } from 'tongchang-lib';
+import { BaseInfoSerToken } from '../../verify.routing.token';
+import { BaseInfoService } from '../base-info.service';
+import { Apis } from '@/shared/urls.const';
 
 @Component({
   selector: 'app-base-info-add-system',
@@ -10,24 +14,48 @@ import { FormBuilder, Validators, FormGroup, FormArray } from '@angular/forms';
 export class BaseInfoAddSystemComponent implements OnInit {
 
   @Input() baseInfo: BaseInfo;
-
+  @Input() afterDone: () => void = () => 1
   @Output() outerPrev = new EventEmitter()
 
   constructor(
     private fb: FormBuilder,
+    private util: TongchangLibService,
+    private http: TongchangHttpService,
+    @Inject(BaseInfoSerToken) private baseInfoSer: BaseInfoService,
   ) { }
-
-  step = 0
-  stepMax = 1
-  pointsForm: FormGroup;
 
   ngOnInit() {
     this.pointsFormInit()
   }
 
+
+  step = 0
+  stepMax = 0
+  pointsForm: FormGroup;
   get pointsConf() {
     return this.pointsForm.getRawValue()
   }
+
+  get formVal(): BaseInfo {
+    return this.baseInfo
+
+    // const pointsConf = this.pointsForm.getRawValue()
+    // return {
+    //   ...this.baseInfo,
+    //   point_conf: JSON.stringify(pointsConf)
+    // }
+  }
+
+  async onSubmit() {
+    await this.util.submitConfirm()
+
+    const res = await this.http.post(Apis.verifyBaseInfo, this.formVal).toPromise()
+
+    if (res.code === 0) {
+      this.afterDone()
+    }
+  }
+
 
   pointsFormInit() {
     this.pointsForm = this.fb.group({

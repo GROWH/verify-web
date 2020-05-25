@@ -1,16 +1,18 @@
 import { Component, OnInit, Injector } from '@angular/core';
-import { GridAction, TongchangLibService, TongchangHttpService } from 'tongchang-lib';
+import { GridAction, TongchangLibService, TongchangHttpService, UniversalComponent } from 'tongchang-lib';
 import { NzMessageService, NzModalService, NzModalRef } from 'ng-zorro-antd';
 import { Router, ActivatedRoute } from '@angular/router';
 import { BaseInfoService } from '../base-info.service';
 import { BaseInfoAddComponent } from '../base-info-add/base-info-add.component';
+import { Apis } from '@/shared/urls.const';
+import { BaseInfo } from '@/model/Verify';
 
 @Component({
   selector: 'app-base-info',
   templateUrl: './base-info.component.html',
   styleUrls: ['./base-info.component.scss']
 })
-export class BaseInfoComponent implements OnInit {
+export class BaseInfoComponent extends UniversalComponent implements OnInit {
 
   constructor(
     injector: Injector,
@@ -20,12 +22,21 @@ export class BaseInfoComponent implements OnInit {
     private modal: NzModalService,
     private router: Router,
     private route: ActivatedRoute,
-  ) { }
+  ) {
+    super(injector, route)
+  }
 
   ngOnInit() {
     this.actionInit()
+    this.uniSer.gridConf = {
+      queryUrl: Apis.verifyBaseInfo,
+      queryBody: null,
+      queryParam: {},
+      queryMethod: 'get',
+      page: 1,
+      size: 10,
+    }
   }
-
 
   uniSer!: BaseInfoService;
   gridActions: GridAction[] = []
@@ -50,6 +61,15 @@ export class BaseInfoComponent implements OnInit {
         click: () => this.uniSer.onForceReload()
       }
     ]
+  }
+
+  itemView() {}
+
+  itemUpdate() {}
+
+  itemDelete(data: BaseInfo) {
+    this.uniSer.selectedData = [data]
+    this.uniSer.onItemRemove()
   }
 
   private onAdd() {

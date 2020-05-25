@@ -98,6 +98,7 @@
       <ng-container *ngSwitchCase="'库房'">
         <app-base-info-add-stock
           [baseInfo]="form.getRawValue()"
+          [afterDone]="afterDone"
           (outerPrev)="prev()"
         ></app-base-info-add-stock>
       </ng-container>
@@ -105,6 +106,7 @@
       <ng-container *ngSwitchCase="'保温箱'">
         <app-base-info-add-incubator
           [baseInfo]="form.getRawValue()"
+          [afterDone]="afterDone"
           (outerPrev)="prev()"
         ></app-base-info-add-incubator>
       </ng-container>
@@ -112,6 +114,7 @@
       <ng-container *ngSwitchCase="'冷藏车'">
         <app-base-info-add-car
           [baseInfo]="form.getRawValue()"
+          [afterDone]="afterDone"
           (outerPrev)="prev()"
         ></app-base-info-add-car>
       </ng-container>
@@ -120,12 +123,14 @@
         <app-base-info-add-freezer
           [baseInfo]="form.getRawValue()"
           (outerPrev)="prev()"
+          [afterDone]="afterDone"
         ></app-base-info-add-freezer>
       </ng-container>
 
       <ng-container *ngSwitchCase="'车载冰箱'">
         <app-base-info-add-car-freezer
           [baseInfo]="form.getRawValue()"
+          [afterDone]="afterDone"
           (outerPrev)="prev()"
         ></app-base-info-add-car-freezer>
       </ng-container>
@@ -140,6 +145,7 @@
       <ng-container *ngSwitchCase="'其他'">
         <app-base-info-add-others
           [baseInfo]="form.getRawValue()"
+          [afterDone]="afterDone"
           (outerPrev)="prev()"
         ></app-base-info-add-others>
       </ng-container>

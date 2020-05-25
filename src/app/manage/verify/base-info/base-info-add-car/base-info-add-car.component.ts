@@ -1,8 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, Inject } from '@angular/core';
 import { BaseInfo } from '@/model/Verify';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
-import { DebugLog } from 'tongchang-lib';
+import { DebugLog, TongchangLibService, TongchangHttpService } from 'tongchang-lib';
 import { filter } from 'rxjs/operators';
+import { BaseInfoService } from '../base-info.service';
+import { BaseInfoSerToken } from '../../verify.routing.token';
+import { Apis } from '@/shared/urls.const';
 
 @Component({
   selector: 'app-base-info-add-car',
@@ -12,10 +15,14 @@ import { filter } from 'rxjs/operators';
 export class BaseInfoAddCarComponent implements OnInit {
 
   @Input() baseInfo: BaseInfo;
+  @Input() afterDone: () => void = () => 1
   @Output() outerPrev = new EventEmitter()
 
   constructor(
     private fb: FormBuilder,
+    private util: TongchangLibService,
+    private http: TongchangHttpService,
+    @Inject(BaseInfoSerToken) private baseInfoSer: BaseInfoService,
   ) { }
 
   ngOnInit() {
@@ -82,6 +89,28 @@ export class BaseInfoAddCarComponent implements OnInit {
 
   get fanConfCtrls() {
     return (this.form.get('fan_conf') as FormArray).controls
+  }
+
+  get formVal(): BaseInfo {
+    const params = this.form.getRawValue()
+    const pointsConf = this.pointsForm.getRawValue()
+    return {
+      ...this.baseInfo,
+      ...params,
+      fan_conf: JSON.stringify(params.fan_conf),
+      point_conf: JSON.stringify(pointsConf)
+    }
+  }
+
+  async onSubmit() {
+    DebugLog(this.formVal)
+    await this.util.submitConfirm()
+
+    const res = await this.http.post(Apis.verifyBaseInfo, this.formVal).toPromise()
+
+    if (res.code === 0) {
+      this.afterDone()
+    }
   }
 
   pointsFormInit() {

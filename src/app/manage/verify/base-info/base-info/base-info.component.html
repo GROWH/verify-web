@@ -1,7 +1,57 @@
 <div class="wrapper">
   <grid-action [actions]="gridActions"></grid-action>
 
-  <div class="temp" style="height: 600px;">
-    <app-base-info-add></app-base-info-add>
-  </div>
+  <nz-table
+    #nzTable
+    class="table"
+    style="min-height: 300px; margin-bottom: 16px;"
+    nzSize="middle"
+    [nzData]="uniSer.data"
+    libClientRect
+    [libHeightMinus]="54"
+    (libHeightChange)="tableHeight = $event + 'px'"
+    [nzScroll]="{y: tableHeight, x: '1220px'}"
+    [nzShowPagination]="false"
+    [nzFrontPagination]="false"
+  >
+    <thead>
+      <tr>
+        <th nzWidth="100px">客户单位</th>
+        <th nzWidth="100px">实施单位</th>
+        <th>验证对象类型</th>
+        <th nzWidth="200px">验证时间</th>
+        <th nzWidth="200px">验证到期时间</th>
+        <th nzWidth="200px">操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let i of nzTable.data">
+        <td>{{ i.client_id }}</td>
+        <td>{{ i.implement_id }}</td>
+        <td>{{ i.target_type }}</td>
+        <td>{{ i.verify_time }}</td>
+        <td>{{ i.verify_invalid_time }}</td>
+        <td>
+          <a (click)="itemView(i)">查看明细</a>
+          <nz-divider nzType="vertical"></nz-divider>
+          <a (click)="itemUpdate(i)">更新时间</a>
+          <nz-divider nzType="vertical"></nz-divider>
+          <a (click)="itemDelete(i)">删除</a>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+  
+  <nz-pagination
+    class="pagination"
+    [ngClass]="{ blur: uniSer.loading }"
+    [nzTotal]="uniSer.totalCount"
+    [nzShowTotal]="totalTemplate"
+    [nzShowSizeChanger]="true"
+    [nzPageSizeOptions]="[10, 50, 100, 500]"
+    [(nzPageIndex)]    ="uniSer.page"
+    [(nzPageSize)]     ="uniSer.size"
+    (nzPageIndexChange)="uniSer.pageParamsCh$.next()"
+    (nzPageSizeChange) ="uniSer.pageParamsCh$.next(true)"
+  ></nz-pagination>
 </div>

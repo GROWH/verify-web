@@ -1,32 +1,17 @@
 import {Component, OnInit} from '@angular/core';
 import {NzModalService, NzModalRef, NzMessageService} from 'ng-zorro-antd';
+import {RuleFormComponent} from './rule-form/rule-form.component';
 import {TongchangHttpService} from 'tongchang-lib';
-import {ManageFormComponent} from './manage-form/manage-form.component';
 
 import {GridAction} from '@/model/GridAction';
 
 @Component({
-  selector: 'app-unit-manage',
-  templateUrl: './unit-manage.component.html',
-  styleUrls: ['./unit-manage.component.scss']
+  selector: 'app-rule-manage',
+  templateUrl: './rule-manage.component.html',
+  styleUrls: ['./rule-manage.component.scss']
 })
+export class RuleManageComponent implements OnInit {
 
-export class UnitManageComponent implements OnInit {
-
-  listOptions = [
-    {
-      name: "验证平台",
-      id: 1
-    },
-    {
-      name: "验证实施单位",
-      id: 2
-    },
-    {
-      name: "验证公司客户",
-      id: 3
-    }
-  ]
   isAllDisplayDataChecked = false;
   isIndeterminate = false;
   position: string = 'bottom'
@@ -38,23 +23,21 @@ export class UnitManageComponent implements OnInit {
   listOfAllData: params[] = []
   mapOfCheckedId: { [key: string]: boolean } = {};
   selectItems = []
-  baseUrl = '/unit'
-  submitAudit = '/unit/submitAudit'
+  baseUrl = '/params'
 
   constructor(
     private modal: NzModalService,
     private msg: NzMessageService,
     private http: TongchangHttpService,
   ) {
-    // this.http.addHeader('account_id','14');
-    // this.http.addHeader('unit_id','10');
   }
+
 
   gridActions: GridAction[];
 
   ngOnInit() {
     this.actionInit()
-    this.getData()
+    // this.getData()
   }
 
   actionInit() {
@@ -62,47 +45,38 @@ export class UnitManageComponent implements OnInit {
       {
         name: '新增',
         icon: 'plus',
-        code: 'unit-manager_add',
+        code: 'param-setting_add',
         type: 'primary',
         click: () => {
-          this.Add()
+          this.paramAdd()
         },
         isExist: true,
       }, {
         name: '修改',
         icon: 'edit',
-        code: 'unit-manager_edit',
+        code: 'param-setting_edit',
         type: 'default',
         click: () => {
-          this.Edit()
-        },
-        isExist: true,
-      }, {
-        name: '提交审核',
-        icon: 'check-circle',
-        code: 'unit-manager_check',
-        type: 'default',
-        click: () => {
-          this.submitCheck()
+          this.paramEdit()
         },
         isExist: true,
       }, {
         name: '删除',
         icon: 'delete',
-        code: 'unit-manager_delete',
+        code: 'param-setting_delete',
         type: 'danger',
         click: () => {
-          this.Delete()
+          this.paramDelete()
         },
         isExist: true,
       },
       {
         name: '刷新',
         icon: 'redo',
-        code: 'unit-manager_reload',
+        code: 'param-setting_reload',
         type: 'dashed',
         click: () => {
-          this.Query()
+          this.paramQuery()
         },
         isExist: true,
       }
@@ -129,11 +103,15 @@ export class UnitManageComponent implements OnInit {
   }
 
   //新增操作
-  Add() {
-    const param = new params;
+  paramAdd() {
+    const param = {
+      fileurl: "",
+      filename: "",
+      filedesc: ""
+    }
     let modalRef: NzModalRef = this.modal.create({
-      nzTitle: "参数配置",
-      nzContent: ManageFormComponent,
+      nzTitle: "新增相关法规",
+      nzContent: RuleFormComponent,
       nzWidth: 700,
       nzComponentParams: {param},
       nzFooter: [
@@ -144,7 +122,7 @@ export class UnitManageComponent implements OnInit {
         {
           label: '确定',
           type: 'primary',
-          disabled:comp => !comp.validateForm.valid,
+          disabled: comp => !comp.validateForm.valid,
           onClick: (comp) => {
             let formVal = comp.validateForm.getRawValue()
             this.modal.confirm({
@@ -152,18 +130,17 @@ export class UnitManageComponent implements OnInit {
               nzContent: '确认提交?',
               nzOnOk: () => {
                 const params = formVal;
-                this.http.post(this.baseUrl, params).subscribe(res => {
-                  if (res.code !== 0) {
-                    this.msg.error(res.message);
-                    return
-                  }
-                  this.msg.success(res.message);
-                  modalRef.close()
-                  this.getData();
-                })
+                // this.http.post(this.baseUrl, params).subscribe(res => {
+                //   if (res.code !== 0) {
+                //     this.msg.error(res.message);
+                //     return
+                //   }
+                //   this.msg.success(res.message);
+                //   this.getData();
+                // })
               }
             })
-
+            modalRef.close()
           }
         }
       ],
@@ -172,19 +149,15 @@ export class UnitManageComponent implements OnInit {
   }
 
   //修改操作
-  Edit() {
+  paramEdit() {
     const param = this.selectItems[0]
     if (this.selectItems.length !== 1) {
       this.msg.warning('请选择一项数据进行操作!')
       return;
     }
-    if (this.selectItems[0].state === '待审核' || this.selectItems[0].state === '审核通过') {
-      this.msg.warning("请选择状态为'草稿'或'审核不通过'的数据项进行操作!");
-      return;
-    }
     let modalRef: NzModalRef = this.modal.create({
-      nzTitle: "参数配置",
-      nzContent: ManageFormComponent,
+      nzTitle: "修改相关法规",
+      nzContent: RuleFormComponent,
       nzWidth: 700,
       nzComponentParams: {param},
       nzFooter: [
@@ -206,14 +179,14 @@ export class UnitManageComponent implements OnInit {
                   ...param,
                   ...formVal
                 };
-                this.http.put(this.baseUrl, params).subscribe(res => {
-                  if (res.code !== 0) {
-                    this.msg.error(res.message);
-                    return
-                  }
-                  this.msg.success(res.message);
-                  this.getData();
-                })
+                // this.http.put(this.baseUrl, params).subscribe(res => {
+                //   if (res.code !== 0) {
+                //     this.msg.error(res.message);
+                //     return
+                //   }
+                //   this.msg.success(res.message);
+                //   this.getData();
+                // })
               }
             })
             modalRef.close()
@@ -226,14 +199,9 @@ export class UnitManageComponent implements OnInit {
   }
 
   //删除操作
-  Delete() {
+  paramDelete() {
     if (this.selectItems.length === 0) {
       this.msg.warning('请先选择数据进行操作!')
-      return;
-    }
-    const flag = this.selectItems.every(item => item.state !== '待审核' && item.state !== '审核通过')
-    if (!flag) {
-      this.msg.warning("请选择状态为'草稿'或'审核不通过'的数据项进行操作!");
       return;
     }
     const selectedIds = this.selectItems.map(it => it.id) + ''
@@ -241,43 +209,21 @@ export class UnitManageComponent implements OnInit {
       nzTitle: '删除',
       nzContent: '确认删除?',
       nzOnOk: () => {
-        this.http.delete(`${this.baseUrl}/${selectedIds}`).subscribe(res => {
-          if (res.code !== 0) {
-            this.msg.error(res.message);
-            return
-          }
-          this.msg.success(res.message);
-          this.getData();
-        })
+        // this.http.delete(`${this.baseUrl}/${selectedIds}`).subscribe(res => {
+        //   if (res.code !== 0) {
+        //     this.msg.error(res.message);
+        //     return
+        //   }
+        //   this.msg.success(res.message);
+        //   this.getData();
+        // })
       }
-    })
-  }
-
-  //提交审核
-  submitCheck() {
-    if (this.selectItems.length === 0) {
-      this.msg.warning('请先选择数据进行操作!')
-      return;
-    }
-    const flag = this.selectItems.every(it => it.state === '草稿')
-    if (!flag) {
-      this.msg.warning('请选择草稿状态的数据项进行操作')
-      return;
-    }
-    const selectedIds = this.selectItems.map(it => it.id) + ''
-    this.http.get(`${this.submitAudit}?ids=${selectedIds}`).subscribe(res => {
-      if (res.code !== 0) {
-        this.msg.error(res.message);
-        return
-      }
-      this.msg.success(res.message);
-      this.getData();
     })
   }
 
   //刷新
-  Query() {
-    this.getData()
+  paramQuery() {
+    // this.getData()
   }
 
   //初始出请求
@@ -303,32 +249,14 @@ export class UnitManageComponent implements OnInit {
     this.getData()
   }
 
-  yesOrno(value) {
-    return value === 'true' || value === true || value === '是' ? '是' : '否'
-  }
-
-  typeTrans(value) {
-    return this.listOptions.filter(item => item.id === value)[0].name
-  }
 }
 
 class params {
-  id: number        //编号
-  unit_name: string;  //单位名称
-  social_code: string;     //统一社会信用代码
-  parent_id: string;    //上级单位
-  unit_type: number;  //单位类型
-  state: string;     //状态
-  fixed_phone: string;     //单位固话
-  linkman: boolean;  //联系人
-  cell_phone: boolean;  //联系人手机
-  unit_address: string;  //单位地址
-  unit_email: string;  //邮箱
-  fax: boolean;  //传真
-  bank?: string;  //开户银行
-  bank_account?: string;  //银行账号
-  auditor?: string;  //审核人
-  audit_mark?: string;  //审核备注
-  audit_time?: string;  //审核时间
-  mark?: string;  //备注
+  filename: string;
+  filedesc: string;
+  fileurl: string;
+  id: number;
+  create_time: string;
+  update_time: string;
+  version: number;
 }

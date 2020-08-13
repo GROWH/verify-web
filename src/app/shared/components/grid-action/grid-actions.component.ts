@@ -1,5 +1,5 @@
-import { Component, Input } from "@angular/core";
-import { GridAction } from "@/model/GridAction";
+import {Component, Input} from "@angular/core";
+import {GridAction} from "@/model/GridAction";
 
 @Component({
   selector: 'grid-action',
@@ -9,8 +9,12 @@ import { GridAction } from "@/model/GridAction";
 
 export class GridActionsComponent {
   @Input() actions: GridAction[];
+  _actions: GridAction[] = []
 
   constructor() {
   }
 
+  ngOnInit() {
+    this._actions = this.actions.filter(it => it.isExist)
+  }
 }

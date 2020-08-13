@@ -1,9 +1,11 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { UniversalComponent, GridAction } from 'tongchang-lib';
+import { UniversalComponent } from 'tongchang-lib';
 import { Component, OnInit, Injector } from '@angular/core';
 
 import { Apis } from '@/shared/urls.const';
 import { StoreHouse } from '@/model/HouseMonit';
+
+import {GridAction} from '@/model/GridAction';
 
 @Component({
   selector: 'app-my-house',
@@ -30,13 +32,14 @@ export class MyHouseComponent extends UniversalComponent {
       size: 10,
     }
   }
-  
+
   gridActions: GridAction[] = [
     {
-      code: 'reload',
+      code: 'my-house_reload',
       icon: 'reload',
       name: '刷新',
-      click: () => this.uniSer.onForceReload()
+      click: () => this.uniSer.onForceReload(),
+      isExist: true,
     }
   ]
 

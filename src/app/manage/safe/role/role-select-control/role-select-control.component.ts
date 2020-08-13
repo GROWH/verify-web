@@ -20,7 +20,7 @@ import { RoleUniSerToken } from '../../safe.routing';
 export class RoleSelectControlComponent implements ControlValueAccessor {
 
   // @Input() moTree: SystemModule[] = [];
-  
+
   @Input() roleType: number;
 
   roleSer: RoleService;
@@ -30,7 +30,7 @@ export class RoleSelectControlComponent implements ControlValueAccessor {
   ) {
     this.roleSer = injector.get(RoleUniSerToken)
   }
-  
+
   treeNodes: NzTreeNodeOptions[] = []
   get moTree(): SystemModule[] {
     const roleSer = this.roleSer
@@ -53,12 +53,11 @@ export class RoleSelectControlComponent implements ControlValueAccessor {
   onCheckedCh(tree: NzTreeComponent) {
     const checked = tree.getCheckedNodeList()
     const halfChecked = tree.getHalfCheckedNodeList()
-  
+
     const checkedIds = [
       ...getTreeKeys(checked),
       ...halfChecked.map(it => it.key)
     ].map(it => +it)
-
     this.onValueCh(checkedIds)
   }
 

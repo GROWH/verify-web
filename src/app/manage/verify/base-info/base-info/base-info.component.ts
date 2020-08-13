@@ -1,11 +1,12 @@
-import { Component, OnInit, Injector } from '@angular/core';
-import { GridAction, TongchangLibService, TongchangHttpService, UniversalComponent } from 'tongchang-lib';
-import { NzMessageService, NzModalService, NzModalRef } from 'ng-zorro-antd';
-import { Router, ActivatedRoute } from '@angular/router';
-import { BaseInfoService } from '../base-info.service';
-import { BaseInfoAddComponent } from '../base-info-add/base-info-add.component';
-import { Apis } from '@/shared/urls.const';
-import { BaseInfo } from '@/model/Verify';
+import {Component, OnInit, Injector} from '@angular/core';
+import {TongchangLibService, TongchangHttpService, UniversalComponent} from 'tongchang-lib';
+import {NzMessageService, NzModalService, NzModalRef} from 'ng-zorro-antd';
+import {Router, ActivatedRoute} from '@angular/router';
+import {BaseInfoService} from '../base-info.service';
+import {BaseInfoAddComponent} from '../base-info-add/base-info-add.component';
+import {Apis} from '@/shared/urls.const';
+import {BaseInfo} from '@/model/Verify';
+import {GridAction} from '@/model/GridAction';
 
 @Component({
   selector: 'app-base-info',
@@ -48,24 +49,28 @@ export class BaseInfoComponent extends UniversalComponent implements OnInit {
       {
         name: '新增',
         icon: 'plus',
-        code: 'add',
+        code: 'verify-info_add',
         type: 'primary',
         click: () => {
           this.onAdd()
-        }
+        },
+        isExist: true,
       },
       {
         name: '刷新',
         icon: 'reload',
-        code: 'reload',
-        click: () => this.uniSer.onForceReload()
+        code: 'verify-info_reload',
+        click: () => this.uniSer.onForceReload(),
+        isExist: true,
       }
     ]
   }
 
-  itemView() {}
+  itemView() {
+  }
 
-  itemUpdate() {}
+  itemUpdate() {
+  }
 
   itemDelete(data: BaseInfo) {
     this.uniSer.selectedData = [data]

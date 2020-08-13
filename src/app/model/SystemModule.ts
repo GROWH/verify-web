@@ -10,7 +10,7 @@ export class SystemModule extends DataBase {
     this.parent_id = parent_id
   }
   key_word:      string;     // 关键字
-  module_code:   string;     // 
+  module_code:   string;     //
   module_name:   string;     // 模块名称
   module_url:    string;     // 路由
   order_number:  number;     // 顺序号
@@ -21,12 +21,12 @@ export class SystemModule extends DataBase {
 }
 
 /**
- * 
+ *
  * @param modules      系统模块
  * @param checkedNodes 选中模块 ID
  */
 export function convertNodes(
-  modules: SystemModule[], 
+  modules: SystemModule[],
   checkedNodes: number[]
 ): NzTreeNodeOptions[] {
   return modules.map(item => {
@@ -36,7 +36,7 @@ export function convertNodes(
     }
 
     const isLeaf = children.length === 0
-    
+
     return {
       title: item.module_name,
       key:   item.id + '',
@@ -52,7 +52,7 @@ export function convertNodes(
 /**
  * 获取 antd 树中所有key
  * @param nodes   antd 树
- * @param _result 
+ * @param _result
  */
 export function getTreeKeys(nodes: NzTreeNode[], _result = []): string[] {
 

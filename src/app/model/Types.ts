@@ -14,3 +14,4 @@ export class Pagination<T> {
   totalPage: number;
   totalRow: number;
 }
+

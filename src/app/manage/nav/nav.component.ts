@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-nav',
@@ -7,13 +7,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavComponent implements OnInit {
   isCollapsed = false;
-  constructor() { }
+  menuList: any = [];
+  constructor() {
+  }
 
   ngOnInit() {
+    const listData = localStorage.getItem('menuAuth');
+    this.menuList= JSON.parse(listData)
   }
-  navScaling () {
+
+  navScaling() {
     this.isCollapsed = !this.isCollapsed
   }
+
   noticeClick() {
     alert("您有一个新的提示")
   }

@@ -1,12 +1,14 @@
-import { Component, OnInit, Injector } from '@angular/core';
-import { GridAction, UniversalComponent, TongchangHttpService, TongchangLibService } from 'tongchang-lib';
-import { Router, ActivatedRoute } from '@angular/router';
-import { MaintainService } from '../maintain.service';
-import { Apis } from '@/shared/urls.const';
-import { HouseAddData, StoreHouse } from '@/model/HouseMonit';
-import { NzModalService, NzModalRef, NzMessageService } from 'ng-zorro-antd';
-import { WarnEditFormComponent } from '../warn-edit-form/warn-edit-form.component';
-import { HouseEditFormComponent } from '../house-edit-form/house-edit-form.component';
+import {Component, OnInit, Injector} from '@angular/core';
+import {UniversalComponent, TongchangHttpService, TongchangLibService} from 'tongchang-lib';
+import {Router, ActivatedRoute} from '@angular/router';
+import {MaintainService} from '../maintain.service';
+import {Apis} from '@/shared/urls.const';
+import {HouseAddData, StoreHouse} from '@/model/HouseMonit';
+import {NzModalService, NzModalRef, NzMessageService} from 'ng-zorro-antd';
+import {WarnEditFormComponent} from '../warn-edit-form/warn-edit-form.component';
+import {HouseEditFormComponent} from '../house-edit-form/house-edit-form.component';
+
+import {GridAction} from '@/model/GridAction';
 
 @Component({
   selector: 'app-maintain',
@@ -40,7 +42,7 @@ export class MaintainComponent extends UniversalComponent {
   }
 
   uniSer!: MaintainService;
-  gridActions: GridAction[] = []
+  gridActions: GridAction[];
   tableHeight = '500px'
 
 
@@ -49,17 +51,19 @@ export class MaintainComponent extends UniversalComponent {
       {
         name: '新增',
         icon: 'plus',
-        code: 'add',
+        code: 'maintain_add',
         type: 'primary',
         click: () => {
           this.router.navigate(['add'], {relativeTo: this.route})
-        }
+        },
+        isExist: true,
       },
       {
         name: '刷新',
         icon: 'reload',
-        code: 'reload',
-        click: () => this.uniSer.onForceReload()
+        code: 'maintain_reload',
+        click: () => this.uniSer.onForceReload(),
+        isExist: true,
       }
     ]
   }
@@ -68,7 +72,7 @@ export class MaintainComponent extends UniversalComponent {
     const modalRef: NzModalRef = this.modal.create({
       nzTitle: '库房编辑',
       nzContent: HouseEditFormComponent,
-      nzComponentParams: { house },
+      nzComponentParams: {house},
       nzMaskClosable: false,
       nzWrapClassName: 'modal-vertical-center',
       nzWidth: 900,
@@ -93,7 +97,7 @@ export class MaintainComponent extends UniversalComponent {
     const modalRef: NzModalRef = this.modal.create({
       nzTitle: '告警设定',
       nzContent: WarnEditFormComponent,
-      nzComponentParams: { house },
+      nzComponentParams: {house},
       nzMaskClosable: false,
       nzWrapClassName: 'modal-vertical-center',
       nzWidth: 900,
@@ -115,17 +119,17 @@ export class MaintainComponent extends UniversalComponent {
   }
 
   viewDetail(house: StoreHouse) {
-    this.router.navigate([ 'detail', house.id ], { relativeTo: this.route })
+    this.router.navigate(['detail', house.id], {relativeTo: this.route})
   }
-    
+
   private async warnSetSubmit(modalRef: NzModalRef, formVal: any, hosid: number) {
     await this.util.submitConfirm()
     const res = await this.http.post(
       Apis.storehouseWarn,
       formVal,
-      { hosid: hosid + '' }
+      {hosid: hosid + ''}
     ).toPromise()
-    
+
     if (res.code === 0) {
       this.msg.success(res.message)
       modalRef.close()

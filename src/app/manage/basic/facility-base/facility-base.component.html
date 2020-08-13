@@ -1,20 +1,15 @@
-<div style="height: 100%;padding: 10px;">
-  <div class="btns">
-    <button class="mr8" nz-button nzType="primary" (click)="Add()"><i nz-icon type="plus"></i>新增</button>
-    <button class="mr8" nz-button nzType="default" (click)="Edit()"><i nz-icon type="edit"></i>修改</button>
-    <button class="mr8" nz-button nzType="danger" (click)="Delete()"><i nz-icon type="delete"></i>删除</button>
-    <button class="mr8" nz-button nzType="default" (click)="Query()"><i nz-icon type="redo"></i>刷新</button>
-  </div>
+<div style="height: 100%;padding: 0 20px;">
+  <grid-action [actions]="gridActions"></grid-action>
   <div style="width: 1510px;">
     <nz-table
-    #rowSelectionTable
-    nzShowSizeChanger
-    [nzData]="listOfDisplayData"
-    [nzTotal]="total"
-    (nzPageIndexChange)="changePageIndex($event)"   
-    (nzPageSizeChange)="changePageSize($event)"
-  >
-    <thead>
+      #rowSelectionTable
+      nzShowSizeChanger
+      [nzData]="listOfDisplayData"
+      [nzTotal]="total"
+      (nzPageIndexChange)="changePageIndex($event)"
+      (nzPageSizeChange)="changePageSize($event)"
+    >
+      <thead>
       <tr>
         <th
           nzShowCheckbox
@@ -35,8 +30,8 @@
         <th>校准/校正周期</th>
         <th>备注</th>
       </tr>
-    </thead>
-    <tbody>
+      </thead>
+      <tbody>
       <tr *ngFor="let data of rowSelectionTable.data">
         <td nzShowCheckbox [(nzChecked)]="mapOfCheckedId[data.id]" (nzCheckedChange)="refreshStatus()"></td>
         <td>{{ data.goods_no }}</td>
@@ -52,7 +47,7 @@
         <td>{{ data.aline_cycle}}</td>
         <td>{{ data.mark }}</td>
       </tr>
-    </tbody>
-  </nz-table>
+      </tbody>
+    </nz-table>
   </div>
 </div>

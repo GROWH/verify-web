@@ -5,6 +5,8 @@ import { ThermometerFormComponent } from './thermometer-form/thermometer-form.co
 import { ParamDesginFormComponent } from './param-desgin-form/param-desgin-form.component';
 import { ReuploadFormComponent } from './reupload-form/reupload-form.component';
 
+import {GridAction} from '@/model/GridAction';
+
 @Component({
   selector: 'app-thermometer',
   templateUrl: './thermometer.component.html',
@@ -34,8 +36,72 @@ export class ThermometerComponent implements OnInit {
     private http: TongchangHttpService,
   ) { }
 
+  gridActions: GridAction[];
+
   ngOnInit() {
+    this.actionInit()
     this.getData()
+  }
+
+  actionInit() {
+    this.gridActions = [
+      {
+        name: '新增',
+        icon: 'plus',
+        code: 'thermometer_add',
+        type: 'primary',
+        click: () => {
+          this.paramAdd()
+        },
+        isExist: true,
+      }, {
+        name: '修改',
+        icon: 'edit',
+        code: 'thermometer_edit',
+        type: 'default',
+        click: () => {
+          this.paramEdit()
+        },
+        isExist: true,
+      }, {
+        name: '参数设定',
+        icon: 'edit',
+        code: 'thermometer_setParam',
+        type: 'default',
+        click: () => {
+          this.paramsDesign()
+        },
+        isExist: true,
+      },{
+        name: '重传',
+        icon: 'edit',
+        code: 'thermometer_reUpload',
+        type: 'default',
+        click: () => {
+          this.reUpload()
+        },
+        isExist: true,
+      }, {
+        name: '删除',
+        icon: 'delete',
+        code: 'thermometer_delete',
+        type: 'danger',
+        click: () => {
+          this.paramDelete()
+        },
+        isExist: true,
+      },
+      {
+        name: '刷新',
+        icon: 'redo',
+        code: 'thermometer_reload',
+        type: 'dashed',
+        click: () => {
+          this.paramQuery()
+        },
+        isExist: true,
+      }
+    ]
   }
 
   refreshStatus(): void {
@@ -48,7 +114,7 @@ export class ThermometerComponent implements OnInit {
         }
       }
     }).filter(item => item)
-    this.isIndeterminate = 
+    this.isIndeterminate =
       this.listOfDisplayData.some(item => this.mapOfCheckedId[item.id]) && !this.isAllDisplayDataChecked;
   }
 
@@ -148,7 +214,7 @@ export class ThermometerComponent implements OnInit {
       ],
       nzWrapClassName: 'modal-vertical-center'
     })
-    
+
   }
   //删除操作
   paramDelete() {
@@ -176,6 +242,7 @@ export class ThermometerComponent implements OnInit {
   paramQuery() {
     this.getData()
   }
+
   paramsDesign() {
     const param = this.selectItems[0]
     if(this.selectItems.length !== 1 ) {
@@ -223,6 +290,7 @@ export class ThermometerComponent implements OnInit {
       nzWrapClassName: 'modal-vertical-center'
     })
   }
+
   reUpload() {
     const param = this.selectItems[0]
     if(this.selectItems.length !== 1 ) {

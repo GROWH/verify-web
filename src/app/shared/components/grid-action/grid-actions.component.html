@@ -1,5 +1,5 @@
 <div class="c-line-btns" appHorizontalScroll>
-  <ng-container *ngFor="let item of actions; let i = index">
+  <ng-container *ngFor="let item of _actions; let i = index">
     <nz-dropdown
       *ngIf="(item.multi && item.multiActions?.length > 0)"
       [nzPlacement]="'bottomLeft'"
@@ -20,9 +20,9 @@
       </ul>
     </nz-dropdown>
 
-    <button 
+    <button
       *ngIf="!item.multi"
-      nz-button 
+      nz-button
       class="action-btn"
       appDebounceClick
       [nzType]="item.type"

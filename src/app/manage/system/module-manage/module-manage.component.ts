@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {
   NzTreeNodeOptions,
   NzModalService,
@@ -8,12 +8,14 @@ import {
   NzTreeComponent,
 } from 'ng-zorro-antd';
 
-import { Apis } from '@/shared/urls.const';
-import { GridAction } from '@/model/GridAction';
-import { SystemModule } from '@/model/SystemModule';
+import {Apis} from '@/shared/urls.const';
+import {GridAction} from '@/model/GridAction';
+import {SystemModule} from '@/model/SystemModule';
 
-import { ModuleManageFormComponent } from '../module-manage-form/module-manage-form.component';
-import { TongchangHttpService, TongchangLibService } from 'tongchang-lib';
+import {ModuleManageFormComponent} from '../module-manage-form/module-manage-form.component';
+import {TongchangHttpService, TongchangLibService} from 'tongchang-lib';
+
+import {buttonAccess} from '../../../config.const';
 
 @Component({
   selector: 'app-module-manage',
@@ -29,7 +31,8 @@ export class ModuleManageComponent implements OnInit {
     private modal: NzModalService,
     private util: TongchangLibService,
     private http: TongchangHttpService,
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     this.actionInit()
@@ -66,7 +69,7 @@ export class ModuleManageComponent implements OnInit {
       {
         name: '新增',
         icon: 'plus',
-        code: 'add',
+        code: 'module-manage_add',
         type: 'primary',
         click: () => {
           const modalRef: NzModalRef = this.modal.create({
@@ -95,17 +98,19 @@ export class ModuleManageComponent implements OnInit {
               }
             ]
           })
-            
-        }
+
+        },
+        isExist: true,//buttonAccess("module-manage_add")
       },
       {
         name: '刷新',
         icon: 'reload',
-        code: 'reload',
+        code: 'module-manage_reload',
         type: 'dashed',
         click: () => {
           this.getModuleTree()
-        }
+        },
+        isExist: true,
       }
     ]
   }
@@ -122,9 +127,9 @@ export class ModuleManageComponent implements OnInit {
   }
 
   async getModuleTree() {
-    const { messageId: msgId } = this.msg.loading('请求中', { nzDuration: 0 })
+    const {messageId: msgId} = this.msg.loading('请求中', {nzDuration: 0})
     const res = await this.http.get<SystemModule[]>(Apis.moduleTree).toPromise()
-    
+
     this.msg.remove(msgId)
 
     if (res.code !== 0) {
@@ -168,7 +173,7 @@ export class ModuleManageComponent implements OnInit {
           disabled: comp => !comp.form.valid
         }
       ]
-      
+
     })
   }
 
@@ -214,12 +219,12 @@ export class ModuleManageComponent implements OnInit {
 
   private moNode2TreeNode(item: SystemModule): NzTreeNodeOptions {
     return {
-      title:      item.module_name,
-      key:        item.id + '',
+      title: item.module_name,
+      key: item.id + '',
       selectable: item.type < 3,
-      isLeaf:     item.type === 3,
-      selected:   this.selectedNode ? this.selectedNode.id === item.id : false,
-      children:   [],
+      isLeaf: item.type === 3,
+      selected: this.selectedNode ? this.selectedNode.id === item.id : false,
+      children: [],
     }
   }
 
@@ -232,7 +237,7 @@ export class ModuleManageComponent implements OnInit {
       this.addModule(res.data)
     }
   }
-    
+
   private async onEditSubmit(modalRef: NzModalRef, formVal: SystemModule) {
     await this.util.submitConfirm()
     const res = await this.http.put<SystemModule>(Apis.module, formVal).toPromise()
@@ -259,13 +264,13 @@ export class ModuleManageComponent implements OnInit {
           ...parentChildren.slice(index + 1)
         ]
       }
-  
+
       /**
        * 原节点children引用接入接口返回的节点上
        */
       const children = this.moduleMap.get(`${mo.id}`).children
       mo.children = children
-      
+
       /**
        * 更新节点map
        */
@@ -278,9 +283,9 @@ export class ModuleManageComponent implements OnInit {
       const treeNode = this.tree.getTreeNodeByKey(`${mo.id}`)
 
       treeNode.title = mo.module_name
-      treeNode.key   = `${mo.id}`
+      treeNode.key = `${mo.id}`
       treeNode.isSelectable = mo.type < 3,
-      treeNode.isLeaf = mo.type === 3
+        treeNode.isLeaf = mo.type === 3
     })();
   }
 
@@ -291,14 +296,14 @@ export class ModuleManageComponent implements OnInit {
     if (mo.parent_id !== 0) {
       const parentNode = this.moduleMap.get(`${mo.parent_id}`)
       const siblings = parentNode.children
-      parentNode.children = [ ...siblings, mo ]
+      parentNode.children = [...siblings, mo]
     }
     this.moduleMap.set(`${mo.id}`, mo)
 
     /** 菜单树更新 */
     const pNode = this.tree.getTreeNodeByKey(`${mo.parent_id}`)
     const newNode = this.moNode2TreeNode(mo)
-    pNode.addChildren([ newNode ])
+    pNode.addChildren([newNode])
   }
 
   private removeModule(mo: SystemModule) {

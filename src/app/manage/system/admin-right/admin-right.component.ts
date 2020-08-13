@@ -81,7 +81,6 @@ export class AdminRightComponent implements OnInit {
     const moduleTree = moTreeRes.data
     const valuesRes = await this.commSer.getParamsByKey(...AllTypesKey).toPromise()
     if (valuesRes.code !== 0) return fieldRetry('配置请求失败')
-
     this.treesConf.forEach(it => {
       const codes: number[] = valuesRes.data[it.key] || []
       it.nodesOptions = this.convertNodes(moduleTree, codes)
@@ -122,7 +121,7 @@ export class AdminRightComponent implements OnInit {
       }
 
       const isLeaf = children.length === 0
-      
+
       isLeaf && DebugLog('叶子节点', item.id)
 
       return {

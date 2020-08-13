@@ -12,97 +12,15 @@
       </a>
     </div>
     <ul nz-menu [nzMode]="'inline'" nzTheme="dark" [nzInlineCollapsed]="isCollapsed">
-      <!-- <li nz-menu-item nz-tooltip nzPlacement="right" [nzTitle]="isCollapsed ? '' : ''">
+      <li nz-submenu *ngFor="let item of menuList;let key=index;">
         <span title>
-          <i nz-icon type="home"></i>
-          <a routerLink="/manage/home">首页</a>
-        </span>
-      </li> -->
-      <li nz-submenu>
-        <span title>
-          <i nz-icon type="home"></i>
-          <span>首页</span>
+          <i nz-icon type="{{key===1?'home':key===2?'appstore':key===3?'database':key===3?'safety':'setting'}}"></i>
+          <span>{{item.module_name}}</span>
         </span>
         <ul>
-          <li nz-menu-item>
-            <a routerLink="/manage/home">首页</a>
+          <li nz-menu-item *ngFor="let child of item.children">
+            <a routerLink="{{child.module_url}}">{{child.module_name}}</a>
           </li>
-        </ul>
-      </li>
-      <li nz-submenu>
-        <span title>
-          <i nz-icon type="appstore"></i>
-          <span>系统设置</span>
-        </span>
-        <ul>
-          <li nz-menu-item>
-            <a [routerLink]="[ '/manage/system/module' ]">模块管理</a>
-          </li>
-          <li nz-menu-item>
-            <a [routerLink]="[ '/manage/system/admin-right' ]">管理员权限管理</a>
-          </li>
-          <li nz-menu-item>
-            <a routerLink="/manage/system/param">系统参数设定</a>
-          </li>
-          <li nz-menu-item>相关法律法规</li>
-          <li nz-menu-item>审批流程设置</li>
-        </ul>
-      </li>
-      <li nz-submenu>
-        <span title>
-          <i nz-icon type="database"></i>
-          <span>基础资料</span>
-        </span>
-        <ul>
-          <li nz-menu-item>
-            <a routerLink="/manage/basic/unitmanage">单位管理</a>
-          </li>
-          <li nz-menu-item>
-            <a routerLink="/manage/basic/unitaudit">单位审核</a>
-          </li>
-          <li nz-menu-item>
-            <a routerLink="/manage/basic/facilitybase">设施基础资料</a>
-          </li>
-        </ul>
-      </li>
-      <li nz-submenu>
-        <span title>
-          <i nz-icon type="safety"></i>
-          <span>安全管理</span>
-        </span>
-        <ul>
-          <li nz-menu-item>
-            <a routerLink="/manage/safe/account">账号管理</a>
-          </li>
-        </ul>
-      </li>
-      <li nz-submenu>
-        <span title>
-          <i nz-icon type="setting"></i>
-          <span>温湿度监测管理</span>
-        </span>
-        <ul>
-          <li nz-menu-item>
-            <a routerLink="/manage/monit/maintain">监控库房管理</a>
-          </li>
-          <li nz-menu-item>
-            <a routerLink="/manage/monit/my-house">我的库房</a>
-          </li>
-        </ul>
-      </li>
-      <li nz-submenu>
-        <span title>
-          <i nz-icon type="setting"></i>
-          <span>设施设备管理 </span>
-        </span>
-        <ul>
-          <li nz-menu-item>
-            <a routerLink="/manage/facility/thermometer">温度计管理</a>
-          </li>
-          <li nz-menu-item>
-            <a routerLink="/manage/facility/thermManger">温度计管理记录</a>
-          </li>
-          <li nz-menu-item>设施设备管理</li>
         </ul>
       </li>
     </ul>
@@ -116,7 +34,7 @@
                [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
             ></i>
         </span>
-      <span class="notice" (click)="noticeClick()">  
+        <span class="notice" (click)="noticeClick()">
         <span class="bellStyle" title="新的通知">
           <i nz-icon nzType="bell" nzTheme="outline"></i>
         </span>

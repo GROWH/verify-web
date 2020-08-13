@@ -65,8 +65,8 @@ export class RoleComponent extends UniversalComponent {
       nzWrapClassName: 'modal-vertical-center height-fixed',
       nzWidth: 900,
       nzFooter: null
-      
-    })      
+
+    })
   }
 
   edit(item: Role) {
@@ -92,7 +92,7 @@ export class RoleComponent extends UniversalComponent {
         }
       ]
     })
-    
+
   }
 
   async del(item: Role) {

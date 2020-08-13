@@ -3,6 +3,7 @@ import { NzModalService, NzModalRef, NzMessageService } from 'ng-zorro-antd';
 import { TongchangHttpService } from 'tongchang-lib';
 import { FacilityBaseFormComponent } from './facility-base-form/facility-base-form.component';
 
+import {GridAction} from '@/model/GridAction';
 
 @Component({
   selector: 'app-facility-base',
@@ -36,8 +37,54 @@ export class FacilityBaseComponent implements OnInit {
     // this.http.addHeader('unit_id','10');
    }
 
+  gridActions: GridAction[];
+
   ngOnInit() {
+    this.actionInit()
     this.getData()
+  }
+
+  actionInit() {
+    this.gridActions = [
+      {
+        name: '新增',
+        icon: 'plus',
+        code: 'facility-base_add',
+        type: 'primary',
+        click: () => {
+          this.Add()
+        },
+        isExist: true,
+      }, {
+        name: '修改',
+        icon: 'edit',
+        code: 'facility-base_edit',
+        type: 'default',
+        click: () => {
+          this.Edit()
+        },
+        isExist: true,
+      }, {
+        name: '删除',
+        icon: 'delete',
+        code: 'facility-base_delete',
+        type: 'danger',
+        click: () => {
+          this.Delete()
+        },
+        isExist: true,
+      },
+      {
+        name: '刷新',
+        icon: 'redo',
+        code: 'facility-base_reload',
+        type: 'dashed',
+        click: () => {
+          this.Query()
+        },
+        isExist: true,
+      }
+    ]
   }
 
   refreshStatus(): void {
@@ -50,7 +97,7 @@ export class FacilityBaseComponent implements OnInit {
         }
       }
     }).filter(item => item)
-    this.isIndeterminate = 
+    this.isIndeterminate =
       this.listOfDisplayData.some(item => this.mapOfCheckedId[item.id]) && !this.isAllDisplayDataChecked;
   }
 
@@ -93,7 +140,7 @@ export class FacilityBaseComponent implements OnInit {
                 })
               }
             })
- 
+
           }
         }
       ],
@@ -148,7 +195,7 @@ export class FacilityBaseComponent implements OnInit {
       ],
       nzWrapClassName: 'modal-vertical-center'
     })
-    
+
   }
   //删除操作
   Delete() {
@@ -218,6 +265,6 @@ class params {
   curing	:string;  // 养护事项
   curing_cycle:string;  // 养护周期
   aline?:string;  //校准/校正事项
-  aline_cycle?:string;  // 校准/校正周期 
+  aline_cycle?:string;  // 校准/校正周期
   mark?:string;  //备注
 }

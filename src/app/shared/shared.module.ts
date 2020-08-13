@@ -5,7 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { DirectiveModule } from './directive/directive.module';
 import { ComponentsModule } from './components/components.module';
-import { PipeModule } from './pipe/pipe.module'
+import { PipeModule } from './pipe/pipe.module';
 
 @NgModule({
   declarations: [],

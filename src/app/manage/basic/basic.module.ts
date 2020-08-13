@@ -12,8 +12,6 @@ import { UnitManageComponent } from './unit-manage/unit-manage.component';
 import { FacilityBaseComponent } from './facility-base/facility-base.component';
 import { FacilityBaseFormComponent } from './facility-base/facility-base-form/facility-base-form.component';
 
-
-
 @NgModule({
   declarations: [
     UnitAuditComponent,
@@ -28,11 +26,14 @@ import { FacilityBaseFormComponent } from './facility-base/facility-base-form/fa
     BasicRoutes,
     SharedModule
   ],
-  entryComponents:[
+  entryComponents: [
     AuditFormComponent,
     ManageFormComponent,
     FacilityBaseFormComponent
   ],
-  
+
 })
 export class BasicModule { }
+
+
+

@@ -3,6 +3,9 @@ import { NzModalService, NzModalRef, NzMessageService, NzTreeNodeOptions, NzTree
 import { TongchangHttpService } from 'tongchang-lib';
 import { AccountFormComponent } from './account-form/account-form.component';
 
+import {GridAction} from '@/model/GridAction';
+import {nodeChildrenAsMap} from "@angular/router/src/utils/tree";
+
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',
@@ -17,6 +20,7 @@ export class AccountComponent implements OnInit {
   listOfDisplayData:params[] = [];
   page = 1;
   size = 10;
+  unitId = 0;
   loading = true;
   total = 1;
   listOfAllData:params[] = []
@@ -36,9 +40,72 @@ export class AccountComponent implements OnInit {
     private http: TongchangHttpService,
   ) { }
 
+  gridActions: GridAction[];
+
   ngOnInit() {
-    // this.getData()
+    this.actionInit()
     this.getTree()
+  }
+
+  actionInit() {
+    this.gridActions = [
+      {
+        name: '新增',
+        icon: 'plus',
+        code: 'account_add',
+        type: 'primary',
+        click: () => {
+          this.Add()
+        },
+        isExist: true,
+      }, {
+        name: '修改',
+        icon: 'edit',
+        code: 'account_edit',
+        type: 'default',
+        click: () => {
+          this.Edit()
+        },
+        isExist: true,
+      }, {
+        name: '启用',
+        icon: 'check-circle',
+        code: 'account_check',
+        type: 'default',
+        click: () => {
+          this.Check()
+        },
+        isExist: true,
+      }, {
+        name: '停用',
+        icon: 'stop',
+        code: 'account_stop',
+        type: 'default',
+        click: () => {
+          this.Stop()
+        },
+        isExist: true,
+      }, {
+        name: '删除',
+        icon: 'delete',
+        code: 'account_delete',
+        type: 'danger',
+        click: () => {
+          this.Delete()
+        },
+        isExist: true,
+      },
+      {
+        name: '刷新',
+        icon: 'redo',
+        code: 'account_reload',
+        type: 'dashed',
+        click: () => {
+          this.Query()
+        },
+        isExist: true,
+      }
+    ]
   }
 
   refreshStatus(): void {
@@ -51,7 +118,7 @@ export class AccountComponent implements OnInit {
         }
       }
     }).filter(item => item)
-    this.isIndeterminate = 
+    this.isIndeterminate =
       this.listOfDisplayData.some(item => this.mapOfCheckedId[item.id]) && !this.isAllDisplayDataChecked;
   }
 
@@ -77,12 +144,11 @@ export class AccountComponent implements OnInit {
           type:'primary',
           disabled:comp => !comp.validateForm.valid,
           onClick:(comp) => {
-            console.log(this.selectNode)
             let formVal = {
               ...comp.validateForm.getRawValue(),
               unit_id:this.selectNode.key
             }
-            
+
             this.modal.confirm({
               nzTitle: '提交',
               nzContent: '确认提交?',
@@ -99,7 +165,7 @@ export class AccountComponent implements OnInit {
                 })
               }
             })
-      
+
           }
         }
       ],
@@ -153,7 +219,7 @@ export class AccountComponent implements OnInit {
       ],
       nzWrapClassName: 'modal-vertical-center'
     })
-    
+
   }
   //删除操作
   Delete() {
@@ -228,7 +294,7 @@ export class AccountComponent implements OnInit {
   getData() {
     this.mapOfCheckedId = {}
     this.loading = true;
-    this.http.get<any>(`${this.baseUrl}?page=${this.page}&size=${this.size}`).subscribe(res => {
+    this.http.get<any>(`${this.baseUrl}?page=${this.page}&size=${this.size}&unitId=${this.unitId}`).subscribe(res => {
       this.loading = false;
       if(res.code === 0) {
         this.listOfDisplayData = res.data.list;
@@ -237,25 +303,25 @@ export class AccountComponent implements OnInit {
     })
   }
 
-  // changePageIndex(pageIndex) {
-  //   this.page = pageIndex;
-  //   this.getData()
-  // }
-  // changePageSize (pageSize) {
-  //   this.size = pageSize
-  //   this.getData()
-  // }
+  changePageIndex(pageIndex) {
+    this.page = pageIndex;
+    this.getData()
+  }
+  changePageSize (pageSize) {
+    this.size = pageSize
+    this.getData()
+  }
   yesOrno(value) {
     return value === 'true' || value === true || value === '是' ? '是' : '否'
   }
   //账号目录树查询
   getTree() {
     this.loading = true;
-    this.http.get<any>(`${this.treeUrl}`).subscribe(res => {
+    const accountId = localStorage.getItem('account');
+    this.http.get<any>(`${this.treeUrl}`,{unit_id:accountId}).subscribe(res => {
       this.loading = false;
       if(res.code === 0) {
         let childrenUnits =  res.data.childrenUnits;
-        this.listOfDisplayData = res.data.accounts
         let children =  childrenUnits.map(item => {
           return {
             title:item.unit_name,
@@ -286,12 +352,8 @@ export class AccountComponent implements OnInit {
 
   nzClick(nodeItem){
     const node = Array.isArray(nodeItem) ? nodeItem[0] : nodeItem
-    this.selectNode = node.accounts ? node : node.node.origin
-    this.listOfDisplayData = this.selectNode.accounts;
-
-    // this.selectNode = nodeItem.node.key
-    // const accounts = nodeItem.node.origin.accounts
-    // this.listOfDisplayData = accounts;
+    this.unitId = nodeItem.key || node.node.key
+    this.getData()
   }
 
 }

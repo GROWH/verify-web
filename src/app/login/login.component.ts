@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
 
   form: FormGroup;
   isSpinning = false;
-  loginUrl='/account/login'
+  loginUrl = '/account/login';
 
   constructor(
     private fb: FormBuilder,
@@ -34,33 +34,36 @@ export class LoginComponent implements OnInit {
       pass: [null, [Validators.required]],
     });
   }
-  
+
   submitForm(): void {
-    localStorage.removeItem('account')
-    localStorage.removeItem('unit')
+    localStorage.removeItem('account');
+    localStorage.removeItem('unit');
     for (const i in this.form.controls) {
       this.form.controls[i].markAsDirty();
       this.form.controls[i].updateValueAndValidity();
     }
-    if(this.form.invalid) {
-      return
+    if (this.form.invalid) {
+      return;
     } else {
       this.isSpinning = true;
       const params = this.form.getRawValue();
-      this.http.get<any>(this.loginUrl,params).toPromise().then(res => {
+      this.http.get<any>(this.loginUrl, params).toPromise().then(res => {
         this.isSpinning = false;
-        if(res.code !== 0) {
+        if (res.code !== 0) {
           this.msg.error(res.message);
-          return
+          return;
         }
         this.msg.success(res.message);
-        localStorage.setItem('account',res.data.account.id)
-        localStorage.setItem(LOGINED_USER_UNIT_KEY,res.data.unit.id)
-        this.router.navigateByUrl('/manage')
+        localStorage.setItem('account', res.data.account.id);//用户ID
+        localStorage.setItem('userInfo', res.data.account);//用户信息
+        localStorage.setItem('menuAuth', JSON.stringify(res.data.moduleTree));//用户菜单权限
+        localStorage.setItem('btnAuth', JSON.stringify(res.data.resources));//用户按钮权限
+        localStorage.setItem(LOGINED_USER_UNIT_KEY, res.data.unit.id);
+        this.router.navigateByUrl('/manage');
       }).catch((err) => {
         this.isSpinning = false;
-        console.log(err)
-      })
+        console.log(err);
+      });
     }
   }
 }

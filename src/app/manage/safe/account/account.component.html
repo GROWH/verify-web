@@ -9,20 +9,15 @@
   </nz-tree>
   </div>
   <div class="contentright">
-    <div class="btns">
-      <button class="mr8" nz-button nzType="primary" (click)="Add()"><i nz-icon type="plus"></i>新增</button>
-      <button class="mr8" nz-button nzType="default" (click)="Edit()"><i nz-icon type="edit"></i>修改</button>
-      <button class="mr8" nz-button nzType="default" (click)="Check()"><i nz-icon type="check-circle"></i>启用</button>
-      <button class="mr8" nz-button nzType="default" (click)="Stop()"><i nz-icon type="stop"></i>停用</button>
-      <button class="mr8" nz-button nzType="danger" (click)="Delete()"><i nz-icon type="delete"></i>删除</button>
-      <button class="mr8" nz-button nzType="default" (click)="Query()"><i nz-icon type="redo"></i>刷新</button>
-    </div>
+    <grid-action [actions]="gridActions"></grid-action>
     <nz-table
     #rowSelectionTable
     nzShowSizeChanger
     [nzData]="listOfDisplayData"
     [nzTotal]="total"
-  
+    (nzPageIndexChange)="changePageIndex($event)"
+    (nzPageSizeChange)="changePageSize($event)"
+
   >
     <thead>
       <tr>

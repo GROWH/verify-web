@@ -6,6 +6,7 @@ export class GridAction {
   click?:        () => any;       // 点击按钮时执行的函数
   multi?:        boolean = false; // 多个按钮合并做下拉
   multiActions?: GridAction[];    // 多个按钮对应的
+  isExist?:      boolean;         //按钮权限
 }
 
 export const NO_FILTER = "NO_FILTER"

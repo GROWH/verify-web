@@ -24,7 +24,7 @@ export class RoleService extends UniversalService<Role> {
         ...it,
         resource: it.resource.map(it => it.id)
       }
-      
+
       return role
     })
   }
@@ -73,7 +73,7 @@ export class RoleService extends UniversalService<Role> {
     const rights = (
       await this.commSer.getParamsByKey(
         ...this.adminRoles.map(it => it.key)
-      ).toPromise() 
+      ).toPromise()
     ).data
 
     this.adminRoles.forEach(item => {
@@ -88,7 +88,7 @@ export class RoleService extends UniversalService<Role> {
    */
   getModuleTreeByCode(moTree: SystemModule[], moIds: number[]) {
     return moTree.reduce<SystemModule[]>((acc, it) => {
-      if (moIds.includes(it.id)) {
+      if ((moIds||[]).includes(it.id)) {
         const node = {
           ...it
         }
@@ -108,7 +108,7 @@ export class RoleService extends UniversalService<Role> {
       {
         name: '新增',
         icon: 'plus',
-        code: 'add',
+        code: 'role_add',
         type: 'primary',
         click: () => {
           const modalRef: NzModalRef = this.modal.create({
@@ -134,16 +134,18 @@ export class RoleService extends UniversalService<Role> {
               }
             ]
           })
-        }
+        },
+        isExist: true,
       },
       {
         name: '刷新',
         icon: 'reload',
-        code: 'reload',
+        code: 'role_reload',
         type: 'dashed',
         click: () => {
           this.onForceReload()
-        }
+        },
+        isExist: true,
       }
     ]
   }

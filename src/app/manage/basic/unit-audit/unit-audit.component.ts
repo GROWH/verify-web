@@ -3,6 +3,8 @@ import { NzModalService, NzModalRef, NzMessageService } from 'ng-zorro-antd';
 import { TongchangHttpService } from 'tongchang-lib';
 import { AuditFormComponent } from './audit-form/audit-form.component';
 
+import {GridAction} from '@/model/GridAction';
+
 @Component({
   selector: 'app-unit-audit',
   templateUrl: './unit-audit.component.html',
@@ -31,8 +33,36 @@ export class UnitAuditComponent implements OnInit {
     private http: TongchangHttpService,
   ) { }
 
+  gridActions: GridAction[];
+
   ngOnInit() {
+    this.actionInit()
     this.getData()
+  }
+
+  actionInit() {
+    this.gridActions = [
+       {
+        name: '审核',
+        icon: 'check',
+        code: 'unit-audit_audit',
+        type: 'default',
+        click: () => {
+          this.audit()
+        },
+         isExist: true,
+      },
+      {
+        name: '刷新',
+        icon: 'redo',
+        code: 'unit-audit_reload',
+        type: 'dashed',
+        click: () => {
+          this.Query()
+        },
+        isExist: true,
+      }
+    ]
   }
 
   refreshStatus(): void {
@@ -45,7 +75,7 @@ export class UnitAuditComponent implements OnInit {
         }
       }
     }).filter(item => item)
-    this.isIndeterminate = 
+    this.isIndeterminate =
       this.listOfDisplayData.some(item => this.mapOfCheckedId[item.id]) && !this.isAllDisplayDataChecked;
   }
 

@@ -3,6 +3,8 @@ import { NzModalService, NzModalRef, NzMessageService, NzTreeNodeOptions, NzTree
 import { TongchangHttpService } from 'tongchang-lib';
 import { ThermManageFormComponent } from './therm-manage-form/therm-manage-form.component';
 
+import {GridAction} from '@/model/GridAction';
+
 @Component({
   selector: 'app-therm-manage',
   templateUrl: './therm-manage.component.html',
@@ -34,8 +36,54 @@ export class ThermManageComponent implements OnInit {
     private http: TongchangHttpService,
   ) { }
 
+  gridActions: GridAction[];
+
   ngOnInit() {
+    this.actionInit()
     this.getthermomete()
+  }
+
+  actionInit() {
+    this.gridActions = [
+      {
+        name: '新增',
+        icon: 'plus',
+        code: 'therm-manage_add',
+        type: 'primary',
+        click: () => {
+          this.Add()
+        },
+        isExist: true,
+      }, {
+        name: '修改',
+        icon: 'edit',
+        code: 'therm-manage_edit',
+        type: 'default',
+        click: () => {
+          this.Edit()
+        },
+        isExist: true,
+      }, {
+        name: '删除',
+        icon: 'delete',
+        code: 'therm-manage_delete',
+        type: 'danger',
+        click: () => {
+          this.Delete()
+        },
+        isExist: true,
+      },
+      {
+        name: '刷新',
+        icon: 'redo',
+        code: 'therm-manage_reload',
+        type: 'dashed',
+        click: () => {
+          this.Query()
+        },
+        isExist: true,
+      }
+    ]
   }
 
   refreshStatus(): void {
@@ -48,7 +96,7 @@ export class ThermManageComponent implements OnInit {
         }
       }
     }).filter(item => item)
-    this.isIndeterminate = 
+    this.isIndeterminate =
       this.listOfDisplayData.some(item => this.mapOfCheckedId[item.id]) && !this.isAllDisplayDataChecked;
   }
 
@@ -75,7 +123,6 @@ export class ThermManageComponent implements OnInit {
           disabled:comp => !comp.validateForm.valid,
           onClick:(comp) => {
             let formVal = comp.validateForm.getRawValue()
-            console.log(formVal);
             this.modal.confirm({
               nzTitle: '提交',
               nzContent: '确认提交?',
@@ -96,7 +143,7 @@ export class ThermManageComponent implements OnInit {
                 })
               }
             })
-      
+
           }
         }
       ],
@@ -150,7 +197,7 @@ export class ThermManageComponent implements OnInit {
       ],
       nzWrapClassName: 'modal-vertical-center'
     })
-    
+
   }
   //删除操作
   Delete() {

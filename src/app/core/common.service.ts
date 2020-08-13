@@ -15,24 +15,24 @@ export class CommonService {
   ) { }
 
   getModuleTree() {
-    return this.http.get<SystemModule[]>(Apis.moduleTree)
+    return this.http.get<SystemModule[]>(Apis.moduleTree);
   }
 
   getParamsByKey(...keys: string[]) {
     return this.http.get<{ [key: string]: string }>(
-      Apis.paramsByKey, 
+      Apis.paramsByKey,
       { code: keys.join(',') }
     )
     .pipe(
       map(res => {
         if (res.code === 0) {
-          Object.keys(res.data || {}).forEach(key => res.data[key] = JSON.parse(res.data[key]))
+          Object.keys(res.data || {}).forEach(key => res.data[key] = res.data[key]);
         }
-        return res as ServerRes<{ [key: string]: any }>
+        return res as ServerRes<{ [key: string]: any }>;
       }),
-    )
+    );
   }
-  
+
   paramsUpdate(key: string, value: string) {
     return this.http.get(
       Apis.paramsUpdateByCode,
@@ -40,6 +40,6 @@ export class CommonService {
         code: key,
         value,
       }
-    )
+    );
   }
 }

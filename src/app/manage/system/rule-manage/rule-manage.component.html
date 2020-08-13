@@ -18,9 +18,9 @@
         [nzIndeterminate]="isIndeterminate"
         (nzCheckedChange)="checkAll($event)"
       ></th>
-      <th>参数编码</th>
-      <th>参数值</th>
-      <th>参数名称描述</th>
+      <th>文件名</th>
+      <th>文件描述</th>
+      <th>文件URL</th>
       <th>创建时间</th>
       <th>更新时间</th>
     </tr>
@@ -28,9 +28,9 @@
     <tbody>
     <tr *ngFor="let data of rowSelectionTable.data">
       <td nzShowCheckbox [(nzChecked)]="mapOfCheckedId[data.id]" (nzCheckedChange)="refreshStatus()"></td>
-      <td>{{ data.code }}</td>
-      <td title="{{data.value}}">{{ data.value.length>100?data.value.substring(1,100)+'...': data.value}}</td>
-      <td>{{ data.name }}</td>
+      <td>{{ data.filename }}</td>
+      <td title="{{data.filedesc}}">{{ data.filedesc.length>100?data.filedesc.substring(1,100)+'...': data.filedesc}}</td>
+      <td>{{ data.fileurl }}</td>
       <td>{{ data.create_time }}</td>
       <td>{{ data.update_time }}</td>
     </tr>

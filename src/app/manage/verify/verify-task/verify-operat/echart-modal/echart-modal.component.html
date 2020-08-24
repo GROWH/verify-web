@@ -1,0 +1,81 @@
+<div class="wrapper">
+  <div class="search-condition">
+    <ul>
+      <li>
+        <label>监测点 :</label>
+        <nz-select
+          class="option-val"
+          nzShowSearch nzAllowClear
+          nzPlaceHolder="请选择"
+          style="width: 120px"
+          [ngModel]="checkVal">
+          <nz-option nzLabel="全部" nzValue="0"></nz-option>
+          <nz-option nzLabel="001" nzValue="1"></nz-option>
+          <nz-option nzLabel="002" nzValue="2"></nz-option>
+        </nz-select>
+      </li>
+      <li>
+        <label>仪器编号 :</label>
+        <nz-select
+          class="option-val"
+          nzShowSearch nzAllowClear
+          nzPlaceHolder="请选择"
+          style="width: 120px"
+          [ngModel]="facilityNo">
+          <nz-option nzLabel="全部" nzValue="0"></nz-option>
+          <nz-option nzLabel="001" nzValue="1"></nz-option>
+          <nz-option nzLabel="002" nzValue="2"></nz-option>
+        </nz-select>
+      </li>
+      <li>
+        <label>曲线类型 :</label>
+        <nz-radio-group
+          class="option-val"
+          [(ngModel)]="checkType">
+          <label nz-radio [nzValue]="'0'">温度</label>
+          <label nz-radio [nzValue]="'1'">湿度</label>
+        </nz-radio-group>
+      </li>
+      <li>
+        <label>曲线时间 :</label>
+        <nz-radio-group
+          class="option-val"
+          [(ngModel)]="lineType">
+          <label nz-radio [nzValue]="'0'">按操作过程</label>
+          <label nz-radio [nzValue]="'1'">按自定义</label>
+        </nz-radio-group>
+      </li>
+      <li *ngIf="lineType === '0'">
+        <nz-select
+          class="option-val"
+          nzShowSearch nzAllowClear
+          nzPlaceHolder="请选择"
+          style="width: 190px"
+          [ngModel]="stateVal">
+          <nz-option nzLabel="全部" nzValue="0"></nz-option>
+          <nz-option nzLabel="001" nzValue="1"></nz-option>
+          <nz-option nzLabel="002" nzValue="2"></nz-option>
+        </nz-select>
+      </li>
+      <li *ngIf="lineType === '1'">
+        <nz-date-picker
+          nzShowTime
+          nzFormat="yyyy-MM-dd HH:mm:ss"
+          nzPlaceHolder="请选择"
+          [(ngModel)]="selfTime"
+        ></nz-date-picker>
+      </li>
+      <li>
+        <button nz-button [nzType]="'primary'" (click)="searchData()"><i nz-icon [nzType]="'search'"></i>搜索</button>
+      </li>
+    </ul>
+  </div>
+  <div class="content">
+    <nz-tabset>
+      <nz-tab nzTitle="数据曲线">
+        <div *ngIf="xData.length !==0" echarts [options]="option" class="demo-chart"></div>
+        <nz-empty style="height: 350px;margin-top: 150px"  *ngIf="xData.length ===0"></nz-empty>
+      </nz-tab>
+    </nz-tabset>
+  </div>
+</div>

@@ -16,7 +16,7 @@
     <div class="panel first" *ngIf="step < 2">
       <input type="file" (change)="fileCh($event)" #fileInput [hidden]="true">
       <ng-container *ngTemplateOutlet="HouseMap"></ng-container>
-      
+
       <div class="buttons" *ngIf="step === 0">
         <button
           nz-button
@@ -66,7 +66,7 @@
               {{ point.code }}
             </td>
             <td>
-              <a (click)="chDevice(point)">选择设备</a>              
+              <a (click)="chDevice(point)">选择设备</a>
             </td>
           </tr>
         </ng-template>
@@ -121,18 +121,18 @@
             ></nz-input-number>
           </nz-form-control>
         </div>
-        
+
         <nz-divider></nz-divider>
         <div class="title">短信告警</div>
 
-        <ng-container 
+        <ng-container
           *ngTemplateOutlet="warnForm; context: { group: 'phone_warn' }"
         ></ng-container>
 
         <nz-divider></nz-divider>
         <div class="title">电话告警</div>
 
-        <ng-container 
+        <ng-container
           *ngTemplateOutlet="warnForm; context: { group: 'message_warn' }"
         ></ng-container>
 
@@ -206,7 +206,7 @@
         </ng-template>
       </form>
     </div>
-    
+
     <div class="panel fourth" *ngIf="step === 3">
       <ng-container
         *ngTemplateOutlet="HouseParams; context: {
@@ -223,7 +223,7 @@
           ]
         }"
       ></ng-container>
-      
+
       <ng-template #HouseParams let-data="data" let-warns="warns">
         <nz-descriptions [nzTitle]="data.name" [nzBordered]="true">
           <nz-descriptions-item nzTitle="最低温度">{{ data.temp_up }}</nz-descriptions-item>
@@ -238,7 +238,7 @@
           </nz-descriptions-item>
         </nz-descriptions>
       </ng-template>
-      
+
 
       <ng-container *ngTemplateOutlet="HouseMap"></ng-container>
       <ng-container *ngTemplateOutlet="devTableWrap; context: { body: pointsView }"></ng-container>
@@ -249,7 +249,7 @@
           <td>{{ point.code }}</td>
         </tr>
       </ng-template>
-      
+
     </div>
   </div>
 
@@ -285,9 +285,9 @@
 <ng-template #HouseMap>
   <div class="img-area">
     <ng-container *ngIf="houseImageUrl; else uploadBt">
-      <div 
+      <div
         class="img-wrapper"
-        [ngClass]="{'adding': pointAdding, 'removing': pointRemoving}"
+        alarm_record.="{'adding': pointAdding, 'removing': pointRemoving}"
       >
         <img
           libClientRect

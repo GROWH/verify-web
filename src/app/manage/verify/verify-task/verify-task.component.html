@@ -1,0 +1,51 @@
+<div class="wrapper">
+  <grid-action [actions]="gridActions"></grid-action>
+
+  <nz-table
+    #rowSelectionTable
+    nzShowSizeChanger
+    [nzTotal]="total"
+    (nzPageIndexChange)="changePageIndex($event)"
+    (nzPageSizeChange)="changePageSize($event)"
+    [nzData]="listOfData">
+    <thead>
+    <tr>
+      <th
+        nzShowCheckbox
+        [(nzChecked)]="isAllDisplayDataChecked"
+        [nzIndeterminate]="isIndeterminate"
+        (nzCheckedChange)="checkAll($event)"
+      ></th>
+      <th>任务编号</th>
+      <th>任务开始时间</th>
+      <th>预计验证完成时间</th>
+      <th>验证终端单位名称</th>
+      <th>验证类型</th>
+      <th>验证对象</th>
+      <th>验证进度</th>
+      <th nzWidth="200px">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of rowSelectionTable.data">
+      <td nzShowCheckbox [(nzChecked)]="mapOfCheckedId[item.check_no]" (nzCheckedChange)="refreshStatus()"></td>
+      <td>{{ item.check_no }}</td>
+      <td>{{ item.task_start_time }}</td>
+      <td>{{ item.expected_complet_time }}</td>
+      <td>{{ item.check_unit }}</td>
+      <td>{{ item.check_mold }}</td>
+      <td>{{ item.check_target }}</td>
+      <td>
+        <div class="warp-div" *ngFor="let iItem of item.check_progress">
+          <div class="yesProgress" title="{{iItem.val}}" *ngIf="iItem.isTrue === true"></div>
+          <div class="noProgress" title="{{iItem.val}}" *ngIf="iItem.isTrue === false"></div>
+        </div>
+      </td>
+      <td>
+        <a (click)="startVerify(item,$event)">开始验证</a>
+<!--        <nz-divider nzType="vertical"></nz-divider>-->
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+</div>

@@ -1,9 +1,9 @@
-import { ActivatedRoute, Router } from '@angular/router';
-import { UniversalComponent } from 'tongchang-lib';
-import { Component, OnInit, Injector } from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {UniversalComponent} from 'tongchang-lib';
+import {Component, OnInit, Injector} from '@angular/core';
 
-import { Apis } from '@/shared/urls.const';
-import { StoreHouse } from '@/model/HouseMonit';
+import {Apis} from '@/shared/urls.const';
+import {StoreHouse} from '@/model/HouseMonit';
 
 import {GridAction} from '@/model/GridAction';
 
@@ -23,10 +23,11 @@ export class MyHouseComponent extends UniversalComponent {
   }
 
   ngOnInit() {
+    const uid = localStorage.getItem('account');
     this.uniSer.gridConf = {
       queryUrl: Apis.storehouseDownUnit,
       queryBody: null,
-      queryParam: { uid: 10 + '' },
+      queryParam: {uid},
       queryMethod: 'get',
       page: 1,
       size: 10,
@@ -44,6 +45,6 @@ export class MyHouseComponent extends UniversalComponent {
   ]
 
   viewDetail(house: StoreHouse) {
-    this.router.navigate([ 'detail', house.id ], { relativeTo: this.route })
+    this.router.navigate(['detail', house.id], {relativeTo: this.route})
   }
 }

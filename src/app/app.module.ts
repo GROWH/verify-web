@@ -19,6 +19,8 @@ import { IconDefinition } from '@ant-design/icons-angular';
 import { SharedModule } from './shared/shared.module';
 import { environment } from 'src/environments/environment';
 
+import {NgxEchartsModule} from "ngx-echarts";
+
 registerLocaleData(zh);
 
 const antDesignIcons = AllIcons as {
@@ -47,7 +49,8 @@ if (!environment.production) {
       fileApi: '/api/file',
       headers: {},
       authRequireCode: -9,
-    })
+    }),
+    NgxEchartsModule,
   ],
   providers: [
     { provide: NZ_I18N, useValue: zh_CN },

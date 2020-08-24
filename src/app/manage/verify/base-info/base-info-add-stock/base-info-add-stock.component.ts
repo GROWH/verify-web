@@ -1,12 +1,14 @@
-import { Component, OnInit, Input, Output, EventEmitter, Inject } from '@angular/core';
-import { FormBuilder, Validators, FormArray, FormGroup } from '@angular/forms';
-import { filter } from 'rxjs/operators';
-import { merge } from 'rxjs';
-import { BaseInfo } from '@/model/Verify';
-import { DebugLog, TongchangLibService, TongchangHttpService } from 'tongchang-lib';
-import { BaseInfoSerToken } from '../../verify.routing.token';
-import { BaseInfoService } from '../base-info.service';
-import { Apis } from '@/shared/urls.const';
+import {Component, OnInit, Input, Output, EventEmitter, Inject} from '@angular/core';
+import {FormBuilder, Validators, FormArray, FormGroup} from '@angular/forms';
+import {filter} from 'rxjs/operators';
+import {merge} from 'rxjs';
+import {BaseInfo} from '@/model/Verify';
+import {DebugLog, TongchangLibService, TongchangHttpService} from 'tongchang-lib';
+import {BaseInfoSerToken} from '../../verify.routing.token';
+import {BaseInfoService} from '../base-info.service';
+import {Apis} from '@/shared/urls.const';
+import * as moment from "moment";
+
 
 @Component({
   selector: 'app-base-info-add-stock',
@@ -27,7 +29,8 @@ export class BaseInfoAddStockComponent implements OnInit {
     private util: TongchangLibService,
     private http: TongchangHttpService,
     @Inject(BaseInfoSerToken) private baseInfoSer: BaseInfoService,
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     this.formInit()
@@ -36,6 +39,11 @@ export class BaseInfoAddStockComponent implements OnInit {
   pointsForm: FormGroup;
   form: FormGroup;
 
+
+  // const updateTime = this.form.getRawValue()
+  // updateTime.verifyTime = moment(updateTime.verify_time).format('YY-MM-DD')
+  // updateTime.verifyInvalidTime = moment(updateTime.verify_invalid_time).format('YY-MM-DD')
+  // console.log(updateTime)
 
   get formVal(): BaseInfo {
     const params = this.form.getRawValue()
@@ -65,30 +73,30 @@ export class BaseInfoAddStockComponent implements OnInit {
    */
   formInit() {
     const form = this.fb.group({
-      temp_up:     [ null, [ Validators.required ] ],
-      temp_down:   [ null, [ Validators.required ] ],
-      length:      [ null, [ Validators.required ] ],
-      width:       [ null, [ Validators.required ] ],
-      height:      [ null, [ Validators.required ] ],
-      area:        [ null, [ Validators.required ] ],
-      vol:         [ null, [ Validators.required ] ],
-      lamp:        [ null, [ Validators.required ] ],
-      windows:     [ null, [ Validators.required ] ],
-      door:        [ null, [ Validators.required ] ],
-      blind_point: [ null, [ Validators.required ] ],
-      monit_point: [ null, [ Validators.required ] ],
-      shelf:       [ null, [ Validators.required ] ],
-      fan:         [ null, [ Validators.required ] ],
+      temp_up: [null, [Validators.required]],
+      temp_down: [null, [Validators.required]],
+      length: [null, [Validators.required]],
+      width: [null, [Validators.required]],
+      height: [null, [Validators.required]],
+      area: [null, [Validators.required]],
+      vol: [null, [Validators.required]],
+      lamp: [null, [Validators.required]],
+      windows: [null, [Validators.required]],
+      door: [null, [Validators.required]],
+      blind_point: [null, [Validators.required]],
+      monit_point: [null, [Validators.required]],
+      shelf: [null, [Validators.required]],
+      fan: [null, [Validators.required]],
 
-      fan_conf:    this.fb.array([]),
+      fan_conf: this.fb.array([]),
     })
 
     const lengthCtrl = form.get('length')
-    const widthCtrl  = form.get('width')
+    const widthCtrl = form.get('width')
     const heightCtrl = form.get('height')
-    const areaCtrl   = form.get('area')
-    const volCtrl    = form.get('vol')
-    const fanCtrl    = form.get('fan')
+    const areaCtrl = form.get('area')
+    const volCtrl = form.get('vol')
+    const fanCtrl = form.get('fan')
     const fanConfCtrl = form.get('fan_conf') as FormArray
 
     fanCtrl.valueChanges.pipe(
@@ -105,7 +113,7 @@ export class BaseInfoAddStockComponent implements OnInit {
       } else {
         for (let i = fanConfCtrl.length; i < count; i++) {
           fanConfCtrl.push(this.fb.group({
-            type: [ null, [ Validators.required ]]
+            type: [null, [Validators.required]]
           }))
         }
       }
@@ -136,11 +144,12 @@ export class BaseInfoAddStockComponent implements OnInit {
       ))
     ).subscribe(() => {
       const area = lengthCtrl.value * widthCtrl.value
-      areaCtrl.setValue(Math.floor(area * 100)/100)
+      areaCtrl.setValue(Math.floor(area * 100) / 100)
     })
 
     this.form = form
   }
+
 
   get params() {
     return this.form.getRawValue()
@@ -169,12 +178,12 @@ export class BaseInfoAddStockComponent implements OnInit {
 
 
     this.pointsForm = this.fb.group({
-      env:     [ 1,                         [ Validators.required ] ],
-      lamp:    [ stockBaseInfo.lamp,        [ Validators.required ] ],
-      matrix:  [ matrixCount,               [ Validators.required ] ],
-      windows: [ stockBaseInfo.windows,     [ Validators.required ] ],
-      monit:   [ stockBaseInfo.monit_point, [ Validators.required ] ],
-      door:    this.fb.array(
+      env: [1, [Validators.required]],
+      lamp: [stockBaseInfo.lamp, [Validators.required]],
+      matrix: [matrixCount, [Validators.required]],
+      windows: [stockBaseInfo.windows, [Validators.required]],
+      monit: [stockBaseInfo.monit_point, [Validators.required]],
+      door: this.fb.array(
         Array(stockBaseInfo.door).fill(0)
           .map((it, index) => {
             return this.fb.group({
@@ -237,8 +246,8 @@ export class BaseInfoAddStockComponent implements OnInit {
 
     othersCtrl.push(
       this.fb.group({
-        name: [ null, [ Validators.required ] ],
-        count: [ null, [ Validators.required ] ],
+        name: [null, [Validators.required]],
+        count: [null, [Validators.required]],
       })
     )
   }
@@ -256,4 +265,5 @@ export class BaseInfoAddStockComponent implements OnInit {
     }
     return count
   }
+
 }

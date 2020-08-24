@@ -53,7 +53,7 @@ export class BaseInfoAddCarComponent implements OnInit {
       fan_conf:    this.fb.array([]),
     })
 
-    const fanCtrl    = form.get('fan')
+    const fanCtrl = form.get('fan')
     const fanConfCtrl = form.get('fan_conf') as FormArray
 
     fanCtrl.valueChanges.pipe(

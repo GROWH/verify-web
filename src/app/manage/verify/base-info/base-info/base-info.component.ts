@@ -14,6 +14,7 @@ import {GridAction} from '@/model/GridAction';
   styleUrls: ['./base-info.component.scss']
 })
 export class BaseInfoComponent extends UniversalComponent implements OnInit {
+  totalTemplate: number = 0;
 
   constructor(
     injector: Injector,
@@ -62,14 +63,23 @@ export class BaseInfoComponent extends UniversalComponent implements OnInit {
         code: 'verify-info_reload',
         click: () => this.uniSer.onForceReload(),
         isExist: true,
+      },
+      {
+        name: '一键生成验证任务',
+        icon: 'check',
+        code: 'verify-info_genera-task',
+        click: () => {
+          console.log('一键生成验证任务')
+        },
+        isExist: true,
       }
     ]
   }
 
-  itemView() {
+  itemView(record) {
   }
 
-  itemUpdate() {
+  itemUpdate(record) {
   }
 
   itemDelete(data: BaseInfo) {
@@ -82,7 +92,8 @@ export class BaseInfoComponent extends UniversalComponent implements OnInit {
       nzTitle: '验证对象基础资料新建向导',
       nzContent: BaseInfoAddComponent,
       nzComponentParams: {
-        afterDone: () => modalRef.close()
+        afterDone: () => modalRef.close(),
+        openType: "base",
       },
       nzMaskClosable: false,
       nzWrapClassName: 'modal-vertical-center height-fixed no-padding',

@@ -1,0 +1,103 @@
+<div class="wrapper" id="allHeight">
+  <div class="option">
+    <div class="option-title">
+      <div class="title-txt">操作选项</div>
+      <div class="show-info">
+        <label class="label">数据状态 : </label>
+        <span class="state success">正常</span>
+      </div>
+      <div class="show-info">
+        <label class="label">当前时间 :</label>
+        <span class="state">{{currDate}}</span>
+      </div>
+      <div class="show-info">
+        <label class="label">环境温度 :</label>
+        <span class="state">27.7℃/62.3%RH</span>
+      </div>
+    </div>
+    <ul>
+      <li>
+        <label class="label">操作项目 :</label>
+        <nz-radio-group
+          class="option-val"
+          [ngModel]="checkVal">
+          <label nz-radio [nzValue]="'正常'">正常</label>
+          <label nz-radio [nzValue]="'断电'">断电</label>
+          <label nz-radio [nzValue]="'开门'">开门</label>
+          <label nz-radio [nzValue]="'预冷'">预冷</label>
+        </nz-radio-group>
+      </li>
+      <li>
+        <label class="label">验证对象 :</label>
+        <nz-select
+          class="option-val"
+          nzShowSearch nzAllowClear
+          nzPlaceHolder="请选择"
+          style="width: 200px"
+          [ngModel]="selectVal">
+          <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
+          <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
+          <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
+        </nz-select>
+      </li>
+      <li>
+        <label class="label">装载情况 :</label>
+        <nz-radio-group
+          class="option-val"
+          [ngModel]="checkVal">
+          <label nz-radio [nzValue]="'正常'">满载</label>
+          <label nz-radio [nzValue]="'断电'">空载</label>
+        </nz-radio-group>
+      </li>
+    </ul>
+  </div>
+
+  <div class="option" id="option">
+    <div class="option-title">
+      <div class="title-txt">验证操作</div>
+    </div>
+    <div style="padding-left:40px;">
+      <grid-action [actions]="gridActions"></grid-action>
+    </div>
+  </div>
+
+
+  <div class="option">
+    <div class="option-title">
+      <div class="title-txt">测点数据列表</div>
+    </div>
+    <nz-table style="margin-top: 10px;"
+              #basicTable
+              [nzData]="tableData"
+              nzShowSizeChanger
+              [nzTotal]="total"
+              [nzScroll]="{ y: tableHeight }"
+              (nzPageIndexChange)="changePageIndex($event)"
+              (nzPageSizeChange)="changePageSize($event)"
+    >
+      <thead>
+      <tr>
+        <th>序号</th>
+        <th>测试点</th>
+        <th>设备编号</th>
+        <th>温度(℃)</th>
+        <th>湿度(%RH)</th>
+        <th>数据时间</th>
+        <th>设备状态</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let data of basicTable.data">
+        <td>{{data.no}}</td>
+        <td>{{data.test_point}}</td>
+        <td>{{data.facility_no}}</td>
+        <td>{{data.temp}}</td>
+        <td>{{data.humi}}</td>
+        <td>{{data.data_time}}</td>
+        <td>{{data.facility_state}}</td>
+      </tr>
+      </tbody>
+    </nz-table>
+  </div>
+
+</div>

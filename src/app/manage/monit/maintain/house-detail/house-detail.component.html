@@ -27,7 +27,7 @@
       <span [title]="house.new_uptime">{{ houseUpdateTimeDisplay }}</span>
       <a (click)="forceReload()" title="刷新">
         <i nz-icon type="reload"></i>
-      </a>         
+      </a>
     </span>
   </div>
 
@@ -65,7 +65,7 @@
   <div class="points">
     <div
       class="map"
-      [ngClass]="{'adding': pointAdding, 'removing': pointRemoving}"
+      alarm_record.="{'adding': pointAdding, 'removing': pointRemoving}"
     >
       <img
         alt="hosuse map"
@@ -88,14 +88,14 @@
           <div class="humi">当前湿度: <b>{{ point.curr_humi || 'N/A' }}</b>%</div>
           <div class="time">最后上传时间: <b>{{ point.last_uptime || 'N/A' }}</b></div>
           <div class="view-rate">
-            <a (click)="showWarnRec(point)">查看监控曲线</a>         
+            <a (click)="showWarnRec(point)">查看监控曲线</a>
           </div>
         </div>
       </div>
     </div>
     <div class="table">
-      <nz-table 
-        #nzTable 
+      <nz-table
+        #nzTable
         nzSize="small"
         [nzData]="house.thermometer"
         [nzShowPagination]="false"
@@ -127,7 +127,7 @@
               <td>{{ point.name }}</td>
             </ng-template>
             <td>
-              <a (click)="chDevice(point)" *ngIf="maintainMode">更换设备</a>              
+              <a (click)="chDevice(point)" *ngIf="maintainMode">更换设备</a>
             </td>
           </tr>
         </tbody>
@@ -139,20 +139,20 @@
     <div class="edit-bar" *ngIf="maintainMode">
       <a (click)="warnSet(house)" title="修改">
         <i nz-icon type="edit"></i>
-      </a>  
+      </a>
     </div>
     <div nz-row nzGutter="48" class="items">
       <div nz-col nzSpan="12">
         <div class="title">短信告警</div>
         <ng-container *ngTemplateOutlet="warnShow; context: {
           conf: warnConfForShow(house.message_warn)
-        }"></ng-container>        
+        }"></ng-container>
       </div>
       <div nz-col nzSpan="12">
         <div class="title">电话告警</div>
         <ng-container *ngTemplateOutlet="warnShow; context: {
           conf: warnConfForShow(house.phone_warn)
-        }"></ng-container>        
+        }"></ng-container>
       </div>
     </div>
   </div>
@@ -162,7 +162,7 @@
     <nz-divider></nz-divider>
 
     <router-outlet></router-outlet>
-    
+
   </div>
 </div>
 

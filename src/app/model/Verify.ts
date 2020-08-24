@@ -33,7 +33,7 @@ export class BaseInfo extends DataBase {
   // 冷藏车
   car_vol?:              number;        // 车厢体积
   car_area?:             number;        // 车厢面积
-  
+
   // 冷柜
   cooler_vol?:           number;        // 冷柜体积
 

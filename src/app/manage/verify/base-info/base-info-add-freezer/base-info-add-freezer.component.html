@@ -13,7 +13,7 @@
             [nzPlaceHolder]="'请输入'"
           ></nz-input-number>
         </nz-form-control>
-  
+
         <nz-form-label nzSpan="4" nzRequired>温度下限</nz-form-label>
         <nz-form-control nzSpan="7">
           <nz-input-number
@@ -24,9 +24,9 @@
           ></nz-input-number>
         </nz-form-control>
       </div>
-  
+
       <div nz-row>
-        
+
         <nz-form-label nzSpan="4" nzRequired>冷柜体积</nz-form-label>
         <nz-form-control nzSpan="7">
           <nz-input-number
@@ -37,7 +37,7 @@
           ></nz-input-number>
         </nz-form-control>
       </div>
-  
+
       <div nz-row>
         <nz-form-label nzSpan="4" nzRequired>出入口数量</nz-form-label>
         <nz-form-control nzSpan="7">
@@ -50,7 +50,7 @@
             [nzPlaceHolder]="'请输入'"
           ></nz-input-number>
         </nz-form-control>
-        
+
         <nz-form-label nzSpan="4" nzRequired>死角数量</nz-form-label>
         <nz-form-control nzSpan="7">
           <nz-input-number
@@ -63,7 +63,7 @@
           ></nz-input-number>
         </nz-form-control>
       </div>
-  
+
       <div nz-row>
         <nz-form-label nzSpan="4" nzRequired>监控探头数量</nz-form-label>
         <nz-form-control nzSpan="7">
@@ -76,7 +76,7 @@
             [nzPlaceHolder]="'请输入'"
           ></nz-input-number>
         </nz-form-control>
-        
+
         <nz-form-label nzSpan="4" nzRequired>风机数量</nz-form-label>
         <nz-form-control nzSpan="7">
           <nz-input-number
@@ -89,7 +89,7 @@
           ></nz-input-number>
         </nz-form-control>
       </div>
-      
+
       <ng-container formArrayName="fan_conf">
         <div
           nz-row
@@ -110,7 +110,7 @@
       </ng-container>
     </form>
   </div>
-  
+
   <div class="points" *ngIf="step === 1">
     <div class="title">布点数量配置</div>
     <nz-divider style="margin: 0;"></nz-divider>
@@ -140,7 +140,7 @@
           ></nz-input-number>
         </nz-form-control>
       </div>
-      
+
       <div nz-row>
         <nz-form-label nzSpan="4" nzRequired>监测探头</nz-form-label>
         <nz-form-control nzSpan="7">
@@ -154,7 +154,7 @@
           ></nz-input-number>
         </nz-form-control>
       </div>
-      
+
       <ng-container
         formArrayName="door"
         *ngIf="pointsForm.get('door').controls.length > 0"
@@ -166,7 +166,7 @@
             <nz-form-control nzSpan="7">
               <input nz-input formControlName="name" placeholder="请输入">
             </nz-form-control>
-            
+
             <nz-form-label nzSpan="4" nzRequired>测点数量</nz-form-label>
             <nz-form-control nzSpan="7">
               <nz-input-number
@@ -181,7 +181,7 @@
           </div>
         </ng-container>
       </ng-container>
-      
+
       <ng-container
         formArrayName="fan_out"
         *ngIf="pointsForm.get('fan_out').controls.length > 0"
@@ -193,7 +193,7 @@
             <nz-form-control nzSpan="7">
               <input nz-input formControlName="name" placeholder="请输入">
             </nz-form-control>
-            
+
             <nz-form-label nzSpan="4" nzRequired>测点数量</nz-form-label>
             <nz-form-control nzSpan="7">
               <nz-input-number
@@ -204,12 +204,12 @@
                 [nzPrecision]="0"
                 [nzPlaceHolder]="'请输入'"
               ></nz-input-number>
-              
+
             </nz-form-control>
           </div>
         </ng-container>
       </ng-container>
-      
+
       <ng-container
         formArrayName="fan_in"
         *ngIf="pointsForm.get('fan_in').controls.length > 0"
@@ -221,7 +221,7 @@
             <nz-form-control nzSpan="7">
               <input nz-input formControlName="name" placeholder="请输入">
             </nz-form-control>
-            
+
             <nz-form-label nzSpan="4" nzRequired>测点数量</nz-form-label>
             <nz-form-control nzSpan="7">
               <nz-input-number
@@ -232,12 +232,12 @@
                 [nzPrecision]="0"
                 [nzPlaceHolder]="'请输入'"
               ></nz-input-number>
-              
+
             </nz-form-control>
           </div>
         </ng-container>
       </ng-container>
-      
+
       <ng-container
         formArrayName="bland"
         *ngIf="pointsForm.get('bland').controls.length > 0"
@@ -249,7 +249,7 @@
             <nz-form-control nzSpan="7">
               <input nz-input formControlName="name" placeholder="请输入">
             </nz-form-control>
-            
+
             <nz-form-label nzSpan="4" nzRequired>测点数量</nz-form-label>
             <nz-form-control nzSpan="7">
               <nz-input-number
@@ -260,12 +260,12 @@
                 [nzPrecision]="0"
                 [nzPlaceHolder]="'请输入'"
               ></nz-input-number>
-              
+
             </nz-form-control>
           </div>
         </ng-container>
       </ng-container>
-      
+
       <ng-container formArrayName="others">
         <nz-divider nzText="其他"></nz-divider>
         <ng-container *ngFor="let ctrl of pointsForm.get('others').controls; index as i">
@@ -274,7 +274,7 @@
             <nz-form-control nzSpan="7">
               <input nz-input formControlName="name" placeholder="请输入">
             </nz-form-control>
-            
+
             <nz-form-label nzSpan="4" nzRequired>测点数量</nz-form-label>
             <nz-form-control nzSpan="7">
               <nz-input-number
@@ -313,7 +313,7 @@
       </ng-container>
     </form>
   </div>
-  
+
   <div class="view" *ngIf="step === 2">
     <div class="title">验证对象基础资料信息确认</div>
     <nz-divider style="margin: 0;"></nz-divider>
@@ -339,11 +339,11 @@
         </div>
         <div nz-col nzSpan="8">
           <div class="key">验证时间</div>
-          <div class="value">{{ baseInfo.verify_time }}</div>
+          <div class="value">{{ baseInfo.verify_time | date:'yyyy-MM-dd' }}</div>
         </div>
         <div nz-col nzSpan="8">
           <div class="key">验证到期时间</div>
-          <div class="value">{{ baseInfo.verify_invalid_time }}</div>
+          <div class="value">{{ baseInfo.verify_invalid_time | date:'yyyy-MM-dd' }}</div>
         </div>
       </div>
       <div nz-row nzGutter="32">
@@ -352,10 +352,10 @@
           <div class="value">{{ baseInfo.warn_before }}</div>
         </div>
         <div nz-col nzSpan="8">
-          
+
         </div>
         <div nz-col nzSpan="8">
-          
+
         </div>
       </div>
     </nz-card>
@@ -370,7 +370,7 @@
           <div class="value">{{ params.temp_down }}</div>
         </div>
         <div nz-col nzSpan="8">
-          
+
         </div>
       </div>
       <div nz-row nzGutter="32">

@@ -1,0 +1,73 @@
+<div class="wrapper">
+  <div class="content">
+    <nz-tabset>
+      <nz-tab nzTitle="验证操作记录">
+        <nz-table
+          style="min-height: 500px"
+          #basicTable
+          [nzData]="listOfData"
+          nzShowSizeChanger
+          [nzTotal]="total"
+          [nzScroll]="{ y: 500 }"
+          (nzPageIndexChange)="changePageIndex($event)"
+          (nzPageSizeChange)="changePageSize($event)"
+        >
+          <thead>
+          <tr>
+            <th nzWidth="110px">操作项目</th>
+            <th nzWidth="105px">装载情况</th>
+            <th nzWidth="110px">风机类型</th>
+            <th nzWidth="110px">监测点</th>
+            <th nzWidth="130px">开始时间</th>
+            <th nzWidth="155px">首次满足条件时间</th>
+            <th nzWidth="130px">回温时间</th>
+            <th nzWidth="132px">停止监测时间</th>
+            <th nzWidth="110px">耗时(时|分)</th>
+            <th nzWidth="159px">操作</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of basicTable.data">
+            <td>{{item.item_name}}</td>
+            <td>{{item.test_point}}</td>
+            <td>{{item.facility_no}}</td>
+            <td>{{item.temp}}</td>
+            <td>{{item.humi}}</td>
+            <td>{{item.data_time}}</td>
+            <td>{{item.facility_state}}</td>
+            <td>{{item.facility_state}}</td>
+            <td>{{item.facility_no}}</td>
+            <td>
+              <span
+                nz-popover
+                nzPlacement="right"
+                nzTrigger="click"
+                [nzContent]="contentTemplate"
+              >
+                <i nz-icon [nzType]="'more'" nzTheme="outline"></i>
+              </span>
+              <ng-template #contentTemplate>
+                <div
+                  style="cursor:pointer;color:dodgerblue;border-bottom: 1px solid lightgrey;padding-bottom: 5px"
+                  (click)="addChildItem(item,$event)">
+                  新增
+                </div>
+                <div
+                  style="cursor:pointer;color:dodgerblue;border-bottom: 1px solid lightgrey;padding: 5px 0"
+                  (click)="editChildItem(item,$event)">
+                  修改
+                </div>
+                <div
+                  style="cursor:pointer;color:dodgerblue;padding-top: 5px"
+                  (click)="delChildItem(item,$event)">
+                  删除
+                </div>
+              </ng-template>
+            </td>
+          </tr>
+          </tbody>
+        </nz-table>
+      </nz-tab>
+    </nz-tabset>
+  </div>
+</div>

@@ -6,6 +6,7 @@ import {Apis} from '@/shared/urls.const';
 import {StoreHouse} from '@/model/HouseMonit';
 
 import {GridAction} from '@/model/GridAction';
+import {buttonAccess} from "@/config.const";
 
 @Component({
   selector: 'app-my-house',
@@ -40,7 +41,7 @@ export class MyHouseComponent extends UniversalComponent {
       icon: 'reload',
       name: '刷新',
       click: () => this.uniSer.onForceReload(),
-      isExist: true,
+      isExist: buttonAccess("my-house_reload"),
     }
   ]
 

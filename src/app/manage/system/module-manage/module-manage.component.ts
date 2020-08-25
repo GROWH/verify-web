@@ -100,7 +100,7 @@ export class ModuleManageComponent implements OnInit {
           })
 
         },
-        isExist: true,//buttonAccess("module-manage_add")
+        isExist: buttonAccess("module-manage_add"),
       },
       {
         name: '刷新',
@@ -110,7 +110,7 @@ export class ModuleManageComponent implements OnInit {
         click: () => {
           this.getModuleTree()
         },
-        isExist: true,
+        isExist: buttonAccess("module-manage_reload"),
       }
     ]
   }

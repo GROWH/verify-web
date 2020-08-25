@@ -4,6 +4,7 @@ import { TongchangHttpService } from 'tongchang-lib';
 import { AuditFormComponent } from './audit-form/audit-form.component';
 
 import {GridAction} from '@/model/GridAction';
+import {buttonAccess} from '../../../config.const';
 
 @Component({
   selector: 'app-unit-audit',
@@ -50,7 +51,7 @@ export class UnitAuditComponent implements OnInit {
         click: () => {
           this.audit()
         },
-         isExist: true,
+         isExist: buttonAccess('unit-audit_audit'),
       },
       {
         name: '刷新',
@@ -60,7 +61,7 @@ export class UnitAuditComponent implements OnInit {
         click: () => {
           this.Query()
         },
-        isExist: true,
+        isExist: buttonAccess('unit-audit_reload'),
       }
     ]
   }

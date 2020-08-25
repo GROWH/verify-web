@@ -4,6 +4,7 @@ import { TongchangHttpService } from 'tongchang-lib';
 import { FacilityBaseFormComponent } from './facility-base-form/facility-base-form.component';
 
 import {GridAction} from '@/model/GridAction';
+import {buttonAccess} from '../../../config.const';
 
 @Component({
   selector: 'app-facility-base',
@@ -54,7 +55,7 @@ export class FacilityBaseComponent implements OnInit {
         click: () => {
           this.Add()
         },
-        isExist: true,
+        isExist: buttonAccess('facility-base_add'),
       }, {
         name: '修改',
         icon: 'edit',
@@ -63,7 +64,7 @@ export class FacilityBaseComponent implements OnInit {
         click: () => {
           this.Edit()
         },
-        isExist: true,
+        isExist: buttonAccess('facility-base_edit'),
       }, {
         name: '删除',
         icon: 'delete',
@@ -72,7 +73,7 @@ export class FacilityBaseComponent implements OnInit {
         click: () => {
           this.Delete()
         },
-        isExist: true,
+        isExist: buttonAccess('facility-base_delete'),
       },
       {
         name: '刷新',
@@ -82,7 +83,7 @@ export class FacilityBaseComponent implements OnInit {
         click: () => {
           this.Query()
         },
-        isExist: true,
+        isExist: buttonAccess('facility-base_reload'),
       }
     ]
   }

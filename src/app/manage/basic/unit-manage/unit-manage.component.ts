@@ -4,6 +4,7 @@ import {TongchangHttpService} from 'tongchang-lib';
 import {ManageFormComponent} from './manage-form/manage-form.component';
 
 import {GridAction} from '@/model/GridAction';
+import {buttonAccess} from '../../../config.const';
 
 @Component({
   selector: 'app-unit-manage',
@@ -67,7 +68,7 @@ export class UnitManageComponent implements OnInit {
         click: () => {
           this.Add()
         },
-        isExist: true,
+        isExist: buttonAccess("unit-manager_add"),
       }, {
         name: '修改',
         icon: 'edit',
@@ -76,7 +77,7 @@ export class UnitManageComponent implements OnInit {
         click: () => {
           this.Edit()
         },
-        isExist: true,
+        isExist: buttonAccess("unit-manager_edit"),
       }, {
         name: '提交审核',
         icon: 'check-circle',
@@ -85,7 +86,7 @@ export class UnitManageComponent implements OnInit {
         click: () => {
           this.submitCheck()
         },
-        isExist: true,
+        isExist: buttonAccess("unit-manager_check"),
       }, {
         name: '删除',
         icon: 'delete',
@@ -94,7 +95,7 @@ export class UnitManageComponent implements OnInit {
         click: () => {
           this.Delete()
         },
-        isExist: true,
+        isExist: buttonAccess("unit-manager_delete"),
       },
       {
         name: '刷新',
@@ -104,7 +105,7 @@ export class UnitManageComponent implements OnInit {
         click: () => {
           this.Query()
         },
-        isExist: true,
+        isExist: buttonAccess("unit-manager_reload"),
       }
     ]
   }

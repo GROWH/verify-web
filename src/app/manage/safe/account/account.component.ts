@@ -5,6 +5,7 @@ import {AccountFormComponent} from './account-form/account-form.component';
 
 import {GridAction} from '@/model/GridAction';
 import {nodeChildrenAsMap} from "@angular/router/src/utils/tree";
+import {buttonAccess} from "@/config.const";
 
 @Component({
   selector: 'app-account',
@@ -14,6 +15,7 @@ import {nodeChildrenAsMap} from "@angular/router/src/utils/tree";
 
 export class AccountComponent implements OnInit {
 
+  accountId: string = localStorage.getItem('account') ||'';
   isAllDisplayDataChecked = false;
   isIndeterminate = false;
   position: string = 'bottom'
@@ -45,6 +47,7 @@ export class AccountComponent implements OnInit {
 
   ngOnInit() {
     this.actionInit()
+    console.log('accountId',this.accountId)
     this.getTree()
   }
 
@@ -58,7 +61,7 @@ export class AccountComponent implements OnInit {
         click: () => {
           this.Add()
         },
-        isExist: true,
+        isExist: buttonAccess("account_add"),
       }, {
         name: '修改',
         icon: 'edit',
@@ -67,7 +70,7 @@ export class AccountComponent implements OnInit {
         click: () => {
           this.Edit()
         },
-        isExist: true,
+        isExist: buttonAccess("account_edit"),
       }, {
         name: '启用',
         icon: 'check-circle',
@@ -76,7 +79,7 @@ export class AccountComponent implements OnInit {
         click: () => {
           this.Check()
         },
-        isExist: true,
+        isExist: buttonAccess("account_check"),
       }, {
         name: '停用',
         icon: 'stop',
@@ -85,7 +88,7 @@ export class AccountComponent implements OnInit {
         click: () => {
           this.Stop()
         },
-        isExist: true,
+        isExist: buttonAccess("account_stop"),
       }, {
         name: '删除',
         icon: 'delete',
@@ -94,7 +97,7 @@ export class AccountComponent implements OnInit {
         click: () => {
           this.Delete()
         },
-        isExist: true,
+        isExist: buttonAccess("account_delete"),
       },
       {
         name: '刷新',
@@ -104,7 +107,7 @@ export class AccountComponent implements OnInit {
         click: () => {
           this.Query()
         },
-        isExist: true,
+        isExist: buttonAccess("account_reload"),
       }
     ]
   }
@@ -327,8 +330,8 @@ export class AccountComponent implements OnInit {
   //账号目录树查询
   getTree() {
     this.loading = true;
-    const accountId = localStorage.getItem('account');
-    this.http.get<any>(`${this.treeUrl}`, {unit_id: accountId}).subscribe(res => {
+    // const accountId = localStorage.getItem('account') ||'';
+    this.http.get<any>(`${this.treeUrl}`, {unit_id: this.accountId}).subscribe(res => {
       this.loading = false;
       if (res.code === 0) {
         let childrenUnits = res.data.childrenUnits;

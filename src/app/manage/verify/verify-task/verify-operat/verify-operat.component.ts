@@ -6,6 +6,7 @@ import {NzModalRef, NzModalService} from "ng-zorro-antd";
 import {EchartModalComponent} from "./echart-modal/echart-modal.component";
 import {TaskInfoComponent} from "./task-info/task-info.component";
 import * as moment from 'moment';
+import {buttonAccess} from "@/config.const";
 
 
 @Component({
@@ -46,26 +47,26 @@ export class VerifyOperatComponent implements OnInit {
       {
         name: '开始监测',
         icon: 'play-circle',
-        code: 'verify-info_start',
+        code: 'verify-operst_start',
         click: () => {
           console.log('开始监测')
         },
-        isExist: true,
+        isExist: buttonAccess("verify-operst_start"),
       },
       {
         name: '停止监测',
         icon: 'pause-circle',
-        code: 'verify-info_pause',
+        code: 'verify-operst_pause',
         type: 'danger',
         click: () => {
           console.log('停止监测')
         },
-        isExist: true,
+        isExist: buttonAccess("verify-operst_pause"),
       },
       {
         name: '数据曲线',
         icon: 'line-chart',
-        code: 'verify-info_line-chart',
+        code: 'verify-operst_line-chart',
         click: () => {
           const modalRef: NzModalRef = this.modal.create({
             nzTitle: '数据曲线',
@@ -75,12 +76,12 @@ export class VerifyOperatComponent implements OnInit {
             nzFooter: null,
           })
         },
-        isExist: true,
+        isExist: buttonAccess("verify-operst_line-chart"),
       },
       {
         name: '任务信息',
         icon: 'database',
-        code: 'verify-info_info',
+        code: 'verify-operst_info',
         click: () => {
           const modalRef: NzModalRef = this.modal.create({
             nzTitle: '任务信息',
@@ -90,7 +91,7 @@ export class VerifyOperatComponent implements OnInit {
             nzFooter: null,
           })
         },
-        isExist: true,
+        isExist: buttonAccess("verify-operst_info"),
       },
     ]
   }

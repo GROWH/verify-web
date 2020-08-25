@@ -3,6 +3,7 @@ import { GridAction } from '@/model/GridAction';
 import {NzMessageService, NzModalRef, NzModalService} from "ng-zorro-antd";
 import { BaseInfoAddComponent } from "@/manage/verify/base-info/base-info-add/base-info-add.component";
 import { ActivatedRoute, Router } from "@angular/router";
+import {buttonAccess} from "@/config.const";
 
 @Component({
   selector: 'app-verify-task',
@@ -53,16 +54,16 @@ export class VerifyTaskComponent implements OnInit {
       {
         name: '新建任务',
         icon: 'plus',
-        code: 'verify-info_add',
+        code: 'verify-task_add',
         type: 'primary',
         click: () => {
           this.onAdd()
         },
-        isExist: true,
+        isExist: buttonAccess("verify-task_add"),
       }, {
         name: '验证操作',
         icon: 'check-circle',
-        code: 'verify-info_operate',
+        code: 'verify-task_operate',
         type: 'default',
         click: () => {
           if(this.selectItems.length === 0){
@@ -71,11 +72,11 @@ export class VerifyTaskComponent implements OnInit {
           }
           this.router.navigate(['detail'], {relativeTo: this.route,})
         },
-        isExist: true,
+        isExist: buttonAccess("verify-task_operate"),
       },{
         name: '修改',
         icon: 'edit',
-        code: 'verify-info_edit',
+        code: 'verify-task_edit',
         type: 'default',
         click: () => {if(this.selectItems.length === 0){
           this.msg.warning('请选择一项数据进行操作!')
@@ -83,11 +84,11 @@ export class VerifyTaskComponent implements OnInit {
         }
 
         },
-        isExist: true,
+        isExist: buttonAccess("verify-task_edit"),
       }, {
         name: '删除',
         icon: 'delete',
-        code: 'verify-info_delete',
+        code: 'verify-task_delete',
         type: 'danger',
         click: () => {
           if(this.selectItems.length === 0){
@@ -95,7 +96,7 @@ export class VerifyTaskComponent implements OnInit {
             return;
           }
         },
-        isExist: true,
+        isExist: buttonAccess("verify-task_delete"),
       },
     ]
   }

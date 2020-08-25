@@ -6,7 +6,7 @@ import { Apis, ResTrans } from '@shared/urls.const'
 
 import { RoleFormComponent } from './role-form/role-form.component'
 import { Role, RoleWithMos } from '@/model/Role';
-import { PLATFORM_RIGHTS_KEY, VERIFY_COMP_RIGHTS_KEY, VERIFY_CUSM_RIGHTS_KEY } from '@/config.const';
+import {buttonAccess, PLATFORM_RIGHTS_KEY, VERIFY_COMP_RIGHTS_KEY, VERIFY_CUSM_RIGHTS_KEY} from '@/config.const';
 import { CommonService } from '@/core/common.service';
 import { SystemModule } from '@/model/SystemModule';
 
@@ -135,7 +135,7 @@ export class RoleService extends UniversalService<Role> {
             ]
           })
         },
-        isExist: true,
+        isExist: buttonAccess("role_add"),
       },
       {
         name: '刷新',
@@ -145,7 +145,7 @@ export class RoleService extends UniversalService<Role> {
         click: () => {
           this.onForceReload()
         },
-        isExist: true,
+        isExist: buttonAccess("role_reload"),
       }
     ]
   }

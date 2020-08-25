@@ -24,6 +24,9 @@ export function buttonAccess(value: string) {
   if (buttonpermsStr == undefined || buttonpermsStr == null) {
     return false;
   }
+  if(JSON.parse(buttonpermsStr).length === 0){
+    return true;
+  }
   let buttonperms = JSON.parse(buttonpermsStr);
   for (let i = 0; i < buttonperms.length; i++) {
     if (buttonperms[i].indexOf(value) > -1) {

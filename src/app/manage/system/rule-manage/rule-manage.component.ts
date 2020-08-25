@@ -4,6 +4,7 @@ import {RuleFormComponent} from './rule-form/rule-form.component';
 import {TongchangHttpService} from 'tongchang-lib';
 
 import {GridAction} from '@/model/GridAction';
+import {buttonAccess} from "@/config.const";
 
 @Component({
   selector: 'app-rule-manage',
@@ -50,7 +51,7 @@ export class RuleManageComponent implements OnInit {
         click: () => {
           this.paramAdd()
         },
-        isExist: true,
+        isExist: buttonAccess("param-setting_add"),
       }, {
         name: '修改',
         icon: 'edit',
@@ -59,7 +60,7 @@ export class RuleManageComponent implements OnInit {
         click: () => {
           this.paramEdit()
         },
-        isExist: true,
+        isExist: buttonAccess("param-setting_edit"),
       }, {
         name: '删除',
         icon: 'delete',
@@ -68,7 +69,7 @@ export class RuleManageComponent implements OnInit {
         click: () => {
           this.paramDelete()
         },
-        isExist: true,
+        isExist: buttonAccess("param-setting_delete"),
       },
       {
         name: '刷新',
@@ -78,7 +79,7 @@ export class RuleManageComponent implements OnInit {
         click: () => {
           this.paramQuery()
         },
-        isExist: true,
+        isExist: buttonAccess("param-setting_reload"),
       }
     ]
   }

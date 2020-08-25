@@ -6,6 +6,7 @@ import { ParamDesginFormComponent } from './param-desgin-form/param-desgin-form.
 import { ReuploadFormComponent } from './reupload-form/reupload-form.component';
 
 import {GridAction} from '@/model/GridAction';
+import {buttonAccess} from "@/config.const";
 
 @Component({
   selector: 'app-thermometer',
@@ -53,7 +54,7 @@ export class ThermometerComponent implements OnInit {
         click: () => {
           this.paramAdd()
         },
-        isExist: true,
+        isExist: buttonAccess("thermometer_add"),
       }, {
         name: '修改',
         icon: 'edit',
@@ -62,7 +63,7 @@ export class ThermometerComponent implements OnInit {
         click: () => {
           this.paramEdit()
         },
-        isExist: true,
+        isExist: buttonAccess("thermometer_edit"),
       }, {
         name: '参数设定',
         icon: 'edit',
@@ -71,7 +72,7 @@ export class ThermometerComponent implements OnInit {
         click: () => {
           this.paramsDesign()
         },
-        isExist: true,
+        isExist: buttonAccess("thermometer_setParam"),
       },{
         name: '重传',
         icon: 'edit',
@@ -80,7 +81,7 @@ export class ThermometerComponent implements OnInit {
         click: () => {
           this.reUpload()
         },
-        isExist: true,
+        isExist: buttonAccess("thermometer_reUpload"),
       }, {
         name: '删除',
         icon: 'delete',
@@ -89,7 +90,7 @@ export class ThermometerComponent implements OnInit {
         click: () => {
           this.paramDelete()
         },
-        isExist: true,
+        isExist: buttonAccess("thermometer_delete"),
       },
       {
         name: '刷新',
@@ -99,7 +100,7 @@ export class ThermometerComponent implements OnInit {
         click: () => {
           this.paramQuery()
         },
-        isExist: true,
+        isExist: buttonAccess("thermometer_reload"),
       }
     ]
   }

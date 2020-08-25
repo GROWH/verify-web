@@ -6,6 +6,7 @@ import {TongchangHttpService} from 'tongchang-lib';
 import {GridAction} from '@/model/GridAction';
 import {ModuleManageFormComponent} from "@/manage/system/module-manage-form/module-manage-form.component";
 import {SystemModule} from "@/model/SystemModule";
+import {buttonAccess} from "@/config.const";
 
 @Component({
   selector: 'app-param-setting',
@@ -52,7 +53,7 @@ export class ParamSettingComponent implements OnInit {
         click: () => {
           this.paramAdd()
         },
-        isExist: true,
+        isExist: buttonAccess("param-setting_add"),
       }, {
         name: '修改',
         icon: 'edit',
@@ -61,7 +62,7 @@ export class ParamSettingComponent implements OnInit {
         click: () => {
           this.paramEdit()
         },
-        isExist: true,
+        isExist: buttonAccess("param-setting_edit"),
       }, {
         name: '删除',
         icon: 'delete',
@@ -70,7 +71,7 @@ export class ParamSettingComponent implements OnInit {
         click: () => {
           this.paramDelete()
         },
-        isExist: true,
+        isExist: buttonAccess("param-setting_delete"),
       },
       {
         name: '刷新',
@@ -80,7 +81,7 @@ export class ParamSettingComponent implements OnInit {
         click: () => {
           this.paramQuery()
         },
-        isExist: true,
+        isExist: buttonAccess("param-setting_reload"),
       }
     ]
   }

@@ -9,6 +9,7 @@ import {WarnEditFormComponent} from '../warn-edit-form/warn-edit-form.component'
 import {HouseEditFormComponent} from '../house-edit-form/house-edit-form.component';
 
 import {GridAction} from '@/model/GridAction';
+import {buttonAccess} from "@/config.const";
 
 @Component({
   selector: 'app-maintain',
@@ -56,14 +57,14 @@ export class MaintainComponent extends UniversalComponent {
         click: () => {
           this.router.navigate(['add'], {relativeTo: this.route})
         },
-        isExist: true,
+        isExist: buttonAccess("maintain_add"),
       },
       {
         name: '刷新',
         icon: 'reload',
         code: 'maintain_reload',
         click: () => this.uniSer.onForceReload(),
-        isExist: true,
+        isExist: buttonAccess("maintain_reload"),
       }
     ]
   }

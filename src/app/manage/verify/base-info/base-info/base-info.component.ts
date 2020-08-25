@@ -7,6 +7,7 @@ import {BaseInfoAddComponent} from '../base-info-add/base-info-add.component';
 import {Apis} from '@/shared/urls.const';
 import {BaseInfo} from '@/model/Verify';
 import {GridAction} from '@/model/GridAction';
+import {buttonAccess} from "@/config.const";
 
 @Component({
   selector: 'app-base-info',
@@ -55,14 +56,14 @@ export class BaseInfoComponent extends UniversalComponent implements OnInit {
         click: () => {
           this.onAdd()
         },
-        isExist: true,
+        isExist: buttonAccess("verify-info_add"),
       },
       {
         name: '刷新',
         icon: 'reload',
         code: 'verify-info_reload',
         click: () => this.uniSer.onForceReload(),
-        isExist: true,
+        isExist: buttonAccess("verify-info_reload"),
       },
       {
         name: '一键生成验证任务',
@@ -71,7 +72,7 @@ export class BaseInfoComponent extends UniversalComponent implements OnInit {
         click: () => {
           console.log('一键生成验证任务')
         },
-        isExist: true,
+        isExist: buttonAccess("verify-info_genera-task"),
       }
     ]
   }

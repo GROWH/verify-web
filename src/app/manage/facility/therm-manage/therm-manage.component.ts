@@ -4,6 +4,7 @@ import { TongchangHttpService } from 'tongchang-lib';
 import { ThermManageFormComponent } from './therm-manage-form/therm-manage-form.component';
 
 import {GridAction} from '@/model/GridAction';
+import {buttonAccess} from "@/config.const";
 
 @Component({
   selector: 'app-therm-manage',
@@ -53,7 +54,7 @@ export class ThermManageComponent implements OnInit {
         click: () => {
           this.Add()
         },
-        isExist: true,
+        isExist: buttonAccess("therm-manage_add"),
       }, {
         name: '修改',
         icon: 'edit',
@@ -62,7 +63,7 @@ export class ThermManageComponent implements OnInit {
         click: () => {
           this.Edit()
         },
-        isExist: true,
+        isExist: buttonAccess("therm-manage_edit"),
       }, {
         name: '删除',
         icon: 'delete',
@@ -71,7 +72,7 @@ export class ThermManageComponent implements OnInit {
         click: () => {
           this.Delete()
         },
-        isExist: true,
+        isExist: buttonAccess("therm-manage_delete"),
       },
       {
         name: '刷新',
@@ -81,7 +82,7 @@ export class ThermManageComponent implements OnInit {
         click: () => {
           this.Query()
         },
-        isExist: true,
+        isExist: buttonAccess("therm-manage_reload"),
       }
     ]
   }

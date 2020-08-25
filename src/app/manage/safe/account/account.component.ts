@@ -330,7 +330,6 @@ export class AccountComponent implements OnInit {
   //账号目录树查询
   getTree() {
     this.loading = true;
-    // const accountId = localStorage.getItem('account') ||'';
     this.http.get<any>(`${this.treeUrl}`, {unit_id: this.accountId}).subscribe(res => {
       this.loading = false;
       if (res.code === 0) {

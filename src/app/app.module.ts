@@ -20,6 +20,7 @@ import { SharedModule } from './shared/shared.module';
 import { environment } from 'src/environments/environment';
 
 import {NgxEchartsModule} from "ngx-echarts";
+import {HashLocationStrategy,LocationStrategy} from '@angular/common';
 
 registerLocaleData(zh);
 
@@ -54,7 +55,8 @@ if (!environment.production) {
   ],
   providers: [
     { provide: NZ_I18N, useValue: zh_CN },
-    { provide: HTTP_INTERCEPTORS, useClass: DefaultInterceptor, multi:true}
+    { provide: HTTP_INTERCEPTORS, useClass: DefaultInterceptor, multi:true},
+    { provide: LocationStrategy,useClass:HashLocationStrategy}
   ],
   bootstrap: [AppComponent]
 })

@@ -14,7 +14,7 @@
     <ul nz-menu [nzMode]="'inline'" nzTheme="dark" [nzInlineCollapsed]="isCollapsed">
       <li nz-submenu *ngFor="let item of menuList;let key=index;">
         <span title>
-          <i nz-icon type="{{key===1?'home':key===2?'appstore':key===3?'database':key===3?'safety':'setting'}}"></i>
+          <i nz-icon type="{{item.icon}}"></i>
           <span>{{item.module_name}}</span>
         </span>
         <ul>

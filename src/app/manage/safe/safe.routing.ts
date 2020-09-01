@@ -2,6 +2,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { RoleComponent } from './role/role.component';
 import { AccountComponent } from './account/account.component';
+import { PersonnelComponent } from './personnel/personnel.component';
 import { InjectionToken } from '@angular/core';
 import { RoleService } from './role/role.service';
 
@@ -18,6 +19,10 @@ const routes: Routes = [
     data: {
       REQUIRED_SERCVICE: RoleUniSerToken
     }
+  },
+  {
+    path: 'personnel',
+    component: PersonnelComponent,
   },
 ];
 

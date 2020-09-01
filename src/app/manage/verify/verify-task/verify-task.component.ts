@@ -1,8 +1,8 @@
-import { Component, Injector, OnInit } from '@angular/core';
-import { GridAction } from '@/model/GridAction';
+import {Component, Injector, OnInit} from '@angular/core';
+import {GridAction} from '@/model/GridAction';
 import {NzMessageService, NzModalRef, NzModalService} from "ng-zorro-antd";
-import { BaseInfoAddComponent } from "@/manage/verify/base-info/base-info-add/base-info-add.component";
-import { ActivatedRoute, Router } from "@angular/router";
+import {BaseInfoAddComponent} from "@/manage/verify/base-info/base-info-add/base-info-add.component";
+import {ActivatedRoute, Router} from "@angular/router";
 import {buttonAccess} from "@/config.const";
 
 @Component({
@@ -29,21 +29,7 @@ export class VerifyTaskComponent implements OnInit {
   gridActions: GridAction[] = [];
   mapOfCheckedId: { [key: string]: boolean } = {};
   selectItems = [];
-  listOfData: TableList[] = [{
-    check_no: '00101',
-    check_name: '1',
-    check_unit: '3',
-    check_unit_type: '3',
-    check_impl_unit: '3',
-    check_target: '3',
-    temp_high: '3',
-    temp_low: '3',
-    check_type: '3',
-    check_mold: '3',
-    check_progress: [{val: '1', isTrue: true},],
-    task_start_time: '3',
-    expected_complet_time: '3',
-  },];
+  listOfData: TableList[] = [];
 
   ngOnInit() {
     this.actionInit()
@@ -66,22 +52,23 @@ export class VerifyTaskComponent implements OnInit {
         code: 'verify-task_operate',
         type: 'default',
         click: () => {
-          if(this.selectItems.length === 0){
+          if (this.selectItems.length === 0) {
             this.msg.warning('请选择一项数据进行操作!')
             return;
           }
           this.router.navigate(['detail'], {relativeTo: this.route,})
         },
         isExist: buttonAccess("verify-task_operate"),
-      },{
+      }, {
         name: '修改',
         icon: 'edit',
         code: 'verify-task_edit',
         type: 'default',
-        click: () => {if(this.selectItems.length === 0){
-          this.msg.warning('请选择一项数据进行操作!')
-          return;
-        }
+        click: () => {
+          if (this.selectItems.length === 0) {
+            this.msg.warning('请选择一项数据进行操作!')
+            return;
+          }
 
         },
         isExist: buttonAccess("verify-task_edit"),
@@ -91,7 +78,7 @@ export class VerifyTaskComponent implements OnInit {
         code: 'verify-task_delete',
         type: 'danger',
         click: () => {
-          if(this.selectItems.length === 0){
+          if (this.selectItems.length === 0) {
             this.msg.warning('请选择一项数据进行操作!')
             return;
           }
@@ -141,6 +128,10 @@ export class VerifyTaskComponent implements OnInit {
       nzWidth: 900,
       nzFooter: null,
     })
+  }
+
+  private onEdit() {
+
   }
 
   //开始验证

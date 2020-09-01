@@ -1,5 +1,5 @@
 .wrapper {
-  padding: 20px;
+  padding: 0 20px 20px 20px;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -8,6 +8,7 @@
     flex: 200px 1 1;
   }
   .pagination {
+    text-align: right;
     margin-top: 10px;
     flex: auto 0 0;
   }

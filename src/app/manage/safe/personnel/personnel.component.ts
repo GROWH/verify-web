@@ -1,19 +1,17 @@
 import {Component, OnInit} from '@angular/core';
 import {NzModalService, NzModalRef, NzMessageService} from 'ng-zorro-antd';
-import {ParamFormComponent} from './param-form/param-form.component';
+import {PersonnelFormComponent} from './personnel-form/personnel-form.component';
 import {TongchangHttpService} from 'tongchang-lib';
 
 import {GridAction} from '@/model/GridAction';
-import {ModuleManageFormComponent} from "@/manage/system/module-manage-form/module-manage-form.component";
-import {SystemModule} from "@/model/SystemModule";
 import {buttonAccess} from "@/config.const";
 
 @Component({
-  selector: 'app-param-setting',
-  templateUrl: './param-setting.component.html',
-  styleUrls: ['./param-setting.component.scss']
+  selector: 'app-personnel',
+  templateUrl: './personnel.component.html',
+  styleUrls: ['./personnel.component.scss']
 })
-export class ParamSettingComponent implements OnInit {
+export class PersonnelComponent implements OnInit {
 
   isAllDisplayDataChecked = false;
   isIndeterminate = false;
@@ -23,10 +21,9 @@ export class ParamSettingComponent implements OnInit {
   size = 10;
   loading = true;
   total = 1;
-  listOfAllData: params[] = []
   mapOfCheckedId: { [key: string]: boolean } = {};
   selectItems = []
-  baseUrl = '/params'
+  baseUrl = '/person'
 
   constructor(
     private modal: NzModalService,
@@ -37,6 +34,7 @@ export class ParamSettingComponent implements OnInit {
 
 
   gridActions: GridAction[];
+
   tableHeight:number=0;
 
   ngOnInit() {
@@ -50,7 +48,7 @@ export class ParamSettingComponent implements OnInit {
       {
         name: '新增',
         icon: 'plus',
-        code: 'param-setting_add',
+        code: 'personnel_add',
         type: 'primary',
         click: () => {
           this.paramAdd()
@@ -59,7 +57,7 @@ export class ParamSettingComponent implements OnInit {
       }, {
         name: '修改',
         icon: 'edit',
-        code: 'param-setting_edit',
+        code: 'personnel_edit',
         type: 'default',
         click: () => {
           this.paramEdit()
@@ -68,7 +66,7 @@ export class ParamSettingComponent implements OnInit {
       }, {
         name: '删除',
         icon: 'delete',
-        code: 'param-setting_delete',
+        code: 'personnel_delete',
         type: 'danger',
         click: () => {
           this.paramDelete()
@@ -78,7 +76,7 @@ export class ParamSettingComponent implements OnInit {
       {
         name: '刷新',
         icon: 'redo',
-        code: 'param-setting_reload',
+        code: 'personnel_reload',
         type: 'dashed',
         click: () => {
           this.paramQuery()
@@ -110,13 +108,16 @@ export class ParamSettingComponent implements OnInit {
   //新增操作
   paramAdd() {
     const param = {
-      name: "",
-      value: "",
-      code: ""
+      name: '',
+      unit: '',
+      dept: '',
+      appoint: '',
+      sign: '',
+      mark: '',
     }
     let modalRef: NzModalRef = this.modal.create({
-      nzTitle: "参数配置",
-      nzContent: ParamFormComponent,
+      nzTitle: "新增",
+      nzContent: PersonnelFormComponent,
       nzWidth: 700,
       nzComponentParams: {param},
       nzFooter: [
@@ -135,6 +136,7 @@ export class ParamSettingComponent implements OnInit {
               nzContent: '确认提交?',
               nzOnOk: () => {
                 const params = formVal;
+                console.log(params)
                 this.http.post(this.baseUrl, params).subscribe(res => {
                   if (res.code !== 0) {
                     this.msg.error(res.message);
@@ -161,8 +163,8 @@ export class ParamSettingComponent implements OnInit {
       return;
     }
     let modalRef: NzModalRef = this.modal.create({
-      nzTitle: "参数配置",
-      nzContent: ParamFormComponent,
+      nzTitle: "修改",
+      nzContent: PersonnelFormComponent,
       nzWidth: 700,
       nzComponentParams: {param},
       nzFooter: [
@@ -257,11 +259,11 @@ export class ParamSettingComponent implements OnInit {
 }
 
 class params {
-  name: string;
-  code: string;
-  value: string;
   id: number;
-  create_time: string;
-  update_time: string;
-  version: number;
+  name: string;
+  unit: string;
+  dept: string;
+  appoint: string;
+  sign: string;
+  mark: string;
 }

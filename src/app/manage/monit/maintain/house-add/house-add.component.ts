@@ -35,7 +35,7 @@ interface ParamsForm {
 })
 export class HouseAddComponent implements OnInit {
 
-  @ViewChild('fileInput') fileInput: ElementRef<HTMLInputElement> 
+  @ViewChild('fileInput') fileInput: ElementRef<HTMLInputElement>
   @ViewChild(ClientRectDirective) imgRectDirective: ClientRectDirective
 
   constructor(
@@ -51,7 +51,7 @@ export class HouseAddComponent implements OnInit {
   ngOnInit() {
     this.paramsFormInit()
   }
-  
+
   step = 0
   houseImageUrl = ''
   imgWidth = 0
@@ -137,7 +137,7 @@ export class HouseAddComponent implements OnInit {
       const nums: string[] = ctrl.value || []
       return nums.length < 3 ? { count: true } : null
     }
-    
+
     const warnGroupConf = {
       types: [[],   [ Validators.required ]],
       nums:  [[],   [ numsValidator       ]],
@@ -156,7 +156,7 @@ export class HouseAddComponent implements OnInit {
       message_warn: this.fb.group(warnGroupConf),
     })
   }
-  
+
   /**
    * 告警信息显示用
    */
@@ -200,7 +200,7 @@ export class HouseAddComponent implements OnInit {
         '选择新平面图将清空已标记点位, 请确认是否继续?'
       )
     }
-
+    console.log(this.fileInput)
     this.fileInput.nativeElement.click()
   }
 
@@ -212,7 +212,7 @@ export class HouseAddComponent implements OnInit {
     if (this.houseImageUrl) return this.pointAdding = !this.pointAdding
     this.msg.error('请先添加库房平面图')
   }
-  
+
   /**
    * 监控点位移除按钮点击
    */
@@ -247,14 +247,14 @@ export class HouseAddComponent implements OnInit {
     }
     this.step += 1
   }
-  
+
   onPrev() {
     this.step -= 1
     if (this.step === 0) this.triggerResize()
   }
 
   removePoint(index: number) {
-    if (!this.pointRemoving) return 
+    if (!this.pointRemoving) return
     const points = this.points
     this.points = [
       ...points.slice(0, index),
@@ -285,7 +285,7 @@ export class HouseAddComponent implements OnInit {
   }
 
   imgClick(e: MouseEvent) {
-    if (!this.pointAdding) return 
+    if (!this.pointAdding) return
 
     const precent = (float: number, precis: number = 2) => {
       const ratio = 10 ** precis
@@ -307,7 +307,7 @@ export class HouseAddComponent implements OnInit {
     DebugLog(this.getSubmitData())
     const { messageId } = this.msg.loading('数据提交中...', { nzDuration: 0 })
     const res = await this.http.post<StoreHouse>(
-      Apis.storehouse, 
+      Apis.storehouse,
       this.getSubmitData()
     ).toPromise()
 

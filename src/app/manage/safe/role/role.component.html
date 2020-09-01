@@ -8,8 +8,7 @@
     [nzData]="uniSer.data"
     libClientRect
     [libHeightMinus]="54"
-    (libHeightChange)="tableHeight = $event + 'px'"
-    [nzScroll]="{y: tableHeight, x: '800px'}"
+    [nzScroll]="{y: tableHeight+'px'}"
     [nzShowPagination]="false"
     [nzFrontPagination]="false"
   >
@@ -29,12 +28,12 @@
           <nz-divider nzType="vertical"></nz-divider>
           <a (click)="edit(i)">修改</a>
           <nz-divider nzType="vertical"></nz-divider>
-          <a (click)="del(i)">删除</a>         
+          <a (click)="del(i)">删除</a>
         </td>
       </tr>
     </tbody>
   </nz-table>
-  
+
   <nz-pagination
     class="pagination"
     [ngClass]="{ blur: uniSer.loading }"

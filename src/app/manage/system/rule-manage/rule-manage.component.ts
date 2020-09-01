@@ -5,6 +5,7 @@ import {TongchangHttpService} from 'tongchang-lib';
 
 import {GridAction} from '@/model/GridAction';
 import {buttonAccess} from "@/config.const";
+import {window} from "rxjs/operators";
 
 @Component({
   selector: 'app-rule-manage',
@@ -24,7 +25,7 @@ export class RuleManageComponent implements OnInit {
   listOfAllData: params[] = []
   mapOfCheckedId: { [key: string]: boolean } = {};
   selectItems = []
-  baseUrl = '/params'
+  baseUrl = '/laws';
 
   constructor(
     private modal: NzModalService,
@@ -35,10 +36,12 @@ export class RuleManageComponent implements OnInit {
 
 
   gridActions: GridAction[];
+  tableHeight:number=0;
 
   ngOnInit() {
+    this.tableHeight = document.body.offsetHeight - 300;
     this.actionInit()
-    // this.getData()
+    this.getData()
   }
 
   actionInit() {
@@ -46,7 +49,7 @@ export class RuleManageComponent implements OnInit {
       {
         name: '新增',
         icon: 'plus',
-        code: 'param-setting_add',
+        code: 'rule-manager_add',
         type: 'primary',
         click: () => {
           this.paramAdd()
@@ -55,7 +58,7 @@ export class RuleManageComponent implements OnInit {
       }, {
         name: '修改',
         icon: 'edit',
-        code: 'param-setting_edit',
+        code: 'rule-manager_edit',
         type: 'default',
         click: () => {
           this.paramEdit()
@@ -64,7 +67,7 @@ export class RuleManageComponent implements OnInit {
       }, {
         name: '删除',
         icon: 'delete',
-        code: 'param-setting_delete',
+        code: 'rule-manager_delete',
         type: 'danger',
         click: () => {
           this.paramDelete()
@@ -74,7 +77,7 @@ export class RuleManageComponent implements OnInit {
       {
         name: '刷新',
         icon: 'redo',
-        code: 'param-setting_reload',
+        code: 'rule-manager_reload',
         type: 'dashed',
         click: () => {
           this.paramQuery()
@@ -106,7 +109,6 @@ export class RuleManageComponent implements OnInit {
   //新增操作
   paramAdd() {
     const param = {
-      fileurl: "",
       filename: "",
       filedesc: ""
     }
@@ -116,10 +118,7 @@ export class RuleManageComponent implements OnInit {
       nzWidth: 700,
       nzComponentParams: {param},
       nzFooter: [
-        {
-          label: '取消',
-          onClick: () => modalRef.close()
-        },
+        {label: '取消', onClick: () => modalRef.close()},
         {
           label: '确定',
           type: 'primary',
@@ -131,14 +130,14 @@ export class RuleManageComponent implements OnInit {
               nzContent: '确认提交?',
               nzOnOk: () => {
                 const params = formVal;
-                // this.http.post(this.baseUrl, params).subscribe(res => {
-                //   if (res.code !== 0) {
-                //     this.msg.error(res.message);
-                //     return
-                //   }
-                //   this.msg.success(res.message);
-                //   this.getData();
-                // })
+                this.http.post(this.baseUrl, params).subscribe(res => {
+                  if (res.code !== 0) {
+                    this.msg.error(res.message);
+                    return
+                  }
+                  this.msg.success(res.message);
+                  this.getData();
+                })
               }
             })
             modalRef.close()
@@ -180,14 +179,14 @@ export class RuleManageComponent implements OnInit {
                   ...param,
                   ...formVal
                 };
-                // this.http.put(this.baseUrl, params).subscribe(res => {
-                //   if (res.code !== 0) {
-                //     this.msg.error(res.message);
-                //     return
-                //   }
-                //   this.msg.success(res.message);
-                //   this.getData();
-                // })
+                this.http.put(this.baseUrl, params).subscribe(res => {
+                  if (res.code !== 0) {
+                    this.msg.error(res.message);
+                    return
+                  }
+                  this.msg.success(res.message);
+                  this.getData();
+                })
               }
             })
             modalRef.close()
@@ -210,21 +209,21 @@ export class RuleManageComponent implements OnInit {
       nzTitle: '删除',
       nzContent: '确认删除?',
       nzOnOk: () => {
-        // this.http.delete(`${this.baseUrl}/${selectedIds}`).subscribe(res => {
-        //   if (res.code !== 0) {
-        //     this.msg.error(res.message);
-        //     return
-        //   }
-        //   this.msg.success(res.message);
-        //   this.getData();
-        // })
+        this.http.delete(`${this.baseUrl}/${selectedIds}`).subscribe(res => {
+          if (res.code !== 0) {
+            this.msg.error(res.message);
+            return
+          }
+          this.msg.success(res.message);
+          this.getData();
+        })
       }
     })
   }
 
   //刷新
   paramQuery() {
-    // this.getData()
+    this.getData()
   }
 
   //初始出请求
@@ -238,6 +237,19 @@ export class RuleManageComponent implements OnInit {
         this.refreshStatus()
       }
     })
+  }
+
+  //下载
+  uploadDom(record) {
+    let downloadUrl = 'api/' + this.baseUrl + '/download?file=' + record.filename;
+    let modalRef: NzModalRef = this.modal.create({
+      nzTitle: null,
+      nzClosable: false,
+      nzContent: `<div style="font-size: 18px!important;font-width: 600!important;">
+                    <a href="${downloadUrl}" download="1">确定下载${record.filename}文件</a>
+                  </div>`,
+      nzFooter: [{label: '取消', onClick: () => modalRef.close()}],
+    });
   }
 
   changePageIndex(pageIndex) {
@@ -255,9 +267,5 @@ export class RuleManageComponent implements OnInit {
 class params {
   filename: string;
   filedesc: string;
-  fileurl: string;
   id: number;
-  create_time: string;
-  update_time: string;
-  version: number;
 }

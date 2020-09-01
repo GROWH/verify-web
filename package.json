@@ -10,7 +10,10 @@
     "e2e": "ng e2e"
   },
   "private": true,
-  "dependencies": {},
+  "dependencies": {
+    "ng2-pdf-viewer": "^6.3.2",
+    "pdfjs-dist": "^2.4.456"
+  },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.13.0",
     "@angular/animations": "~7.2.0",

@@ -1,4 +1,3 @@
-
 <div class="wrapper">
   <grid-action [actions]="gridActions"></grid-action>
 
@@ -8,8 +7,7 @@
     [nzData]="uniSer.data"
     libClientRect
     [libHeightMinus]="54"
-    (libHeightChange)="tableHeight = $event + 'px'"
-    [nzScroll]="{y: tableHeight, x: '1220px'}"
+    [nzScroll]="{y: tableHeight}"
     [nzShowPagination]="false"
     [nzFrontPagination]="false"
   >
@@ -55,12 +53,12 @@
           <nz-divider nzType="vertical"></nz-divider>
           <a (click)="viewDetail(i)">详情</a>
           <nz-divider nzType="vertical"></nz-divider>
-          <a (click)="warnSet(i)">告警设定</a>         
+          <a (click)="warnSet(i)">告警设定</a>
         </td>
       </tr>
     </tbody>
   </nz-table>
-  
+
   <nz-pagination
     class="pagination"
     [ngClass]="{ blur: uniSer.loading }"

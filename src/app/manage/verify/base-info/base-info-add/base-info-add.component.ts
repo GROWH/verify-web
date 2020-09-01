@@ -41,6 +41,8 @@ export class BaseInfoAddComponent implements OnInit {
       this.currStp++
     }
     if (curr === 1) {
+      console.log(this.form)
+      console.log(this.form.valid)
       if (!this.form.valid) {
         this.msg.error('存在未填写的项目，请检查！')
       }else{
@@ -58,11 +60,11 @@ export class BaseInfoAddComponent implements OnInit {
   form: FormGroup
 
   baseFormInit() {
-    const uid = localStorage.getItem(LOGINED_USER_UNIT_KEY)
+    const unit_name = localStorage.getItem('unitName')
 
     this.form = this.fb.group({
       client_id: [null, [Validators.required]],
-      implement_id: [uid, [Validators.required]],
+      implement_id: [unit_name, [Validators.required]],
       client_type: [null, [Validators.required]],
       target_type: [null, [Validators.required]],
       house_types: [null, [Validators.required]],

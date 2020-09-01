@@ -1,19 +1,17 @@
 import {Component, OnInit} from '@angular/core';
-import {NzModalService, NzModalRef, NzMessageService} from 'ng-zorro-antd';
-import {ParamFormComponent} from './param-form/param-form.component';
-import {TongchangHttpService} from 'tongchang-lib';
+import {NzMessageService, NzModalRef, NzModalService} from "ng-zorro-antd";
+import {TongchangHttpService} from "tongchang-lib";
 
 import {GridAction} from '@/model/GridAction';
-import {ModuleManageFormComponent} from "@/manage/system/module-manage-form/module-manage-form.component";
-import {SystemModule} from "@/model/SystemModule";
 import {buttonAccess} from "@/config.const";
+import {EquipmentFormComponent} from "@/manage/facility/equipment/equipment-form/equipment-form.component";
 
 @Component({
-  selector: 'app-param-setting',
-  templateUrl: './param-setting.component.html',
-  styleUrls: ['./param-setting.component.scss']
+  selector: 'app-equipment',
+  templateUrl: './equipment.component.html',
+  styleUrls: ['./equipment.component.scss']
 })
-export class ParamSettingComponent implements OnInit {
+export class EquipmentComponent implements OnInit {
 
   isAllDisplayDataChecked = false;
   isIndeterminate = false;
@@ -23,10 +21,9 @@ export class ParamSettingComponent implements OnInit {
   size = 10;
   loading = true;
   total = 1;
-  listOfAllData: params[] = []
   mapOfCheckedId: { [key: string]: boolean } = {};
-  selectItems = []
-  baseUrl = '/params'
+  selectItems = [];
+  baseUrl = '/person';
 
   constructor(
     private modal: NzModalService,
@@ -35,22 +32,19 @@ export class ParamSettingComponent implements OnInit {
   ) {
   }
 
-
   gridActions: GridAction[];
-  tableHeight:number=0;
 
   ngOnInit() {
-    this.tableHeight = document.body.offsetHeight - 300;
     this.actionInit()
-    this.getData()
+    // this.getData()
   }
-
+  //页面按钮
   actionInit() {
     this.gridActions = [
       {
         name: '新增',
         icon: 'plus',
-        code: 'param-setting_add',
+        code: 'personnel_add',
         type: 'primary',
         click: () => {
           this.paramAdd()
@@ -59,7 +53,7 @@ export class ParamSettingComponent implements OnInit {
       }, {
         name: '修改',
         icon: 'edit',
-        code: 'param-setting_edit',
+        code: 'personnel_edit',
         type: 'default',
         click: () => {
           this.paramEdit()
@@ -68,7 +62,7 @@ export class ParamSettingComponent implements OnInit {
       }, {
         name: '删除',
         icon: 'delete',
-        code: 'param-setting_delete',
+        code: 'personnel_delete',
         type: 'danger',
         click: () => {
           this.paramDelete()
@@ -78,7 +72,7 @@ export class ParamSettingComponent implements OnInit {
       {
         name: '刷新',
         icon: 'redo',
-        code: 'param-setting_reload',
+        code: 'personnel_reload',
         type: 'dashed',
         click: () => {
           this.paramQuery()
@@ -110,13 +104,21 @@ export class ParamSettingComponent implements OnInit {
   //新增操作
   paramAdd() {
     const param = {
-      name: "",
-      value: "",
-      code: ""
+      supplier: '',
+      pur_price: '',
+      pur_person: '',
+      location: '',
+      unit: '',
+      curator: '',
+      product_date: '',
+      expect_date: '',
+      state: '',
+      mark: '',
+      picture: '',
     }
     let modalRef: NzModalRef = this.modal.create({
-      nzTitle: "参数配置",
-      nzContent: ParamFormComponent,
+      nzTitle: "添加设备信息",
+      nzContent: EquipmentFormComponent,
       nzWidth: 700,
       nzComponentParams: {param},
       nzFooter: [
@@ -130,22 +132,23 @@ export class ParamSettingComponent implements OnInit {
           disabled: comp => !comp.validateForm.valid,
           onClick: (comp) => {
             let formVal = comp.validateForm.getRawValue()
-            this.modal.confirm({
-              nzTitle: '提交',
-              nzContent: '确认提交?',
-              nzOnOk: () => {
-                const params = formVal;
-                this.http.post(this.baseUrl, params).subscribe(res => {
-                  if (res.code !== 0) {
-                    this.msg.error(res.message);
-                    return
-                  }
-                  this.msg.success(res.message);
-                  this.getData();
-                })
-              }
-            })
-            modalRef.close()
+            // this.modal.confirm({
+            //   nzTitle: '提交',
+            //   nzContent: '确认提交?',
+            //   nzOnOk: () => {
+            //     const params = formVal;
+            //     console.log(params)
+            //     this.http.post(this.baseUrl, params).subscribe(res => {
+            //       if (res.code !== 0) {
+            //         this.msg.error(res.message);
+            //         return
+            //       }
+            //       this.msg.success(res.message);
+            //       this.getData();
+            //     })
+            //   }
+            // })
+            // modalRef.close()
           }
         }
       ],
@@ -161,8 +164,8 @@ export class ParamSettingComponent implements OnInit {
       return;
     }
     let modalRef: NzModalRef = this.modal.create({
-      nzTitle: "参数配置",
-      nzContent: ParamFormComponent,
+      nzTitle: "修改设备信息",
+      nzContent: EquipmentFormComponent,
       nzWidth: 700,
       nzComponentParams: {param},
       nzFooter: [
@@ -176,25 +179,25 @@ export class ParamSettingComponent implements OnInit {
           disabled: comp => !comp.validateForm.valid,
           onClick: (comp) => {
             let formVal = comp.validateForm.getRawValue()
-            this.modal.confirm({
-              nzTitle: '提交',
-              nzContent: '确认提交?',
-              nzOnOk: () => {
-                const params = {
-                  ...param,
-                  ...formVal
-                };
-                this.http.put(this.baseUrl, params).subscribe(res => {
-                  if (res.code !== 0) {
-                    this.msg.error(res.message);
-                    return
-                  }
-                  this.msg.success(res.message);
-                  this.getData();
-                })
-              }
-            })
-            modalRef.close()
+            // this.modal.confirm({
+            //   nzTitle: '提交',
+            //   nzContent: '确认提交?',
+            //   nzOnOk: () => {
+            //     const params = {
+            //       ...param,
+            //       ...formVal
+            //     };
+            //     this.http.put(this.baseUrl, params).subscribe(res => {
+            //       if (res.code !== 0) {
+            //         this.msg.error(res.message);
+            //         return
+            //       }
+            //       this.msg.success(res.message);
+            //       this.getData();
+            //     })
+            //   }
+            // })
+            // modalRef.close()
           }
         }
       ],
@@ -214,21 +217,21 @@ export class ParamSettingComponent implements OnInit {
       nzTitle: '删除',
       nzContent: '确认删除?',
       nzOnOk: () => {
-        this.http.delete(`${this.baseUrl}/${selectedIds}`).subscribe(res => {
-          if (res.code !== 0) {
-            this.msg.error(res.message);
-            return
-          }
-          this.msg.success(res.message);
-          this.getData();
-        })
+        // this.http.delete(`${this.baseUrl}/${selectedIds}`).subscribe(res => {
+        //   if (res.code !== 0) {
+        //     this.msg.error(res.message);
+        //     return
+        //   }
+        //   this.msg.success(res.message);
+        //   this.getData();
+        // })
       }
     })
   }
 
   //刷新
   paramQuery() {
-    this.getData()
+    // this.getData()
   }
 
   //初始出请求
@@ -246,22 +249,27 @@ export class ParamSettingComponent implements OnInit {
 
   changePageIndex(pageIndex) {
     this.page = pageIndex;
-    this.getData()
+    // this.getData()
   }
 
   changePageSize(pageSize) {
     this.size = pageSize
-    this.getData()
+    // this.getData()
   }
 
 }
 
 class params {
-  name: string;
-  code: string;
-  value: string;
   id: number;
-  create_time: string;
-  update_time: string;
-  version: number;
+  supplier: string;
+  pur_price: string;
+  pur_person: string;
+  location: string;
+  unit: string;
+  curator: string;
+  product_date: string;
+  expect_date: string;
+  state: string;
+  mark: string;
+  picture: string;
 }

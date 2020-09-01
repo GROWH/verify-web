@@ -34,7 +34,10 @@ export class ModuleManageComponent implements OnInit {
   ) {
   }
 
+  tableHeight:number=0;
+
   ngOnInit() {
+    this.tableHeight = document.body.offsetHeight - 300;
     this.actionInit()
     this.getModuleTree()
   }

@@ -3,7 +3,11 @@
 
 @include commTable;
 
-
+.pagination {
+  text-align: right;
+  margin-top: 10px;
+  flex: auto 0 0;
+}
 .table {
   .point {
     font-weight: bold;
@@ -17,4 +21,5 @@
   .point-down {
     color: #3470CC;
   }
+
 }

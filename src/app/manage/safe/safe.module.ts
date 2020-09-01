@@ -11,6 +11,8 @@ import { RoleFormComponent } from './role/role-form/role-form.component';
 import { RoleService } from './role/role.service';
 import { RoleViewComponent } from './role/role-view/role-view.component';
 import { RoleSelectControlComponent } from './role/role-select-control/role-select-control.component';
+import { PersonnelComponent } from './personnel/personnel.component';
+import { PersonnelFormComponent } from './personnel/personnel-form/personnel-form.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +22,8 @@ import { RoleSelectControlComponent } from './role/role-select-control/role-sele
     RoleFormComponent,
     RoleViewComponent,
     RoleSelectControlComponent,
+    PersonnelComponent,
+    PersonnelFormComponent,
   ],
   imports: [
     CommonModule,
@@ -30,6 +34,7 @@ import { RoleSelectControlComponent } from './role/role-select-control/role-sele
     AccountFormComponent,
     RoleFormComponent,
     RoleViewComponent,
+    PersonnelFormComponent,
   ],
   providers: [
     {

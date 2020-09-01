@@ -1,28 +1,25 @@
 <div style="height: 100%;padding: 0 20px;">
   <grid-action [actions]="gridActions"></grid-action>
   <nz-table
-    style="height: 800px;"
     #rowSelectionTable
     nzShowSizeChanger
     [nzData]="listOfDisplayData"
     [nzTotal]="total"
     (nzPageIndexChange)="changePageIndex($event)"
     (nzPageSizeChange)="changePageSize($event)"
-
+    [nzScroll]="{y: tableHeight+'px'}"
   >
     <thead>
     <tr>
-      <th
+      <th nzWidth="4%"
         nzShowCheckbox
         [(nzChecked)]="isAllDisplayDataChecked"
         [nzIndeterminate]="isIndeterminate"
         (nzCheckedChange)="checkAll($event)"
       ></th>
-      <th>文件名</th>
+      <th nzWidth="15%">文件名</th>
       <th>文件描述</th>
-      <th>文件URL</th>
-      <th>创建时间</th>
-      <th>更新时间</th>
+      <th nzWidth="10%">操作</th>
     </tr>
     </thead>
     <tbody>
@@ -30,9 +27,7 @@
       <td nzShowCheckbox [(nzChecked)]="mapOfCheckedId[data.id]" (nzCheckedChange)="refreshStatus()"></td>
       <td>{{ data.filename }}</td>
       <td title="{{data.filedesc}}">{{ data.filedesc.length>100?data.filedesc.substring(1,100)+'...': data.filedesc}}</td>
-      <td>{{ data.fileurl }}</td>
-      <td>{{ data.create_time }}</td>
-      <td>{{ data.update_time }}</td>
+      <td><a (click)="uploadDom(data)">下载</a></td>
     </tr>
     </tbody>
   </nz-table>

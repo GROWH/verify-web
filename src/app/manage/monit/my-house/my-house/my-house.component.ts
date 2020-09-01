@@ -14,6 +14,7 @@ import {buttonAccess} from "@/config.const";
   styleUrls: ['./my-house.component.scss']
 })
 export class MyHouseComponent extends UniversalComponent {
+  tableHeight:number = 0;
 
   constructor(
     injector: Injector,
@@ -24,6 +25,7 @@ export class MyHouseComponent extends UniversalComponent {
   }
 
   ngOnInit() {
+    this.tableHeight = document.body.offsetHeight - 300;
     const uid = localStorage.getItem('account');
     this.uniSer.gridConf = {
       queryUrl: Apis.storehouseDownUnit,

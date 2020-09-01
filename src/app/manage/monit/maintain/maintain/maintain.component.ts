@@ -31,6 +31,7 @@ export class MaintainComponent extends UniversalComponent {
   }
 
   ngOnInit() {
+    this.tableHeight = document.body.offsetHeight - 300;
     this.actionInit()
     this.uniSer.gridConf = {
       queryUrl: Apis.storehouse,
@@ -44,7 +45,7 @@ export class MaintainComponent extends UniversalComponent {
 
   uniSer!: MaintainService;
   gridActions: GridAction[];
-  tableHeight = '500px'
+  tableHeight:number = 0;
 
 
   actionInit() {

@@ -58,7 +58,8 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('userInfo', res.data.account);//用户信息
         localStorage.setItem('menuAuth', JSON.stringify(res.data.moduleTree));//用户菜单权限
         localStorage.setItem('btnAuth', JSON.stringify(res.data.resources));//用户按钮权限
-        localStorage.setItem(LOGINED_USER_UNIT_KEY, res.data.unit.id);
+        localStorage.setItem(LOGINED_USER_UNIT_KEY, res.data.unit.id);//单位ID
+        localStorage.setItem('unitName', res.data.unit.unit_name);//单位名称
         this.router.navigateByUrl('/manage');
       }).catch((err) => {
         this.isSpinning = false;

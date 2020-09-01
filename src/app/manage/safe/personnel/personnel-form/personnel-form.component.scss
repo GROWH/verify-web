@@ -1,0 +1,27 @@
+.sign-img {
+  .img-wrapper{
+    display: inline-block;
+    border:1px dashed #BBBBBB;
+  }
+  .del-sign-btn{
+    position: absolute;
+    margin: 0 0 0 10px;
+  }
+  .add-bt {
+    height: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    cursor: pointer;
+    border:1px dashed #BBBBBB;
+
+    .icon {
+      font-size: 16px;
+    }
+
+    .desc {
+      font-size: 16px;
+    }
+  }
+}

@@ -1,55 +1,55 @@
 <div class="wrapper">
   <div class="left">
     <grid-action [actions]="gridActions"></grid-action>
-    
+
     <nz-table
       #nzTable
       [nzData]="tableData"
-      [nzScroll]="{y: '500px', x: '800px'}"
+      [nzScroll]="{y: tableHeight+'px'}"
       [nzShowPagination]="false"
       [nzFrontPagination]="false"
     >
       <thead>
-        <tr>
-          <th nzWidth="150px">模块名</th>
-          <th nzWidth="120px">关键字</th>
-          <th nzWidth="120px">Code</th>
-          <th nzWidth="120px">ParID</th>
-          <th>路由</th>
-          <th nzWidth="120px">顺序号</th>
-          <th nzWidth="120px">类型</th>
-          <th nzWidth="120px">系统菜单</th>
-          <th nzWidth="120px">操作</th>
-        </tr>
+      <tr>
+        <th nzWidth="150px">模块名</th>
+        <th nzWidth="120px">关键字</th>
+        <th nzWidth="120px">Code</th>
+        <th nzWidth="120px">ParID</th>
+        <th>路由</th>
+        <th nzWidth="120px">顺序号</th>
+        <th nzWidth="120px">类型</th>
+        <th nzWidth="120px">系统菜单</th>
+        <th nzWidth="120px">操作</th>
+      </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let i of nzTable.data">
-          <td>{{ i.module_name }}</td>
-          <td>{{ i.key_word }}</td>
-          <td>{{ i.module_code }}</td>
-          <td>{{ i.parent_id }}</td>
-          <td>{{ i.module_url }}</td>
-          <td>{{ i.order_number }}</td>
-          <td>{{ moTypeMap[i.type] }}</td>
-          <td>
-            <i 
-              nz-icon 
-              [ngStyle]="{ color: i.is_menu ? '#99CC33' : '#E60000', fontSize: '18px' }"
-              [nzType]=" i.is_menu ? 'check-circle' : 'close-circle' " 
-              nzTheme="fill"
-            ></i>
-          </td>
-          <td>
-            <a (click)="edit(i)">修改</a>
-            <nz-divider nzType="vertical"></nz-divider>
-            <a (click)="del(i)">删除</a>         
-          </td>
-        </tr>
+      <tr *ngFor="let i of nzTable.data">
+        <td>{{ i.module_name }}</td>
+        <td>{{ i.key_word }}</td>
+        <td>{{ i.module_code }}</td>
+        <td>{{ i.parent_id }}</td>
+        <td>{{ i.module_url }}</td>
+        <td>{{ i.order_number }}</td>
+        <td>{{ moTypeMap[i.type] }}</td>
+        <td>
+          <i
+            nz-icon
+            [ngStyle]="{ color: i.is_menu ? '#99CC33' : '#E60000', fontSize: '18px' }"
+            [nzType]=" i.is_menu ? 'check-circle' : 'close-circle' "
+            nzTheme="fill"
+          ></i>
+        </td>
+        <td>
+          <a (click)="edit(i)">修改</a>
+          <nz-divider nzType="vertical"></nz-divider>
+          <a (click)="del(i)">删除</a>
+        </td>
+      </tr>
       </tbody>
     </nz-table>
 
   </div>
-  
+
   <div class="right">
     <nz-tree
       [nzData]="nodeTree"

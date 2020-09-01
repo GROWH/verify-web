@@ -1,27 +1,27 @@
 <div>
   <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
     <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="filename">文件名称</nz-form-label>
-      <nz-form-control [nzSm]="14" [nzXs]="24">
-        <input nz-input formControlName="filename" id="filename" />
-        <nz-form-explain *ngIf="validateForm.get('filename')?.dirty && validateForm.get('filename')?.errors">
-          请输入文件名称
-        </nz-form-explain>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="filename">文件名称</nz-form-label>
+      <nz-form-control [nzSm]="9" [nzXs]="12">
+        <input nz-input formControlName="filename" [ngModel]="filename" disabled id="uploadName"/>
+      </nz-form-control>
+      <nz-form-control [nzSm]="1" [nzXs]="12"></nz-form-control>
+      <nz-form-control [nzSm]="4" [nzXs]="12">
+        <nz-upload
+          nzAction="api/file/upload"
+          [nzBeforeUpload]="beforeUpload"
+          [nzMultiple]="false"
+          [nzShowUploadList]="false"
+          (nzChange)="handleChange($event)"
+        >
+          <button nz-button><i nz-icon nzType="upload"></i>选择文件</button>
+        </nz-upload>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="fileurl">文件URL</nz-form-label>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="filedesc">文件描述</nz-form-label>
       <nz-form-control [nzSm]="14" [nzXs]="24">
-        <input nz-input formControlName="fileurl" id="fileurl" />
-        <nz-form-explain *ngIf="validateForm.get('fileurl')?.dirty && validateForm.get('fileurl')?.errors">
-          请输入文件URL
-        </nz-form-explain>
-      </nz-form-control>
-    </nz-form-item>
-    <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24"  nzFor="filedesc">文件描述</nz-form-label>
-      <nz-form-control [nzSm]="14" [nzXs]="24">
-        <textarea nz-input formControlName="filedesc" id="filedesc" ></textarea>
+        <textarea nz-input formControlName="filedesc" id="filedesc"></textarea>
       </nz-form-control>
     </nz-form-item>
   </form>

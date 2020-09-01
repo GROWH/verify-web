@@ -8,8 +8,7 @@
     [nzData]="uniSer.data"
     libClientRect
     [libHeightMinus]="54"
-    (libHeightChange)="tableHeight = $event + 'px'"
-    [nzScroll]="{y: tableHeight, x: '1120px'}"
+    [nzScroll]="{y: tableHeight+'px'}"
     [nzShowPagination]="false"
     [nzFrontPagination]="false"
   >
@@ -51,12 +50,12 @@
         <td>{{ i.state || 'N/A' }}</td>
         <td>{{ i.new_uptime || 'N/A' }}</td>
         <td>
-          <a (click)="viewDetail(i)">详情</a>   
+          <a (click)="viewDetail(i)">详情</a>
         </td>
       </tr>
     </tbody>
   </nz-table>
-  
+
   <nz-pagination
     class="pagination"
     [ngClass]="{ blur: uniSer.loading }"

@@ -8,6 +8,8 @@ import { ThermManageComponent } from './therm-manage/therm-manage.component';
 import { ThermManageFormComponent } from './therm-manage/therm-manage-form/therm-manage-form.component';
 import { ParamDesginFormComponent } from './thermometer/param-desgin-form/param-desgin-form.component';
 import { ReuploadFormComponent } from './thermometer/reupload-form/reupload-form.component';
+import { EquipmentFormComponent } from './equipment/equipment-form/equipment-form.component';
+import { EquipmentComponent } from './equipment/equipment.component';
 
 
 @NgModule({
@@ -22,13 +24,16 @@ import { ReuploadFormComponent } from './thermometer/reupload-form/reupload-form
     ThermManageComponent,
     ThermManageFormComponent,
     ParamDesginFormComponent,
-    ReuploadFormComponent
+    ReuploadFormComponent,
+    EquipmentFormComponent,
+    EquipmentComponent
   ],
   entryComponents:[
     ThermometerFormComponent,
     ThermManageFormComponent,
     ParamDesginFormComponent,
-    ReuploadFormComponent
+    ReuploadFormComponent,
+    EquipmentFormComponent,
   ]
 })
 export class FacilityModule { }

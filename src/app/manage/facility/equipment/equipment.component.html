@@ -4,7 +4,6 @@
     #rowSelectionTable
     nzShowSizeChanger
     [nzData]="listOfDisplayData"
-    [nzScroll]="{y: tableHeight+'px'}"
     [nzTotal]="total"
     (nzPageIndexChange)="changePageIndex($event)"
     (nzPageSizeChange)="changePageSize($event)"
@@ -12,27 +11,39 @@
   >
     <thead>
     <tr>
-      <th nzWidth="2%"
+      <th
         nzShowCheckbox
         [(nzChecked)]="isAllDisplayDataChecked"
         [nzIndeterminate]="isIndeterminate"
         (nzCheckedChange)="checkAll($event)"
       ></th>
-      <th nzWidth="15%">参数编码</th>
-      <th nzWidth="50%">参数值</th>
-      <th nzWidth="10%">参数名称描述</th>
-      <th>创建时间</th>
-      <th>更新时间</th>
+      <th>供应商</th>
+      <th>采购价格</th>
+      <th>采购员</th>
+      <th>存放位置</th>
+      <th>所属单位</th>
+      <th>日常保管员</th>
+      <th>生产日期</th>
+      <th>预计报废时间</th>
+      <th>状态</th>
+      <th>备注</th>
+      <th>图片</th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let data of rowSelectionTable.data">
       <td nzShowCheckbox [(nzChecked)]="mapOfCheckedId[data.id]" (nzCheckedChange)="refreshStatus()"></td>
-      <td>{{ data.code }}</td>
-      <td title="{{data.value}}">{{ data.value.length>100?data.value.substring(1,100)+'...': data.value}}</td>
-      <td>{{ data.name }}</td>
-      <td>{{ data.create_time }}</td>
-      <td>{{ data.update_time }}</td>
+      <td title="{{data.supplier}}">{{ data.supplier}}</td>
+      <td>{{ data.pur_price }}</td>
+      <td>{{ data.pur_person }}</td>
+      <td>{{ data.location }}</td>
+      <td>{{ data.unit }}</td>
+      <td>{{ data.curator }}</td>
+      <td>{{ data.product_date }}</td>
+      <td>{{ data.expect_date }}</td>
+      <td>{{ data.state }}</td>
+      <td>{{ data.mark }}</td>
+      <td>{{ data.picture }}</td>
     </tr>
     </tbody>
   </nz-table>

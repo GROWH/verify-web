@@ -1,0 +1,100 @@
+<div>
+  <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="supplier">供应商</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="supplier" id="supplier" />
+        <nz-form-explain *ngIf="validateForm.get('supplier')?.dirty && validateForm.get('supplier')?.errors">
+          请输入供应商
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="pur_price">采购价格</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="pur_price" id="pur_price" />
+        <nz-form-explain *ngIf="validateForm.get('pur_price')?.dirty && validateForm.get('pur_price')?.errors">
+          请输入采购价格
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="pur_person">采购员</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="pur_person" id="pur_person" />
+        <nz-form-explain *ngIf="validateForm.get('pur_person')?.dirty && validateForm.get('pur_person')?.errors">
+          请输入采购员
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="location">存放位置</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="location" id="location" />
+        <nz-form-explain *ngIf="validateForm.get('location')?.dirty && validateForm.get('location')?.errors">
+          请输入存放位置
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="unit">所属单位</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="unit" id="unit" />
+        <nz-form-explain *ngIf="validateForm.get('unit')?.dirty && validateForm.get('unit')?.errors">
+          请输入所属单位
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="curator">日常保管员</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="curator" id="curator" />
+        <nz-form-explain *ngIf="validateForm.get('curator')?.dirty && validateForm.get('curator')?.errors">
+          请输入日常保管员
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="value">生产日期</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-date-picker formControlName="product_date"></nz-date-picker>
+        <nz-form-explain *ngIf="validateForm.get('product_date')?.dirty && validateForm.get('product_date')?.errors">
+          请选择预生产日期
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="expect_date">预计报废时间</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-date-picker formControlName="expect_date"></nz-date-picker>
+        <nz-form-explain *ngIf="validateForm.get('expect_date')?.dirty && validateForm.get('expect_date')?.errors">
+          请选择预计报废时间
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="state">状态</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="state" id="state" />
+        <nz-form-explain *ngIf="validateForm.get('state')?.dirty && validateForm.get('state')?.errors">
+          请输入状态
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzFor="mark">备注</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <textarea nz-input formControlName="mark" id="mark" ></textarea>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzFor="picture">图片</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="picture" id="picture" />
+        <nz-form-explain *ngIf="validateForm.get('picture')?.dirty && validateForm.get('picture')?.errors">
+          请输入状态
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</div>

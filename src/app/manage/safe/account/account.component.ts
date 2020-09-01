@@ -47,7 +47,6 @@ export class AccountComponent implements OnInit {
 
   ngOnInit() {
     this.actionInit()
-    console.log('accountId',this.accountId)
     this.getTree()
   }
 

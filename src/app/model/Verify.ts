@@ -3,7 +3,7 @@ import { DataBase } from './Types';
 export class BaseInfo extends DataBase {
   // 新增接口
   client_id:             number;        // 验证对象单位
-  implement_id:          number;        // 验证实施单位
+  implement_id:          string;        // 验证实施单位
   client_type:           string;        // 验证对象单位类别
   target_type:           string;        // 验证对象类别
   verify_time:           string;        // 验证时间

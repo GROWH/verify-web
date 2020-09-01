@@ -1,0 +1,77 @@
+<div>
+  <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="name">姓名</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="name" id="name" />
+        <nz-form-explain *ngIf="validateForm.get('name')?.dirty && validateForm.get('name')?.errors">
+          请输入姓名
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="unit">单位</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="unit" id="unit" />
+        <nz-form-explain *ngIf="validateForm.get('unit')?.dirty && validateForm.get('unit')?.errors">
+          请输入单位
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="dept">部门</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="dept" id="dept" />
+        <nz-form-explain *ngIf="validateForm.get('dept')?.dirty && validateForm.get('dept')?.errors">
+          请输入部门
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="appoint">岗位</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="appoint" id="appoint" />
+        <nz-form-explain *ngIf="validateForm.get('appoint')?.dirty && validateForm.get('appoint')?.errors">
+          请输入岗位
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <input type="file" (change)="fileCh($event)" #fileInput [hidden]="true">
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="sign">签字样式</nz-form-label>
+      <nz-form-control [nzSm]="12" [nzXs]="24">
+        <div class="sign-img">
+          <div class="img-wrapper" *ngIf="signImageUrl; else uploadBt">
+            <img [src]="signImageUrl" width="100%">
+          </div>
+          <ng-template #uploadBt>
+            <div class="add-bt" (click)="onFileSelect()">
+              <div class="icon">
+                <i nz-icon spin type="plus"></i>
+              </div>
+              <div class="desc">
+                添加签字样式
+              </div>
+            </div>
+          </ng-template>
+          <button
+            class="del-sign-btn"
+            *ngIf="signImageUrl"
+            nz-button
+            [title]="'重新选择'"
+            [nzType]="'default'"
+            (click)="delSign()"
+          >
+            <i nz-icon  [type]="'delete'"></i>
+          </button>
+        </div>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzFor="mark">备注</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <textarea nz-input formControlName="mark" id="mark" ></textarea>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</div>

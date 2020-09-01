@@ -5,6 +5,7 @@ import { DebugLog, TongchangLibService, TongchangHttpService } from 'tongchang-l
 import { BaseInfoSerToken } from '../../verify.routing.token';
 import { BaseInfoService } from '../base-info.service';
 import { Apis } from '@/shared/urls.const';
+import {LOGINED_USER_UNIT_KEY} from "@/config.const";
 
 @Component({
   selector: 'app-base-info-add-incubator',
@@ -54,8 +55,9 @@ export class BaseInfoAddIncubatorComponent implements OnInit {
   async onSubmit() {
     DebugLog(this.formVal)
     await this.util.submitConfirm()
-
-    const res = await this.http.post(Apis.verifyBaseInfo, this.formVal).toPromise()
+    const uid = localStorage.getItem(LOGINED_USER_UNIT_KEY);
+    const params = Object.assign({},this.formVal,{implement_id:uid});
+    const res = await this.http.post(Apis.verifyBaseInfo, params).toPromise()
 
     if (res.code === 0) {
       this.afterDone()

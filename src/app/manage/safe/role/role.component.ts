@@ -23,7 +23,7 @@ export class RoleComponent extends UniversalComponent {
 
   uniSer!: RoleService;
   gridActions!: GridAction[];
-  tableHeight = '500px'
+  tableHeight:number = 0;
 
   constructor(
     injector: Injector,
@@ -39,6 +39,8 @@ export class RoleComponent extends UniversalComponent {
 
 
   ngOnInit() {
+    this.tableHeight = document.body.offsetHeight - 300;
+
     this.uniSer.gridConf = {
       queryUrl: Apis.role,
       queryBody: null,

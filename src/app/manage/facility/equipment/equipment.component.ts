@@ -23,7 +23,7 @@ export class EquipmentComponent implements OnInit {
   total = 1;
   mapOfCheckedId: { [key: string]: boolean } = {};
   selectItems = [];
-  baseUrl = '/person';
+  baseUrl = '/equipment';
 
   constructor(
     private modal: NzModalService,
@@ -33,10 +33,14 @@ export class EquipmentComponent implements OnInit {
   }
 
   gridActions: GridAction[];
+  tableWidth:number=0;
+  tableHeight:number=0;
 
   ngOnInit() {
+    this.tableWidth = document.body.offsetWidth - 345;
+    this.tableHeight = document.body.offsetHeight - 300;
     this.actionInit()
-    // this.getData()
+    this.getData()
   }
   //页面按钮
   actionInit() {
@@ -44,40 +48,40 @@ export class EquipmentComponent implements OnInit {
       {
         name: '新增',
         icon: 'plus',
-        code: 'personnel_add',
+        code: 'equipment_add',
         type: 'primary',
         click: () => {
           this.paramAdd()
         },
-        isExist: buttonAccess("param-setting_add"),
+        isExist: buttonAccess("equipment_add"),
       }, {
         name: '修改',
         icon: 'edit',
-        code: 'personnel_edit',
+        code: 'equipment_edit',
         type: 'default',
         click: () => {
           this.paramEdit()
         },
-        isExist: buttonAccess("param-setting_edit"),
+        isExist: buttonAccess("equipment_edit"),
       }, {
         name: '删除',
         icon: 'delete',
-        code: 'personnel_delete',
+        code: 'equipment_delete',
         type: 'danger',
         click: () => {
           this.paramDelete()
         },
-        isExist: buttonAccess("param-setting_delete"),
+        isExist: buttonAccess("equipment_delete"),
       },
       {
         name: '刷新',
         icon: 'redo',
-        code: 'personnel_reload',
+        code: 'equipment_reload',
         type: 'dashed',
         click: () => {
           this.paramQuery()
         },
-        isExist: buttonAccess("param-setting_reload"),
+        isExist: buttonAccess("equipment_reload"),
       }
     ]
   }
@@ -113,8 +117,8 @@ export class EquipmentComponent implements OnInit {
       product_date: '',
       expect_date: '',
       state: '',
-      mark: '',
       picture: '',
+      mark: '',
     }
     let modalRef: NzModalRef = this.modal.create({
       nzTitle: "添加设备信息",
@@ -129,26 +133,28 @@ export class EquipmentComponent implements OnInit {
         {
           label: '确定',
           type: 'primary',
-          disabled: comp => !comp.validateForm.valid,
+          disabled: comp => {
+            console.log(comp)
+            return !comp.validateForm.valid
+          },
           onClick: (comp) => {
             let formVal = comp.validateForm.getRawValue()
-            // this.modal.confirm({
-            //   nzTitle: '提交',
-            //   nzContent: '确认提交?',
-            //   nzOnOk: () => {
-            //     const params = formVal;
-            //     console.log(params)
-            //     this.http.post(this.baseUrl, params).subscribe(res => {
-            //       if (res.code !== 0) {
-            //         this.msg.error(res.message);
-            //         return
-            //       }
-            //       this.msg.success(res.message);
-            //       this.getData();
-            //     })
-            //   }
-            // })
-            // modalRef.close()
+            this.modal.confirm({
+              nzTitle: '提交',
+              nzContent: '确认提交?',
+              nzOnOk: () => {
+                const params = formVal;
+                this.http.post(this.baseUrl, params).subscribe(res => {
+                  if (res.code !== 0) {
+                    this.msg.error(res.message);
+                    return
+                  }
+                  this.msg.success(res.message);
+                  this.getData();
+                })
+              }
+            })
+            modalRef.close()
           }
         }
       ],
@@ -179,25 +185,25 @@ export class EquipmentComponent implements OnInit {
           disabled: comp => !comp.validateForm.valid,
           onClick: (comp) => {
             let formVal = comp.validateForm.getRawValue()
-            // this.modal.confirm({
-            //   nzTitle: '提交',
-            //   nzContent: '确认提交?',
-            //   nzOnOk: () => {
-            //     const params = {
-            //       ...param,
-            //       ...formVal
-            //     };
-            //     this.http.put(this.baseUrl, params).subscribe(res => {
-            //       if (res.code !== 0) {
-            //         this.msg.error(res.message);
-            //         return
-            //       }
-            //       this.msg.success(res.message);
-            //       this.getData();
-            //     })
-            //   }
-            // })
-            // modalRef.close()
+            this.modal.confirm({
+              nzTitle: '提交',
+              nzContent: '确认提交?',
+              nzOnOk: () => {
+                const params = {
+                  ...param,
+                  ...formVal
+                };
+                this.http.put(this.baseUrl, params).subscribe(res => {
+                  if (res.code !== 0) {
+                    this.msg.error(res.message);
+                    return
+                  }
+                  this.msg.success(res.message);
+                  this.getData();
+                })
+              }
+            })
+            modalRef.close()
           }
         }
       ],
@@ -217,21 +223,21 @@ export class EquipmentComponent implements OnInit {
       nzTitle: '删除',
       nzContent: '确认删除?',
       nzOnOk: () => {
-        // this.http.delete(`${this.baseUrl}/${selectedIds}`).subscribe(res => {
-        //   if (res.code !== 0) {
-        //     this.msg.error(res.message);
-        //     return
-        //   }
-        //   this.msg.success(res.message);
-        //   this.getData();
-        // })
+        this.http.delete(`${this.baseUrl}/${selectedIds}`).subscribe(res => {
+          if (res.code !== 0) {
+            this.msg.error(res.message);
+            return
+          }
+          this.msg.success(res.message);
+          this.getData();
+        })
       }
     })
   }
 
   //刷新
   paramQuery() {
-    // this.getData()
+    this.getData()
   }
 
   //初始出请求
@@ -249,12 +255,12 @@ export class EquipmentComponent implements OnInit {
 
   changePageIndex(pageIndex) {
     this.page = pageIndex;
-    // this.getData()
+    this.getData()
   }
 
   changePageSize(pageSize) {
     this.size = pageSize
-    // this.getData()
+    this.getData()
   }
 
 }

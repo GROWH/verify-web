@@ -64,15 +64,6 @@ export class BaseInfoComponent extends UniversalComponent implements OnInit {
         code: 'verify-info_reload',
         click: () => this.uniSer.onForceReload(),
         isExist: buttonAccess("verify-info_reload"),
-      },
-      {
-        name: '一键生成验证任务',
-        icon: 'check',
-        code: 'verify-info_genera-task',
-        click: () => {
-          console.log('一键生成验证任务')
-        },
-        isExist: buttonAccess("verify-info_genera-task"),
       }
     ]
   }

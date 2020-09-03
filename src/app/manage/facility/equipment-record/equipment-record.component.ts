@@ -1,19 +1,17 @@
 import {Component, OnInit} from '@angular/core';
-import {NzModalService, NzModalRef, NzMessageService} from 'ng-zorro-antd';
-import {RuleFormComponent} from './rule-form/rule-form.component';
-import {TongchangHttpService} from 'tongchang-lib';
+import {NzMessageService, NzModalRef, NzModalService} from "ng-zorro-antd";
+import {TongchangHttpService} from "tongchang-lib";
 
 import {GridAction} from '@/model/GridAction';
 import {buttonAccess} from "@/config.const";
-import {window} from "rxjs/operators";
+import {RecordFormComponent} from "@/manage/facility/equipment-record/record-form/record-form.component";
 
 @Component({
-  selector: 'app-rule-manage',
-  templateUrl: './rule-manage.component.html',
-  styleUrls: ['./rule-manage.component.scss']
+  selector: 'app-equipment-record',
+  templateUrl: './equipment-record.component.html',
+  styleUrls: ['./equipment-record.component.scss']
 })
-export class RuleManageComponent implements OnInit {
-
+export class EquipmentRecordComponent implements OnInit {
   isAllDisplayDataChecked = false;
   isIndeterminate = false;
   position: string = 'bottom'
@@ -22,10 +20,12 @@ export class RuleManageComponent implements OnInit {
   size = 10;
   loading = true;
   total = 1;
-  listOfAllData: params[] = []
   mapOfCheckedId: { [key: string]: boolean } = {};
-  selectItems = []
-  baseUrl = '/laws';
+  selectItems = [];
+  baseUrl = '/equipmentRecord';
+  equipmentUrl = '/equipment';
+  equipmentList = []; //设备列表
+  selectedItem: params;
 
   constructor(
     private modal: NzModalService,
@@ -34,55 +34,57 @@ export class RuleManageComponent implements OnInit {
   ) {
   }
 
-
   gridActions: GridAction[];
-  tableHeight:number=0;
+  tableWidth: number = 0;
+  tableHeight: number = 0;
 
   ngOnInit() {
+    this.tableWidth = document.body.offsetWidth - 624;
     this.tableHeight = document.body.offsetHeight - 300;
     this.actionInit()
-    this.getData()
+    this.getEquipment()
   }
 
+  //页面按钮
   actionInit() {
     this.gridActions = [
       {
         name: '新增',
         icon: 'plus',
-        code: 'rule-manager_add',
+        code: 'record_add',
         type: 'primary',
         click: () => {
           this.paramAdd()
         },
-        isExist: buttonAccess("rule-manager_add"),
+        isExist: buttonAccess("record_add"),
       }, {
         name: '修改',
         icon: 'edit',
-        code: 'rule-manager_edit',
+        code: 'record_edit',
         type: 'default',
         click: () => {
           this.paramEdit()
         },
-        isExist: buttonAccess("rule-manager_edit"),
+        isExist: buttonAccess("record_edit"),
       }, {
         name: '删除',
         icon: 'delete',
-        code: 'rule-manager_delete',
+        code: 'record_delete',
         type: 'danger',
         click: () => {
           this.paramDelete()
         },
-        isExist: buttonAccess("rule-manager_delete"),
+        isExist: buttonAccess("record_delete"),
       },
       {
         name: '刷新',
         icon: 'redo',
-        code: 'rule-manager_reload',
+        code: 'record_reload',
         type: 'dashed',
         click: () => {
           this.paramQuery()
         },
-        isExist: buttonAccess("rule-manager_reload"),
+        isExist: buttonAccess("record_reload"),
       }
     ]
   }
@@ -102,23 +104,31 @@ export class RuleManageComponent implements OnInit {
   }
 
   checkAll(value: boolean): void {
-    this.listOfDisplayData.forEach(item => (this.mapOfCheckedId[item.id] = value));
+    this.listOfDisplayData.forEach(item => (this.mapOfCheckedId[item.equipment_id] = value));
     this.refreshStatus();
   }
 
   //新增操作
   paramAdd() {
     const param = {
-      filename: "",
-      filedesc: ""
+      change_type: '',
+      curing_period: '',
+      curing_date: '',
+      next_curing_date: '',
+      warn_time: '',
+      mark: '',
+      picture: '',
     }
     let modalRef: NzModalRef = this.modal.create({
-      nzTitle: "新增相关法规",
-      nzContent: RuleFormComponent,
+      nzTitle: "添加设备信息",
+      nzContent: RecordFormComponent,
       nzWidth: 700,
       nzComponentParams: {param},
       nzFooter: [
-        {label: '取消', onClick: () => modalRef.close()},
+        {
+          label: '取消',
+          onClick: () => modalRef.close()
+        },
         {
           label: '确定',
           type: 'primary',
@@ -130,13 +140,14 @@ export class RuleManageComponent implements OnInit {
               nzContent: '确认提交?',
               nzOnOk: () => {
                 const params = formVal;
+                params.equipment_id = this.selectedItem.id;
                 this.http.post(this.baseUrl, params).subscribe(res => {
                   if (res.code !== 0) {
                     this.msg.error(res.message);
                     return
                   }
                   this.msg.success(res.message);
-                  this.getData();
+                  this.nodeClick(this.selectedItem)
                 })
               }
             })
@@ -156,8 +167,8 @@ export class RuleManageComponent implements OnInit {
       return;
     }
     let modalRef: NzModalRef = this.modal.create({
-      nzTitle: "修改相关法规",
-      nzContent: RuleFormComponent,
+      nzTitle: "修改设备信息",
+      nzContent: RecordFormComponent,
       nzWidth: 700,
       nzComponentParams: {param},
       nzFooter: [
@@ -185,7 +196,7 @@ export class RuleManageComponent implements OnInit {
                     return
                   }
                   this.msg.success(res.message);
-                  this.getData();
+                  this.nodeClick(this.selectedItem)
                 })
               }
             })
@@ -200,7 +211,7 @@ export class RuleManageComponent implements OnInit {
 
   //删除操作
   paramDelete() {
-    if (this.selectItems.length === 0) {
+    if (this.selectItems.length !== 1) {
       this.msg.warning('请先选择数据进行操作!')
       return;
     }
@@ -215,7 +226,7 @@ export class RuleManageComponent implements OnInit {
             return
           }
           this.msg.success(res.message);
-          this.getData();
+          this.nodeClick(this.selectedItem)
         })
       }
     })
@@ -223,7 +234,29 @@ export class RuleManageComponent implements OnInit {
 
   //刷新
   paramQuery() {
-    this.getData()
+    this.nodeClick(this.selectedItem)
+  }
+
+  getEquipment() {
+    this.http.get<any>(this.equipmentUrl).subscribe(res => {
+      if (res.code === 0) {
+        this.equipmentList = res.data
+        this.selectedItem = res.data[0]
+        this.nodeClick(this.selectedItem)
+      }
+    })
+  }
+
+  nodeClick(node) {
+    this.selectedItem = node;
+    //查询选中所属单位的设备操作记录
+    this.http.get<any>(`${this.equipmentUrl}/${node.id}`).subscribe(res => {
+      if (res.code === 0) {
+        this.listOfDisplayData = res.data.record;
+        this.isAllDisplayDataChecked = false;
+        this.mapOfCheckedId = {};
+      }
+    })
   }
 
   //初始出请求
@@ -239,19 +272,6 @@ export class RuleManageComponent implements OnInit {
     })
   }
 
-  //下载
-  uploadDom(record) {
-    let downloadUrl = 'api/' + this.baseUrl + '/download?file=' + record.filename;
-    let modalRef: NzModalRef = this.modal.create({
-      nzTitle: null,
-      nzClosable: false,
-      nzContent: `<div style="font-size: 18px!important;font-width: 600!important;">
-                    <a href="${downloadUrl}" download="1">确定下载${record.filename}文件</a>
-                  </div>`,
-      nzFooter: [{label: '取消', onClick: () => modalRef.close()}],
-    });
-  }
-
   changePageIndex(pageIndex) {
     this.page = pageIndex;
     this.getData()
@@ -265,7 +285,13 @@ export class RuleManageComponent implements OnInit {
 }
 
 class params {
-  filename: string;
-  filedesc: string;
   id: number;
+  equipment_id: number;
+  change_type: string;
+  curing_period: string;
+  curing_date: string;
+  next_curing_date: string;
+  warn_time: string;
+  picture: string;
+  mark: string;
 }

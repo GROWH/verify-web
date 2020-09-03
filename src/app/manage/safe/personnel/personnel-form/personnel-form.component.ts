@@ -64,12 +64,12 @@ export class PersonnelFormComponent implements OnInit {
   creatForm(param) {
     this.signImageUrl = param.sign;
     this.validateForm = this.fb.group({
-      name: [param.name, [Validators.required]],
-      unit: [param.unit, [Validators.required]],
-      dept: [param.dept, [Validators.required]],
+      name:    [param.name, [Validators.required]],
+      unit:    [param.unit, [Validators.required]],
+      dept:    [param.dept, [Validators.required]],
       appoint: [param.appoint, [Validators.required]],
-      sign: [param.sign],
-      mark: [param.mark],
+      sign:    [param.sign],
+      mark:    [param.mark],
     });
   }
 

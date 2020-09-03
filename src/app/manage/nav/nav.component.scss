@@ -13,7 +13,7 @@
   position: relative;
   z-index: 10;
   min-height: 100vh;
-  box-shadow: 2px 0 6px rgba(0,21,41,.35);
+  box-shadow: 2px 0 6px rgba(0, 21, 41, .35);
 }
 
 .header-trigger {
@@ -21,7 +21,7 @@
   padding: 20px 24px;
   font-size: 20px;
   cursor: pointer;
-  transition: all .3s,padding 0s;
+  transition: all .3s, padding 0s;
 }
 
 .trigger:hover {
@@ -35,7 +35,6 @@
   overflow: hidden;
   line-height: 64px;
   background: #001529;
-  // background: #ccc;
   transition: all .3s;
 }
 
@@ -52,7 +51,7 @@
   color: #fff;
   font-weight: 600;
   font-size: 14px;
-  font-family: Avenir,Helvetica Neue,Arial,Helvetica,sans-serif;
+  font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
   vertical-align: middle;
 }
 
@@ -67,7 +66,7 @@ nz-header {
   height: 64px;
   padding: 0;
   background: #fff;
-  box-shadow: 0 1px 4px rgba(0,21,41,.08);
+  box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
 }
 
 nz-content {
@@ -79,33 +78,78 @@ nz-content {
   height: 100%;
   overflow: auto;
 }
+
 .notice:hover {
   cursor: pointer;
-} 
- .bellStyle {
+}
+
+.bellStyle {
   position: absolute;
-  font-size:20px;
+  font-size: 20px;
   display: inline-block;
   right: 60px;
-  // width: 60px;
 }
+
 .bellStyle:hover {
-  color:blue
+  color: blue
 }
+
 .count {
   position: absolute;
-  color: #fff;
-  font-size: 12px;
-  right: 53px;
-  top:13px;
-  width: 20px;
-  height: 20px;
+  right: 62px;
+  top: 20px;
+  width: 10px;
+  height: 10px;
   background-color: red;
-  line-height: 20px;
   border-radius: 10px;
   text-align: center;
 }
 
-// [nz-menu] {
-//   width: 240px;
-// }
+.alert-ul {
+  position: absolute;
+  right: 18px;
+  top: 55px;
+  padding: 6px 10px 6px 10px;
+  background: white;
+  box-shadow: 0px 0px 2px 1px #BBBBBB;
+  border-radius: 6px;
+
+  .top {
+    position: absolute;
+    right: 62px;
+    top: -20px;
+  }
+
+  .top:before, .top:after {
+    position: absolute;
+    content: '';
+    border-top: 10px transparent dashed;
+    border-left: 10px transparent dashed;
+    border-right: 10px transparent dashed;
+    border-bottom: 10px #fff solid;
+  }
+
+  .top:before {
+    border-bottom: 10px #CCCCCC solid;
+  }
+
+  .top:after {
+    top: 1px;
+    border-bottom: 10px #fff solid;
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+
+    li {
+      height: 30px;
+      line-height: 30px;
+      text-align: left;
+      cursor: pointer;
+
+    }
+  }
+}

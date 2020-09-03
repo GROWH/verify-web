@@ -1,0 +1,89 @@
+<div>
+  <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="change_type">变更类型</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-select formControlName="change_type"   >
+          <nz-option *ngFor="let item of changeTypes" [nzValue]="item.name" [nzLabel]="item.name"></nz-option>
+        </nz-select>
+        <nz-form-explain *ngIf="validateForm.get('change_type')?.dirty && validateForm.get('change_type')?.errors">
+          请选择变更类型
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="curing_period">操作周期</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="curing_period" id="curing_period"/>
+        <nz-form-explain *ngIf="validateForm.get('curing_period')?.dirty && validateForm.get('curing_period')?.errors">
+          请输入操作周期
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="curing_date">日期</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-date-picker formControlName="curing_date" id="curing_date"></nz-date-picker>
+        <nz-form-explain *ngIf="validateForm.get('curing_date')?.dirty && validateForm.get('curing_date')?.errors">
+          请选择日期
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="next_curing_date">下次操作时间</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-date-picker formControlName="next_curing_date" id="next_curing_date"></nz-date-picker>
+        <nz-form-explain
+          *ngIf="validateForm.get('next_curing_date')?.dirty && validateForm.get('next_curing_date')?.errors">
+          请选择下次操作时间
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="warn_time">预警时间</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-date-picker formControlName="warn_time" id="warn_time"></nz-date-picker>
+        <nz-form-explain *ngIf="validateForm.get('warn_time')?.dirty && validateForm.get('warn_time')?.errors">
+          请选择预警时间
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <input type="file" (change)="fileCh($event)" #fileInput [hidden]="true">
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="picture">设备图片</nz-form-label>
+      <nz-form-control [nzSm]="signImageUrl ? 12 : 14" [nzXs]="24">
+        <div class="pic-img">
+          <div class="img-wrapper" *ngIf="signImageUrl; else uploadBt">
+            <img [src]="signImageUrl" width="100%">
+          </div>
+          <ng-template #uploadBt>
+            <div class="add-bt" (click)="onFileSelect()">
+              <div class="icon">
+                <i nz-icon spin type="plus"></i>
+              </div>
+              <div class="desc">
+                添加设备图片
+              </div>
+            </div>
+          </ng-template>
+          <button
+            class="del-sign-btn"
+            *ngIf="signImageUrl"
+            nz-button
+            [title]="'重新选择'"
+            [nzType]="'default'"
+            (click)="delSign()"
+          >
+            <i nz-icon [type]="'delete'"></i>
+          </button>
+        </div>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="mark">备注</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <textarea nz-input formControlName="mark" id="mark"></textarea>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</div>

@@ -53,7 +53,7 @@ export class PersonnelComponent implements OnInit {
         click: () => {
           this.paramAdd()
         },
-        isExist: buttonAccess("param-setting_add"),
+        isExist: buttonAccess("personnel_add"),
       }, {
         name: '修改',
         icon: 'edit',
@@ -62,7 +62,7 @@ export class PersonnelComponent implements OnInit {
         click: () => {
           this.paramEdit()
         },
-        isExist: buttonAccess("param-setting_edit"),
+        isExist: buttonAccess("personnel_edit"),
       }, {
         name: '删除',
         icon: 'delete',
@@ -71,7 +71,7 @@ export class PersonnelComponent implements OnInit {
         click: () => {
           this.paramDelete()
         },
-        isExist: buttonAccess("param-setting_delete"),
+        isExist: buttonAccess("personnel_delete"),
       },
       {
         name: '刷新',
@@ -81,7 +81,7 @@ export class PersonnelComponent implements OnInit {
         click: () => {
           this.paramQuery()
         },
-        isExist: buttonAccess("param-setting_reload"),
+        isExist: buttonAccess("personnel_reload"),
       }
     ]
   }

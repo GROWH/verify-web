@@ -1,19 +1,19 @@
-import {Component, OnInit, Input, ViewChild, ElementRef} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {NzMessageService} from "ng-zorro-antd";
 
 import {DebugLog} from 'tongchang-lib';
 
 @Component({
-  selector: 'app-equipment-form',
-  templateUrl: './equipment-form.component.html',
-  styleUrls: ['./equipment-form.component.scss']
+  selector: 'app-record-form',
+  templateUrl: './record-form.component.html',
+  styleUrls: ['./record-form.component.scss']
 })
-export class EquipmentFormComponent implements OnInit {
+export class RecordFormComponent implements OnInit {
   @Input() param: {};
 
   @ViewChild('fileInput') fileInput: ElementRef<HTMLInputElement>;
-
+  changeTypes = [{name:'维护'}, {name:'养护'},]
   validateForm: FormGroup;
   signImageUrl: string = '';
 
@@ -54,7 +54,7 @@ export class EquipmentFormComponent implements OnInit {
 
     reader.onload = () => {
       this.signImageUrl = reader.result as string;
-      //赋值给picture
+      //赋值给sign
       Object.assign(this.validateForm.get('picture'), {value: reader.result as string})
       DebugLog(reader.result)
     }
@@ -63,17 +63,14 @@ export class EquipmentFormComponent implements OnInit {
   creatForm(param) {
     this.signImageUrl = param.picture;
     this.validateForm = this.fb.group({
-      supplier:     [param.supplier, [Validators.required]],
-      pur_price:    [param.pur_price, [Validators.required]],
-      pur_person:   [param.pur_person, [Validators.required]],
-      location:     [param.location, [Validators.required]],
-      unit:         [param.unit, [Validators.required]],
-      curator:      [param.curator, [Validators.required]],
-      product_date: [param.product_date, [Validators.required]],
-      expect_date:  [param.expect_date, [Validators.required]],
-      state:        [param.state, [Validators.required]],
-      picture:      [param.picture],
-      mark:         [param.mark],
+      change_type:      [param.change_type, [Validators.required]],
+      curing_period:    [param.curing_period, [Validators.required]],
+      curing_date:      [param.curing_date, [Validators.required]],
+      next_curing_date: [param.next_curing_date, [Validators.required]],
+      warn_time:        [param.warn_time, [Validators.required]],
+      mark:             [param.mark],
+      picture:          [param.picture],
     });
   }
+
 }

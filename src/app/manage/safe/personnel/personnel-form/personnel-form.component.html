@@ -39,7 +39,7 @@
     <nz-form-item>
       <input type="file" (change)="fileCh($event)" #fileInput [hidden]="true">
       <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="sign">签字样式</nz-form-label>
-      <nz-form-control [nzSm]="12" [nzXs]="24">
+      <nz-form-control [nzSm]="signImageUrl ? 12 : 14" [nzXs]="24">
         <div class="sign-img">
           <div class="img-wrapper" *ngIf="signImageUrl; else uploadBt">
             <img [src]="signImageUrl" width="100%">

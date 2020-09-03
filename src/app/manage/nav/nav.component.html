@@ -29,17 +29,24 @@
     <nz-header>
       <div class="app-header">
         <span class="header-trigger" (click)="navScaling()">
-            <i class="trigger"
-               nz-icon
-               [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
-            ></i>
+          <i class="trigger"
+             nz-icon
+             [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+          ></i>
         </span>
-        <span class="notice" (click)="noticeClick()">
-        <span class="bellStyle" title="新的通知">
+
+        <span class="bellStyle" title="新的通知" (click)="noticeClick()">
           <i nz-icon nzType="bell" nzTheme="outline"></i>
         </span>
-        <span class="count">998</span>
-      </span>
+        <span class="count"></span>
+        <div class="alert-ul" [style.display]="isAlert ? 'inline-block':'none'">
+            <div class="top"></div>
+            <ul>
+              <li *ngFor="let item of remindList;let key=index;">
+                <a routerLink="{{item.url}}">{{item.name}}( {{item.count}} )</a>
+              </li>
+            </ul>
+          </div>
       </div>
     </nz-header>
     <nz-content>

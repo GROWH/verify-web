@@ -31,7 +31,13 @@ export class VerifyTaskComponent implements OnInit {
   selectItems = [];
   listOfData: TableList[] = [];
 
+
+  tableWidth:number=0;
+  tableHeight:number=0;
+
   ngOnInit() {
+    this.tableWidth = document.body.offsetWidth - 345;
+    this.tableHeight = document.body.offsetHeight - 300;
     this.actionInit()
   }
 
@@ -46,19 +52,6 @@ export class VerifyTaskComponent implements OnInit {
           this.onAdd()
         },
         isExist: buttonAccess("verify-task_add"),
-      }, {
-        name: '验证操作',
-        icon: 'check-circle',
-        code: 'verify-task_operate',
-        type: 'default',
-        click: () => {
-          if (this.selectItems.length === 0) {
-            this.msg.warning('请选择一项数据进行操作!')
-            return;
-          }
-          this.router.navigate(['detail'], {relativeTo: this.route,})
-        },
-        isExist: buttonAccess("verify-task_operate"),
       }, {
         name: '修改',
         icon: 'edit',
@@ -84,6 +77,19 @@ export class VerifyTaskComponent implements OnInit {
           }
         },
         isExist: buttonAccess("verify-task_delete"),
+      },{
+        name: '验证操作',
+        icon: 'check-circle',
+        code: 'verify-task_operate',
+        type: 'default',
+        click: () => {
+          if (this.selectItems.length === 0) {
+            this.msg.warning('请选择一项数据进行操作!')
+            return;
+          }
+          this.router.navigate(['detail'], {relativeTo: this.route,})
+        },
+        isExist: buttonAccess("verify-task_operate"),
       },
     ]
   }

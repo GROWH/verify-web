@@ -3,7 +3,7 @@
     <nz-form-item>
       <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="supplier">供应商</nz-form-label>
       <nz-form-control [nzSm]="14" [nzXs]="24">
-        <input nz-input formControlName="supplier" id="supplier" />
+        <input nz-input formControlName="supplier" id="supplier"/>
         <nz-form-explain *ngIf="validateForm.get('supplier')?.dirty && validateForm.get('supplier')?.errors">
           请输入供应商
         </nz-form-explain>
@@ -12,7 +12,7 @@
     <nz-form-item>
       <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="pur_price">采购价格</nz-form-label>
       <nz-form-control [nzSm]="14" [nzXs]="24">
-        <input nz-input formControlName="pur_price" id="pur_price" />
+        <input nz-input formControlName="pur_price" id="pur_price"/>
         <nz-form-explain *ngIf="validateForm.get('pur_price')?.dirty && validateForm.get('pur_price')?.errors">
           请输入采购价格
         </nz-form-explain>
@@ -21,7 +21,7 @@
     <nz-form-item>
       <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="pur_person">采购员</nz-form-label>
       <nz-form-control [nzSm]="14" [nzXs]="24">
-        <input nz-input formControlName="pur_person" id="pur_person" />
+        <input nz-input formControlName="pur_person" id="pur_person"/>
         <nz-form-explain *ngIf="validateForm.get('pur_person')?.dirty && validateForm.get('pur_person')?.errors">
           请输入采购员
         </nz-form-explain>
@@ -30,7 +30,7 @@
     <nz-form-item>
       <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="location">存放位置</nz-form-label>
       <nz-form-control [nzSm]="14" [nzXs]="24">
-        <input nz-input formControlName="location" id="location" />
+        <input nz-input formControlName="location" id="location"/>
         <nz-form-explain *ngIf="validateForm.get('location')?.dirty && validateForm.get('location')?.errors">
           请输入存放位置
         </nz-form-explain>
@@ -39,7 +39,7 @@
     <nz-form-item>
       <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="unit">所属单位</nz-form-label>
       <nz-form-control [nzSm]="14" [nzXs]="24">
-        <input nz-input formControlName="unit" id="unit" />
+        <input nz-input formControlName="unit" id="unit"/>
         <nz-form-explain *ngIf="validateForm.get('unit')?.dirty && validateForm.get('unit')?.errors">
           请输入所属单位
         </nz-form-explain>
@@ -48,14 +48,14 @@
     <nz-form-item>
       <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="curator">日常保管员</nz-form-label>
       <nz-form-control [nzSm]="14" [nzXs]="24">
-        <input nz-input formControlName="curator" id="curator" />
+        <input nz-input formControlName="curator" id="curator"/>
         <nz-form-explain *ngIf="validateForm.get('curator')?.dirty && validateForm.get('curator')?.errors">
           请输入日常保管员
         </nz-form-explain>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="value">生产日期</nz-form-label>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="product_date">生产日期</nz-form-label>
       <nz-form-control [nzSm]="14" [nzXs]="24">
         <nz-date-picker formControlName="product_date"></nz-date-picker>
         <nz-form-explain *ngIf="validateForm.get('product_date')?.dirty && validateForm.get('product_date')?.errors">
@@ -73,27 +73,53 @@
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="state">状态</nz-form-label>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="state">设备状态</nz-form-label>
       <nz-form-control [nzSm]="14" [nzXs]="24">
-        <input nz-input formControlName="state" id="state" />
+        <nz-radio-group formControlName="state">
+          <label nz-radio nzValue="停用">停用</label>
+          <label nz-radio nzValue="作废">作废</label>
+          <label nz-radio nzValue="启用">启用</label>
+        </nz-radio-group>
         <nz-form-explain *ngIf="validateForm.get('state')?.dirty && validateForm.get('state')?.errors">
           请输入状态
         </nz-form-explain>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24"  nzFor="mark">备注</nz-form-label>
-      <nz-form-control [nzSm]="14" [nzXs]="24">
-        <textarea nz-input formControlName="mark" id="mark" ></textarea>
+      <input type="file" (change)="fileCh($event)" #fileInput [hidden]="true">
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="picture">设备图片</nz-form-label>
+      <nz-form-control [nzSm]="signImageUrl ? 12 : 14" [nzXs]="24">
+        <div class="pic-img">
+          <div class="img-wrapper" *ngIf="signImageUrl; else uploadBt">
+            <img [src]="signImageUrl" width="100%">
+          </div>
+          <ng-template #uploadBt>
+            <div class="add-bt" (click)="onFileSelect()">
+              <div class="icon">
+                <i nz-icon spin type="plus"></i>
+              </div>
+              <div class="desc">
+                添加设备图片
+              </div>
+            </div>
+          </ng-template>
+          <button
+            class="del-sign-btn"
+            *ngIf="signImageUrl"
+            nz-button
+            [title]="'重新选择'"
+            [nzType]="'default'"
+            (click)="delSign()"
+          >
+            <i nz-icon [type]="'delete'"></i>
+          </button>
+        </div>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24"  nzFor="picture">图片</nz-form-label>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="mark">备注</nz-form-label>
       <nz-form-control [nzSm]="14" [nzXs]="24">
-        <input nz-input formControlName="picture" id="picture" />
-        <nz-form-explain *ngIf="validateForm.get('picture')?.dirty && validateForm.get('picture')?.errors">
-          请输入状态
-        </nz-form-explain>
+        <textarea nz-input formControlName="mark" id="mark"></textarea>
       </nz-form-control>
     </nz-form-item>
   </form>

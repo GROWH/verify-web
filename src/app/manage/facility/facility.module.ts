@@ -10,6 +10,8 @@ import { ParamDesginFormComponent } from './thermometer/param-desgin-form/param-
 import { ReuploadFormComponent } from './thermometer/reupload-form/reupload-form.component';
 import { EquipmentFormComponent } from './equipment/equipment-form/equipment-form.component';
 import { EquipmentComponent } from './equipment/equipment.component';
+import { EquipmentRecordComponent } from './equipment-record/equipment-record.component';
+import { RecordFormComponent } from './equipment-record/record-form/record-form.component';
 
 
 @NgModule({
@@ -26,7 +28,9 @@ import { EquipmentComponent } from './equipment/equipment.component';
     ParamDesginFormComponent,
     ReuploadFormComponent,
     EquipmentFormComponent,
-    EquipmentComponent
+    EquipmentComponent,
+    EquipmentRecordComponent,
+    RecordFormComponent
   ],
   entryComponents:[
     ThermometerFormComponent,
@@ -34,6 +38,7 @@ import { EquipmentComponent } from './equipment/equipment.component';
     ParamDesginFormComponent,
     ReuploadFormComponent,
     EquipmentFormComponent,
+    RecordFormComponent,
   ]
 })
 export class FacilityModule { }

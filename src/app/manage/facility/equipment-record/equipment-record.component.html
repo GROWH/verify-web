@@ -1,0 +1,52 @@
+<div class="container">
+  <div class="treeLeft">
+    <div class="title">所属单位列表</div>
+    <ul *ngFor="let item of equipmentList">
+      <li [ngClass]="{'checked':selectedItem.id === item.id}" (click)="nodeClick(item)">{{item.unit}}</li>
+    </ul>
+  </div>
+  <div class="contentright">
+    <grid-action [actions]="gridActions"></grid-action>
+    <div [style.width.px]="tableWidth">
+      <nz-table
+      #rowSelectionTable
+      nzShowSizeChanger
+      [nzData]="listOfDisplayData"
+      [nzTotal]="total"
+      (nzPageIndexChange)="changePageIndex($event)"
+      (nzPageSizeChange)="changePageSize($event)"
+      [nzScroll]="{ x: '2000px',y: tableHeight+'px'}"
+    >
+      <thead>
+      <tr>
+        <th nzWidth="2%" nzLeft="0"
+          nzShowCheckbox
+          [(nzChecked)]="isAllDisplayDataChecked"
+          [nzIndeterminate]="isIndeterminate"
+          (nzCheckedChange)="checkAll($event)"
+        ></th>
+        <th nzWidth="8%">变更类型</th>
+        <th nzWidth="8%">周期(天)</th>
+        <th nzWidth="12%">日期</th>
+        <th nzWidth="12%">下次日期</th>
+        <th nzWidth="12%">预警时间</th>
+        <th nzWidth="15%">图片</th>
+        <th>备注</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let data of rowSelectionTable.data">
+        <td nzLeft="0" nzShowCheckbox [(nzChecked)]="mapOfCheckedId[data.id]" (nzCheckedChange)="refreshStatus()"></td>
+        <td>{{ data.change_type}}</td>
+        <td>{{ data.curing_period }}</td>
+        <td>{{ data.curing_date }}</td>
+        <td>{{ data.next_curing_date }}</td>
+        <td>{{ data.warn_time }}</td>
+        <td><img src="{{data.picture}}" height="40px"></td>
+        <td>{{ data.mark }}</td>
+      </tr>
+      </tbody>
+    </nz-table>
+    </div>
+  </div>
+</div>

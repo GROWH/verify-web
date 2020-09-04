@@ -1,4 +1,4 @@
-<nz-layout class="app-layout">
+<nz-layout id="menuWidth" class="app-layout">
   <nz-sider class="menu-sidebar"
             nzCollapsible
             nzWidth="256px"
@@ -13,10 +13,17 @@
     </div>
     <ul nz-menu [nzMode]="'inline'" nzTheme="dark" [nzInlineCollapsed]="isCollapsed">
       <li nz-submenu *ngFor="let item of menuList;let key=index;">
-        <span title>
+<!--        home-->
+        <a class="homeMenu" title *ngIf="item.key_word == 'home'" routerLink="{{item.module_url}}">
+          <i nz-icon type="{{item.icon}}"></i>
+          <span>{{item.module_name}}</span>
+        </a>
+
+        <span title *ngIf="item.key_word != 'home'">
           <i nz-icon type="{{item.icon}}"></i>
           <span>{{item.module_name}}</span>
         </span>
+
         <ul>
           <li nz-menu-item *ngFor="let child of item.children">
             <a routerLink="{{child.module_url}}">{{child.module_name}}</a>
@@ -35,18 +42,25 @@
           ></i>
         </span>
 
-        <span class="bellStyle" title="新的通知" (click)="noticeClick()">
+        <span class="alert-mask"
+              [style.display]="isShowTip ? 'inline-block':'none'"
+              (click)="noticeClick()"></span><!--  提示遮罩层-->
+
+        <span class="bellStyle" title="新的通知">
           <i nz-icon nzType="bell" nzTheme="outline"></i>
         </span>
-        <span class="count"></span>
-        <div class="alert-ul" [style.display]="isAlert ? 'inline-block':'none'">
-            <div class="top"></div>
-            <ul>
-              <li *ngFor="let item of remindList;let key=index;">
-                <a routerLink="{{item.url}}">{{item.name}}( {{item.count}} )</a>
-              </li>
-            </ul>
-          </div>
+
+        <span class="count"
+              [style.display]="isShowTip ? 'inline-block':'none'"></span><!--  小红点-->
+
+        <div class="alert-ul" [style.display]="isShow ? 'inline-block':'none'">
+          <div class="top"></div>
+          <ul>
+            <li *ngFor="let item of remindList;let key=index;">
+              <a routerLink="{{item.url}}">{{item.name}}( {{item.count}} )</a>
+            </li>
+          </ul>
+        </div>
       </div>
     </nz-header>
     <nz-content>

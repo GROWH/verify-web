@@ -52,28 +52,21 @@
     </ul>
   </div>
 
-  <div class="option" id="option">
-    <div class="option-title">
-      <div class="title-txt">验证操作</div>
-    </div>
-    <div style="padding-left:40px;">
-      <grid-action [actions]="gridActions"></grid-action>
-    </div>
-  </div>
-
-
   <div class="option">
     <div class="option-title">
       <div class="title-txt">测点数据列表</div>
     </div>
-    <nz-table style="margin-top: 10px;"
-              #basicTable
-              [nzData]="tableData"
-              nzShowSizeChanger
-              [nzTotal]="total"
-              [nzScroll]="{ y: tableHeight }"
-              (nzPageIndexChange)="changePageIndex($event)"
-              (nzPageSizeChange)="changePageSize($event)"
+    <div style="padding-left:40px;">
+      <grid-action [actions]="gridActions"></grid-action>
+    </div>
+    <nz-table
+      #basicTable
+      [nzData]="tableData"
+      nzShowSizeChanger
+      [nzTotal]="total"
+      [nzScroll]="{ y: tableHeight }"
+      (nzPageIndexChange)="changePageIndex($event)"
+      (nzPageSizeChange)="changePageSize($event)"
     >
       <thead>
       <tr>

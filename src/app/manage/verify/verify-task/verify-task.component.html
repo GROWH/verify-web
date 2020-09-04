@@ -1,55 +1,56 @@
 <div class="wrapper">
   <grid-action [actions]="gridActions"></grid-action>
-  <div [style.width.px]="tableWidth">
-    <nz-table
-      #rowSelectionTable
-      nzShowSizeChanger
-      [nzTotal]="total"
-      (nzPageIndexChange)="changePageIndex($event)"
-      (nzPageSizeChange)="changePageSize($event)"
-      [nzScroll]="{ x: '2500px',y: tableHeight+'px'}"
-      [nzData]="listOfData">
-      <thead>
-      <tr>
-        <th nzWidth="2%" nzLeft="0"
+  <nz-table
+    #rowSelectionTable
+    nzShowSizeChanger
+    [nzTotal]="total"
+    (nzPageIndexChange)="changePageIndex($event)"
+    (nzPageSizeChange)="changePageSize($event)"
+    [nzScroll]="{ x: '120%',y: tableHeight+'px'}"
+    [nzData]="listOfData">
+    <thead>
+    <tr>
+      <th nzWidth="2%" nzLeft="0"
           nzShowCheckbox
           [(nzChecked)]="isAllDisplayDataChecked"
           [nzIndeterminate]="isIndeterminate"
           (nzCheckedChange)="checkAll($event)"
-        ></th>
-        <th nzWidth="6%">任务编号</th>
-        <th nzWidth="8%">任务名称</th>
-        <th nzWidth="8%">验证终端单位名称</th>
-        <th nzWidth="6%">验证单位类别</th>
-        <th nzWidth="8%">验证实施单位名称</th>
-        <th nzWidth="6%">验证对象</th>
-        <th nzWidth="6%">温度上限</th>
-        <th nzWidth="6%">温度下限</th>
-        <th nzWidth="6%">验证类别</th>
-        <th nzWidth="6%">验证类型</th>
-        <th>操作</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let item of rowSelectionTable.data">
-        <td nzLeft="0" nzShowCheckbox [(nzChecked)]="mapOfCheckedId[item.check_no]" (nzCheckedChange)="refreshStatus()"></td>
-        <td>{{ item.check_no }}</td>
-        <td>{{ item.check_name }}</td>
-        <td>{{ item.check_unit }}</td>
-        <td>{{ item.check_unit_type }}</td>
-        <td>{{ item.check_impl_unit }}</td>
-        <td>{{ item.check_target }}</td>
-        <td>{{ item.temp_high }}</td>
-        <td>{{ item.temp_low }}</td>
-        <td>{{ item.check_type }}</td>
-        <td>{{ item.check_mold }}</td>
-        <td>
-          <a>查看</a>
-          <nz-divider nzType="vertical"></nz-divider>
-          <a>更新</a>
-        </td>
-      </tr>
-      </tbody>
-    </nz-table>
-  </div>
+      ></th>
+      <th nzWidth="8%">任务编号</th>
+      <th nzWidth="8%">任务名称</th>
+      <th nzWidth="12%">验证终端单位名称</th>
+      <th nzWidth="12%">验证单位类别</th>
+      <th nzWidth="12%">验证实施单位名称</th>
+      <th nzWidth="6%">验证对象</th>
+      <th nzWidth="6%">温度上限</th>
+      <th nzWidth="6%">温度下限</th>
+      <th nzWidth="6%">验证类别</th>
+      <th nzWidth="6%">验证类型</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of rowSelectionTable.data">
+      <td nzLeft="0" nzShowCheckbox [(nzChecked)]="mapOfCheckedId[item.check_no]"
+          (nzCheckedChange)="refreshStatus()"></td>
+      <td>{{ item.check_no }}</td>
+      <td>{{ item.check_name }}</td>
+      <td>{{ item.check_unit }}</td>
+      <td>{{ item.check_unit_type }}</td>
+      <td>{{ item.check_impl_unit }}</td>
+      <td>{{ item.check_target }}</td>
+      <td>{{ item.temp_high }}</td>
+      <td>{{ item.temp_low }}</td>
+      <td>{{ item.check_type }}</td>
+      <td>{{ item.check_mold }}</td>
+      <td>
+        <a>查看</a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <a>更新</a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <a>删除</a>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
 </div>

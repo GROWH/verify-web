@@ -1,54 +1,52 @@
 <div style="height: 100%;padding: 0 20px;">
   <grid-action [actions]="gridActions"></grid-action>
-  <div [style.width.px]="tableWidth">
-    <nz-table
-      #rowSelectionTable
-      nzShowSizeChanger
-      [nzData]="listOfDisplayData"
-      [nzTotal]="total"
-      (nzPageIndexChange)="changePageIndex($event)"
-      (nzPageSizeChange)="changePageSize($event)"
-      [nzScroll]="{ x: '2200px',y: tableHeight+'px'}"
-    >
-      <thead>
-      <tr>
-        <th nzWidth="2%" nzLeft="0"
+  <nz-table
+    #rowSelectionTable
+    nzShowSizeChanger
+    [nzData]="listOfDisplayData"
+    [nzTotal]="total"
+    (nzPageIndexChange)="changePageIndex($event)"
+    (nzPageSizeChange)="changePageSize($event)"
+    [nzScroll]="{ x: '120%',y: tableHeight+'px'}"
+  >
+    <thead>
+    <tr>
+      <th nzWidth="2%" nzLeft="0"
           nzShowCheckbox
           [(nzChecked)]="isAllDisplayDataChecked"
           [nzIndeterminate]="isIndeterminate"
           (nzCheckedChange)="checkAll($event)"
-        ></th>
-        <th nzWidth="5%" nzLeft="3%">货号</th>
-        <th nzWidth="6%">名称</th>
-        <th nzWidth="6%">生产企业</th>
-        <th nzWidth="6%">规格</th>
-        <th nzWidth="6%">型号</th>
-        <th nzWidth="6%">保质期</th>
-        <th nzWidth="6%">采购金额</th>
-        <th nzWidth="10%">养护事项</th>
-        <th nzWidth="6%">养护周期</th>
-        <th nzWidth="10%">校准/校正事项</th>
-        <th nzWidth="6%">校准/校正周期</th>
-        <th>备注</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let data of rowSelectionTable.data">
-        <td nzLeft="0"  nzShowCheckbox [(nzChecked)]="mapOfCheckedId[data.id]" (nzCheckedChange)="refreshStatus()"></td>
-        <td nzLeft="3%">{{ data.goods_no }}</td>
-        <td>{{ data.name }}</td>
-        <td>{{ data.product_busi }}</td>
-        <td>{{ data.norms }}</td>
-        <td>{{ data.model_num }}</td>
-        <td>{{ data.quality_period}}/天</td>
-        <td>{{ data.price }}</td>
-        <td>{{ data.curing }}</td>
-        <td>{{ data.curing_cycle }}/天</td>
-        <td>{{ data.aline }}</td>
-        <td>{{ data.aline_cycle}}/天</td>
-        <td>{{ data.mark }}</td>
-      </tr>
-      </tbody>
-    </nz-table>
-  </div>
+      ></th>
+      <th nzWidth="5%" nzLeft="3%">货号</th>
+      <th nzWidth="6%">名称</th>
+      <th nzWidth="6%">生产企业</th>
+      <th nzWidth="6%">规格</th>
+      <th nzWidth="6%">型号</th>
+      <th nzWidth="6%">保质期</th>
+      <th nzWidth="6%">采购金额</th>
+      <th nzWidth="10%">养护事项</th>
+      <th nzWidth="6%">养护周期</th>
+      <th nzWidth="10%">校准/校正事项</th>
+      <th nzWidth="6%">校准/校正周期</th>
+      <th>备注</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of rowSelectionTable.data">
+      <td nzLeft="0" nzShowCheckbox [(nzChecked)]="mapOfCheckedId[data.id]" (nzCheckedChange)="refreshStatus()"></td>
+      <td nzLeft="3%">{{ data.goods_no }}</td>
+      <td>{{ data.name }}</td>
+      <td>{{ data.product_busi }}</td>
+      <td>{{ data.norms }}</td>
+      <td>{{ data.model_num }}</td>
+      <td>{{ data.quality_period}}/天</td>
+      <td>{{ data.price }}</td>
+      <td>{{ data.curing }}</td>
+      <td>{{ data.curing_cycle }}/天</td>
+      <td>{{ data.aline }}</td>
+      <td>{{ data.aline_cycle}}/天</td>
+      <td>{{ data.mark }}</td>
+    </tr>
+    </tbody>
+  </nz-table>
 </div>

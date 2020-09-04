@@ -7,28 +7,27 @@
   </div>
   <div class="contentright">
     <grid-action [actions]="gridActions"></grid-action>
-    <div [style.width.px]="tableWidth">
-      <nz-table
+    <nz-table
       #rowSelectionTable
       nzShowSizeChanger
       [nzData]="listOfDisplayData"
       [nzTotal]="total"
       (nzPageIndexChange)="changePageIndex($event)"
       (nzPageSizeChange)="changePageSize($event)"
-      [nzScroll]="{ x: '2000px',y: tableHeight+'px'}"
+      [nzScroll]="{ x: '120%',y: tableHeight+'px'}"
     >
       <thead>
       <tr>
         <th nzWidth="2%" nzLeft="0"
-          nzShowCheckbox
-          [(nzChecked)]="isAllDisplayDataChecked"
-          [nzIndeterminate]="isIndeterminate"
-          (nzCheckedChange)="checkAll($event)"
+            nzShowCheckbox
+            [(nzChecked)]="isAllDisplayDataChecked"
+            [nzIndeterminate]="isIndeterminate"
+            (nzCheckedChange)="checkAll($event)"
         ></th>
         <th nzWidth="8%">变更类型</th>
-        <th nzWidth="8%">周期(天)</th>
-        <th nzWidth="12%">日期</th>
-        <th nzWidth="12%">下次日期</th>
+        <th nzWidth="8%">操作周期</th>
+        <th nzWidth="12%">本次操作日期</th>
+        <th nzWidth="12%">下次操作日期</th>
         <th nzWidth="12%">预警时间</th>
         <th nzWidth="15%">图片</th>
         <th>备注</th>
@@ -38,7 +37,7 @@
       <tr *ngFor="let data of rowSelectionTable.data">
         <td nzLeft="0" nzShowCheckbox [(nzChecked)]="mapOfCheckedId[data.id]" (nzCheckedChange)="refreshStatus()"></td>
         <td>{{ data.change_type}}</td>
-        <td>{{ data.curing_period }}</td>
+        <td>{{ data.curing_period }}/天</td>
         <td>{{ data.curing_date }}</td>
         <td>{{ data.next_curing_date }}</td>
         <td>{{ data.warn_time }}</td>
@@ -47,6 +46,5 @@
       </tr>
       </tbody>
     </nz-table>
-    </div>
   </div>
 </div>

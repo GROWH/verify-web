@@ -21,21 +21,21 @@
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="curing_date">日期</nz-form-label>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="curing_date">本次操作日期</nz-form-label>
       <nz-form-control [nzSm]="14" [nzXs]="24">
         <nz-date-picker formControlName="curing_date" id="curing_date"></nz-date-picker>
         <nz-form-explain *ngIf="validateForm.get('curing_date')?.dirty && validateForm.get('curing_date')?.errors">
-          请选择日期
+          请选择本次操作日期
         </nz-form-explain>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="next_curing_date">下次操作时间</nz-form-label>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="next_curing_date">下次操作日期</nz-form-label>
       <nz-form-control [nzSm]="14" [nzXs]="24">
         <nz-date-picker formControlName="next_curing_date" id="next_curing_date"></nz-date-picker>
         <nz-form-explain
           *ngIf="validateForm.get('next_curing_date')?.dirty && validateForm.get('next_curing_date')?.errors">
-          请选择下次操作时间
+          请选择下次操作日期
         </nz-form-explain>
       </nz-form-control>
     </nz-form-item>

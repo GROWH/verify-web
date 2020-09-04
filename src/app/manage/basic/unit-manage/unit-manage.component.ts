@@ -52,13 +52,10 @@ export class UnitManageComponent implements OnInit {
   }
 
   gridActions: GridAction[];
-
-  tableWidth:number=0;
   tableHeight:number=0;
 
 
   ngOnInit() {
-    this.tableWidth = document.body.offsetWidth - 345;
     this.tableHeight = document.body.offsetHeight - 300;
     this.actionInit()
     this.getData()

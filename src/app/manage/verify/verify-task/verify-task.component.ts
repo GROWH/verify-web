@@ -29,14 +29,25 @@ export class VerifyTaskComponent implements OnInit {
   gridActions: GridAction[] = [];
   mapOfCheckedId: { [key: string]: boolean } = {};
   selectItems = [];
-  listOfData: TableList[] = [];
+  listOfData: TableList[] = [{
+    check_no: '1',
+    check_name: '1',
+    check_unit: '1',
+    check_unit_type: '1',
+    check_impl_unit: '1',
+    check_target: '1',
+    temp_high: '1',
+    temp_low: '1',
+    check_type: '1',
+    check_mold: '1',
+    check_progress: '1',
+    task_start_time: '1',
+    expected_complet_time: '1'
+  }];
 
-
-  tableWidth:number=0;
-  tableHeight:number=0;
+  tableHeight: number = 0;
 
   ngOnInit() {
-    this.tableWidth = document.body.offsetWidth - 345;
     this.tableHeight = document.body.offsetHeight - 300;
     this.actionInit()
   }
@@ -77,7 +88,7 @@ export class VerifyTaskComponent implements OnInit {
           }
         },
         isExist: buttonAccess("verify-task_delete"),
-      },{
+      }, {
         name: '验证操作',
         icon: 'check-circle',
         code: 'verify-task_operate',
@@ -136,15 +147,6 @@ export class VerifyTaskComponent implements OnInit {
     })
   }
 
-  private onEdit() {
-
-  }
-
-  //开始验证
-  startVerify(record, $event) {
-    $event.stopPropagation();
-    console.log('开始验证', record)
-  }
 
 }
 

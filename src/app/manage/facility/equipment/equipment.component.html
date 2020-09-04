@@ -1,53 +1,50 @@
 <div style="height: 100%;padding: 0 20px;">
   <grid-action [actions]="gridActions"></grid-action>
-  <div [style.width.px]="tableWidth">
-    <nz-table
-      #rowSelectionTable
-      nzShowSizeChanger
-      [nzData]="listOfDisplayData"
-      [nzTotal]="total"
-      (nzPageIndexChange)="changePageIndex($event)"
-      (nzPageSizeChange)="changePageSize($event)"
-      [nzScroll]="{ x: '2500px',y: tableHeight+'px'}"
-    >
-      <thead>
-      <tr>
-        <th nzWidth="2%" nzLeft="0"
+  <nz-table
+    #rowSelectionTable
+    nzShowSizeChanger
+    [nzData]="listOfDisplayData"
+    [nzTotal]="total"
+    (nzPageIndexChange)="changePageIndex($event)"
+    (nzPageSizeChange)="changePageSize($event)"
+    [nzScroll]="{ x: '150%',y: tableHeight+'px'}"
+  >
+    <thead>
+    <tr>
+      <th nzWidth="2%" nzLeft="0"
           nzShowCheckbox
           [(nzChecked)]="isAllDisplayDataChecked"
           [nzIndeterminate]="isIndeterminate"
           (nzCheckedChange)="checkAll($event)"
-        ></th>
-        <th nzWidth="10%">供应商</th>
-        <th nzWidth="5%">采购价格</th>
-        <th nzWidth="5%">采购员</th>
-        <th nzWidth="8%">存放位置</th>
-        <th nzWidth="8%">所属单位</th>
-        <th nzWidth="5%">日常保管员</th>
-        <th nzWidth="8%">生产日期</th>
-        <th nzWidth="8%">预计报废时间</th>
-        <th nzWidth="5%">状态</th>
-        <th nzWidth="8%">图片</th>
-        <th>备注</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let data of rowSelectionTable.data">
-        <td nzLeft="0" nzShowCheckbox [(nzChecked)]="mapOfCheckedId[data.id]" (nzCheckedChange)="refreshStatus()"></td>
-        <td title="{{data.supplier}}">{{ data.supplier}}</td>
-        <td>{{ data.pur_price }}</td>
-        <td>{{ data.pur_person }}</td>
-        <td>{{ data.location }}</td>
-        <td>{{ data.unit }}</td>
-        <td>{{ data.curator }}</td>
-        <td>{{ data.product_date }}</td>
-        <td>{{ data.expect_date }}</td>
-        <td>{{ data.state }}</td>
-        <td><img src="{{data.picture}}" height="40px"></td>
-        <td>{{ data.mark }}</td>
-      </tr>
-      </tbody>
-    </nz-table>
-  </div>
-
+      ></th>
+      <th nzWidth="10%">供应商</th>
+      <th nzWidth="5%">采购价格</th>
+      <th nzWidth="5%">采购员</th>
+      <th nzWidth="8%">存放位置</th>
+      <th nzWidth="8%">所属单位</th>
+      <th nzWidth="5%">日常保管员</th>
+      <th nzWidth="8%">生产日期</th>
+      <th nzWidth="8%">预计报废时间</th>
+      <th nzWidth="5%">状态</th>
+      <th nzWidth="8%">图片</th>
+      <th>备注</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of rowSelectionTable.data">
+      <td nzLeft="0" nzShowCheckbox [(nzChecked)]="mapOfCheckedId[data.id]" (nzCheckedChange)="refreshStatus()"></td>
+      <td title="{{data.supplier}}">{{ data.supplier}}</td>
+      <td>{{ data.pur_price }}</td>
+      <td>{{ data.pur_person }}</td>
+      <td>{{ data.location }}</td>
+      <td>{{ data.unit }}</td>
+      <td>{{ data.curator }}</td>
+      <td>{{ data.product_date }}</td>
+      <td>{{ data.expect_date }}</td>
+      <td>{{ data.state }}</td>
+      <td><img src="{{data.picture}}" height="40px"></td>
+      <td>{{ data.mark }}</td>
+    </tr>
+    </tbody>
+  </nz-table>
 </div>

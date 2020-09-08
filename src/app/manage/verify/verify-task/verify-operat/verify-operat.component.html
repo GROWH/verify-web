@@ -56,20 +56,27 @@
     <div class="option-title">
       <div class="title-txt">测点数据列表</div>
     </div>
-    <div style="padding-left:40px;">
+    <div style="padding-left:20px;">
       <grid-action [actions]="gridActions"></grid-action>
     </div>
     <nz-table
       #basicTable
+      #rowSelectionTable
       [nzData]="tableData"
       nzShowSizeChanger
       [nzTotal]="total"
-      [nzScroll]="{ y: tableHeight }"
+      [nzScroll]="{ y: tableHeight+'px' }"
       (nzPageIndexChange)="changePageIndex($event)"
       (nzPageSizeChange)="changePageSize($event)"
     >
       <thead>
       <tr>
+        <th nzWidth="2%" nzLeft="0"
+            nzShowCheckbox
+            [(nzChecked)]="isAllDisplayDataChecked"
+            [nzIndeterminate]="isIndeterminate"
+            (nzCheckedChange)="checkAll($event)"
+        ></th>
         <th>序号</th>
         <th>测试点</th>
         <th>设备编号</th>
@@ -81,6 +88,8 @@
       </thead>
       <tbody>
       <tr *ngFor="let data of basicTable.data">
+        <td nzLeft="0" nzShowCheckbox [(nzChecked)]="mapOfCheckedId[data.no]"
+            (nzCheckedChange)="refreshStatus()"></td>
         <td>{{data.no}}</td>
         <td>{{data.test_point}}</td>
         <td>{{data.facility_no}}</td>

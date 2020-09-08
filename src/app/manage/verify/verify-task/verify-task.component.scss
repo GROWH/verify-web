@@ -1,7 +1,7 @@
 @import "variables";
 
 .wrapper {
-  padding: $ContainerPadding;
+  padding: 0 20px 20px 20px;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -24,29 +24,6 @@
 
     .point-down {
       color: #3470CC;
-    }
-  }
-
-  .warp-div {
-    display: inline-block;
-    line-height: 30px;
-    color:white;
-    text-align: center;
-    width: 60px;
-    .yesProgress {
-      display: inline-block;
-      background:limegreen;
-      width:100%;
-      height: 6px;
-      border-radius: 20px;
-    }
-
-    .noProgress {
-      display: inline-block;
-      background: red;
-      width:100%;
-      height: 6px;
-      border-radius: 20px;
     }
   }
 

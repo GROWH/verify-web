@@ -10,13 +10,15 @@ export const LOGINED_USER_UNIT_KEY = 'LOGINED_USER_UNIT_KEY';
 })
 export class HomeComponent implements OnInit {
 
+  userCode:string = '1';
   constructor(
     private http:TongchangHttpService
   ) {
   }
 
   ngOnInit() {
-    console.log(localStorage.getItem('LOGINED_USER_UNIT_KEY'))
+    this.userCode = localStorage.getItem('LOGINED_USER_UNIT_KEY');
+    console.log(this.userCode)
   }
 
 }

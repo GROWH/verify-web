@@ -4,13 +4,9 @@
   <nz-table
     #nzTable
     class="table"
-    style="min-height: 300px; margin-bottom: 16px;"
     nzSize="middle"
     [nzData]="uniSer.data"
-    libClientRect
-    [libHeightMinus]="54"
-    (libHeightChange)="tableHeight = $event + 'px'"
-    [nzScroll]="{y: tableHeight, x: '1220px'}"
+    [nzScroll]="{y: tableHeight}"
     [nzShowPagination]="false"
     [nzFrontPagination]="false"
   >

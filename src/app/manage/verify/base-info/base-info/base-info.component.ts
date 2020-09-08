@@ -30,6 +30,7 @@ export class BaseInfoComponent extends UniversalComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.tableHeight = document.body.offsetHeight - 300;
     this.actionInit()
     this.uniSer.gridConf = {
       queryUrl: Apis.verifyBaseInfo,
@@ -43,7 +44,7 @@ export class BaseInfoComponent extends UniversalComponent implements OnInit {
 
   uniSer!: BaseInfoService;
   gridActions: GridAction[] = []
-  tableHeight = '500px'
+  tableHeight:number = 0;
 
 
   actionInit() {

@@ -150,9 +150,8 @@ export class AccountComponent implements OnInit {
           onClick: (comp) => {
             let formVal = {
               ...comp.validateForm.getRawValue(),
-              unit_id: this.selectNode.key
+              unit_id: this.unitId
             }
-
             this.modal.confirm({
               nzTitle: '提交',
               nzContent: '确认提交?',
@@ -364,6 +363,7 @@ export class AccountComponent implements OnInit {
   nzClick(nodeItem) {
     const node = Array.isArray(nodeItem) ? nodeItem[0] : nodeItem
     this.unitId = nodeItem.key || node.node.key
+
     this.getData()
   }
 

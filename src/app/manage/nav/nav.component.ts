@@ -1,7 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {TongchangHttpService} from "tongchang-lib";
-import {timeInterval} from "rxjs/operators";
-import {SchedulerLike} from "rxjs";
 
 @Component({
   selector: 'app-nav',
@@ -51,12 +49,12 @@ export class NavComponent implements OnInit, OnDestroy {
   timer() {
     this.setTimer = setInterval(() => {
       this.getRemind()
-    }, 30000)
+    }, 60000)
   }
 
   ngOnDestroy() {
     //清除定时器
-    // clearInterval(this.setTimer);
+    clearInterval(this.setTimer);
   }
 
   getRemind() {
@@ -75,14 +73,14 @@ export class NavComponent implements OnInit, OnDestroy {
               })
             } else if (iItem.module_code === 'my-house') {
               findArr.push({
-                name: '温度计需校准提醒',
+                name: '监控库房告警提醒',
                 code: iItem.module_code,
                 url: iItem.module_url,
                 count: 0
               })
             } else if (iItem.module_code === 'thermManger') {
               findArr.push({
-                name: '监控库房告警提醒',
+                name: '温度计需校准提醒',
                 code: iItem.module_code,
                 url: iItem.module_url,
                 count: 0

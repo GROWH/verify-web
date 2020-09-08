@@ -29,17 +29,20 @@ export class VerifyOperatComponent implements OnInit {
   checkVal: '';//环境状态值
   selectVal: '';//验证对象
   gridActions: GridAction[] = [];
-  tableData: TableData[] = [];//接口返回后增加no属性
-  tableHeight: string = '';
-  currDate:any='';
+  // @ts-ignore
+  tableData: TableData[] = [{test_point: '1'}, {test_point: '2'}];//接口返回后增加no属性
+  tableHeight: number = 0;
+  currDate: any = '';
+
+  isAllDisplayDataChecked = false;
+  isIndeterminate = false;
+  mapOfCheckedId: { [key: string]: boolean } = {};
+  selectItems = [];
 
   ngOnInit() {
-    this.currDate = moment().format('YYYY-MM-DD HH:mm:ss')
+    this.currDate = moment().format('YYYY-MM-DD HH:mm:ss');
+    this.tableHeight = document.body.offsetHeight - 445;
     this.actionInit()
-    const allHeight = document.getElementById('allHeight').offsetHeight;
-    const optionHeight = document.getElementById('option').offsetHeight * 4;
-    this.tableHeight = allHeight - (optionHeight) + 'px';
-    // console.log(this.router)
   }
 
   actionInit() {
@@ -105,6 +108,25 @@ export class VerifyOperatComponent implements OnInit {
     this.size = pageSize
     // this.getData()
   }
+
+  refreshStatus(): void {
+    this.isAllDisplayDataChecked = this.tableData.every((item) => this.mapOfCheckedId[item.no]);
+    let checkId = this.mapOfCheckedId
+    this.selectItems = this.tableData.map((item) => {
+      for (let key in checkId) {
+        if (checkId[key] && Number(key) === item.no) {
+          return item
+        }
+      }
+    }).filter(item => item)
+    this.isIndeterminate = this.tableData.some(item => this.mapOfCheckedId[item.no]) && !this.isAllDisplayDataChecked;
+  }
+
+  checkAll(value: boolean): void {
+    this.tableData.forEach(item => (this.mapOfCheckedId[item.no] = value));
+    this.refreshStatus();
+  }
+
 
 }
 

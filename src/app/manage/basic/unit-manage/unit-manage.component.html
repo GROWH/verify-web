@@ -7,7 +7,7 @@
     [nzTotal]="total"
     (nzPageIndexChange)="changePageIndex($event)"
     (nzPageSizeChange)="changePageSize($event)"
-    [nzScroll]="{ x: '180%',y: tableHeight+'px'}"
+    [nzScroll]="{ x: '200%',y: tableHeight+'px'}"
   >
     <thead>
     <tr>
@@ -17,21 +17,21 @@
           [nzIndeterminate]="isIndeterminate"
           (nzCheckedChange)="checkAll($event)"
       ></th>
-      <th nzWidth="8%" nzLeft="3%">单位名称</th>
-      <th nzWidth="8%">统一社会信用码</th>
-      <th nzWidth="5%">单位类型</th>
-      <th nzWidth="6%">单位固话</th>
+      <th nzWidth="6%" nzLeft="3%">单位名称</th>
+      <th nzWidth="6%">统一社会信用码</th>
+      <th nzWidth="4%">单位类型</th>
+      <th nzWidth="5%">单位固话</th>
       <th nzWidth="4%">状态</th>
       <th nzWidth="4%">联系人</th>
       <th nzWidth="6%">联系人手机</th>
-      <th nzWidth="8%">单位地址</th>
-      <th nzWidth="8%">邮箱</th>
+      <th nzWidth="6%">单位地址</th>
+      <th nzWidth="6%">邮箱</th>
       <th nzWidth="6%">传真</th>
       <th nzWidth="8%">开户银行</th>
-      <th nzWidth="8%">创建账号</th>
-      <th nzWidth="8%">审核备注</th>
+      <th nzWidth="6%">创建账号</th>
+      <th nzWidth="10%">审核备注</th>
       <th nzWidth="4%">审核人</th>
-      <th>审核时间</th>
+      <th nzWidth="6%">审核时间</th>
       <th>备注</th>
     </tr>
     </thead>

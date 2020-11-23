@@ -96,6 +96,55 @@
       </div>
     </div>
 
+    <div nz-row [nzGutter]="24">
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzSpan='16' nzFor="wifi_ssid">WIFI名称</nz-form-label>
+          <nz-form-control nzSpan="8">
+            <input nz-input formControlName="wifi_ssid" id="wifi_ssid" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzSpan='16' nzFor="wifi_pwd">WIFI密码</nz-form-label>
+          <nz-form-control nzSpan="8">
+            <input nz-input formControlName="wifi_pwd" id="wifi_pwd" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+
+    <div nz-row [nzGutter]="24">
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzSpan='16' nzFor="wifi_ipaddr">WIFI静态IP地址</nz-form-label>
+          <nz-form-control nzSpan="8">
+            <input nz-input formControlName="wifi_ipaddr" id="wifi_ipaddr" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzSpan='16' nzFor="wifi_geteway">WIFI静态网关</nz-form-label>
+          <nz-form-control nzSpan="8">
+            <input nz-input formControlName="wifi_geteway" id="wifi_geteway" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+
+    <div nz-row [nzGutter]="24">
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzSpan='16' nzFor="wifi_netmask">WIFI静态子网掩码</nz-form-label>
+          <nz-form-control nzSpan="8">
+            <input nz-input formControlName="wifi_netmask" id="wifi_netmask" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+
 
     <div nz-row [nzGutter]="24">
       <div nz-col nzSpan="12">

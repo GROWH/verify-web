@@ -39,6 +39,11 @@ export class ParamDesginFormComponent implements OnInit {
       upload_intvl_2: [param.upload_intvl_2, [ Validators.required ]],
       record_intvl_3: [param.record_intvl_3, [ Validators.required ]],
       upload_intvl_3: [param.upload_intvl_3, [ Validators.required ]],
+      wifi_ssid: [param.wifi_ssid],
+      wifi_pwd: [param.wifi_pwd],
+      wifi_ipaddr: [param.wifi_ipaddr],
+      wifi_geteway: [param.wifi_geteway],
+      wifi_netmask: [param.wifi_netmask],
       sl_alarm_en: [param.sl_alarm_en],
     });
   }

@@ -48,7 +48,7 @@ export class ManageFormComponent implements OnInit {
       fixed_phone: [param.fixed_phone],
       linkman: [param.linkman ,[ Validators.required ]],
       unit_address: [param.unit_address ,[ Validators.required ]],
-      fax: [param.fax ,[ Validators.required ]],
+      fax: [param.fax],
       bank: [param.bank ,[ Validators.required ]],
       bank_account: [param.bank_account ,[ Validators.required ]],
       mark: [param.mark],

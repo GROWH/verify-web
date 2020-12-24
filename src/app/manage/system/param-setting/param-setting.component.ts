@@ -119,6 +119,7 @@ export class ParamSettingComponent implements OnInit {
       nzContent: ParamFormComponent,
       nzWidth: 700,
       nzComponentParams: {param},
+      nzMaskClosable:false,
       nzFooter: [
         {
           label: '取消',

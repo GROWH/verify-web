@@ -115,6 +115,7 @@ export class ThermManageComponent implements OnInit {
       nzContent:ThermManageFormComponent,
       nzWidth:700,
       nzComponentParams:{param},
+      nzMaskClosable:false,
       nzFooter:[
         {
           label:'取消',

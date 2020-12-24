@@ -122,6 +122,7 @@ export class EquipmentRecordComponent implements OnInit {
       nzContent: RecordFormComponent,
       nzWidth: 700,
       nzComponentParams: {param},
+      nzMaskClosable:false,
       nzFooter: [
         {
           label: '取消',

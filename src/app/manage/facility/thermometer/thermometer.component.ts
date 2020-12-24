@@ -137,6 +137,7 @@ export class ThermometerComponent implements OnInit {
       nzContent:ThermometerFormComponent,
       nzWidth:700,
       nzComponentParams:{param},
+      nzMaskClosable:false,
       nzFooter:[
         {
           label:'取消',

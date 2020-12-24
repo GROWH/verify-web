@@ -123,6 +123,7 @@ export class EquipmentComponent implements OnInit {
       nzContent: EquipmentFormComponent,
       nzWidth: 700,
       nzComponentParams: {param},
+      nzMaskClosable:false,
       nzFooter: [
         {
           label: '取消',

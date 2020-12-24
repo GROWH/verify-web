@@ -77,12 +77,12 @@
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="fax">传真</nz-form-label>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzFor="fax">传真</nz-form-label>
       <nz-form-control [nzSm]="14" [nzXs]="24">
         <input  nz-input formControlName="fax" id="fax" />
-        <nz-form-explain *ngIf="validateForm.get('fax')?.dirty && validateForm.get('fax')?.errors">
+        <!-- <nz-form-explain *ngIf="validateForm.get('fax')?.dirty && validateForm.get('fax')?.errors">
           传真
-        </nz-form-explain>
+        </nz-form-explain> -->
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>

@@ -120,6 +120,7 @@ export class PersonnelComponent implements OnInit {
       nzContent: PersonnelFormComponent,
       nzWidth: 700,
       nzComponentParams: {param},
+      nzMaskClosable:false,
       nzFooter: [
         {
           label: '取消',

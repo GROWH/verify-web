@@ -3,7 +3,7 @@
     <nz-form-item>
       <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="state">审核意见</nz-form-label>
       <nz-form-control [nzSm]="14" [nzXs]="24">
-        <nz-radio-group formControlName="state">
+        <nz-radio-group formControlName="state" [(ngModel)]="radioValue">
           <label nz-radio nzValue="通过">通过</label>
           <label nz-radio nzValue="不通过">不通过</label>
         </nz-radio-group>

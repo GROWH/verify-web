@@ -117,6 +117,7 @@ export class RuleManageComponent implements OnInit {
       nzContent: RuleFormComponent,
       nzWidth: 700,
       nzComponentParams: {param},
+      nzMaskClosable:false,
       nzFooter: [
         {label: '取消', onClick: () => modalRef.close()},
         {

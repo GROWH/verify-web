@@ -116,6 +116,7 @@ export class FacilityBaseComponent implements OnInit {
       nzContent:FacilityBaseFormComponent,
       nzWidth:700,
       nzComponentParams:{param},
+      nzMaskClosable:false,
       nzFooter:[
         {
           label:'取消',

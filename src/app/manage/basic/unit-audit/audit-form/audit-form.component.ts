@@ -9,9 +9,13 @@ import { FormBuilder, FormControl, FormGroup, Validators, ValidatorFn, AbstractC
 
 export class AuditFormComponent implements OnInit {
   validateForm: FormGroup;
+  radioValue: string;
   constructor(
     private fb: FormBuilder
-  ) { }
+    
+  ) { 
+    this.radioValue = '通过';
+  }
 
   ngOnInit() {
     this.creatForm();

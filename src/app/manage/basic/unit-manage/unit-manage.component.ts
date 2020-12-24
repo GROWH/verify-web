@@ -7,9 +7,9 @@ import {GridAction} from '@/model/GridAction';
 import {buttonAccess} from '../../../config.const';
 
 @Component({
-  selector: 'app-unit-manage',
-  templateUrl: './unit-manage.component.html',
-  styleUrls: ['./unit-manage.component.scss']
+    selector: 'app-unit-manage',
+    templateUrl: './unit-manage.component.html',
+    styleUrls: ['./unit-manage.component.scss']
 })
 
 export class UnitManageComponent implements OnInit {
@@ -140,6 +140,7 @@ export class UnitManageComponent implements OnInit {
       nzContent: ManageFormComponent,
       nzWidth: 700,
       nzComponentParams: {param},
+      nzMaskClosable:false,
       nzFooter: [
         {
           label: '取消',

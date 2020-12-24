@@ -67,7 +67,7 @@ export class MaintainComponent extends UniversalComponent {
         },
         isExist: buttonAccess("maintain_add"),
       }, {
-        name: '启用',
+        name: '启用库房',
         icon: 'check-circle',
         code: 'maintain_check',
         type: 'default',
@@ -76,7 +76,7 @@ export class MaintainComponent extends UniversalComponent {
         },
         isExist: buttonAccess("maintain_check"),
       }, {
-        name: '停用',
+        name: '停用库房',
         icon: 'stop',
         code: 'maintain_stop',
         type: 'default',
@@ -101,9 +101,9 @@ export class MaintainComponent extends UniversalComponent {
       this.msg.warning('请先选择数据进行操作!');
       return;
     }
-    const checkStatus = this.selectItems.every(it => !it.enable);
+    const checkStatus = this.selectItems.every(it => !it.state);
     if (!checkStatus) {
-      this.msg.warning('请选择禁用状态的数据进行操作');
+      this.msg.warning('请选择空库状态的库房进行操作');
       return;
     }
     const selectedIds = this.selectItems.map(it => it.id) + '';
@@ -123,9 +123,9 @@ export class MaintainComponent extends UniversalComponent {
       this.msg.warning('请先选择数据进行操作!');
       return;
     }
-    const checkStatus = this.selectItems.every(it => it.enable);
+    const checkStatus = this.selectItems.every(it => it.state);
     if (!checkStatus) {
-      this.msg.warning('请选择启用状态的数据进行操作');
+      this.msg.warning('请选择使用状态的库房进行操作');
       return;
     }
     const selectedIds = this.selectItems.map(it => it.id) + '';
@@ -212,7 +212,7 @@ export class MaintainComponent extends UniversalComponent {
   }
 
   yesOrno(value) {
-    return value === 'true' || value === true || value === '启用中...' ? '启用中...' : '停用中...';
+    return value === 'true' || value === true || value === '使用' ? '使用' : '空库';
   }
 
   private async warnSetSubmit(modalRef: NzModalRef, formVal: any, hosid: number) {

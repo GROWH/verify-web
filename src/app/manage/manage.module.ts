@@ -6,11 +6,13 @@ import { NavComponent } from './nav/nav.component';
 import { HomeComponent } from './home/home.component'
 
 import { SharedModule } from '@/shared/shared.module';
+import { ResetpwdFormComponent } from './nav/resetpwd-form/resetpwd-form.component';
 
 @NgModule({
   declarations: [
     NavComponent,
-    HomeComponent
+    HomeComponent,
+    ResetpwdFormComponent,
   ],
   imports: [
     SharedModule,
@@ -56,6 +58,9 @@ import { SharedModule } from '@/shared/shared.module';
         ]
       }
     ])
-  ]
+  ],
+  entryComponents: [
+    ResetpwdFormComponent,
+  ],
 })
 export class ManageModule { }

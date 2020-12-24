@@ -6,6 +6,7 @@ import { SharedModule } from '@/shared/shared.module';
 import { SafeRoutes, RoleUniSerToken } from './safe.routing';
 import { AccountComponent } from './account/account.component';
 import { AccountFormComponent } from './account/account-form/account-form.component';
+import { ResetPasswordFormComponent } from './account/reset-password-form/reset-password-form.component';
 import { RoleComponent } from './role/role.component';
 import { RoleFormComponent } from './role/role-form/role-form.component';
 import { RoleService } from './role/role.service';
@@ -18,6 +19,7 @@ import { PersonnelFormComponent } from './personnel/personnel-form/personnel-for
   declarations: [
     AccountComponent,
     AccountFormComponent,
+    ResetPasswordFormComponent,
     RoleComponent,
     RoleFormComponent,
     RoleViewComponent,
@@ -32,6 +34,7 @@ import { PersonnelFormComponent } from './personnel/personnel-form/personnel-for
   ],
   entryComponents: [
     AccountFormComponent,
+    ResetPasswordFormComponent,
     RoleFormComponent,
     RoleViewComponent,
     PersonnelFormComponent,

@@ -13,6 +13,12 @@
   >
     <thead>
       <tr>
+        <th nzWidth="2%" nzLeft="0"
+            nzShowCheckbox
+            [(nzChecked)]="isAllDisplayDataChecked"
+            [nzIndeterminate]="isIndeterminate"
+            (nzCheckedChange)="checkAll($event)"
+        ></th>
         <th nzWidth="200px">库房名称</th>
         <th nzWidth="320px">监控范围</th>
         <th nzWidth="100px">探头数量</th>
@@ -23,6 +29,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let i of nzTable.data">
+        <td nzLeft="0" nzShowCheckbox [(nzChecked)]="mapOfCheckedId[i.id]" (nzCheckedChange)="refreshStatus()"></td>
         <td>{{ i.name }}</td>
         <td>
           T:
@@ -46,7 +53,7 @@
           </span>
         </td>
         <td>{{ i.thermometer.length }}</td>
-        <td>{{ i.state || 'N/A' }}</td>
+        <td>{{ yesOrno( i.state) }}</td>
         <td>{{ i.new_uptime || 'N/A' }}</td>
         <td>
           <a (click)="houseEdit(i)">编辑</a>

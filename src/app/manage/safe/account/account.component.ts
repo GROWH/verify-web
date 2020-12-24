@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {NzModalService, NzModalRef, NzMessageService, NzTreeNodeOptions, NzTreeComponent} from 'ng-zorro-antd';
 import {TongchangHttpService} from 'tongchang-lib';
 import {AccountFormComponent} from './account-form/account-form.component';
+import {ResetPasswordFormComponent} from './reset-password-form/reset-password-form.component';
 
 import {GridAction} from '@/model/GridAction';
 import {nodeChildrenAsMap} from "@angular/router/src/utils/tree";
@@ -61,7 +62,7 @@ export class AccountComponent implements OnInit {
           this.Add()
         },
         isExist: buttonAccess("account_add"),
-      }, {
+      },{
         name: '修改',
         icon: 'edit',
         code: 'account_edit',
@@ -71,6 +72,15 @@ export class AccountComponent implements OnInit {
         },
         isExist: buttonAccess("account_edit"),
       }, {
+        name: '重置密码',
+        icon: 'edit',
+        code: 'account_passReset',
+        type: 'default',
+        click: () => {
+          this.passReset()
+        },
+        isExist: buttonAccess("account_passReset"),
+      },  {
         name: '启用',
         icon: 'check-circle',
         code: 'account_check',
@@ -248,6 +258,56 @@ export class AccountComponent implements OnInit {
         })
       }
     })
+  }
+
+  //重置密码操作
+  passReset() {
+    const param = new params;
+    if (this.selectItems.length !== 1) {
+      this.msg.warning('请选择一项数据进行操作!');
+      return;
+    }
+    let modalRef: NzModalRef = this.modal.create({
+      nzTitle: "重置密码",
+      nzContent: ResetPasswordFormComponent,
+      nzWidth: 700,
+      nzComponentParams: {param},
+      nzFooter: [
+        {
+          label: '取消',
+          onClick: () => modalRef.close()
+        },
+        {
+          label: '确定',
+          type: 'primary',
+          disabled: comp => !comp.validateForm.valid,
+          onClick: (comp) => {
+            let formVal = {
+              ...this.selectItems[0],
+              ...comp.validateForm.getRawValue(),
+            };
+            this.modal.confirm({
+              nzTitle: '提交',
+              nzContent: '确认提交?',
+              nzOnOk: () => {
+                const params = formVal;
+                this.http.put(this.baseUrl, params).subscribe(res => {
+                  if (res.code !== 0) {
+                    this.msg.error(res.message);
+                    return;
+                  }
+                  this.msg.success(res.message);
+                  modalRef.close();
+                  this.getTree();
+                });
+              }
+            });
+
+          }
+        }
+      ],
+      nzWrapClassName: 'modal-vertical-center'
+    });
   }
 
   //启用

@@ -32,7 +32,7 @@ export class MaintainComponent extends UniversalComponent {
 
   ngOnInit() {
     this.tableHeight = document.body.offsetHeight - 300;
-    this.actionInit()
+    this.actionInit();
     this.uniSer.gridConf = {
       queryUrl: Apis.storehouse,
       queryBody: null,
@@ -40,12 +40,19 @@ export class MaintainComponent extends UniversalComponent {
       queryMethod: 'get',
       page: 1,
       size: 50,
-    }
+    };
   }
 
   uniSer!: MaintainService;
   gridActions: GridAction[];
   tableHeight:number = 0;
+
+  selectItems = [];
+  checkUrl = '/storehouse/enable/'; //启用
+  stopUrl = '/storehouse/stop/'; //停用
+  isAllDisplayDataChecked = false;
+  isIndeterminate = false;
+  mapOfCheckedId: { [key: string]: boolean } = {};
 
 
   actionInit() {
@@ -56,9 +63,27 @@ export class MaintainComponent extends UniversalComponent {
         code: 'maintain_add',
         type: 'primary',
         click: () => {
-          this.router.navigate(['add'], {relativeTo: this.route})
+          this.router.navigate(['add'], {relativeTo: this.route});
         },
         isExist: buttonAccess("maintain_add"),
+      }, {
+        name: '启用',
+        icon: 'check-circle',
+        code: 'maintain_check',
+        type: 'default',
+        click: () => {
+          this.Check();
+        },
+        isExist: buttonAccess("maintain_check"),
+      }, {
+        name: '停用',
+        icon: 'stop',
+        code: 'maintain_stop',
+        type: 'default',
+        click: () => {
+          this.Stop();
+        },
+        isExist: buttonAccess("maintain_stop"),
       },
       {
         name: '刷新',
@@ -68,6 +93,68 @@ export class MaintainComponent extends UniversalComponent {
         isExist: buttonAccess("maintain_reload"),
       }
     ]
+  }
+
+  //启用
+  Check() {
+    if (this.selectItems.length === 0) {
+      this.msg.warning('请先选择数据进行操作!');
+      return;
+    }
+    const checkStatus = this.selectItems.every(it => !it.enable);
+    if (!checkStatus) {
+      this.msg.warning('请选择禁用状态的数据进行操作');
+      return;
+    }
+    const selectedIds = this.selectItems.map(it => it.id) + '';
+    this.http.get(`${this.checkUrl}?ids=${selectedIds}`).subscribe(res => {
+      if (res.code !== 0) {
+        this.msg.error(res.message);
+        return;
+      }
+      this.msg.success(res.message);
+      this.uniSer.onForceReload();
+    });
+  }
+
+  //停用
+  Stop() {
+    if (this.selectItems.length === 0) {
+      this.msg.warning('请先选择数据进行操作!');
+      return;
+    }
+    const checkStatus = this.selectItems.every(it => it.enable);
+    if (!checkStatus) {
+      this.msg.warning('请选择启用状态的数据进行操作');
+      return;
+    }
+    const selectedIds = this.selectItems.map(it => it.id) + '';
+    this.http.get(`${this.stopUrl}?ids=${selectedIds}`).subscribe(res => {
+      if (res.code !== 0) {
+        this.msg.error(res.message);
+        return;
+      }
+      this.msg.success(res.message);
+      this.uniSer.onForceReload();
+    });
+  }
+
+  refreshStatus(): void {
+    this.isAllDisplayDataChecked = this.uniSer.data.every((item) => this.mapOfCheckedId[item.id]);
+    let checkId = this.mapOfCheckedId;
+    this.selectItems = this.uniSer.data.map((item) => {
+      for (let key in checkId) {
+        if (checkId[key] && Number(key) === item.id) {
+          return item;
+        }
+      }
+    }).filter(item => item);
+    this.isIndeterminate =
+      this.uniSer.data.some(item => this.mapOfCheckedId[item.id]) && !this.isAllDisplayDataChecked;
+  }
+  checkAll(value: boolean): void {
+    this.uniSer.data.forEach(item => (this.mapOfCheckedId[item.id] = value));
+    this.refreshStatus();
   }
 
   houseEdit(house: StoreHouse) {
@@ -92,7 +179,7 @@ export class MaintainComponent extends UniversalComponent {
           disabled: comp => !comp.form.valid
         }
       ]
-    })
+    });
   }
 
   warnSet(house: StoreHouse) {
@@ -117,37 +204,41 @@ export class MaintainComponent extends UniversalComponent {
           disabled: comp => !comp.form.valid
         }
       ]
-    })
+    });
   }
 
   viewDetail(house: StoreHouse) {
-    this.router.navigate(['detail', house.id], {relativeTo: this.route})
+    this.router.navigate(['detail', house.id], {relativeTo: this.route});
+  }
+
+  yesOrno(value) {
+    return value === 'true' || value === true || value === '启用中...' ? '启用中...' : '停用中...';
   }
 
   private async warnSetSubmit(modalRef: NzModalRef, formVal: any, hosid: number) {
-    await this.util.submitConfirm()
+    await this.util.submitConfirm();
     const res = await this.http.post(
       Apis.storehouseWarn,
       formVal,
       {hosid: hosid + ''}
-    ).toPromise()
+    ).toPromise();
 
     if (res.code === 0) {
-      this.msg.success(res.message)
-      modalRef.close()
-      this.uniSer.onForceReload()
+      this.msg.success(res.message);
+      modalRef.close();
+      this.uniSer.onForceReload();
     }
   }
 
 
   private async houseEditSubmit(modalRef: NzModalRef, formVal: any) {
-    await this.util.submitConfirm()
-    const res = await this.http.put(Apis.storehouse, formVal).toPromise()
+    await this.util.submitConfirm();
+    const res = await this.http.put(Apis.storehouse, formVal).toPromise();
 
     if (res.code === 0) {
-      this.msg.success(res.message)
-      modalRef.close()
-      this.uniSer.onForceReload()
+      this.msg.success(res.message);
+      modalRef.close();
+      this.uniSer.onForceReload();
     }
   }
 }

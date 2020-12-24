@@ -35,6 +35,7 @@ export class PointRecord {
 }
 
 export interface HouseAddData {
+  id:          number;
   name:         string;        // 库房名称
   map:          string;        // 库房平面图
   temp_up:      number;        // 最高温度

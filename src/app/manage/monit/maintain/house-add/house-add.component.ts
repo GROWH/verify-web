@@ -323,6 +323,7 @@ export class HouseAddComponent implements OnInit {
     const formVal: ParamsForm = this.paramsForm.getRawValue()
 
     return {
+      id: null,
       ...formVal,
       map:         this.houseImageUrl,
       thermometer: this.points,

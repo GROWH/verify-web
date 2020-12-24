@@ -44,7 +44,7 @@ export class HouseDetailComponent implements OnInit {
     const hosid = this.route.snapshot.paramMap.get('hosid')
     this.uniSer.detailHosId = +hosid
     this.hosid = hosid
-    
+
     timer(0, 30000).pipe(
       takeUntil(this.destroy$),
       filter(() => this.canReload())
@@ -57,7 +57,7 @@ export class HouseDetailComponent implements OnInit {
     //Add 'implements OnDestroy' to the class.
     this.destroy$.next()
   }
-  
+
   /**
    * 维护模式
    */
@@ -72,7 +72,7 @@ export class HouseDetailComponent implements OnInit {
   pointAdding = false
   pointRemoving = false
   pointEditing  = false
-  
+
   private hosid: string;
   private destroy$ = new Subject()
 
@@ -97,7 +97,7 @@ export class HouseDetailComponent implements OnInit {
 
   async addPoint(e: MouseEvent) {
     const imgElRect = (e.target as HTMLElement).getBoundingClientRect()
-    if (!this.pointAdding) return 
+    if (!this.pointAdding) return
 
     const dev = await this.uniSer.deviceSelect()
 
@@ -119,7 +119,7 @@ export class HouseDetailComponent implements OnInit {
     this.stopRemove()
     this.pointAdding = !this.pointAdding
   }
-  
+
   /**
    * 监控点位移除按钮点击
    */
@@ -129,7 +129,7 @@ export class HouseDetailComponent implements OnInit {
   }
 
   removePoint(index: number) {
-    if (!this.pointRemoving) return 
+    if (!this.pointRemoving) return
     const points = this.house.thermometer
     this.house.thermometer = [
       ...points.slice(0, index),
@@ -140,16 +140,16 @@ export class HouseDetailComponent implements OnInit {
 
   /**
    * 监控点位变更
-   * @param event 
-   * @param pointConf 
+   * @param event
+   * @param pointConf
    */
   pointMove(event: MouseEvent, pointConf: MonitPointConf) {
-    if (this.pointAdding || this.pointRemoving || !this.maintainMode) return 
+    if (this.pointAdding || this.pointRemoving || !this.maintainMode) return
 
     const point = event.target as HTMLElement
     const cotin = point.parentElement as HTMLElement
 
-    if (!point.classList.contains('point')) return 
+    if (!point.classList.contains('point')) return
 
     point.style.zIndex = `${zIndexInit++}`
     const pointRect = point.getBoundingClientRect()
@@ -164,14 +164,14 @@ export class HouseDetailComponent implements OnInit {
       point.classList.remove('moving')
       DebugLog('move stopped!')
     })
-    
+
     mouseMove$.pipe( takeUntil(mouseUp$) ).subscribe(moveEvent => {
       point.classList.add('moving')
 
       // 接近边界最小距离
       const rangeIn = 5
       const { clientX, clientY } = moveEvent
-    
+
       let relX = clientX - offsetX - cotinRect.left
       let relY = clientY - offsetY - cotinRect.top
 
@@ -208,7 +208,7 @@ export class HouseDetailComponent implements OnInit {
       point.name = dev.name
       this.pointChanged = true
       this.pointEditing = false
-      
+
     } catch (error) {
       DebugLog(error)
       this.pointEditing = false
@@ -220,13 +220,13 @@ export class HouseDetailComponent implements OnInit {
    */
   async savePointConf() {
     const points = this.house.thermometer
-  
+
     const res = await this.http.post(
       Apis.storehousePoint,
       points,
       { hosid: this.house.id + ''}
     ).toPromise()
-    
+
     if (res.code === 0) {
       this.msg.success(res.message)
       this.pointChanged = false
@@ -255,7 +255,7 @@ export class HouseDetailComponent implements OnInit {
       this.house.units = newUnits
     }
     this.msg.remove(messageId)
-    
+
   }
 
   async authAdd() {
@@ -297,8 +297,8 @@ export class HouseDetailComponent implements OnInit {
       },
       nzMaskClosable: false,
       nzWrapClassName: 'modal-vertical-center',
-      nzWidth: 900,
-      nzFooter: null,      
+      nzWidth: 1200,
+      nzFooter: null,
     })
   }
 
@@ -346,7 +346,7 @@ export class HouseDetailComponent implements OnInit {
       }
     )
   }
-    
+
   private async warnSetSubmit(modalRef: NzModalRef, formVal: any, hosid: number) {
     await this.util.submitConfirm()
     const res = await this.http.post(
@@ -354,7 +354,7 @@ export class HouseDetailComponent implements OnInit {
       formVal,
       { hosid: hosid + '' }
     ).toPromise()
-    
+
     if (res.code === 0) {
       this.msg.success(res.message)
       modalRef.close()
@@ -380,7 +380,7 @@ export class HouseDetailComponent implements OnInit {
       })
     )
     .toPromise()
-    
+
     if (res.code === 0) {
       const house = res.data
       this.house = house

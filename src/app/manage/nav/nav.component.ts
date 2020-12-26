@@ -3,7 +3,6 @@ import {TongchangHttpService} from "tongchang-lib";
 
 import {ResetpwdFormComponent} from './resetpwd-form/resetpwd-form.component';
 import { NzModalService, NzModalRef, NzMessageService } from "ng-zorro-antd";
-import {ResetPasswordFormComponent} from "@/manage/safe/account/reset-password-form/reset-password-form.component";
 
 @Component({
   selector: 'app-nav',
@@ -63,7 +62,7 @@ export class NavComponent implements OnInit, OnDestroy {
     //清除定时器
     clearInterval(this.setTimer);
   }
-
+  //获取报警信息
   getRemind() {
     const findArr: any = [];
     this.http.get<any>(this.remindUrl).subscribe(res => {
@@ -117,18 +116,17 @@ export class NavComponent implements OnInit, OnDestroy {
   noticeClick() {
     this.isShow = !this.isShow;
   }
-  //
+  //退出账号
   outSyatem() {
     sessionStorage.clear();  //清除所有session值
     const url = (window.location.href).split('#')[0];
-    console.log(url);
     window.open(url, '_self');
   }
 
+  //修改密码
   resetPsw() {
     const param = new params;
     const userInfo = JSON.parse(localStorage.getItem('userInfo'));
-    console.log(userInfo);
     let modalRef: NzModalRef = this.modal.create({
       nzTitle: "修改密码",
       nzContent: ResetpwdFormComponent,
@@ -148,7 +146,6 @@ export class NavComponent implements OnInit, OnDestroy {
               ...userInfo,
               ...comp.validateForm.getRawValue(),
             };
-            console.log(formVal);
             this.modal.confirm({
               nzTitle: '提交',
               nzContent: '确认提交?',

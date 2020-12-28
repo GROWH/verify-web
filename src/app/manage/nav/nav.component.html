@@ -41,23 +41,31 @@
              [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
           ></i>
         </span>
-
-        <span class="alert-mask" (click)="noticeClick()"></span><!--  提示遮罩层-->
-
-        <span class="bellStyle" title="新的通知">
+        <div class="alert-list">
+          <span  [style.display]="isShowTip ? 'inline-block':'none'" class="alert-mask" (click)="noticeClick()"></span><!--  提示遮罩层-->
+          <span class="bellStyle" title="新的通知">
           <i nz-icon nzType="bell" nzTheme="outline"></i>
-        </span>
-
-        <span class="count"
-              [style.display]="isShowTip ? 'inline-block':'none'"></span><!--  小红点-->
-
-        <div class="alert-ul" [style.display]="isShow ? 'inline-block':'none'">
-          <div class="top"></div>
-          <ul>
-            <li *ngFor="let item of remindList;let key=index;">
-              <a routerLink="{{item.url}}">{{item.name}}( {{item.count}} )</a>
-            </li>
-          </ul>
+          </span>
+          <span class="count" [style.display]="isShowTip ? 'inline-block':'none'"></span><!--  小红点-->
+          <div class="alert-ul" [style.display]="isShow ? 'inline-block':'none'">
+            <div class="top"></div>
+            <ul>
+              <li *ngFor="let item of remindList;let key=index;">
+                <a routerLink="{{item.url}}">{{item.name}}( {{item.count}} )</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="user-manager">
+          <i nz-icon style="font-size: 20px" nzType="user" nzTheme="outline"></i>
+          <div id="user-option">
+            <div class="mask"></div>
+            <div class="top"></div>
+            <ul>
+              <li (click)="outSyatem()">退出账号</li>
+              <li (click)="resetPsw()">修改密码</li>
+            </ul>
+          </div>
         </div>
       </div>
     </nz-header>

@@ -1,0 +1,13 @@
+<div>
+  <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="pass">新密码</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input  nz-input formControlName="pass" id="pass" />
+        <nz-form-explain *ngIf="validateForm.get('pass')?.dirty && validateForm.get('pass')?.errors">
+          请输入新密码
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</div>

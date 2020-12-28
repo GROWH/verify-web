@@ -41,6 +41,14 @@
             <i nz-icon nzType="arrow-down" nzTheme="outline"></i>
             {{ i.temp_down }} ℃
           </span>
+          <span class="point point-top">
+            <i nz-icon nzType="arrow-up" nzTheme="outline"></i>
+            {{ i.Warning_temp_up }} ℃
+          </span>
+          <span class="point point-down">
+            <i nz-icon nzType="arrow-down" nzTheme="outline"></i>
+            {{ i.Warning_temp_down }} ℃
+          </span>
           &nbsp;&nbsp;
           RH:
           <span class="point point-top">
@@ -50,6 +58,14 @@
           <span class="point point-down">
             <i nz-icon nzType="arrow-down" nzTheme="outline"></i>
             {{ i.humi_down }} %
+          </span>
+          <span class="point point-top">
+            <i nz-icon nzType="arrow-up" nzTheme="outline"></i>
+            {{ i.Warning_humi_up }} %
+          </span>
+          <span class="point point-down">
+            <i nz-icon nzType="arrow-down" nzTheme="outline"></i>
+            {{ i.Warning_humi_down }} %
           </span>
         </td>
         <td>{{ i.thermometer.length }}</td>

@@ -12,8 +12,10 @@ export class BaseInfo extends DataBase {
   point_conf:            string;        // 布点配置
 
   // 库房 冷藏车 冷柜
-  temp_up?:              number;        // 温度上限
-  temp_down?:            number;        // 温度下限
+  temp_up?:              number;        // 温度报警上限
+  temp_down?:            number;        // 温度报警下限
+  Warning_temp_up?:      number;        // 温度预警上限
+  Warning_temp_down?:    number;        // 温度预警下限
   fan?:                  number;        // 风机数量
   blind_point?:          number;        // 死角数量
   monit_point?:          number;        // 监控探头数量

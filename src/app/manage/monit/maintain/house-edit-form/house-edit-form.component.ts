@@ -27,6 +27,10 @@ export class HouseEditFormComponent implements OnInit {
       temp_down: [ house.temp_down, [ Validators.required ] ],
       humi_up:   [ house.humi_up,   [ Validators.required ] ],
       humi_down: [ house.humi_down, [ Validators.required ] ],
+      Warning_temp_up:   [ house.Warning_temp_up,   [ Validators.required ] ],
+      Warning_temp_down: [ house.Warning_temp_down, [ Validators.required ] ],
+      Warning_humi_up:   [ house.Warning_humi_up,   [ Validators.required ] ],
+      Warning_humi_down: [ house.Warning_humi_down, [ Validators.required ] ],
     })
   }
 

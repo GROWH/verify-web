@@ -40,6 +40,10 @@ export class WarnEditFormComponent implements OnInit {
         nums:  [data.nums,  [ numsValidator       ]],
         delay: [data.delay, [ Validators.required ]],
         span:  [data.span,  [ Validators.required ]],
+        Warning_type_name: [data.Warning_type_name, [ Validators.required ]],
+        Warning_nums:  [data.Warning_nums,  [ numsValidator       ]],
+        Warning_delay: [data.Warning_delay, [ Validators.required ]],
+        Warning_span:  [data.Warning_span,  [ Validators.required ]],
       })
     }
 
@@ -56,6 +60,13 @@ export class WarnEditFormComponent implements OnInit {
   getPhoneNums(groupName: string): string[] {
     return this.form.get(groupName).get('nums').value || []
   }
+   /**
+   * 获取预警表单组下所有告警电话
+   * @param groupName 表单组名
+   */
+  getPhoneNums1(groupName: string): string[] {
+    return this.form.get(groupName).get('Warning_nums').value || []
+  }
 
   /**
    * 告警电话添加
@@ -65,6 +76,22 @@ export class WarnEditFormComponent implements OnInit {
   onPhoneAdd(groupName: string, phoneNoInput: HTMLInputElement) {
     const phoneNo = phoneNoInput.value
     const numsCtrl  = this.form.get(groupName).get('nums') as FormControl
+    const inputCtrl = this.fb.control(phoneNo, [ Validators.required, SimpPhoneValidator ])
+
+    if (!inputCtrl.valid) return this.msg.error('请输入正确的手机号')
+    const nums: string[] = numsCtrl.value || []
+    if (nums.indexOf(phoneNo) > -1) return this.msg.error('手机号已添加')
+    numsCtrl.setValue([ ...nums, phoneNo ])
+    phoneNoInput.value = ''
+  }
+    /**
+   * 预警电话添加
+   * @param groupName 表单组名
+   * @param phoneNoInput 电话输入框 Input
+   */
+  onPhoneAdd1(groupName: string, phoneNoInput: HTMLInputElement) {
+    const phoneNo = phoneNoInput.value
+    const numsCtrl  = this.form.get(groupName).get('Warning_nums') as FormControl
     const inputCtrl = this.fb.control(phoneNo, [ Validators.required, SimpPhoneValidator ])
 
     if (!inputCtrl.valid) return this.msg.error('请输入正确的手机号')
@@ -88,6 +115,23 @@ export class WarnEditFormComponent implements OnInit {
   }
 
   get formVal() {
+    return this.form.getRawValue()
+  }
+
+  /**
+   * 预警电话移除
+   */
+  onPhoneRemove1(groupName: string, index: number) {
+    const numsCtrl = this.form.get(groupName).get('Warning_nums') as FormControl
+    const nums: string[] = numsCtrl.value
+
+    numsCtrl.setValue([
+      ...nums.slice(0, index),
+      ...nums.slice(index + 1),
+    ])
+  }
+
+  get formVal1() {
     return this.form.getRawValue()
   }
 }

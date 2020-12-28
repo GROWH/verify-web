@@ -4,8 +4,12 @@ import { Unit } from './Unit';
 export interface WarnConf {
   types: string[];  // 报警类型
   nums:  string[];  // 报警电话
-  delay: number;    // 延时
+  delay: number;    // 报警延时
   span:  number;    // 报警间隔
+  Warning_type_name: string[];  // 预警类型
+  Warning_nums:  string[];  // 预警电话
+  Warning_delay: number;    // 预警延时
+  Warning_span:  number;    // 预警间隔
 }
 
 export interface MonitPointConf {
@@ -38,10 +42,14 @@ export interface HouseAddData {
   id:          number;
   name:         string;        // 库房名称
   map:          string;        // 库房平面图
-  temp_up:      number;        // 最高温度
-  temp_down:    number;        // 最低温度
-  humi_up:      number;        // 最高湿度
-  humi_down:    number;        // 最低湿度
+  temp_up:      number;        // 最高报警温度
+  temp_down:    number;        // 最低报警温度
+  humi_up:      number;        // 最高报警湿度
+  humi_down:    number;        // 最低报警湿度
+  Warning_temp_up:      number;        // 最高预警温度
+  Warning_temp_down:    number;        // 最低预警温度
+  Warning_humi_up:      number;        // 最高预警湿度
+  Warning_humi_down:    number;        // 最低预警湿度
   phone_warn:   WarnConf;      // 电话报警设定
   message_warn: WarnConf;      // 短信报警设定
   thermometer:  MonitPointConf[];       // 监控点位
@@ -50,10 +58,14 @@ export interface HouseAddData {
 export class Warn extends DataBase {
   types:         string[];  // 报警类型
   nums:          string[];  // 报警电话
-  delay:         number;    // 延时
+  delay:         number;    // 报警延时
   span:          number;    // 报警间隔
   storehouse_id: number;    //
   way:           string;    //
+  Warning_type_name:         string[];  // 预警类型
+  Warning_nums:          string[];  // 预警电话
+  Warning_delay:         number;    // 预警延时
+  Warning_span:          number;    // 预警间隔
 }
 
 export class StoreHouse extends DataBase {
@@ -63,6 +75,10 @@ export class StoreHouse extends DataBase {
   temp_down:    number;
   humi_up:      number;
   humi_down:    number;
+  Warning_temp_up:      number;
+  Warning_temp_down:    number;
+  Warning_humi_up:      number;
+  Warning_humi_down:    number;
   phone_warn:   Warn;
   message_warn: Warn;
   thermometer:  MonitPointConf[];

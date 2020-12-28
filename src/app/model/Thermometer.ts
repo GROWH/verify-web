@@ -9,15 +9,20 @@ export class Thermometer extends DataBase {
   supplier:            any;               // 
   model:               any;               // 
   humi_alarm_high:     any;               // 
-  humi_alarm_low:      any;               // 
+  humi_alarm_low:      any;               //
+  Warning_humi_up:     any;               //
+  Warning_humi_down:   any;               //
   re_start_time:       any;               // 
   startmode:           any;               // 
-  temp_alarm_high:     any;               // 
+  temp_alarm_high:     any;               //
+  temp_alarm_low:      any;               // 
+  Warning_temp_up:     any;               // 
+  Warning_temp_down:   any;               //  
   workmode:            any;               // 
   re_end_time:         any;               // 
   purchase_price:      any;               // 
   name:                any;               // 
-  temp_alarm_low:      any;               // 
+  
   reset:               any;               // 
   upload_intvl_5:      any;               // 
   upload_intvl_4:      any;               // 

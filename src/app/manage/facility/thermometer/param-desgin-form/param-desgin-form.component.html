@@ -42,6 +42,46 @@
     <div nz-row [nzGutter]="24">
       <div nz-col nzSpan="12">
         <nz-form-item>
+          <nz-form-label nzSpan='16'  nzRequired nzFor="Warning_temp_up">温度预警高值(-200.00 ~ +200: ℃)</nz-form-label>
+          <nz-form-control nzSpan="8">
+            <nz-input-number formControlName="Warning_temp_up" [nzMin]="-200" [nzMax]="200" [nzStep]="1"></nz-input-number>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzSpan='16'  nzRequired nzFor="Warning_temp_down">温度预警低值(-200.00 ~ +200: ℃)</nz-form-label>
+          <nz-form-control nzSpan="8">
+            <nz-input-number formControlName="Warning_temp_down" [nzMin]="-200" [nzMax]="200" [nzStep]="1"></nz-input-number>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+
+    <div nz-row [nzGutter]="24">
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzSpan='16'  nzRequired nzFor="Warning_humi_up">湿度预警高值(0~100: %RH)</nz-form-label>
+          <nz-form-control nzSpan="8">
+            <nz-input-number formControlName="Warning_humi_up" [nzMin]="0" [nzMax]="100" [nzStep]="1"></nz-input-number>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzSpan='16'  nzRequired nzFor="Warning_humi_down">湿度预警低值(0~100: %RH)</nz-form-label>
+          <nz-form-control nzSpan="8">
+            <nz-input-number formControlName="Warning_humi_down" [nzMin]="0" [nzMax]="100" [nzStep]="1"></nz-input-number>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+
+
+
+    <div nz-row [nzGutter]="24">
+      <div nz-col nzSpan="12">
+        <nz-form-item>
           <nz-form-label nzSpan='16'  nzRequired nzFor="record_intvl_1">正常工作模式记录间隔(30~62000: s)</nz-form-label>
           <nz-form-control nzSpan="8">
             <nz-input-number formControlName="record_intvl_1" [nzMin]="30" [nzMax]="62000" [nzStep]="1"></nz-input-number>

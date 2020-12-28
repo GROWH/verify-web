@@ -214,7 +214,7 @@ export class MaintainComponent extends UniversalComponent {
   yesOrno(value) {
     return value === 'true' || value === true || value === '启用中...' ? '启用中...' : '停用中...';
   }
-
+  // 告警设定-提交
   private async warnSetSubmit(modalRef: NzModalRef, formVal: any, hosid: number) {
     await this.util.submitConfirm();
     const res = await this.http.post(
@@ -230,11 +230,10 @@ export class MaintainComponent extends UniversalComponent {
     }
   }
 
-
+// 编辑-提交
   private async houseEditSubmit(modalRef: NzModalRef, formVal: any) {
     await this.util.submitConfirm();
     const res = await this.http.put(Apis.storehouse, formVal).toPromise();
-
     if (res.code === 0) {
       this.msg.success(res.message);
       modalRef.close();

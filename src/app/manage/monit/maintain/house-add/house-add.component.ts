@@ -24,6 +24,10 @@ interface ParamsForm {
   temp_down: number;
   humi_up: number;
   humi_down: number;
+  Warning_temp_up: number;
+  Warning_temp_down: number;
+  Warning_humi_up: number;
+  Warning_humi_down: number;
   phone_warn: WarnConf;
   message_warn: WarnConf;
 }
@@ -37,7 +41,7 @@ export class HouseAddComponent implements OnInit {
 
   @ViewChild('fileInput') fileInput: ElementRef<HTMLInputElement>
   @ViewChild(ClientRectDirective) imgRectDirective: ClientRectDirective
-
+ 
   constructor(
     private fb: FormBuilder,
     private msg: NzMessageService,
@@ -47,11 +51,12 @@ export class HouseAddComponent implements OnInit {
     private router: Router,
     @Inject(MaintainSerToken) private maintainSer: MaintainService,
   ) { }
+ 
 
   ngOnInit() {
     this.paramsFormInit()
   }
-
+  
   step = 0
   houseImageUrl = ''
   imgWidth = 0
@@ -92,15 +97,23 @@ export class HouseAddComponent implements OnInit {
   }
 
   /**
-   * 获取告警表单组下所有告警电话
+   * 获取报警表单组下所有报警电话
    * @param groupName 表单组名
    */
   getPhoneNums(groupName: string): string[] {
     return this.paramsForm.get(groupName).get('nums').value || []
   }
 
+   /**
+   * 获取报警表单组下所有预警电话
+   * @param groupName 表单组名
+   */
+  getPhoneNums1(groupName: string): string[] {
+    return this.paramsForm.get(groupName).get('Warning_nums').value || []
+  }
+
   /**
-   * 告警电话添加
+   * 报警电话添加
    * @param groupName 表单组名
    * @param phoneNoInput 电话输入框 Input
    */
@@ -115,12 +128,41 @@ export class HouseAddComponent implements OnInit {
     numsCtrl.setValue([ ...nums, phoneNo ])
     phoneNoInput.value = ''
   }
+  /**
+   * 预警电话添加
+   * @param groupName 表单组名
+   * @param phoneNoInput 电话输入框 Input
+   */
+  onPhoneAdd1(groupName: string, phoneNoInput: HTMLInputElement) {
+    const phoneNo = phoneNoInput.value
+    const numsCtrl  = this.paramsForm.get(groupName).get('Warning_nums') as FormControl
+    const inputCtrl = this.fb.control(phoneNo, [ Validators.required, SimpPhoneValidator ])
+
+    if (!inputCtrl.valid) return this.msg.error('请输入正确的手机号')
+    const nums: string[] = numsCtrl.value || []
+    if (nums.indexOf(phoneNo) > -1) return this.msg.error('手机号已添加')
+    numsCtrl.setValue([ ...nums, phoneNo ])
+    phoneNoInput.value = ''
+  }
+
 
   /**
-   * 告警电话移除
+   * 报警电话移除
    */
   onPhoneRemove(groupName: string, index: number) {
     const numsCtrl = this.paramsForm.get(groupName).get('nums') as FormControl
+    const nums: string[] = numsCtrl.value
+
+    numsCtrl.setValue([
+      ...nums.slice(0, index),
+      ...nums.slice(index + 1),
+    ])
+  }
+  /**
+   * 预警电话移除
+   */
+  onPhoneRemove1(groupName: string, index: number) {
+    const numsCtrl = this.paramsForm.get(groupName).get('Warning_nums') as FormControl
     const nums: string[] = numsCtrl.value
 
     numsCtrl.setValue([
@@ -143,35 +185,51 @@ export class HouseAddComponent implements OnInit {
       nums:  [[],   [ numsValidator       ]],
       delay: [null, [ Validators.required ]],
       span:  [null, [ Validators.required ]],
+      Warning_type_name: [[],   [ Validators.required ]],
+      Warning_nums:  [[],   [ numsValidator       ]],
+      Warning_delay: [null, [ Validators.required ]],
+      Warning_span:  [null, [ Validators.required ]],
     }
 
-
+   
+    
     this.paramsForm = this.fb.group({
       name:      [ null, [ Validators.required ]],
       temp_up:   [ null, [ Validators.required ] ],
       temp_down: [ null, [ Validators.required ] ],
       humi_up:   [ null, [ Validators.required ] ],
       humi_down: [ null, [ Validators.required ] ],
+      Warning_temp_up:   [ null, [ Validators.required ] ],
+      Warning_temp_down: [ null, [ Validators.required ] ],
+      Warning_humi_up:   [ null, [ Validators.required ] ],
+      Warning_humi_down: [ null, [ Validators.required ] ],
       phone_warn:   this.fb.group(warnGroupConf),
       message_warn: this.fb.group(warnGroupConf),
     })
   }
 
   /**
-   * 告警信息显示用
+   * 报警信息显示用
    */
   warnConfForShow(groupName: string) {
     const data: WarnConf = this.paramsForm.get(groupName).value
+    // console.log(data);
     return {
+      
+      
       types: data.types.map(it => this.warnCodeMap[it]).join(','),
       nums:  data.nums.join(','),
       delay: data.delay + '秒',
       span:  data.delay + '秒',
+      Warning_type_name: data.Warning_type_name.map(it => this.warnCodeMap[it]).join(','),
+      Warning_nums: data.Warning_nums.join(','),
+      Warning_delay: data.Warning_delay + '秒',
+      Warning_span:  data.Warning_delay + '秒',
     }
   }
 
   /**
-   * 更换设备
+   * 更换设备(选择设备)
    */
   async chDevice(point: MonitPointConf) {
     const hasSelect = this.points.map(it => it.code)
@@ -233,15 +291,21 @@ export class HouseAddComponent implements OnInit {
         if (!this.points.every(it => !!it.code && !!it.name)) return this.msg.error('请完整填写温度计信息')
         break;
       case 2:
+        console.log( this.paramsForm.valid)
         const {
           temp_up,
           temp_down,
           humi_up,
-          humi_down
+          humi_down,
+          Warning_temp_up,
+          Warning_temp_down,
+          Warning_humi_up,
+          Warning_humi_down
+
         } = this.paramsForm.value
 
-        if (temp_up <= temp_down) return this.msg.error('温度上限应大于下限')
-        if (humi_up <= humi_down) return this.msg.error('湿度上限应大于下限')
+        if (temp_up <= temp_down || Warning_temp_up <= Warning_temp_down) return this.msg.error('温度上限应大于下限')
+        if (humi_up <= humi_down || Warning_humi_up <= Warning_humi_down) return this.msg.error('湿度上限应大于下限')
       default:
         break;
     }
@@ -305,6 +369,7 @@ export class HouseAddComponent implements OnInit {
 
   async onSubmit() {
     DebugLog(this.getSubmitData())
+    console.log(this.getSubmitData())
     const { messageId } = this.msg.loading('数据提交中...', { nzDuration: 0 })
     const res = await this.http.post<StoreHouse>(
       Apis.storehouse,
@@ -312,7 +377,8 @@ export class HouseAddComponent implements OnInit {
     ).toPromise()
 
     this.msg.remove(messageId)
-
+      console.log(res);
+      
     if (res.code === 0) {
       this.msg.success(res.message)
       this.router.navigate(['..'], { relativeTo: this.route })

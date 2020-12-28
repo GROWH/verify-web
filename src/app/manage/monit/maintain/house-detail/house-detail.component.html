@@ -168,8 +168,12 @@
 
 <ng-template #warnShow let-conf="conf">
   <nz-divider></nz-divider>
-  <div class="types">告警类型: {{ conf.types }}</div>
-  <div class="delay">告警延时: {{ conf.delay }}</div>
-  <div class="span">告警间隔:  {{ conf.span }} </div>
-  <div class="phone">告警电话: {{ conf.nums }}</div>
+  <div class="types">报警类型: {{ conf.types }}</div>
+  <div class="delay">报警延时: {{ conf.delay }}</div>
+  <div class="span">报警间隔:  {{ conf.span }} </div>
+  <div class="phone">报警电话: {{ conf.nums }}</div>
+  <div class="types">预警类型: {{ conf.Warning_type_name }}</div>
+  <div class="delay">预警延时: {{ conf.Warning_delay }}</div>
+  <div class="span">预警间隔:  {{ conf.Warning_span }} </div>
+  <div class="phone">预警电话: {{ conf.Warning_nums }}</div>
 </ng-template>

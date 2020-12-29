@@ -20,7 +20,7 @@ export class HouseEditFormComponent implements OnInit {
   }
   
   form: FormGroup;
-  formInit(house: StoreHouse) {
+  formInit(house: StoreHouse) { 
     this.form = this.fb.group({
       name:      [ house.name,      [ Validators.required ] ],
       temp_up:   [ house.temp_up,   [ Validators.required ] ],

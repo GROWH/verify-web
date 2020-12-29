@@ -220,11 +220,11 @@ export class HouseAddComponent implements OnInit {
       types: data.types.map(it => this.warnCodeMap[it]).join(','),
       nums:  data.nums.join(','),
       delay: data.delay + '秒',
-      span:  data.delay + '秒',
+      span:  data.span + '秒',
       Warning_type_name: data.Warning_type_name.map(it => this.warnCodeMap[it]).join(','),
       Warning_nums: data.Warning_nums.join(','),
       Warning_delay: data.Warning_delay + '秒',
-      Warning_span:  data.Warning_delay + '秒',
+      Warning_span:  data.Warning_span + '秒',
     }
   }
 
@@ -369,7 +369,6 @@ export class HouseAddComponent implements OnInit {
 
   async onSubmit() {
     DebugLog(this.getSubmitData())
-    console.log(this.getSubmitData())
     const { messageId } = this.msg.loading('数据提交中...', { nzDuration: 0 })
     const res = await this.http.post<StoreHouse>(
       Apis.storehouse,
@@ -377,8 +376,6 @@ export class HouseAddComponent implements OnInit {
     ).toPromise()
 
     this.msg.remove(messageId)
-      console.log(res);
-      
     if (res.code === 0) {
       this.msg.success(res.message)
       this.router.navigate(['..'], { relativeTo: this.route })

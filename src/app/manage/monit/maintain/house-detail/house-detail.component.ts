@@ -284,11 +284,11 @@ export class HouseDetailComponent implements OnInit {
       types: data.types.map(it => this.warnCodeMap[it]).join(','),
       nums:  data.nums.join(','),
       delay: data.delay + '秒',
-      span:  data.delay + '秒',
+      span:  data.span + '秒',
       Warning_type_name: data.types.map(it => this.warnCodeMap[it]).join(','),
       Warning_nums: data.Warning_nums.join(','),
       Warning_delay: data.Warning_delay + '秒',
-      Warning_span:  data.Warning_delay + '秒',
+      Warning_span:  data.Warning_span + '秒',
     }
   }
 

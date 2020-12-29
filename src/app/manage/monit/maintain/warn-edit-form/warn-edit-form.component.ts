@@ -28,7 +28,7 @@ export class WarnEditFormComponent implements OnInit {
     this.formInit(this.house)
   }
 
-  private formInit(house: StoreHouse) {
+  private formInit(house: StoreHouse) { 
     const numsValidator: ValidatorFn = (ctrl) => {
       const nums: string[] = ctrl.value || []
       return nums.length < 3 ? { count: true } : null
@@ -65,6 +65,7 @@ export class WarnEditFormComponent implements OnInit {
    * @param groupName 表单组名
    */
   getPhoneNums1(groupName: string): string[] {
+
     return this.form.get(groupName).get('Warning_nums').value || []
   }
 

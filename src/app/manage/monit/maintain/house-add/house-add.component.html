@@ -199,23 +199,23 @@
             </div>
 
             <div nz-row nzGutter="8">
-              <nz-form-label nzSpan="5" nzRequired>报警延时</nz-form-label>
+              <nz-form-label nzSpan="5" nzRequired>报警延时(>30)</nz-form-label>
               <nz-form-control nzSpan="7">
                 <nz-input-number
                   class="full-width"
                   formControlName="delay"
-                  [nzMin]="0"
+                  [nzMin]="30"
                   [nzStep]="1"
                   [nzPrecision]="0"
                   [nzPlaceHolder]="'单位: 秒'"
                 ></nz-input-number>
               </nz-form-control>
-              <nz-form-label nzSpan="5" nzRequired>报警间隔</nz-form-label>
+              <nz-form-label nzSpan="5" nzRequired>报警间隔(>30)</nz-form-label>
               <nz-form-control nzSpan="7">
                 <nz-input-number
                   class="full-width"
                   formControlName="span"
-                  [nzMin]="0"
+                  [nzMin]="30"
                   [nzStep]="1"
                   [nzPrecision]="0"
                   [nzPlaceHolder]="'单位: 秒'"
@@ -264,23 +264,23 @@
             </div>
 
             <div nz-row nzGutter="8">
-              <nz-form-label nzSpan="5" nzRequired>预警延时</nz-form-label>
+              <nz-form-label nzSpan="5" nzRequired>预警延时(>30)</nz-form-label>
               <nz-form-control nzSpan="7">
                 <nz-input-number
                   class="full-width"
                   formControlName="Warning_delay"
-                  [nzMin]="0"
+                  [nzMin]="30"
                   [nzStep]="1"
                   [nzPrecision]="0"
                   [nzPlaceHolder]="'单位: 秒'"
                 ></nz-input-number>
               </nz-form-control>
-              <nz-form-label nzSpan="5" nzRequired>预警间隔</nz-form-label>
+              <nz-form-label nzSpan="5" nzRequired>预警间隔(>30)</nz-form-label>
               <nz-form-control nzSpan="7">
                 <nz-input-number
                   class="full-width"
                   formControlName="Warning_span"
-                  [nzMin]="0"
+                  [nzMin]="30"
                   [nzStep]="1"
                   [nzPrecision]="0"
                   [nzPlaceHolder]="'单位: 秒'"

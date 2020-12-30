@@ -20,7 +20,8 @@
             (nzCheckedChange)="checkAll($event)"
         ></th>
         <th nzWidth="200px">库房名称</th>
-        <th nzWidth="320px">监控范围</th>
+        <th nzWidth="320px">报警监控范围</th>
+        <th nzWidth="320px">预警监控范围</th>
         <th nzWidth="100px">探头数量</th>
         <th nzWidth="120px">库房状态</th>
         <th>最后上传时间</th>
@@ -41,14 +42,6 @@
             <i nz-icon nzType="arrow-down" nzTheme="outline"></i>
             {{ i.temp_down }} ℃
           </span>
-          <span class="point point-top">
-            <i nz-icon nzType="arrow-up" nzTheme="outline"></i>
-            {{ i.Warning_temp_up }} ℃
-          </span>
-          <span class="point point-down">
-            <i nz-icon nzType="arrow-down" nzTheme="outline"></i>
-            {{ i.Warning_temp_down }} ℃
-          </span>
           &nbsp;&nbsp;
           RH:
           <span class="point point-top">
@@ -59,6 +52,19 @@
             <i nz-icon nzType="arrow-down" nzTheme="outline"></i>
             {{ i.humi_down }} %
           </span>
+        </td>
+        <td>
+          T:
+          <span class="point point-top">
+            <i nz-icon nzType="arrow-up" nzTheme="outline"></i>
+            {{ i.Warning_temp_up }} ℃
+          </span>
+          <span class="point point-down">
+            <i nz-icon nzType="arrow-down" nzTheme="outline"></i>
+            {{ i.Warning_temp_down }} ℃
+          </span>
+          &nbsp;&nbsp;
+          RH:
           <span class="point point-top">
             <i nz-icon nzType="arrow-up" nzTheme="outline"></i>
             {{ i.Warning_humi_up }} %

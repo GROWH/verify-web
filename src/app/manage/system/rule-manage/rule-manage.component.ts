@@ -244,10 +244,11 @@ export class RuleManageComponent implements OnInit {
   uploadDom(record) {
     let downloadUrl = 'api/' + this.baseUrl + '/download?file=' + record.filename;
     let modalRef: NzModalRef = this.modal.create({
-      nzTitle: null,
+      nzTitle: '请确认是否下载?',
+      nzWidth: 400,
       nzClosable: false,
       nzContent: `<div style="font-size: 18px!important;font-width: 600!important;">
-                    <a href="${downloadUrl}" download="1">确定下载${record.filename}文件</a>
+                    <a href="${downloadUrl}" download="1">下载${record.filename}文件</a>
                   </div>`,
       nzFooter: [{label: '取消', onClick: () => modalRef.close()}],
     });

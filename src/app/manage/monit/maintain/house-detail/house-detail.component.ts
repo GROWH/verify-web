@@ -300,7 +300,7 @@ export class HouseDetailComponent implements OnInit {
         posId: point.id
       },
       nzMaskClosable: false,
-      nzWrapClassName: 'modal-vertical-center',
+      nzWrapClassName: 'test-modal',
       nzWidth: 1200,
       nzFooter: null,
     })

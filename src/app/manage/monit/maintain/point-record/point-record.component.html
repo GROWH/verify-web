@@ -1,17 +1,65 @@
 <div class="wrapper">
-  <div class="range">
-    <nz-range-picker
-      [nzRanges]="ranges"
-      [nzDisabledDate]="rangeDisableDate"
-      [(ngModel)]="datas"
-      (ngModelChange)="dateCh$.next()"
-    ></nz-range-picker>
+  <div class="content">
+    <nz-tabset>
+      <nz-tab nzTitle="数据曲线">
+        <div class="range">
+          <nz-range-picker
+            [nzRanges]="ranges"
+            [nzDisabledDate]="rangeDisableDate"
+            [(ngModel)]="datas"
+            (ngModelChange)="dateCh$.next()"
+          ></nz-range-picker>
+        </div>
+        <div
+          echarts
+          class="charts"
+          [options]="chartOption"
+          (chartInit)="chartInit($event)"
+        ></div>
+      </nz-tab>
+      <nz-tab nzTitle="历史数据查询">
+        <div class="range">
+          <nz-range-picker
+            [nzRanges]="ranges"
+            [nzDisabledDate]="rangeDisableDate"
+            [(ngModel)]="datas1"
+          ></nz-range-picker>
+          <grid-action style="display: inline-block;float: right;width: 200px;height: 50px;line-height: 0;" [actions]="gridActions"></grid-action>
+        </div>
+        <nz-table
+          class="history-table"
+          style="height: 400px"
+          #basicTable
+          [nzData]="listOfData"
+          nzShowSizeChanger
+          [nzScroll]="{ x: '100%',y: '270px'}"
+          [nzTotal]="total"
+          (nzPageIndexChange)="changePageIndex($event)"
+          (nzPageSizeChange)="changePageSize($event)"
+        >
+          <thead>
+          <tr>
+            <th nzWidth="110px">日期</th>
+            <th nzWidth="105px">时间</th>
+            <th nzWidth="110px">温度(℃)</th>
+            <th nzWidth="110px">温度范围(℃)</th>
+            <th nzWidth="130px">湿度(%)</th>
+            <th nzWidth="155px">湿度范围(%)</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of basicTable.data">
+            <td>{{ item.time | date:'yyyy-MM-dd' }}</td>
+            <td>{{ item.time | date:'HH:mm' }}</td>
+            <td>{{item.temp}}</td>
+            <td>{{item.temp_up + "~" + item.temp_down}}</td>
+            <td>{{item.humi}}</td>
+            <td>{{item.humi_up + "~" + item.humi_down}}</td>
+          </tr>
+          </tbody>
+        </nz-table>
+      </nz-tab>
+    </nz-tabset>
   </div>
-  <div
-    echarts
-    class="charts"
-    [options]="chartOption"
-    (chartInit)="chartInit($event)"
-  ></div>
 </div>
 

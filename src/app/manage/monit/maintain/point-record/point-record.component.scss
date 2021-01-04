@@ -1,8 +1,11 @@
-.wrapper {
-  .range {
-    display: flex;
-    justify-content: flex-end;
+:host {
+  .test-modal{
+    .ant-modal-body {
+      padding: 0 20px 24px 24px;
+    }
   }
+}
+.wrapper {
   .charts {
     height: 400px;
   }

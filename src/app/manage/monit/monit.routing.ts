@@ -4,8 +4,9 @@ import { MaintainComponent } from './maintain/maintain/maintain.component';
 import { HouseAddComponent } from './maintain/house-add/house-add.component';
 import { HouseDetailComponent } from './maintain/house-detail/house-detail.component';
 import { HandRecordComponent } from './maintain/hand-record/hand-record.component';
-import { MaintainSerToken, HandRecordSerToken, MyHouseSerToken } from './monit.routing.token';
+import { MaintainSerToken, HandRecordSerToken, MyHouseSerToken, AlarmHandlSerToken } from './monit.routing.token';
 import { MyHouseComponent } from './my-house/my-house/my-house.component';
+import { AlarmHandlComponent } from './alarm-handl/alarm-handl/alarm-handl.component';
 
 const routes: Routes = [
   {
@@ -56,7 +57,14 @@ const routes: Routes = [
       }
     ]
 
-  }
+  },
+  {
+    path: 'alarm-handl',
+    component: AlarmHandlComponent,
+    data: {
+      REQUIRED_SERCVICE: AlarmHandlSerToken,
+    },
+  },
 ];
 
 export const MonitRoutes = RouterModule.forChild(routes);

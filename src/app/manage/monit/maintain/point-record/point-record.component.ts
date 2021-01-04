@@ -1,24 +1,24 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { EChartOption, ECharts } from 'echarts'
-import { addDays, format } from 'date-fns'
+import { EChartOption, ECharts } from 'echarts';
+import { addDays, format } from 'date-fns';
 import { Subject, merge, of, Observable } from 'rxjs';
 import { DebugLog, TongchangHttpService, TongchangLibService } from 'tongchang-lib';
 
 import { Apis } from '@/shared/urls.const';
 import { PointRecord } from '@/model/HouseMonit';
-import { delayWhen } from 'rxjs/operators';
-import { NzMessageService } from 'ng-zorro-antd';
+import {delayWhen, window} from 'rxjs/operators';
+import {NzMessageService, NzModalRef, NzModalService} from 'ng-zorro-antd';
+import {GridAction} from '@/model/GridAction';
+import {buttonAccess} from '@/config.const';
 
 const rangeCount = (offset: number) => {
-  const end = new Date()
-  const start = addDays(end, offset)
+  const end = new Date();
+  const start = addDays(end, offset);
 
   return [
-    // new Date(start.getFullYear(), start.getMonth(), start.getDate()),
-    // new Date(end.getFullYear(), end.getMonth(), end.getDate(), 23, 59, 59, 999),
     start, end
-  ]
-}
+  ];
+};
 
 @Component({
   selector: 'app-point-record',
@@ -27,43 +27,31 @@ const rangeCount = (offset: number) => {
 })
 export class PointRecordComponent implements OnInit {
 
-  @Input() posId: number = -1
-
   constructor(
     private msg: NzMessageService,
     private http: TongchangHttpService,
     private util: TongchangLibService,
+    private modal: NzModalService,
   ) { }
 
-  ngOnInit() {
-    DebugLog(this.datas)
-    
-    merge(
-      of(1).pipe(
-        delayWhen(() => this.chartsReady$.asObservable())
-      ),
-      this.dateCh$
-    )
-    .subscribe(() => this.dateCh())
-  }
-  
-  chartsIns: ECharts
+  @Input() posId = -1;
+  page = 1;
+  size = 10;
+  total = 1;
+  listOfData: TableList[] = [];
+  chartsIns: ECharts;
+  gridActions: GridAction[] = [];
+  loading = true;
 
-  dateCh$ = new Subject<void>()
-  datas = rangeCount(0)
+  dateCh$ = new Subject<void>();
+  datas = rangeCount(0);
+  datas1 = rangeCount(0);
   ranges = {
-    '今天': rangeCount.bind(null, 0),
-    '近三天': rangeCount.bind(null, -2),
-    '近一周': rangeCount.bind(null, -6),
-    '近30天': rangeCount.bind(null, -30),
-  }
-
-  rangeDisableDate = (now: Date) => {
-    const today = new Date()
-    today.setHours(23, 59, 59, 999)
-
-    return now.getTime() > today.getTime()
-  }
+    今天: rangeCount.bind(null, 0),
+    近三天: rangeCount.bind(null, -2),
+    近一周: rangeCount.bind(null, -6),
+    近30天: rangeCount.bind(null, -30),
+  };
 
   chartOption: EChartOption = {
     title: {
@@ -96,11 +84,11 @@ export class PointRecordComponent implements OnInit {
           title: '刷新数据',
           icon: 'path://M7 9h-7v-7h1v5.2c1.853-4.237 6.083-7.2 11-7.2 6.623 0 12 5.377 12 12s-5.377 12-12 12c-6.286 0-11.45-4.844-11.959-11h1.004c.506 5.603 5.221 10 10.955 10 6.071 0 11-4.929 11-11s-4.929-11-11-11c-4.66 0-8.647 2.904-10.249 7h5.249v1z',
           onclick: () => {
-            this.dateCh$.next()
+            this.dateCh$.next();
           }
         },
         saveAsImage: {
-          backgroundColor: "#fff",
+          backgroundColor: '#fff',
         }
       }
     },
@@ -153,7 +141,7 @@ export class PointRecordComponent implements OnInit {
       },
 
     ],
-    
+
     series: [
       {
         name: '温度(℃)',
@@ -172,45 +160,90 @@ export class PointRecordComponent implements OnInit {
         yAxisIndex: 1,
       }
     ]
+  };
+
+  private chartsReady$ = new Subject();
+
+  ngOnInit() {
+    this.actionInit();
+    this.getTableData();
+    DebugLog(this.datas);
+
+    merge(
+      of(1).pipe(
+        delayWhen(() => this.chartsReady$.asObservable())
+      ),
+      this.dateCh$
+    )
+    .subscribe(() => this.dateCh());
   }
 
-  private chartsReady$ = new Subject()
+  actionInit() {
+    this.gridActions = [
+      {
+        name: '查询',
+        icon: 'search',
+        code: 'point-record_search',
+        type: 'primary',
+        click: () => {
+          this.getTableData();
+        },
+        isExist: buttonAccess('point-record_search'),
+      }, {
+        name: '下载',
+        icon: 'download',
+        code: 'point-record_download',
+        type: 'default',
+        click: () => {
+        this.exportFun();
+        },
+        isExist: buttonAccess('point-record_download'),
+      },
+    ];
+  }
+
+  rangeDisableDate = (now: Date) => {
+    const today = new Date();
+    today.setHours(23, 59, 59, 999);
+
+    return now.getTime() > today.getTime();
+  }
 
   chartInit(charts: ECharts) {
-    this.chartsIns = charts
-    this.chartsReady$.next()
+    this.chartsIns = charts;
+    this.chartsReady$.next();
   }
 
   async dateCh() {
-    DebugLog(this.datas)
-    const [ start, end ] = this.datas
+    DebugLog(this.datas);
+    const [ start, end ] = this.datas;
 
-    start.setHours(0, 0, 0, 0)
-    end.setHours(23, 59, 59, 999)
-    
-    const { messageId: msgID } = this.msg.loading('数据加载中...', {nzDuration: 0})
+    start.setHours(0, 0, 0, 0);
+    end.setHours(23, 59, 59, 999);
+
+    const { messageId: msgID } = this.msg.loading('数据加载中...', {nzDuration: 0});
     const res = await this.http.get<PointRecord[]>(Apis.pointRecord, {
       pid: this.posId + '',
       start_time: format(start, 'YYYY-MM-DD HH:mm:ss.SSS'),
       end_time:   format(end,   'YYYY-MM-DD HH:mm:ss.SSS'),
-    }).toPromise()
-    this.msg.remove(msgID)
+    }).toPromise();
+    this.msg.remove(msgID);
 
-    if (res.code !== 0) return
-    this.msg.success('数据已加载')
+    if (res.code !== 0) { return; }
+    this.msg.success('数据已加载');
 
     const [time, temp, humi] = res.data.reduce((acc, it) => {
-      const time = acc[0]
-      const temp = acc[1]
-      const humi = acc[2]
-      
-      time.push(it.time)
-      temp.push(it.temp)
-      humi.push(it.humi)
+      const time = acc[0];
+      const temp = acc[1];
+      const humi = acc[2];
 
-      return acc
-    }, [[], [], []])
-    
+      time.push(it.time);
+      temp.push(it.temp);
+      humi.push(it.humi);
+
+      return acc;
+    }, [[], [], []]);
+
     this.chartsIns.setOption({
       xAxis: [
         {
@@ -228,6 +261,84 @@ export class PointRecordComponent implements OnInit {
           data: humi,
         }
       ]
-    })
+    });
   }
+
+  // 初始出请求
+  getTableData() {
+    const [ start, end ] = this.datas1;
+    start.setHours(0, 0, 0, 0);
+    end.setHours(23, 59, 59, 999);
+    const baseUrl = '/position/queryHistoricalData';
+    this.loading = true;
+    const params = {
+      pid: this.posId + '',
+      start_time: format(start, 'YYYY-MM-DD HH:mm:ss.SSS'),
+      end_time: format(end,   'YYYY-MM-DD HH:mm:ss.SSS'),
+    };
+    this.http.get<any>(`${baseUrl}?page=${this.page}&size=${this.size}`, params).subscribe(res => {
+      this.loading = false;
+      if (res.code === 0) {
+        this.listOfData = res.data;
+      }
+    });
+  }
+
+  //
+  exportFun() {
+    let [ start, end ] = this.datas1;
+    start.setHours(0, 0, 0, 0);
+    end.setHours(23, 59, 59, 999);
+    const starTime = "'" + format(start, 'YYYY-MM-DD HH:mm:ss.SSS') + "'";
+    const endTime = "'" + format(end,   'YYYY-MM-DD HH:mm:ss.SSS') + "'";
+    // const baseUrl = '/position/export?pid=' + this.posId + '&start_time=' + starTime + '&end_time=' + endTime;
+    // let modalRef: NzModalRef = this.modal.create({
+    //   nzTitle: '请确认是否下载?',
+    //   nzClosable: false,
+    //   nzWidth: 400,
+    //   nzContent: `<div>
+    //                 <a style="font-size: 18px!important;font-width: 600!important;" href="${baseUrl}" download="1">确认下载</a>
+    //               </div>`,
+    //   nzFooter: [{label: '取消', onClick: () => modalRef.close()}],
+    // });
+    const params = {
+      pid: this.posId + '',
+      start_time: "'" + format(start, 'YYYY-MM-DD HH:mm:ss.SSS') + "'",
+      end_time: "'" + format(end,   'YYYY-MM-DD HH:mm:ss.SSS') + "'",
+    };
+    const baseUrl = '/position/export?pid=' + this.posId + '&start_time=' + starTime + '&end_time=' + endTime;
+    this.modal.confirm({
+      nzTitle: '下载',
+      nzContent: '确认下载?',
+      nzOnOk: () => {
+        this.http.post(baseUrl, params).subscribe(res => {
+          if (res.code !== 0) {
+            this.msg.error(res.message);
+            return;
+          }
+          this.msg.success(res.message);
+        });
+      }
+    });
+  }
+
+  changePageIndex(pageIndex) {
+    this.page = pageIndex;
+    this.getTableData();
+  }
+
+  changePageSize(pageSize) {
+    this.size = pageSize;
+    this.getTableData();
+  }
+}
+export class TableList {
+  time: string;
+  test_point: string;
+  temp: string;
+  temp_up: string;
+  temp_down: string;
+  humi: string;
+  humi_up: string;
+  humi_down: string;
 }

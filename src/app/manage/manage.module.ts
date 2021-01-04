@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { NavComponent } from './nav/nav.component';
-import { HomeComponent } from './home/home.component'
+import { HomeComponent } from './home/home.component';
 
 import { SharedModule } from '@/shared/shared.module';
 import { ResetpwdFormComponent } from './nav/resetpwd-form/resetpwd-form.component';
@@ -40,8 +40,8 @@ import { ResetpwdFormComponent } from './nav/resetpwd-form/resetpwd-form.compone
             loadChildren: './safe/safe.module#SafeModule'
           },
           {
-            path:'basic',
-            loadChildren:'./basic/basic.module#BasicModule'
+            path: 'basic',
+            loadChildren: './basic/basic.module#BasicModule'
           },
           {
             path: 'monit',
@@ -52,8 +52,8 @@ import { ResetpwdFormComponent } from './nav/resetpwd-form/resetpwd-form.compone
             loadChildren: './verify/verify.module#VerifyModule'
           },
           {
-            path:'facility',
-            loadChildren:'./facility/facility.module#FacilityModule'
+            path: 'facility',
+            loadChildren: './facility/facility.module#FacilityModule'
           }
         ]
       }

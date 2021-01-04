@@ -1,6 +1,125 @@
-<p *ngIf="userCode ==='1'">
-  验证实施用户首页
-</p>
-<p *ngIf="userCode !=='1'">
-  home works!
-</p>
+<div class="wrapper">
+  <div *ngIf="userCode ==='1'">验证实施用户首页</div>
+  <div *ngIf="userCode !=='1'" class="content">
+    <div class="condition">
+      <div style="display: inline-block">
+        <label>监测区域 ：</label>
+        <nz-select
+          class="option-val"
+          nzShowSearch nzAllowClear
+          nzPlaceHolder="请选择"
+          style="width: 200px"
+        >
+          <nz-option nzLabel="全部" nzValue="0"></nz-option>
+          <nz-option nzLabel="001" nzValue="1"></nz-option>
+          <nz-option nzLabel="002" nzValue="2"></nz-option>
+        </nz-select>
+      </div>
+      <ul>
+        <li><span style="background: #3D9A23">测点总数 ：100</span></li>
+        <li><span style="background: #FFEC5B">预警测点 ：100</span></li>
+        <li><span style="background: #FE0f0f">报警测点 ：100</span></li>
+        <li><span style="background: #A4A5B0">离线测点 ：100</span></li>
+        <li><span style="background: #FF7747">未处理报警数 ：100</span></li>
+        <li>
+          <span *ngIf="isShow === true" (click)="showStyle(false)"><i nz-icon nzType="appstore" nzTheme="outline"></i></span>
+          <span *ngIf="isShow === false" (click)="showStyle(true)"><i nz-icon nzType="bars" nzTheme="outline"></i></span>
+        </li>
+      </ul>
+    </div>
+    <div class="con-main">
+      <div *ngIf="isShow === false"  class="card">
+        <div class="card-item" *ngFor="let item of dataList;let key=index;">
+          <div class="card-item-con">
+            <span style="font-size: 16px;"><i nz-icon nzType="wifi" nzTheme="outline" class="success-color"></i></span>
+            <span>日期 : 2021-01-01</span>
+            <span>时间 : 00:00</span>
+            <span style="font-size: 14px;">
+              <i style="margin-right: 4px;" nz-icon nzType="code-sandbox-square" nzTheme="fill" class="error-color"></i>
+              <i nz-icon nzType="slack-square" nzTheme="fill"  class="primary-color"></i>
+            </span>
+          </div>
+          <div class="card-item-con">
+            <div class="card-item-con-mid">
+              <div class="item1">
+                <p>温</p>
+                <p>度</p>
+              </div>
+              <div class="item2"><span class="success-color">-40.5</span>℃</div>
+              <div class="item3">
+                <p>温度范围</p>
+                <p>上限 : -20.5℃</p>
+                <p>下限 : -50.5℃</p>
+              </div>
+            </div>
+          </div>
+          <div class="card-item-con">
+            <div class="card-item-con-mid">
+              <div class="item1">
+                <p>湿</p>
+                <p>度</p>
+              </div>
+              <div class="item2"><span class="warn-color">84.5</span>%</div>
+              <div class="item3">
+                <p>湿度范围</p>
+                <p>上限 : 85%</p>
+                <p>下限 : 35%</p>
+              </div>
+            </div>
+          </div>
+          <div class="card-item-con">
+            <span>仓库名称 : 萝岗仓库冷冻库A</span>
+            <span>探头名称 : a-1号探头</span>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="isShow === true"  class="list">
+        <nz-table
+          class="history-table"
+          style="height: 400px"
+          #basicTable
+          [nzData]="listOfData"
+          nzShowSizeChanger
+          [nzScroll]="{y: tableHeight}"
+          [nzTotal]="total"
+          (nzPageIndexChange)="changePageIndex($event)"
+          (nzPageSizeChange)="changePageSize($event)"
+        >
+          <thead>
+          <tr>
+            <th nzWidth="60px">序号</th>
+            <th nzWidth="110px">库房名称</th>
+            <th nzWidth="110px">测点位置</th>
+            <th nzWidth="100px">日期</th>
+            <th nzWidth="80px">时间</th>
+            <th nzWidth="100px">温度(℃)</th>
+            <th nzWidth="100px">温度范围(℃)</th>
+            <th nzWidth="100px">湿度(%)</th>
+            <th nzWidth="100px">湿度范围(%)</th>
+            <th nzWidth="80px">测点状态</th>
+            <th nzWidth="50px">检查</th>
+            <th nzWidth="50px">曲线图</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of basicTable.data;let key = index">
+            <td>{{ key+1 }}</td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.pointer }}</td>
+            <td>{{ item.time | date:'yyyy-MM-dd' }}</td>
+            <td>{{ item.time | date:'HH:mm' }}</td>
+            <td>{{item.temp}}</td>
+            <td>{{item.temp_up + "~" + item.temp_down}}</td>
+            <td>{{item.humi}}</td>
+            <td>{{item.humi_up + "~" + item.humi_down}}</td>
+            <td>{{item.state}}</td>
+            <td><i style="font-size: 18px" nz-icon nzType="code-sandbox-square" nzTheme="fill" class="error-color"></i></td>
+            <td><i style="font-size: 18px" nz-icon nzType="slack-square" nzTheme="fill"  class="primary-color"></i></td>
+          </tr>
+          </tbody>
+        </nz-table>
+      </div>
+    </div>
+  </div>
+</div>
+<!--[ngModel]="checkVal"-->

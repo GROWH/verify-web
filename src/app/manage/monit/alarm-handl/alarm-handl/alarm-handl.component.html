@@ -1,19 +1,33 @@
-
 <div class="wrapper">
   <div class="condition">
     <div class="condition-item">
       <label>库房名称 ：</label>
-      <nz-select nzShowSearch nzAllowClear nzPlaceHolder="请选择" style="width: 200px">
+      <nz-select
+        nzShowSearch
+        nzAllowClear
+        nzPlaceHolder="请选择"
+        style="width: 200px"
+        [ngModel]="condition.cId"
+        (ngModelChange)="storeChange($event,'cId')"
+      >
         <nz-option *ngFor="let item of unitList" [nzLabel]="item.name" [nzValue]="item.id" ></nz-option>
       </nz-select>
     </div>
     <div class="condition-item">
       <label>报警开始时间 ：</label>
-      <nz-date-picker></nz-date-picker> 至 <nz-date-picker></nz-date-picker>
+      <nz-date-picker [(ngModel)]="condition.start" (ngModelChange)="storeChange($event,'start')"></nz-date-picker> 至
+      <nz-date-picker [(ngModel)]="condition.end" (ngModelChange)="storeChange($event,'end')"></nz-date-picker>
     </div>
     <div class="condition-item">
       <label>类型 ：</label>
-      <nz-select nzShowSearch nzAllowClear nzPlaceHolder="请选择" style="width: 100px">
+      <nz-select
+        nzShowSearch
+        nzAllowClear
+        nzPlaceHolder="请选择"
+        style="width: 120px"
+        [ngModel]="condition.type"
+        (ngModelChange)="storeChange($event,'type')"
+      >
         <nz-option nzLabel="温度" nzValue="温度"></nz-option>
         <nz-option nzLabel="湿度" nzValue="湿度"></nz-option>
         <nz-option nzLabel="温度+湿度" nzValue="温度+湿度"></nz-option>
@@ -21,9 +35,16 @@
     </div>
     <div class="condition-item">
       <label>处理状态 ：</label>
-      <nz-select nzShowSearch nzAllowClear nzPlaceHolder="请选择" style="width: 100px">
-        <nz-option nzLabel="已处理" nzValue="已处理"></nz-option>
-        <nz-option nzLabel="未处理" nzValue="未已处理"></nz-option>
+      <nz-select
+        nzShowSearch
+        nzAllowClear
+        nzPlaceHolder="请选择"
+        style="width: 120px"
+        [ngModel]="condition.status"
+        (ngModelChange)="storeChange($event,'status')"
+      >
+        <nz-option nzLabel="已处理" nzValue="true"></nz-option>
+        <nz-option nzLabel="未处理" nzValue="false"></nz-option>
       </nz-select>
     </div>
     <grid-action style="display:inline-block;float:right;width: 172px;height: 50px;line-height: 45px;"

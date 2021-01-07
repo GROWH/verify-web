@@ -1,28 +1,19 @@
+
 <div class="wrapper">
   <div class="condition">
     <div class="condition-item">
       <label>库房名称 ：</label>
-      <nz-select
-        nzShowSearch nzAllowClear
-        nzPlaceHolder="请选择"
-        style="width: 200px"
-      >
-        <nz-option nzLabel="全部" nzValue="0"></nz-option>
-        <nz-option nzLabel="001" nzValue="1"></nz-option>
-        <nz-option nzLabel="002" nzValue="2"></nz-option>
+      <nz-select nzShowSearch nzAllowClear nzPlaceHolder="请选择" style="width: 200px">
+        <nz-option *ngFor="let item of unitList" [nzLabel]="item.name" [nzValue]="item.id" ></nz-option>
       </nz-select>
     </div>
     <div class="condition-item">
       <label>报警开始时间 ：</label>
-      <nz-date-picker></nz-date-picker>  至  <nz-date-picker></nz-date-picker>
+      <nz-date-picker></nz-date-picker> 至 <nz-date-picker></nz-date-picker>
     </div>
     <div class="condition-item">
       <label>类型 ：</label>
-      <nz-select
-        nzShowSearch nzAllowClear
-        nzPlaceHolder="请选择"
-        style="width: 100px"
-      >
+      <nz-select nzShowSearch nzAllowClear nzPlaceHolder="请选择" style="width: 100px">
         <nz-option nzLabel="温度" nzValue="温度"></nz-option>
         <nz-option nzLabel="湿度" nzValue="湿度"></nz-option>
         <nz-option nzLabel="温度+湿度" nzValue="温度+湿度"></nz-option>
@@ -30,57 +21,48 @@
     </div>
     <div class="condition-item">
       <label>处理状态 ：</label>
-      <nz-select
-        nzShowSearch nzAllowClear
-        nzPlaceHolder="请选择"
-        style="width: 100px"
-      >
+      <nz-select nzShowSearch nzAllowClear nzPlaceHolder="请选择" style="width: 100px">
         <nz-option nzLabel="已处理" nzValue="已处理"></nz-option>
         <nz-option nzLabel="未处理" nzValue="未已处理"></nz-option>
       </nz-select>
     </div>
-    <grid-action style="display: inline-block;float: right;width: 172px;height: 50px;line-height: 45px;" [actions]="gridActions"></grid-action>
+    <grid-action style="display:inline-block;float:right;width: 172px;height: 50px;line-height: 45px;"
+      [actions]="gridActions"></grid-action>
   </div>
-  <nz-table
-    class="history-table"
-    style="height: 400px"
-    #basicTable
-    [nzData]="listOfData"
-    nzShowSizeChanger
-    [nzScroll]="{y: tableHeight}"
-    [nzTotal]="total"
-    (nzPageIndexChange)="changePageIndex($event)"
-    (nzPageSizeChange)="changePageSize($event)"
-  >
+  <nz-table class="history-table" style="height: 400px" #basicTable [nzData]="listOfData" nzShowSizeChanger
+    [nzScroll]="{y: tableHeight}" [nzTotal]="total" (nzPageIndexChange)="changePageIndex($event)"
+    (nzPageSizeChange)="changePageSize($event)">
     <thead>
-    <tr>
-      <th nzWidth="60px">序号</th>
-      <th nzWidth="110px">库房名称</th>
-      <th nzWidth="110px">测点位置</th>
-      <th nzWidth="130px">开始时间</th>
-      <th nzWidth="130px">结束时间</th>
-      <th nzWidth="100px">持续时间</th>
-      <th nzWidth="100px">类型</th>
-      <th nzWidth="100px">温度范围(℃)</th>
-      <th nzWidth="100px">湿度范围(%)</th>
-      <th nzWidth="50px">曲线图</th>
-      <th nzWidth="80px">处理状态</th>
-    </tr>
+      <tr>
+        <th nzWidth="60px">序号</th>
+        <th nzWidth="110px">库房名称</th>
+        <th nzWidth="110px">测点位置</th>
+        <th nzWidth="130px">开始时间</th>
+        <th nzWidth="130px">结束时间</th>
+        <th nzWidth="100px">持续时间</th>
+        <th nzWidth="100px">类型</th>
+        <th nzWidth="100px">温度范围(℃)</th>
+        <th nzWidth="100px">湿度范围(%)</th>
+        <th nzWidth="80px">曲线图</th>
+        <th nzWidth="80px">处理状态</th>
+      </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let item of basicTable.data;let key = index">
-      <td>{{ key+1 }}</td>
-      <td>{{ item.name }}</td>
-      <td>{{ item.pointer }}</td>
-      <td>{{ item.start_time | date:'yyyy-MM-dd HH:mm' }}</td>
-      <td>{{ item.end_time | date:'yyyy-MM-dd HH:mm' }}</td>
-      <td>{{ timeGap(item) }}</td>
-      <td>{{item.type}}</td>
-      <td>{{item.temp_up + "~" + item.temp_down}}</td>
-      <td>{{item.humi_up + "~" + item.humi_down}}</td>
-      <td><i style="font-size: 18px" nz-icon nzType="slack-square" nzTheme="fill"  class="primary-color"></i></td>
-      <td>{{item.state}}</td>
-    </tr>
+      <tr *ngFor="let item of basicTable.data;let key = index">
+        <td>{{ key+1 }}</td>
+        <td>{{ item.cname }}</td>
+        <td>{{ item.pname }}</td>
+        <td>{{ item.alarm_time | date:'yyyy-MM-dd HH:mm' }}</td>
+        <td>{{ item.alarm_time_end | date:'yyyy-MM-dd HH:mm' }}</td>
+        <td>{{ timeGap(item) }}</td>
+        <td>{{item.alarm_type}}</td>
+        <td>{{item.temp_up + "~" + item.temp_down}}</td>
+        <td>{{item.humi_up + "~" + item.humi_down}}</td>
+        <td><i (click)="pointChers(item)" style="font-size: 18px" nz-icon nzType="slack-square" nzTheme="fill" class="primary-color"></i></td>
+        <td>
+          <a (click)="handles(item)">{{item.state}}</a>
+        </td>
+      </tr>
     </tbody>
   </nz-table>
 </div>

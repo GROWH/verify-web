@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2021-01-04 17:50:55
+ * @LastEditTime: 2021-01-04 20:22:52
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: /verify-web/src/app/manage/monit/monit.module.ts
+ */
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -10,7 +18,6 @@ import { MyHouseModule } from './my-house/my-house.module';
 import { MyHouseService } from './my-house/my-house.service';
 import { AlarmHandlModule } from './alarm-handl/alarm-handl.module';
 import { AlarmHandlService } from './alarm-handl/alarm-handl.service';
-
 @NgModule({
   declarations: [],
   imports: [

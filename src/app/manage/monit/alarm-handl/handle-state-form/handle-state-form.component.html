@@ -1,0 +1,40 @@
+<div>
+  <form nz-form [formGroup]="form" (ngSubmit)="submitForm()">
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="cause">报警原因</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="cause" id="cause" />
+        <nz-form-explain *ngIf="form.get('cause')?.dirty && form.get('cause')?.errors">
+          请输入
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="method">处理方法</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="method" id="method" />
+        <nz-form-explain *ngIf="form.get('method')?.dirty && form.get('method')?.errors">
+          请输入
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzRequired nzFor="processor">处理人</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="processor" id="processor" />
+        <nz-form-explain *ngIf="form.get('processor')?.dirty && form.get('processor')?.errors">
+          请输入
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="remarks">备注</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <textarea  nz-input formControlName="remarks" id="remarks"></textarea>
+        <nz-form-explain *ngIf="form.get('remarks')?.dirty && form.get('remarks')?.errors">
+          请输入
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</div>

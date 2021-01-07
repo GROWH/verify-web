@@ -70,18 +70,6 @@ export class AlarmHandlComponent implements OnInit {
       },
     ];
   }
-  // 刷新
-  refreshStatus(): void {
-    this.loading = true;
-    this.http
-      .get<any>(`${this.baseUrl}?page=${this.page}&size=${this.size}`)
-      .subscribe((res) => {
-        this.loading = false;
-        if (res.code === 0) {
-          this.listOfData = res.data.list;
-        }
-      });
-  }
 
   changePageIndex(pageIndex) {
     this.page = pageIndex;
@@ -140,8 +128,8 @@ export class AlarmHandlComponent implements OnInit {
               nzTitle: '提交',
               nzContent: '确认提交?',
               nzOnOk: () => {
-                const house = formVal;
-                this.http.put(this.baseUrl, house).subscribe((res) => {
+                const params = formVal;
+                this.http.put(this.baseUrl, params).subscribe((res) => {
                   if (res.code !== 0) {
                     this.msg.error(res.message);
                     return;

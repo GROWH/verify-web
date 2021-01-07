@@ -11,8 +11,8 @@
         <h1 *ngIf="!isCollapsed">温湿度监测冷链验证管理系统</h1>
       </a>
     </div>
-    <ul nz-menu [nzMode]="'inline'" nzTheme="dark" [nzInlineCollapsed]="isCollapsed">
-      <li nz-submenu *ngFor="let item of menuList;let key=index;">
+    <ul nz-menu [nzMode]="'inline'" nzTheme="light" [nzInlineCollapsed]="isCollapsed">
+      <li nz-submenu *ngFor="let item of menuList;let key=index;" [(nzOpen)]="openMap['sub'+key]" (nzOpenChange)="openHandler('sub'+key)">
 <!--        home-->
         <a class="homeMenu" title *ngIf="item.key_word == 'home'" routerLink="{{item.module_url}}">
           <i nz-icon type="{{item.icon}}"></i>
@@ -41,6 +41,24 @@
              [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
           ></i>
         </span>
+        <div class="header-tab"  [style.width.px]="conWidth">
+          <nz-tabset
+            nzType="card"
+            nzSize="small"
+          >
+            <nz-tab
+              *ngFor="let menu of tabList; index as i"
+              [nzTitle]="titleTemplate"
+            >
+              <ng-template #titleTemplate>
+                <div class="self-tab">
+                  <a [ngClass]="{'a-active':menu.isSelect,'.a-normal':!menu.isSelect}" routerLink="/{{ menu.module }}">{{ menu.title }}</a>
+                  <i class="anticon anticon-close ant-tabs-close-x" (click)="closeUrl(menu.module,menu.isSelect)"></i>
+                </div>
+              </ng-template>
+            </nz-tab>
+          </nz-tabset>
+        </div>
         <div class="alert-list">
           <span  [style.display]="isShowTip ? 'inline-block':'none'" class="alert-mask" (click)="noticeClick()"></span><!--  提示遮罩层-->
           <span class="bellStyle" title="新的通知">
@@ -57,8 +75,8 @@
           </div>
         </div>
         <div class="user-manager">
-          <i nz-icon style="font-size: 20px" nzType="user" nzTheme="outline"></i>
-          <div id="user-option">
+          <i nz-icon style="font-size: 20px" nzType="user" nzTheme="outline" (mouseover)="mouseFun('inline-block')"></i>
+          <div id="user-option" (mouseleave)="mouseFun('none')">
             <div class="mask"></div>
             <div class="top"></div>
             <ul>

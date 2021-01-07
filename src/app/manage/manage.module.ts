@@ -7,6 +7,7 @@ import { HomeComponent } from './home/home.component';
 
 import { SharedModule } from '@/shared/shared.module';
 import { ResetpwdFormComponent } from './nav/resetpwd-form/resetpwd-form.component';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { ResetpwdFormComponent } from './nav/resetpwd-form/resetpwd-form.compone
           }
         ]
       }
-    ])
+    ]),
+    FormsModule,
   ],
   entryComponents: [
     ResetpwdFormComponent,

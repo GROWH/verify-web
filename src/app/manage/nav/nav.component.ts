@@ -1,36 +1,73 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {TongchangHttpService} from "tongchang-lib";
+import {TongchangHttpService} from 'tongchang-lib';
 
 import {ResetpwdFormComponent} from './resetpwd-form/resetpwd-form.component';
-import { NzModalService, NzModalRef, NzMessageService } from "ng-zorro-antd";
+import {NzModalService, NzModalRef, NzMessageService, collapseMotion} from 'ng-zorro-antd';
+
+import { SimpleReuseStrategy } from '../../SimpleReuseStrategy';
+import {ActivatedRoute, Router, NavigationEnd, RouterEvent} from '@angular/router';
+import { filter, map, mergeMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',
-  styleUrls: ['./nav.component.scss']
+  styleUrls: ['./nav.component.scss'],
+  providers: [SimpleReuseStrategy]
 })
 export class NavComponent implements OnInit, OnDestroy {
   isCollapsed = false;
   menuList: any = [];
-  isShow: boolean = false;//提醒框是否显示(block)
-  remindUrl: string = "/remind";//接口名
+  isShow = false; // 提醒框是否显示(block)
+  remindUrl = '/remind'; // 接口名
   remindList: any = [];
-  setTimer: any = [];//定时器名称
-  isShowTip: boolean = false;//是否有提示
+  setTimer: any = []; // 定时器名称
+  isShowTip = false; // 是否有提示
   baseUrl = '/account';
-
+  // 路由列表
+  tabList: any = [{title: '首页', module: '/manage/home', power: '/manage/home', isSelect: true}];
+  conWidth = 0;
+  openMap = {};
 
   constructor(
     private http: TongchangHttpService,
     private modal: NzModalService,
     private msg: NzMessageService,
+    private router: Router,
+    private route: Router,
+    private activatedRoute: ActivatedRoute,
   ) {
   }
 
   ngOnInit() {
+    this.conWidth = document.body.clientWidth - 269;
+    const tabArr = localStorage.getItem('tabList');
+    if (tabArr !== null) { this.tabList = JSON.parse(tabArr); }
+    this.menuAddIcon();
+    this.getRemind();
+    this.tabRouter();
+    // this.timer()
+  }
+
+  // 定时调用提醒
+  timer() {
+    this.setTimer = setInterval(() => {
+      this.getRemind();
+    }, 60000);
+  }
+
+  ngOnDestroy() {
+    // 清除定时器
+    clearInterval(this.setTimer);
+  }
+  // 主菜单相关处理
+  menuAddIcon() {
     const listData = localStorage.getItem('menuAuth');
-    this.menuList = JSON.parse(listData)
-    this.menuList.map(item => {
+    this.menuList = JSON.parse(listData);
+    this.menuList.map((item, index) => {
+      // 设置主菜单打开状态
+      const keyName = 'sub' + index;
+      this.openMap[keyName] = false;
+      // 给主菜单添加图标
       if (item.module_code === 'home') {
         item.icon = 'home';
       } else if (item.module_code === 'system') {
@@ -47,22 +84,16 @@ export class NavComponent implements OnInit, OnDestroy {
         item.icon = 'appstore';
       }
     });
-    this.getRemind();
-    // this.timer()
+  }
+  openHandler(value: string): void {
+    for (const key in this.openMap) {
+      if (key !== value) {
+        this.openMap[key] = false;
+      }
+    }
   }
 
-  //定时调用提醒
-  timer() {
-    this.setTimer = setInterval(() => {
-      this.getRemind();
-    }, 60000);
-  }
-
-  ngOnDestroy() {
-    //清除定时器
-    clearInterval(this.setTimer);
-  }
-  //获取报警信息
+  // 获取报警信息
   getRemind() {
     const findArr: any = [];
     this.http.get<any>(this.remindUrl).subscribe(res => {
@@ -107,28 +138,32 @@ export class NavComponent implements OnInit, OnDestroy {
       }
     });
   }
-
   navScaling() {
+    if (!this.isCollapsed) {
+      this.conWidth = document.body.clientWidth - 108;
+    } else {
+      this.conWidth = document.body.clientWidth - 284;
+    }
     this.isCollapsed = !this.isCollapsed;
   }
-
-
   noticeClick() {
     this.isShow = !this.isShow;
   }
-  //退出账号
+  mouseFun(arr) {
+    document.getElementById('user-option').style.display = arr;
+  }
+  // 退出账号
   outSyatem() {
-    sessionStorage.clear();  //清除所有session值
+    sessionStorage.clear();  // 清除所有session值
     const url = (window.location.href).split('#')[0];
     window.open(url, '_self');
   }
-
-  //修改密码
+  // 修改密码
   resetPsw() {
     const param = new params;
     const userInfo = JSON.parse(localStorage.getItem('userInfo'));
-    let modalRef: NzModalRef = this.modal.create({
-      nzTitle: "修改密码",
+    const modalRef: NzModalRef = this.modal.create({
+      nzTitle: '修改密码',
       nzContent: ResetpwdFormComponent,
       nzWidth: 700,
       nzComponentParams: {param},
@@ -142,7 +177,7 @@ export class NavComponent implements OnInit, OnDestroy {
           type: 'primary',
           disabled: comp => !comp.validateForm.valid,
           onClick: (comp) => {
-            let formVal = {
+            const formVal = {
               ...userInfo,
               ...comp.validateForm.getRawValue(),
             };
@@ -169,8 +204,66 @@ export class NavComponent implements OnInit, OnDestroy {
       nzWrapClassName: 'modal-vertical-center'
     });
   }
+
+
+  // 处理tab所需要的menulist
+  handArr(menuArr) {
+    let cbLiat = [];
+    menuArr.map(item => {
+      if (!item.module_code.indexOf('home')) {
+        cbLiat.push(menuArr[0]);
+      }
+      cbLiat = cbLiat.concat(item.children);
+    });
+    return cbLiat;
+  }
+  // tab-Router
+  tabRouter() {
+    const menuArr = this.handArr(this.menuList);
+    this.router.events.pipe(
+      filter(x => x instanceof NavigationEnd)
+    ).subscribe((event) => {
+      if ((event instanceof RouterEvent)) {
+        this.tabList.forEach(p => p.isSelect = false);
+        const titArr = menuArr.filter((ele) => {
+          return event.url.indexOf(ele.module_url) > -1;
+        }); // 获取Tab => title
+        const tabArr = this.tabList.filter((ele) => {
+          return titArr[0].module_name === ele.title;
+        });
+        if (tabArr.length === 0) {
+          const menu = {title: titArr[0].module_name, module: event.url, power: event.url, isSelect: true};
+          this.tabList.push(menu);
+        } else {
+          tabArr[0].isSelect = true;
+        }
+      }
+      localStorage.setItem('tabList', JSON.stringify(this.tabList));
+    });
+  }
+  // 关闭选项标签
+  closeUrl(module: string, isSelect: boolean) {
+      // 当前关闭的是第几个路由
+      const index = this.tabList.findIndex(p => p.module == module);
+      // 如果只有一个不可以关闭
+      if (this.tabList.length == 1) { return ; }
+
+      this.tabList = this.tabList.filter(p => p.module != module);
+      // 删除复用
+      delete SimpleReuseStrategy.handlers[module];
+      if (!isSelect) { return; }
+      // 显示上一个选中
+      let menu = this.tabList[index - 1];
+      if (!menu) {// 如果上一个没有下一个选中
+        menu = this.tabList[index + 1];
+     }
+      this.tabList.forEach(p => p.isSelect = p.module == menu.module );
+      // 显示当前路由信息
+      this.router.navigate(['/' + menu.module]);
+    }
 }
 
-class params {
+
+export class params {
   id: number;
 }

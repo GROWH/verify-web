@@ -15,7 +15,6 @@ import { DeviceSelectComponent } from './device-select/device-select.component';
 import { UnitSelectComponent } from './unit-select/unit-select.component';
 import { HandRecordComponent } from './hand-record/hand-record.component';
 import { HandRecordFormComponent } from './hand-record-form/hand-record-form.component';
-import { PointRecordComponent } from './point-record/point-record.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +27,6 @@ import { PointRecordComponent } from './point-record/point-record.component';
     UnitSelectComponent,
     HandRecordComponent,
     HandRecordFormComponent,
-    PointRecordComponent,
   ],
   imports: [
     CommonModule,
@@ -43,7 +41,6 @@ import { PointRecordComponent } from './point-record/point-record.component';
     DeviceSelectComponent,
     UnitSelectComponent,
     HandRecordFormComponent,
-    PointRecordComponent,
   ],
 })
 export class MaintainModule { }

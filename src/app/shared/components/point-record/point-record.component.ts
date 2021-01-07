@@ -4,12 +4,13 @@ import { addDays, format } from 'date-fns';
 import { Subject, merge, of, Observable } from 'rxjs';
 import { DebugLog, TongchangHttpService, TongchangLibService } from 'tongchang-lib';
 
-import { Apis } from '@/shared/urls.const';
+import { Apis } from '@shared/urls.const';
 import { PointRecord } from '@/model/HouseMonit';
-import {delayWhen, window} from 'rxjs/operators';
+import {delayWhen} from 'rxjs/operators';
 import {NzMessageService, NzModalRef, NzModalService} from 'ng-zorro-antd';
 import {GridAction} from '@/model/GridAction';
 import {buttonAccess} from '@/config.const';
+import * as $ from  'jquery';
 
 const rangeCount = (offset: number) => {
   const end = new Date();
@@ -36,7 +37,7 @@ export class PointRecordComponent implements OnInit {
 
   @Input() posId = -1;
   page = 1;
-  size = 10;
+  size = 20;
   total = 1;
   listOfData: TableList[] = [];
   chartsIns: ECharts;
@@ -273,52 +274,35 @@ export class PointRecordComponent implements OnInit {
     this.loading = true;
     const params = {
       pid: this.posId + '',
-      start_time: format(start, 'YYYY-MM-DD HH:mm:ss.SSS'),
-      end_time: format(end,   'YYYY-MM-DD HH:mm:ss.SSS'),
+      start_time: "'" + format(start, 'YYYY-MM-DD HH:mm:ss.SSS') + "'" ,
+      end_time: "'" + format(end,   'YYYY-MM-DD HH:mm:ss.SSS') + "'",
     };
     this.http.get<any>(`${baseUrl}?page=${this.page}&size=${this.size}`, params).subscribe(res => {
       this.loading = false;
       if (res.code === 0) {
-        this.listOfData = res.data;
+        this.total = res.data.totalRow;
+        this.listOfData = res.data.list;
       }
     });
   }
 
   //
   exportFun() {
-    let [ start, end ] = this.datas1;
+    const [ start, end ] = this.datas1;
     start.setHours(0, 0, 0, 0);
     end.setHours(23, 59, 59, 999);
     const starTime = "'" + format(start, 'YYYY-MM-DD HH:mm:ss.SSS') + "'";
     const endTime = "'" + format(end,   'YYYY-MM-DD HH:mm:ss.SSS') + "'";
-    // const baseUrl = '/position/export?pid=' + this.posId + '&start_time=' + starTime + '&end_time=' + endTime;
-    // let modalRef: NzModalRef = this.modal.create({
-    //   nzTitle: '请确认是否下载?',
-    //   nzClosable: false,
-    //   nzWidth: 400,
-    //   nzContent: `<div>
-    //                 <a style="font-size: 18px!important;font-width: 600!important;" href="${baseUrl}" download="1">确认下载</a>
-    //               </div>`,
-    //   nzFooter: [{label: '取消', onClick: () => modalRef.close()}],
-    // });
-    const params = {
-      pid: this.posId + '',
-      start_time: "'" + format(start, 'YYYY-MM-DD HH:mm:ss.SSS') + "'",
-      end_time: "'" + format(end,   'YYYY-MM-DD HH:mm:ss.SSS') + "'",
-    };
-    const baseUrl = '/position/export?pid=' + this.posId + '&start_time=' + starTime + '&end_time=' + endTime;
-    this.modal.confirm({
-      nzTitle: '下载',
-      nzContent: '确认下载?',
-      nzOnOk: () => {
-        this.http.post(baseUrl, params).subscribe(res => {
-          if (res.code !== 0) {
-            this.msg.error(res.message);
-            return;
-          }
-          this.msg.success(res.message);
-        });
-      }
+    const downloadUrl = 'api/position/download?pid=' + this.posId + '&start_time=' + starTime + '&end_time=' + endTime;
+    const fileName = '温湿度监控数据(' + format(new Date(), 'YYYY-MM-DD HH:mm') + ').xls';
+    const modalRef: NzModalRef = this.modal.create({
+      nzTitle: '请确认是否下载?',
+      nzWidth: 400,
+      nzClosable: false,
+      nzContent: `<div style="font-size: 18px!important;font-width: 600!important;">
+            <a href="${downloadUrl}">下载 ${fileName}</a>
+          </div>`,
+      nzFooter: [{label: '取消', onClick: () => modalRef.close()}],
     });
   }
 

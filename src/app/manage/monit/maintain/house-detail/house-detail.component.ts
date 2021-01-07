@@ -14,7 +14,7 @@ import { DOCUMENT } from '@angular/common';
 import { MaintainService } from '../maintain.service';
 import { MaintainSerToken } from '../../monit.routing.token';
 import { Unit } from '@/model/Unit';
-import { PointRecordComponent } from '../point-record/point-record.component';
+import { PointRecordComponent } from '../../../../shared/components/point-record/point-record.component';
 
 moment.locale('zh-cn')
 

@@ -9,10 +9,10 @@
           nzShowSearch nzAllowClear
           nzPlaceHolder="请选择"
           style="width: 200px"
+          [ngModel]="checkVal"
+          (ngModelChange)="storeChange($event)"
         >
-          <nz-option nzLabel="全部" nzValue="0"></nz-option>
-          <nz-option nzLabel="001" nzValue="1"></nz-option>
-          <nz-option nzLabel="002" nzValue="2"></nz-option>
+          <nz-option *ngFor="let item of storeList" [nzLabel]="item.name" [nzValue]="item.id"></nz-option>
         </nz-select>
       </div>
       <ul>
@@ -28,62 +28,68 @@
       </ul>
     </div>
     <div class="con-main">
-      <div *ngIf="isShow === false"  class="card">
-        <div class="card-item" *ngFor="let item of dataList;let key=index;">
-          <div class="card-item-con">
-            <span style="font-size: 16px;"><i nz-icon nzType="wifi" nzTheme="outline" class="success-color"></i></span>
-            <span>日期 : 2021-01-01</span>
-            <span>时间 : 00:00</span>
-            <span style="font-size: 14px;">
-              <i style="margin-right: 4px;" nz-icon nzType="code-sandbox-square" nzTheme="fill" class="error-color"></i>
-              <i nz-icon nzType="slack-square" nzTheme="fill"  class="primary-color"></i>
+      <div class="card-inner" [style.height.px]="cardConHeight"  *ngIf="isShow === false" (scroll)="divScrollFun()">
+        <div class="card" *ngIf="listOfData.length === 0">
+          <div style="text-align: center;margin: auto">
+            <img width="200" src="../../../assets/imgs/temp.jpg" alt="暂无数据">
+            <p>暂无数据</p>
+          </div>
+        </div>
+        <div class="card" *ngIf="listOfData.length !== 0">
+          <div class="card-item" *ngFor="let item of listOfData;let key=index;">
+            <div class="card-item-con">
+              <span style="font-size: 16px;"><i nz-icon nzType="wifi" nzTheme="outline" [ngClass]="{'success-color':isState(item.time),'default-color':!isState(item.time)}"></i></span>
+              <span>日期 : {{ item.time | date:'yyyy-MM-dd' }}</span>
+              <span>时间 : {{ item.time | date:'HH:mm' }}</span>
+              <span style="font-size: 14px;cursor: pointer">
+<!--              <i style="margin-right: 4px;" nz-icon nzType="code-sandbox-square" nzTheme="fill" class="error-color"></i>-->
+              <i (click)="pointChers(item)" style="margin-left: 30px;" nz-icon nzType="slack-square" nzTheme="fill"  class="primary-color"></i>
             </span>
-          </div>
-          <div class="card-item-con">
-            <div class="card-item-con-mid">
-              <div class="item1">
-                <p>温</p>
-                <p>度</p>
-              </div>
-              <div class="item2"><span class="success-color">-40.5</span>℃</div>
-              <div class="item3">
-                <p>温度范围</p>
-                <p>上限 : -20.5℃</p>
-                <p>下限 : -50.5℃</p>
+            </div>
+            <div class="card-item-con">
+              <div class="card-item-con-mid">
+                <div class="item1">
+                  <p>温</p>
+                  <p>度</p>
+                </div>
+                <div class="item2"><span class="success-color">{{item.temp}}</span>℃</div>
+                <div class="item3">
+                  <p>温度范围</p>
+                  <p>上限 : {{item.temp_up}}℃</p>
+                  <p>下限 : {{item.temp_down}}℃</p>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="card-item-con">
-            <div class="card-item-con-mid">
-              <div class="item1">
-                <p>湿</p>
-                <p>度</p>
-              </div>
-              <div class="item2"><span class="warn-color">84.5</span>%</div>
-              <div class="item3">
-                <p>湿度范围</p>
-                <p>上限 : 85%</p>
-                <p>下限 : 35%</p>
+            <div class="card-item-con">
+              <div class="card-item-con-mid">
+                <div class="item1">
+                  <p>湿</p>
+                  <p>度</p>
+                </div>
+                <div class="item2"><span class="warn-color">{{item.humi}}</span>%</div>
+                <div class="item3">
+                  <p>湿度范围</p>
+                  <p>上限 : {{item.humi_up}}%</p>
+                  <p>下限 : {{item.humi_down}}%</p>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="card-item-con">
-            <span>仓库名称 : 萝岗仓库冷冻库A</span>
-            <span>探头名称 : a-1号探头</span>
+            <div class="card-item-con">
+              <span title="{{item.cname}}">仓库名称 : {{ item.cname }}</span>
+              <span title="{{item.bname}}">探头名称 : {{ item.bname }}</span>
+            </div>
           </div>
         </div>
       </div>
       <div *ngIf="isShow === true"  class="list">
         <nz-table
           class="history-table"
-          style="height: 400px"
           #basicTable
           [nzData]="listOfData"
           nzShowSizeChanger
-          [nzScroll]="{y: tableHeight}"
-          [nzTotal]="total"
-          (nzPageIndexChange)="changePageIndex($event)"
-          (nzPageSizeChange)="changePageSize($event)"
+          [nzScroll]="{y: tableHeight+'px'}"
+          [nzShowPagination]="false"
+          [nzFrontPagination]="false"
         >
           <thead>
           <tr>
@@ -97,29 +103,37 @@
             <th nzWidth="100px">湿度(%)</th>
             <th nzWidth="100px">湿度范围(%)</th>
             <th nzWidth="80px">测点状态</th>
-            <th nzWidth="50px">检查</th>
+<!--            <th nzWidth="50px">检查</th>-->
             <th nzWidth="50px">曲线图</th>
           </tr>
           </thead>
           <tbody>
           <tr *ngFor="let item of basicTable.data;let key = index">
             <td>{{ key+1 }}</td>
-            <td>{{ item.name }}</td>
-            <td>{{ item.pointer }}</td>
+            <td>{{ item.cname }}</td>
+            <td>{{ item.bname }}</td>
             <td>{{ item.time | date:'yyyy-MM-dd' }}</td>
             <td>{{ item.time | date:'HH:mm' }}</td>
             <td>{{item.temp}}</td>
             <td>{{item.temp_up + "~" + item.temp_down}}</td>
             <td>{{item.humi}}</td>
             <td>{{item.humi_up + "~" + item.humi_down}}</td>
-            <td>{{item.state}}</td>
-            <td><i style="font-size: 18px" nz-icon nzType="code-sandbox-square" nzTheme="fill" class="error-color"></i></td>
-            <td><i style="font-size: 18px" nz-icon nzType="slack-square" nzTheme="fill"  class="primary-color"></i></td>
+            <td>{{isState(item.time) ? '在线' : '离线'}}</td>
+<!--            <td><i style="font-size: 18px" nz-icon nzType="code-sandbox-square" nzTheme="fill" class="error-color"></i></td>-->
+            <td><i (click)="pointChers(item)" style="font-size: 18px;cursor: pointer" nz-icon nzType="slack-square" nzTheme="fill"  class="primary-color"></i></td>
           </tr>
           </tbody>
         </nz-table>
+        <nz-pagination
+          class="pagination"
+          [nzTotal]="total"
+          [nzShowSizeChanger]="true"
+          [(nzPageIndex)]="page"
+          [(nzPageSize)]="size"
+          (nzPageIndexChange)="changePageIndex($event)"
+          (nzPageSizeChange)="changePageSize($event)"
+        ></nz-pagination>
       </div>
     </div>
   </div>
 </div>
-<!--[ngModel]="checkVal"-->

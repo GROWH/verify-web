@@ -33,9 +33,8 @@
           [nzData]="listOfData"
           nzShowSizeChanger
           [nzScroll]="{ x: '100%',y: '270px'}"
-          [nzTotal]="total"
-          (nzPageIndexChange)="changePageIndex($event)"
-          (nzPageSizeChange)="changePageSize($event)"
+          [nzShowPagination]="false"
+          [nzFrontPagination]="false"
         >
           <thead>
           <tr>
@@ -58,6 +57,15 @@
           </tr>
           </tbody>
         </nz-table>
+        <nz-pagination
+          class="pagination"
+          [nzTotal]="total"
+          [nzShowSizeChanger]="true"
+          [(nzPageIndex)]="page"
+          [(nzPageSize)]="size"
+          (nzPageIndexChange)="changePageIndex($event)"
+          (nzPageSizeChange)="changePageSize($event)"
+        ></nz-pagination>
       </nz-tab>
     </nz-tabset>
   </div>

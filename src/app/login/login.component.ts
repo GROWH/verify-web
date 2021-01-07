@@ -36,6 +36,7 @@ export class LoginComponent implements OnInit {
   }
 
   submitForm(): void {
+    localStorage.removeItem('tabList');
     localStorage.removeItem('account');
     localStorage.removeItem('unit');
     for (const i in this.form.controls) {

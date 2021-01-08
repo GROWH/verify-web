@@ -170,7 +170,7 @@ export class AlarmHandlComponent implements OnInit {
       .subscribe((res) => {
         this.loading = false;
         if (res.code === 0) {
-          // this.listOfData = res.data.list;
+          this.listOfData = res.data.list;
         }
       });
   }

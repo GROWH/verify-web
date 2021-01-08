@@ -29,8 +29,8 @@ export class AlarmHandlComponent implements OnInit {
   gridActions: GridAction[] = [];
   condition = {
     cId: '',
-    start: null,
-    end: null,
+    start: new Date(),
+    end: new Date(),
     type: '温度',
     status: 'false',
   };
@@ -170,7 +170,7 @@ export class AlarmHandlComponent implements OnInit {
       .subscribe((res) => {
         this.loading = false;
         if (res.code === 0) {
-          this.listOfData = res.data.list;
+          // this.listOfData = res.data.list;
         }
       });
   }

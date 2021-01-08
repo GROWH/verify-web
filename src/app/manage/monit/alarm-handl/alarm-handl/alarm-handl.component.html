@@ -81,7 +81,7 @@
         <td>{{item.humi_up + "~" + item.humi_down}}</td>
         <td><i (click)="pointChers(item)" style="font-size: 18px" nz-icon nzType="slack-square" nzTheme="fill" class="primary-color"></i></td>
         <td>
-          <a (click)="handles(item)">{{item.state}}</a>
+          <span [ngClass]="{'primary-color':item.state == true,'error-color':!item.state == true}" (click)="handles(item)">{{item.state == true ? '已处理':'未处理'}}</span>
         </td>
       </tr>
     </tbody>

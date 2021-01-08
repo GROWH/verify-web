@@ -25,6 +25,17 @@
     .ant-tabs-tab-active {
       border-bottom: 1px solid #e8e8e8!important;
     }
+    .ant-tabs-tab-next{
+      background: #EEEEEE;
+      border-top-right-radius: 6px;
+      border-bottom-right-radius: 6px;
+    }
+
+    .ant-tabs-tab-prev{
+      background: #EEEEEE;
+      border-top-left-radius: 6px;
+      border-bottom-left-radius: 6px;
+    }
   }
 }
 

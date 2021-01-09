@@ -28,6 +28,7 @@ export class ResetpwdFormComponent implements OnInit {
   creatForm(param) {
     this.validateForm = this.fb.group({
       pass: [param.pass, [ Validators.required ]],
+      oldPass: [param.oldPass, [ Validators.required ]],
     });
   }
 }

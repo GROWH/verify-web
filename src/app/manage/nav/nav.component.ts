@@ -186,6 +186,10 @@ export class NavComponent implements OnInit, OnDestroy {
               nzContent: '确认提交?',
               nzOnOk: () => {
                 const params = formVal;
+                if (params.oldPass != localStorage.getItem('pass')) {
+                  this.msg.error('原始密码错误，请重新输入！');
+                  return;
+                }
                 this.http.put(this.baseUrl, params).subscribe(res => {
                   if (res.code !== 0) {
                     this.msg.error(res.message);

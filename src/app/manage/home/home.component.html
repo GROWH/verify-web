@@ -17,8 +17,8 @@
       </div>
       <ul>
         <li><span style="background: #3D9A23">测点总数 ：20</span></li>
-        <li><span style="background: #fdf601">预警测点 ：8</span></li>
-        <li><span style="background: #FE0f0f">报警测点 ：12</span></li>
+        <li><span style="background: #FFCB1C">预警测点 ：8</span></li>
+        <li><span style="background: #EF252C">报警测点 ：12</span></li>
         <li><span style="background: #A4A5B0">离线测点 ：20</span></li>
         <li><span style="background: #FF7747">未处理报警数 ：1</span></li>
         <li>
@@ -38,13 +38,15 @@
         <div class="card" *ngIf="listOfData.length !== 0">
           <div class="card-item" *ngFor="let item of listOfData;let key=index;">
             <div class="card-item-con">
-              <span style="font-size: 16px;"><i nz-icon nzType="wifi" nzTheme="outline" [ngClass]="{'success-color':isState(item.time),'default-color':!isState(item.time)}"></i></span>
-              <span>日期 : {{ item.time | date:'yyyy-MM-dd' }}</span>
-              <span>时间 : {{ item.time | date:'HH:mm' }}</span>
-              <span style="font-size: 14px;cursor: pointer">
-<!--              <i style="margin-right: 4px;" nz-icon nzType="code-sandbox-square" nzTheme="fill" class="error-color"></i>-->
-              <i (click)="pointChers(item)" style="margin-left: 30px;" nz-icon nzType="slack-square" nzTheme="fill"  class="primary-color"></i>
-            </span>
+              <span class="wifi-icon"><i nz-icon nzType="wifi" nzTheme="outline" [ngClass]="{'success-color':isState(item.time),'default-color':!isState(item.time)}"></i></span>
+              <div class="date-time">
+                <span style="margin-right: 15px;">日期 : {{ item.time | date:'yyyy-MM-dd' }}</span>
+                <span>时间 : {{ item.time | date:'HH:mm' }}</span>
+              </div>
+              <span class="opera-btn">
+<!--                <i style="margin-right: 10px;" nz-icon nzType="code-sandbox-square" nzTheme="fill" class="error-color"></i>-->
+                <i (click)="pointChers(item)" nz-icon nzType="slack-square" nzTheme="fill"  class="primary-color"></i>
+              </span>
             </div>
             <div class="card-item-con">
               <div class="card-item-con-mid">
@@ -52,7 +54,9 @@
                   <p>温</p>
                   <p>度</p>
                 </div>
-                <div class="item2"><span class="success-color">{{item.temp}}</span>℃</div>
+                <div class="item2">
+                  <span [ngClass]=isSetColor(item.temp,item.temp_down,item.temp_up)>{{item.temp}}</span>℃
+                </div>
                 <div class="item3">
                   <p>温度范围</p>
                   <p>上限 : {{item.temp_up}}℃</p>
@@ -66,7 +70,9 @@
                   <p>湿</p>
                   <p>度</p>
                 </div>
-                <div class="item2"><span class="warn-color">{{item.humi}}</span>%</div>
+                <div class="item2">
+                  <span [ngClass]=isSetColor(item.humi,item.humi_down,item.humi_up)>{{item.humi}}</span>%
+                </div>
                 <div class="item3">
                   <p>湿度范围</p>
                   <p>上限 : {{item.humi_up}}%</p>

@@ -137,6 +137,17 @@ export class HomeComponent implements OnInit {
     }
     return cbVal;
   }
+  isSetColor(val, downVal, upVal) {
+    let theColor = '';
+    if (val > downVal + 1 && val < upVal - 1) {
+      theColor = 'success-color';
+    } else if (val < downVal || val > upVal) {
+      theColor = 'error-color';
+    } else {
+      theColor = 'warn-color';
+    }
+    return theColor;
+  }
 
   getAlarmData() {
     this.http.get<any>(`/home/positions`).subscribe(res => {

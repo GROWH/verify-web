@@ -55,6 +55,7 @@ export class LoginComponent implements OnInit {
           return;
         }
         this.msg.success(res.message);
+        localStorage.setItem('pass', params.pass);//用户ID
         localStorage.setItem('account', res.data.account.id);//用户ID
         localStorage.setItem('userInfo', JSON.stringify(res.data.account));//用户信息
         localStorage.setItem('menuAuth', JSON.stringify(res.data.moduleTree));//用户菜单权限

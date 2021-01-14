@@ -27,7 +27,11 @@ export class HomeComponent implements OnInit {
   storeList = [];
   checkVal = '';
   alarmData = {
-
+    allNum: 0,
+    warnNum: 0,
+    alarmNum: 0,
+    unproceNum: 0,
+    offLineNum: 0,
   };
 
 
@@ -137,14 +141,24 @@ export class HomeComponent implements OnInit {
     }
     return cbVal;
   }
-  isSetColor(val, downVal, upVal) {
-    let theColor = '';
-    if (val > downVal + 1 && val < upVal - 1) {
-      theColor = 'success-color';
-    } else if (val < downVal || val > upVal) {
-      theColor = 'error-color';
+  isSetColor(record, type) {
+    let theColor = 'success-color';
+    if (type === 'temp') {
+      if (record.temp > record.temp_down && record.temp < record.temp_up) {
+        theColor = 'success-color';
+      } else if (record.temp < record.warning_temp_down || record.temp > record.warning_temp_up) {
+        theColor = 'warn-color';
+      } else {
+        theColor = 'error-color';
+      }
     } else {
-      theColor = 'warn-color';
+      if (record.humi > record.humi_down && record.humi < record.humi_up) {
+        theColor = 'success-color';
+      } else if (record.humi < record.warning_humi_down || record.humi > record.warning_humi_up) {
+        theColor = 'warn-color';
+      } else {
+        theColor = 'error-color';
+      }
     }
     return theColor;
   }
@@ -152,12 +166,23 @@ export class HomeComponent implements OnInit {
   getAlarmData() {
     this.http.get<any>(`/home/positions`).subscribe(res => {
       if (res.code === 0) {
-        console.log(res);
+        this.alarmData.allNum = res.data;
       }
     });
     this.http.get<any>(`/home/alarm`).subscribe(res => {
       if (res.code === 0) {
-        console.log(res);
+        this.alarmData.unproceNum = res.data;
+      }
+    });
+    this.http.get<any>(`/home/AlarmProbe`).subscribe(res => {
+      if (res.code === 0) {
+        this.alarmData.alarmNum = res.data;
+        this.alarmData.warnNum = this.alarmData.alarmNum;
+      }
+    });
+    this.http.get<any>(`/home/Offline`).subscribe(res => {
+      if (res.code === 0) {
+        this.alarmData.offLineNum = res.data;
       }
     });
   }

@@ -10,17 +10,17 @@
         </nz-select>
       </div>
       <ul>
-        <li><span style="background: #3D9A23">测点总数 ：20</span></li>
-        <li><span style="background: #FFCB1C">预警测点 ：8</span></li>
-        <li><span style="background: #EF252C">报警测点 ：12</span></li>
-        <li><span style="background: #A4A5B0">离线测点 ：20</span></li>
-        <li><span style="background: #FF7747">未处理报警数 ：1</span></li>
         <li>
           <span *ngIf="isShow === true" (click)="showStyle(false)"><i nz-icon nzType="appstore"
               nzTheme="outline"></i></span>
           <span *ngIf="isShow === false" (click)="showStyle(true)"><i nz-icon nzType="bars"
               nzTheme="outline"></i></span>
         </li>
+        <li><span style="background: #FF7747">未处理报警数 ：{{alarmData.unproceNum}}</span></li>
+        <li><span style="background: #A4A5B0">离线测点 ：{{alarmData.offLineNum}}</span></li>
+        <li><span style="background: #EF252C">报警测点 ：{{alarmData.alarmNum}}</span></li>
+        <li><span style="background: #FFCB1C">预警测点 ：{{alarmData.warnNum}}</span></li>
+        <li><span style="background: #3D9A23">测点总数 ：{{alarmData.allNum}}</span></li>
       </ul>
     </div>
     <div class="con-main">
@@ -52,7 +52,7 @@
                   <p>度</p>
                 </div>
                 <div class="item2">
-                  <span [ngClass]=isSetColor(item.temp,item.temp_down,item.temp_up)>{{item.temp}}</span>℃
+                  <span [ngClass]="isSetColor(item,'temp')" >{{item.temp}}</span>℃
                 </div>
                 <div class="item3">
                   <p>温度范围</p>
@@ -68,7 +68,7 @@
                   <p>度</p>
                 </div>
                 <div class="item2">
-                  <span [ngClass]=isSetColor(item.humi,item.humi_down,item.humi_up)>{{item.humi}}</span>%
+                  <span [ngClass]="isSetColor(item,'humi')" >{{item.humi}}</span>%
                 </div>
                 <div class="item3">
                   <p>湿度范围</p>

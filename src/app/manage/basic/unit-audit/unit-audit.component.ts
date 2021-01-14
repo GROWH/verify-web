@@ -51,7 +51,7 @@ export class UnitAuditComponent implements OnInit {
         code: 'unit-audit_audit',
         type: 'default',
         click: () => {
-          this.audit()
+          this.audit();
         },
          isExist: buttonAccess('unit-audit_audit'),
       },

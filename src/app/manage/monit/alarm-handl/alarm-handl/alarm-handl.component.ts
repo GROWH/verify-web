@@ -128,7 +128,11 @@ export class AlarmHandlComponent implements OnInit {
               nzTitle: '提交',
               nzContent: '确认提交?',
               nzOnOk: () => {
-                const params = formVal;
+                const params = {
+                  ...formVal,
+                  id: house.id,
+                  version: 1,
+                };
                 this.http.put(this.baseUrl, params).subscribe((res) => {
                   if (res.code !== 0) {
                     this.msg.error(res.message);
@@ -191,7 +195,7 @@ export class AlarmHandlComponent implements OnInit {
       nzTitle: record.pname,
       nzContent: PointRecordComponent,
       nzComponentParams: {
-        posId: record.id,
+        posId: record.pid,
       },
       nzMaskClosable: false,
       nzWrapClassName: 'test-modal',
@@ -214,9 +218,10 @@ export class TableList {
   temp_down: string; // 温度范围(℃)
   humi_up: string; // 湿度范围(%)
   humi_down: string; // 湿度范围(%)
-  state: string; // 处理状态
+  processing: boolean; // 处理状态
   cause: string; // 报警原因
   method: string; // 处理方法
   remarks: string; // 处理人
   processor: string; // 备注
+  id: any;
 }

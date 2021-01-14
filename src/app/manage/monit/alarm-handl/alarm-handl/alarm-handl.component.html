@@ -2,9 +2,15 @@
   <div class="condition">
     <div class="condition-item">
       <label>库房名称 ：</label>
-      <nz-select nzShowSearch nzAllowClear nzPlaceHolder="请选择" style="width: 200px" [ngModel]="condition.cId"
-        (ngModelChange)="storeChange($event,'cId')">
-        <nz-option *ngFor="let item of unitList" [nzLabel]="item.name" [nzValue]="item.id"></nz-option>
+      <nz-select
+        nzShowSearch
+        nzAllowClear
+        nzPlaceHolder="请选择"
+        style="width: 200px"
+        [ngModel]="condition.cId"
+        (ngModelChange)="storeChange($event,'cId')"
+      >
+        <nz-option *ngFor="let item of unitList" [nzLabel]="item.name" [nzValue]="item.id" ></nz-option>
       </nz-select>
     </div>
     <div class="condition-item">
@@ -14,8 +20,14 @@
     </div>
     <div class="condition-item">
       <label>类型 ：</label>
-      <nz-select nzShowSearch nzAllowClear nzPlaceHolder="请选择" style="width: 120px" [ngModel]="condition.type"
-        (ngModelChange)="storeChange($event,'type')">
+      <nz-select
+        nzShowSearch
+        nzAllowClear
+        nzPlaceHolder="请选择"
+        style="width: 120px"
+        [ngModel]="condition.type"
+        (ngModelChange)="storeChange($event,'type')"
+      >
         <nz-option nzLabel="温度" nzValue="温度"></nz-option>
         <nz-option nzLabel="湿度" nzValue="湿度"></nz-option>
         <nz-option nzLabel="温度+湿度" nzValue="温度+湿度"></nz-option>
@@ -23,8 +35,14 @@
     </div>
     <div class="condition-item">
       <label>处理状态 ：</label>
-      <nz-select nzShowSearch nzAllowClear nzPlaceHolder="请选择" style="width: 120px" [ngModel]="condition.status"
-        (ngModelChange)="storeChange($event,'status')">
+      <nz-select
+        nzShowSearch
+        nzAllowClear
+        nzPlaceHolder="请选择"
+        style="width: 120px"
+        [ngModel]="condition.status"
+        (ngModelChange)="storeChange($event,'status')"
+      >
         <nz-option nzLabel="已处理" nzValue="true"></nz-option>
         <nz-option nzLabel="未处理" nzValue="false"></nz-option>
       </nz-select>
@@ -61,11 +79,9 @@
         <td>{{item.alarm_type}}</td>
         <td>{{item.temp_up + "~" + item.temp_down}}</td>
         <td>{{item.humi_up + "~" + item.humi_down}}</td>
-        <td><i (click)="pointChers(item)" style="font-size: 18px" nz-icon nzType="slack-square" nzTheme="fill"
-            class="primary-color"></i></td>
+        <td><i (click)="pointChers(item)" style="font-size: 18px" nz-icon nzType="slack-square" nzTheme="fill" class="primary-color"></i></td>
         <td>
-          <span [ngClass]="{'primary-color':item.state == true,'error-color':!item.state == true}"
-            (click)="handles(item)" style="cursor: pointer">{{item.state == true ? '已处理':'未处理'}}</span>
+          <span style="cursor: pointer" [ngClass]="{'primary-color':item.processing == true,'error-color':!item.processing == true}" (click)="handles(item)">{{item.processing == true ? '已处理':'未处理'}}</span>
         </td>
       </tr>
     </tbody>

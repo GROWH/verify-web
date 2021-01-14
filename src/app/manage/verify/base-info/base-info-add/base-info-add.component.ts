@@ -60,9 +60,11 @@ export class BaseInfoAddComponent implements OnInit {
   form: FormGroup
 
   baseFormInit() {
-    const unit_name = localStorage.getItem('unitName')
+    const unit_name = localStorage.getItem('unitName');
+    const client_name = '';
 
     this.form = this.fb.group({
+      client_name: [client_name, [Validators.required]],
       client_id: [null, [Validators.required]],
       implement_id: [unit_name, [Validators.required]],
       client_type: [null, [Validators.required]],

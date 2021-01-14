@@ -285,10 +285,10 @@ export class HouseDetailComponent implements OnInit {
       nums:  data.nums.join(','),
       delay: data.delay + '秒',
       span:  data.span + '秒',
-      Warning_type_name: data.types.map(it => this.warnCodeMap[it]).join(','),
-      Warning_nums: data.Warning_nums.join(','),
-      Warning_delay: data.Warning_delay + '秒',
-      Warning_span:  data.Warning_span + '秒',
+      warning_type_name: data.types.map(it => this.warnCodeMap[it]).join(','),
+      warning_nums: data.warning_nums.join(','),
+      warning_delay: data.warning_delay + '秒',
+      warning_span:  data.warning_span + '秒',
     }
   }
 
@@ -379,8 +379,8 @@ export class HouseDetailComponent implements OnInit {
         if (it.code === 0) {
           it.data.message_warn.nums = JSON.parse(it.data.message_warn.nums as any)
           it.data.phone_warn.nums = JSON.parse(it.data.phone_warn.nums as any)
-          it.data.message_warn.Warning_nums = JSON.parse(it.data.message_warn.Warning_nums as any)
-          it.data.phone_warn.Warning_nums = JSON.parse(it.data.phone_warn.Warning_nums as any)
+          it.data.message_warn.warning_nums = JSON.parse(it.data.message_warn.warning_nums as any)
+          it.data.phone_warn.warning_nums = JSON.parse(it.data.phone_warn.warning_nums as any)
         }
         return it
       })

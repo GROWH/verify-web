@@ -3,18 +3,20 @@
     <div nz-row [nzGutter]="24">
       <div nz-col nzSpan="12">
         <nz-form-item>
-          <nz-form-label nzSpan='16'  nzRequired nzFor="temp_alarm_high">温度报警高值(-200.00 ~ +200: ℃)</nz-form-label>
+          <nz-form-label nzSpan='16' nzRequired nzFor="temp_alarm_high">温度报警高值(-200.00 ~ +200: ℃)</nz-form-label>
           <nz-form-control nzSpan="8">
-            <nz-input-number formControlName="temp_alarm_high" [nzMin]="-200" [nzMax]="200" [nzStep]="1"></nz-input-number>
+            <nz-input-number formControlName="temp_alarm_high" [nzMin]="-200" [nzMax]="200" [nzStep]="1">
+            </nz-input-number>
             <!-- <input type nz-input formControlName="temp_alarm_high" id="temp_alarm_high" /> -->
           </nz-form-control>
         </nz-form-item>
       </div>
       <div nz-col nzSpan="12">
         <nz-form-item>
-          <nz-form-label nzSpan='16'  nzRequired nzFor="temp_alarm_low">温度报警低值(-200.00 ~ +200: ℃)</nz-form-label>
+          <nz-form-label nzSpan='16' nzRequired nzFor="temp_alarm_low">温度报警低值(-200.00 ~ +200: ℃)</nz-form-label>
           <nz-form-control nzSpan="8">
-            <nz-input-number formControlName="temp_alarm_low" [nzMin]="-200" [nzMax]="200" [nzStep]="1"></nz-input-number>
+            <nz-input-number formControlName="temp_alarm_low" [nzMin]="-200" [nzMax]="200" [nzStep]="1">
+            </nz-input-number>
           </nz-form-control>
         </nz-form-item>
       </div>
@@ -23,7 +25,7 @@
     <div nz-row [nzGutter]="24">
       <div nz-col nzSpan="12">
         <nz-form-item>
-          <nz-form-label nzSpan='16'  nzRequired nzFor="humi_alarm_high">湿度报警高值(0~100: %RH)</nz-form-label>
+          <nz-form-label nzSpan='16' nzRequired nzFor="humi_alarm_high">湿度报警高值(0~100: %RH)</nz-form-label>
           <nz-form-control nzSpan="8">
             <nz-input-number formControlName="humi_alarm_high" [nzMin]="0" [nzMax]="100" [nzStep]="1"></nz-input-number>
           </nz-form-control>
@@ -31,7 +33,7 @@
       </div>
       <div nz-col nzSpan="12">
         <nz-form-item>
-          <nz-form-label nzSpan='16'  nzRequired nzFor="humi_alarm_low">湿度报警低值(0~100: %RH)</nz-form-label>
+          <nz-form-label nzSpan='16' nzRequired nzFor="humi_alarm_low">湿度报警低值(0~100: %RH)</nz-form-label>
           <nz-form-control nzSpan="8">
             <nz-input-number formControlName="humi_alarm_low" [nzMin]="0" [nzMax]="100" [nzStep]="1"></nz-input-number>
           </nz-form-control>
@@ -42,57 +44,19 @@
     <div nz-row [nzGutter]="24">
       <div nz-col nzSpan="12">
         <nz-form-item>
-          <nz-form-label nzSpan='16'  nzRequired nzFor="Warning_temp_up">温度预警高值(-200.00 ~ +200: ℃)</nz-form-label>
+          <nz-form-label nzSpan='16' nzRequired nzFor="warning_temp_up">温度预警高值(-200.00 ~ +200: ℃)</nz-form-label>
           <nz-form-control nzSpan="8">
-            <nz-input-number formControlName="Warning_temp_up" [nzMin]="-200" [nzMax]="200" [nzStep]="1"></nz-input-number>
+            <nz-input-number formControlName="warning_temp_up" [nzMin]="-200" [nzMax]="200" [nzStep]="1">
+            </nz-input-number>
           </nz-form-control>
         </nz-form-item>
       </div>
       <div nz-col nzSpan="12">
         <nz-form-item>
-          <nz-form-label nzSpan='16'  nzRequired nzFor="Warning_temp_down">温度预警低值(-200.00 ~ +200: ℃)</nz-form-label>
+          <nz-form-label nzSpan='16' nzRequired nzFor="warning_temp_down">温度预警低值(-200.00 ~ +200: ℃)</nz-form-label>
           <nz-form-control nzSpan="8">
-            <nz-input-number formControlName="Warning_temp_down" [nzMin]="-200" [nzMax]="200" [nzStep]="1"></nz-input-number>
-          </nz-form-control>
-        </nz-form-item>
-      </div>
-    </div>
-
-    <div nz-row [nzGutter]="24">
-      <div nz-col nzSpan="12">
-        <nz-form-item>
-          <nz-form-label nzSpan='16'  nzRequired nzFor="Warning_humi_up">湿度预警高值(0~100: %RH)</nz-form-label>
-          <nz-form-control nzSpan="8">
-            <nz-input-number formControlName="Warning_humi_up" [nzMin]="0" [nzMax]="100" [nzStep]="1"></nz-input-number>
-          </nz-form-control>
-        </nz-form-item>
-      </div>
-      <div nz-col nzSpan="12">
-        <nz-form-item>
-          <nz-form-label nzSpan='16'  nzRequired nzFor="Warning_humi_down">湿度预警低值(0~100: %RH)</nz-form-label>
-          <nz-form-control nzSpan="8">
-            <nz-input-number formControlName="Warning_humi_down" [nzMin]="0" [nzMax]="100" [nzStep]="1"></nz-input-number>
-          </nz-form-control>
-        </nz-form-item>
-      </div>
-    </div>
-
-
-
-    <div nz-row [nzGutter]="24">
-      <div nz-col nzSpan="12">
-        <nz-form-item>
-          <nz-form-label nzSpan='16'  nzRequired nzFor="record_intvl_1">正常工作模式记录间隔(30~62000: s)</nz-form-label>
-          <nz-form-control nzSpan="8">
-            <nz-input-number formControlName="record_intvl_1" [nzMin]="30" [nzMax]="62000" [nzStep]="1"></nz-input-number>
-          </nz-form-control>
-        </nz-form-item>
-      </div>
-      <div nz-col nzSpan="12">
-        <nz-form-item>
-          <nz-form-label nzSpan='16'  nzRequired nzFor="upload_intvl_1">正常工作模式上报间隔(30~62000: s)</nz-form-label>
-          <nz-form-control nzSpan="8">
-            <nz-input-number formControlName="upload_intvl_1" [nzMin]="30" [nzMax]="62000" [nzStep]="1"></nz-input-number>
+            <nz-input-number formControlName="warning_temp_down" [nzMin]="-200" [nzMax]="200" [nzStep]="1">
+            </nz-input-number>
           </nz-form-control>
         </nz-form-item>
       </div>
@@ -101,17 +65,41 @@
     <div nz-row [nzGutter]="24">
       <div nz-col nzSpan="12">
         <nz-form-item>
-          <nz-form-label nzSpan='16'  nzRequired nzFor="record_intvl_2">失控工作模式记录间隔(30~62000: s)</nz-form-label>
+          <nz-form-label nzSpan='16' nzRequired nzFor="warning_humi_up">湿度预警高值(0~100: %RH)</nz-form-label>
           <nz-form-control nzSpan="8">
-            <nz-input-number formControlName="record_intvl_2" [nzMin]="30" [nzMax]="62000" [nzStep]="1"></nz-input-number>
+            <nz-input-number formControlName="warning_humi_up" [nzMin]="0" [nzMax]="100" [nzStep]="1"></nz-input-number>
           </nz-form-control>
         </nz-form-item>
       </div>
       <div nz-col nzSpan="12">
         <nz-form-item>
-          <nz-form-label nzSpan='16'  nzRequired nzFor="upload_intvl_2">失控工作模式上报间隔(30~62000: s)</nz-form-label>
+          <nz-form-label nzSpan='16' nzRequired nzFor="warning_humi_down">湿度预警低值(0~100: %RH)</nz-form-label>
           <nz-form-control nzSpan="8">
-            <nz-input-number formControlName="upload_intvl_2" [nzMin]="30" [nzMax]="62000" [nzStep]="1"></nz-input-number>
+            <nz-input-number formControlName="warning_humi_down" [nzMin]="0" [nzMax]="100" [nzStep]="1">
+            </nz-input-number>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+
+
+
+    <div nz-row [nzGutter]="24">
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzSpan='16' nzRequired nzFor="record_intvl_1">正常工作模式记录间隔(30~62000: s)</nz-form-label>
+          <nz-form-control nzSpan="8">
+            <nz-input-number formControlName="record_intvl_1" [nzMin]="30" [nzMax]="62000" [nzStep]="1">
+            </nz-input-number>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzSpan='16' nzRequired nzFor="upload_intvl_1">正常工作模式上报间隔(30~62000: s)</nz-form-label>
+          <nz-form-control nzSpan="8">
+            <nz-input-number formControlName="upload_intvl_1" [nzMin]="30" [nzMax]="62000" [nzStep]="1">
+            </nz-input-number>
           </nz-form-control>
         </nz-form-item>
       </div>
@@ -120,17 +108,40 @@
     <div nz-row [nzGutter]="24">
       <div nz-col nzSpan="12">
         <nz-form-item>
-          <nz-form-label nzSpan='16'  nzRequired nzFor="record_intvl_3">内部供电模式记录间隔(30~62000: s)</nz-form-label>
+          <nz-form-label nzSpan='16' nzRequired nzFor="record_intvl_2">失控工作模式记录间隔(30~62000: s)</nz-form-label>
           <nz-form-control nzSpan="8">
-            <nz-input-number formControlName="record_intvl_3" [nzMin]="30" [nzMax]="62000" [nzStep]="1"></nz-input-number>
+            <nz-input-number formControlName="record_intvl_2" [nzMin]="30" [nzMax]="62000" [nzStep]="1">
+            </nz-input-number>
           </nz-form-control>
         </nz-form-item>
       </div>
       <div nz-col nzSpan="12">
         <nz-form-item>
-          <nz-form-label nzSpan='16'  nzRequired nzFor="upload_intvl_3">内部供电模式上报间隔(30~62000: s)</nz-form-label>
+          <nz-form-label nzSpan='16' nzRequired nzFor="upload_intvl_2">失控工作模式上报间隔(30~62000: s)</nz-form-label>
           <nz-form-control nzSpan="8">
-            <nz-input-number formControlName="upload_intvl_3" [nzMin]="30" [nzMax]="62000" [nzStep]="1"></nz-input-number>
+            <nz-input-number formControlName="upload_intvl_2" [nzMin]="30" [nzMax]="62000" [nzStep]="1">
+            </nz-input-number>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+
+    <div nz-row [nzGutter]="24">
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzSpan='16' nzRequired nzFor="record_intvl_3">内部供电模式记录间隔(30~62000: s)</nz-form-label>
+          <nz-form-control nzSpan="8">
+            <nz-input-number formControlName="record_intvl_3" [nzMin]="30" [nzMax]="62000" [nzStep]="1">
+            </nz-input-number>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzSpan='16' nzRequired nzFor="upload_intvl_3">内部供电模式上报间隔(30~62000: s)</nz-form-label>
+          <nz-form-control nzSpan="8">
+            <nz-input-number formControlName="upload_intvl_3" [nzMin]="30" [nzMax]="62000" [nzStep]="1">
+            </nz-input-number>
           </nz-form-control>
         </nz-form-item>
       </div>
@@ -189,7 +200,7 @@
     <div nz-row [nzGutter]="24">
       <div nz-col nzSpan="12">
         <nz-form-item>
-          <nz-form-label nzSpan='16'  nzRequired nzFor="sl_alarm_en">是否启用声光报警</nz-form-label>
+          <nz-form-label nzSpan='16' nzRequired nzFor="sl_alarm_en">是否启用声光报警</nz-form-label>
           <nz-form-control nzSpan="8">
             <nz-radio-group formControlName="sl_alarm_en">
               <label nz-radio nzValue="ON">ON</label>

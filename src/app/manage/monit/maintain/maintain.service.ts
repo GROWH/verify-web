@@ -38,8 +38,8 @@ export class MaintainService extends UniversalService<HouseAddData> {
     datas.forEach(it => {
       it.message_warn.nums = JSON.parse(it.message_warn.nums)
       it.phone_warn.nums   = JSON.parse(it.phone_warn.nums)
-      it.message_warn.Warning_nums = JSON.parse(it.message_warn.Warning_nums)
-      it.phone_warn.Warning_nums   = JSON.parse(it.phone_warn.Warning_nums)
+      it.message_warn.warning_nums = JSON.parse(it.message_warn.warning_nums)
+      it.phone_warn.warning_nums   = JSON.parse(it.phone_warn.warning_nums)
     })
     return datas as HouseAddData[]
   }

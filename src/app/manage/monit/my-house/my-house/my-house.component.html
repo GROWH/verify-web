@@ -1,17 +1,8 @@
-
 <div class="wrapper">
   <grid-action [actions]="gridActions"></grid-action>
 
-  <nz-table
-    #nzTable
-    class="table"
-    [nzData]="uniSer.data"
-    libClientRect
-    [libHeightMinus]="54"
-    [nzScroll]="{y: tableHeight+'px'}"
-    [nzShowPagination]="false"
-    [nzFrontPagination]="false"
-  >
+  <nz-table #nzTable class="table" [nzData]="uniSer.data" libClientRect [libHeightMinus]="54"
+    [nzScroll]="{y: tableHeight+'px'}" [nzShowPagination]="false" [nzFrontPagination]="false">
     <thead>
       <tr>
         <th nzWidth="200px">库房名称</th>
@@ -56,18 +47,10 @@
     </tbody>
   </nz-table>
 
-  <nz-pagination
-    class="pagination"
-    [ngClass]="{ blur: uniSer.loading }"
-    [nzTotal]="uniSer.totalCount"
-    [nzShowTotal]="totalTemplate"
-    [nzShowSizeChanger]="true"
-    [nzPageSizeOptions]="[10, 50, 100, 500]"
-    [(nzPageIndex)]    ="uniSer.page"
-    [(nzPageSize)]     ="uniSer.size"
-    (nzPageIndexChange)="uniSer.pageParamsCh$.next()"
-    (nzPageSizeChange) ="uniSer.pageParamsCh$.next(true)"
-  ></nz-pagination>
+  <nz-pagination class="pagination" [ngClass]="{ blur: uniSer.loading }" [nzTotal]="uniSer.totalCount"
+    [nzShowTotal]="totalTemplate" [nzShowSizeChanger]="true" [nzPageSizeOptions]="[10, 50, 100, 500]"
+    [(nzPageIndex)]="uniSer.page" [(nzPageSize)]="uniSer.size" (nzPageIndexChange)="uniSer.pageParamsCh$.next()"
+    (nzPageSizeChange)="uniSer.pageParamsCh$.next(true)"></nz-pagination>
 </div>
 
 

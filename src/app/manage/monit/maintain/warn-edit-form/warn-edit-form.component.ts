@@ -40,10 +40,10 @@ export class WarnEditFormComponent implements OnInit {
         nums:  [data.nums,  [ numsValidator       ]],
         delay: [data.delay, [ Validators.required ]],
         span:  [data.span,  [ Validators.required ]],
-        Warning_type_name: [data.Warning_type_name, [ Validators.required ]],
-        Warning_nums:  [data.Warning_nums,  [ numsValidator       ]],
-        Warning_delay: [data.Warning_delay, [ Validators.required ]],
-        Warning_span:  [data.Warning_span,  [ Validators.required ]],
+        warning_type_name: [data.warning_type_name, [ Validators.required ]],
+        warning_nums:  [data.warning_nums,  [ numsValidator       ]],
+        warning_delay: [data.warning_delay, [ Validators.required ]],
+        warning_span:  [data.warning_span,  [ Validators.required ]],
       })
     }
 
@@ -66,7 +66,7 @@ export class WarnEditFormComponent implements OnInit {
    */
   getPhoneNums1(groupName: string): string[] {
 
-    return this.form.get(groupName).get('Warning_nums').value || []
+    return this.form.get(groupName).get('warning_nums').value || []
   }
 
   /**
@@ -92,7 +92,7 @@ export class WarnEditFormComponent implements OnInit {
    */
   onPhoneAdd1(groupName: string, phoneNoInput: HTMLInputElement) {
     const phoneNo = phoneNoInput.value
-    const numsCtrl  = this.form.get(groupName).get('Warning_nums') as FormControl
+    const numsCtrl  = this.form.get(groupName).get('warning_nums') as FormControl
     const inputCtrl = this.fb.control(phoneNo, [ Validators.required, SimpPhoneValidator ])
 
     if (!inputCtrl.valid) return this.msg.error('请输入正确的手机号')
@@ -123,7 +123,7 @@ export class WarnEditFormComponent implements OnInit {
    * 预警电话移除
    */
   onPhoneRemove1(groupName: string, index: number) {
-    const numsCtrl = this.form.get(groupName).get('Warning_nums') as FormControl
+    const numsCtrl = this.form.get(groupName).get('warning_nums') as FormControl
     const nums: string[] = numsCtrl.value
 
     numsCtrl.setValue([

@@ -6,11 +6,7 @@
         已授权单位 <i nz-icon type="down"></i>
       </a>
       <ul nz-menu>
-        <li
-          nz-menu-item
-          *ngFor="let unit of house.units"
-          (click)="authDel(unit)"
-        >
+        <li nz-menu-item *ngFor="let unit of house.units" (click)="authDel(unit)">
           {{ unit.unit_name }}
         </li>
         <li nz-menu-item>
@@ -35,52 +31,24 @@
   <nz-divider></nz-divider>
 
   <div class="point-edit" *ngIf="maintainMode">
-    <button
-      nz-button
-      [title]="pointAdding ? '结束添加' : '添加点位'"
-      [nzType]="pointAdding ? 'default' : 'primary'"
-      (click)="onPointAdd()"
-    >
+    <button nz-button [title]="pointAdding ? '结束添加' : '添加点位'" [nzType]="pointAdding ? 'default' : 'primary'"
+      (click)="onPointAdd()">
       <i nz-icon [type]="pointAdding ? 'check' : 'plus'"></i>
     </button>
-    <button
-      nz-button
-      [title]="pointRemoving ? '完成' : '删除点位'"
-      [nzType]="pointRemoving ? 'default' : 'primary'"
-      (click)="onPointRemove()"
-    >
-      <i nz-icon  [type]="pointRemoving ? 'check' : 'delete'"></i>
+    <button nz-button [title]="pointRemoving ? '完成' : '删除点位'" [nzType]="pointRemoving ? 'default' : 'primary'"
+      (click)="onPointRemove()">
+      <i nz-icon [type]="pointRemoving ? 'check' : 'delete'"></i>
     </button>
-    <button
-      *ngIf="pointChanged"
-      nz-button
-      title="保存"
-      nzType="dashed"
-      class="save"
-      (click)="savePointConf()"
-    >
+    <button *ngIf="pointChanged" nz-button title="保存" nzType="dashed" class="save" (click)="savePointConf()">
       <i nz-icon type="save"></i>
     </button>
   </div>
   <div class="points">
-    <div
-      class="map"
-      alarm_record.="{'adding': pointAdding, 'removing': pointRemoving}"
-    >
-      <img
-        alt="hosuse map"
-        draggable="false"
-        [src]="house.map"
-        (click)="addPoint($event)"
-      >
-      <div
-        class="point"
-        style="z-index: 1;"
-        *ngFor="let point of house.thermometer; index as i"
-        [ngStyle]="{left: point.x + '%', top: point.y + '%'}"
-        (click)="removePoint(i)"
-        (mousedown)="pointMove($event, point)"
-      >
+    <div class="map" alarm_record.="{'adding': pointAdding, 'removing': pointRemoving}">
+      <img alt="hosuse map" draggable="false" [src]="house.map" (click)="addPoint($event)">
+      <div class="point" style="z-index: 1;" *ngFor="let point of house.thermometer; index as i"
+        [ngStyle]="{left: point.x + '%', top: point.y + '%'}" (click)="removePoint(i)"
+        (mousedown)="pointMove($event, point)">
         {{ i + 1 }}
         <div class="point-detail">
           <div class="name">{{ point.name }}</div>
@@ -94,13 +62,8 @@
       </div>
     </div>
     <div class="table">
-      <nz-table
-        #nzTable
-        nzSize="small"
-        [nzData]="house.thermometer"
-        [nzShowPagination]="false"
-        [nzFrontPagination]="false"
-      >
+      <nz-table #nzTable nzSize="small" [nzData]="house.thermometer" [nzShowPagination]="false"
+        [nzFrontPagination]="false">
         <thead>
           <tr>
             <th nzWidth="width">编号</th>
@@ -115,12 +78,7 @@
             <td>{{ point.code }}</td>
             <ng-container *ngIf="maintainMode; else devNameView">
               <nz-form-control>
-                <input
-                  nz-input
-                  placeholder="请输入"
-                  [(ngModel)]="point.name"
-                  (ngModelChange)="pointChanged = true"
-                >
+                <input nz-input placeholder="请输入" [(ngModel)]="point.name" (ngModelChange)="pointChanged = true">
               </nz-form-control>
             </ng-container>
             <ng-template #devNameView>
@@ -170,10 +128,10 @@
   <nz-divider></nz-divider>
   <div class="types">报警类型: {{ conf.types }}</div>
   <div class="delay">报警延时: {{ conf.delay }}</div>
-  <div class="span">报警间隔:  {{ conf.span }} </div>
+  <div class="span">报警间隔: {{ conf.span }} </div>
   <div class="phone">报警电话: {{ conf.nums }}</div>
-  <div class="types">预警类型: {{ conf.Warning_type_name }}</div>
-  <div class="delay">预警延时: {{ conf.Warning_delay }}</div>
-  <div class="span">预警间隔:  {{ conf.Warning_span }} </div>
-  <div class="phone">预警电话: {{ conf.Warning_nums }}</div>
+  <div class="types">预警类型: {{ conf.warning_type_name }}</div>
+  <div class="delay">预警延时: {{ conf.warning_delay }}</div>
+  <div class="span">预警间隔: {{ conf.warning_span }} </div>
+  <div class="phone">预警电话: {{ conf.warning_nums }}</div>
 </ng-template>

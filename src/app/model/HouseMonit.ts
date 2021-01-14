@@ -6,10 +6,10 @@ export interface WarnConf {
   nums: string[]; // 报警电话
   delay: number; // 报警延时
   span: number; // 报警间隔
-  Warning_type_name: string[]; // 预警类型
-  Warning_nums: string[]; // 预警电话
-  Warning_delay: number; // 预警延时
-  Warning_span: number; // 预警间隔
+  warning_type_name: string[]; // 预警类型
+  warning_nums: string[]; // 预警电话
+  warning_delay: number; // 预警延时
+  warning_span: number; // 预警间隔
 }
 
 export interface MonitPointConf {
@@ -46,10 +46,10 @@ export interface HouseAddData {
   temp_down: number; // 最低报警温度
   humi_up: number; // 最高报警湿度
   humi_down: number; // 最低报警湿度
-  Warning_temp_up: number; // 最高预警温度
-  Warning_temp_down: number; // 最低预警温度
-  Warning_humi_up: number; // 最高预警湿度
-  Warning_humi_down: number; // 最低预警湿度
+  warning_temp_up: number; // 最高预警温度
+  warning_temp_down: number; // 最低预警温度
+  warning_humi_up: number; // 最高预警湿度
+  warning_humi_down: number; // 最低预警湿度
   phone_warn: WarnConf; // 电话报警设定
   message_warn: WarnConf; // 短信报警设定
   thermometer: MonitPointConf[]; // 监控点位
@@ -62,10 +62,10 @@ export class Warn extends DataBase {
   span: number; // 报警间隔
   storehouse_id: number; //
   way: string; //
-  Warning_type_name: string[]; // 预警类型
-  Warning_nums: string[]; // 预警电话
-  Warning_delay: number; // 预警延时
-  Warning_span: number; // 预警间隔
+  warning_type_name: string[]; // 预警类型
+  warning_nums: string[]; // 预警电话
+  warning_delay: number; // 预警延时
+  warning_span: number; // 预警间隔
 }
 
 export class StoreHouse extends DataBase {
@@ -75,10 +75,10 @@ export class StoreHouse extends DataBase {
   temp_down: number;
   humi_up: number;
   humi_down: number;
-  Warning_temp_up: number;
-  Warning_temp_down: number;
-  Warning_humi_up: number;
-  Warning_humi_down: number;
+  warning_temp_up: number;    //最高预警温度
+  warning_temp_down: number;  //最低预警温度
+  warning_humi_up: number;    //最高预警湿度
+  warning_humi_down: number;  //最低预警湿度
   phone_warn: Warn;
   message_warn: Warn;
   thermometer: MonitPointConf[];

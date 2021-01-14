@@ -24,10 +24,10 @@ interface ParamsForm {
   temp_down: number;
   humi_up: number;
   humi_down: number;
-  Warning_temp_up: number;
-  Warning_temp_down: number;
-  Warning_humi_up: number;
-  Warning_humi_down: number;
+  warning_temp_up: number;
+  warning_temp_down: number;
+  warning_humi_up: number;
+  warning_humi_down: number;
   phone_warn: WarnConf;
   message_warn: WarnConf;
 }
@@ -109,7 +109,7 @@ export class HouseAddComponent implements OnInit {
    * @param groupName 表单组名
    */
   getPhoneNums1(groupName: string): string[] {
-    return this.paramsForm.get(groupName).get('Warning_nums').value || []
+    return this.paramsForm.get(groupName).get('warning_nums').value || []
   }
 
   /**
@@ -135,7 +135,7 @@ export class HouseAddComponent implements OnInit {
    */
   onPhoneAdd1(groupName: string, phoneNoInput: HTMLInputElement) {
     const phoneNo = phoneNoInput.value
-    const numsCtrl  = this.paramsForm.get(groupName).get('Warning_nums') as FormControl
+    const numsCtrl  = this.paramsForm.get(groupName).get('warning_nums') as FormControl
     const inputCtrl = this.fb.control(phoneNo, [ Validators.required, SimpPhoneValidator ])
 
     if (!inputCtrl.valid) return this.msg.error('请输入正确的手机号')
@@ -162,7 +162,7 @@ export class HouseAddComponent implements OnInit {
    * 预警电话移除
    */
   onPhoneRemove1(groupName: string, index: number) {
-    const numsCtrl = this.paramsForm.get(groupName).get('Warning_nums') as FormControl
+    const numsCtrl = this.paramsForm.get(groupName).get('warning_nums') as FormControl
     const nums: string[] = numsCtrl.value
 
     numsCtrl.setValue([
@@ -185,10 +185,10 @@ export class HouseAddComponent implements OnInit {
       nums:  [[],   [ numsValidator       ]],
       delay: [null, [ Validators.required ]],
       span:  [null, [ Validators.required ]],
-      Warning_type_name: [[],   [ Validators.required ]],
-      Warning_nums:  [[],   [ numsValidator       ]],
-      Warning_delay: [null, [ Validators.required ]],
-      Warning_span:  [null, [ Validators.required ]],
+      warning_type_name: [[],   [ Validators.required ]],
+      warning_nums:  [[],   [ numsValidator       ]],
+      warning_delay: [null, [ Validators.required ]],
+      warning_span:  [null, [ Validators.required ]],
     }
 
    
@@ -199,10 +199,10 @@ export class HouseAddComponent implements OnInit {
       temp_down: [ null, [ Validators.required ] ],
       humi_up:   [ null, [ Validators.required ] ],
       humi_down: [ null, [ Validators.required ] ],
-      Warning_temp_up:   [ null, [ Validators.required ] ],
-      Warning_temp_down: [ null, [ Validators.required ] ],
-      Warning_humi_up:   [ null, [ Validators.required ] ],
-      Warning_humi_down: [ null, [ Validators.required ] ],
+      warning_temp_up:   [ null, [ Validators.required ] ],
+      warning_temp_down: [ null, [ Validators.required ] ],
+      warning_humi_up:   [ null, [ Validators.required ] ],
+      warning_humi_down: [ null, [ Validators.required ] ],
       phone_warn:   this.fb.group(warnGroupConf),
       message_warn: this.fb.group(warnGroupConf),
     })
@@ -221,10 +221,10 @@ export class HouseAddComponent implements OnInit {
       nums:  data.nums.join(','),
       delay: data.delay + '秒',
       span:  data.span + '秒',
-      Warning_type_name: data.Warning_type_name.map(it => this.warnCodeMap[it]).join(','),
-      Warning_nums: data.Warning_nums.join(','),
-      Warning_delay: data.Warning_delay + '秒',
-      Warning_span:  data.Warning_span + '秒',
+      warning_type_name: data.warning_type_name.map(it => this.warnCodeMap[it]).join(','),
+      warning_nums: data.warning_nums.join(','),
+      warning_delay: data.warning_delay + '秒',
+      warning_span:  data.warning_span + '秒',
     }
   }
 
@@ -297,15 +297,15 @@ export class HouseAddComponent implements OnInit {
           temp_down,
           humi_up,
           humi_down,
-          Warning_temp_up,
-          Warning_temp_down,
-          Warning_humi_up,
-          Warning_humi_down
+          warning_temp_up,
+          warning_temp_down,
+          warning_humi_up,
+          warning_humi_down
 
         } = this.paramsForm.value
 
-        if (temp_up <= temp_down || Warning_temp_up <= Warning_temp_down) return this.msg.error('温度上限应大于下限')
-        if (humi_up <= humi_down || Warning_humi_up <= Warning_humi_down) return this.msg.error('湿度上限应大于下限')
+        if (temp_up <= temp_down || warning_temp_up <= warning_temp_down) return this.msg.error('温度上限应大于下限')
+        if (humi_up <= humi_down || warning_humi_up <= warning_humi_down) return this.msg.error('湿度上限应大于下限')
       default:
         break;
     }

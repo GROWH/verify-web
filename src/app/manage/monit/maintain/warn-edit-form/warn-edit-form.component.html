@@ -1,147 +1,84 @@
 <form nz-form [formGroup]="form">
   <div class="title">电话告警</div>
-  <ng-container 
-    *ngTemplateOutlet="warnForm; context: { group: 'phone_warn' }"
-  ></ng-container>
+  <ng-container *ngTemplateOutlet="warnForm; context: { group: 'phone_warn' }"></ng-container>
 
   <nz-divider></nz-divider>
 
   <div class="title">短信告警</div>
-  <ng-container 
-    *ngTemplateOutlet="warnForm; context: { group: 'message_warn' }"
-  ></ng-container>
-  
+  <ng-container *ngTemplateOutlet="warnForm; context: { group: 'message_warn' }"></ng-container>
+
   <ng-template let-group="group" #warnForm>
     <ng-container [formGroupName]="group">
       <div nz-row nzGutter="8">
         <nz-form-label nzSpan="5" nzRequired>报警类型</nz-form-label>
         <nz-form-control nzSpan="19">
-          <nz-select
-            nzAllowClear
-            nzMode="multiple"
-            nzPlaceHolder="可多选"
-            formControlName="types"
-          >
-            <nz-option
-              *ngFor="let item of warnTypes"
-              [nzLabel]="item.label"
-              [nzValue]="item.value"
-            >
+          <nz-select nzAllowClear nzMode="multiple" nzPlaceHolder="可多选" formControlName="types">
+            <nz-option *ngFor="let item of warnTypes" [nzLabel]="item.label" [nzValue]="item.value">
             </nz-option>
           </nz-select>
         </nz-form-control>
       </div>
-  
+
       <div nz-row nzGutter="8">
         <nz-form-label nzSpan="5" nzRequired>报警延时(>30)</nz-form-label>
         <nz-form-control nzSpan="7">
-          <nz-input-number
-            class="full-width"
-            formControlName="delay"
-            [nzMin]="30"
-            [nzStep]="1"
-            [nzPrecision]="0"
-            [nzPlaceHolder]="'单位: 秒'"
-          ></nz-input-number>
+          <nz-input-number class="full-width" formControlName="delay" [nzMin]="30" [nzStep]="1" [nzPrecision]="0"
+            [nzPlaceHolder]="'单位: 秒'"></nz-input-number>
         </nz-form-control>
         <nz-form-label nzSpan="5" nzRequired>报警间隔(>30)</nz-form-label>
         <nz-form-control nzSpan="7">
-          <nz-input-number
-            class="full-width"
-            formControlName="span"
-            [nzMin]="30"
-            [nzStep]="1"
-            [nzPrecision]="0"
-            [nzPlaceHolder]="'单位: 秒'"
-          ></nz-input-number>
+          <nz-input-number class="full-width" formControlName="span" [nzMin]="30" [nzStep]="1" [nzPrecision]="0"
+            [nzPlaceHolder]="'单位: 秒'"></nz-input-number>
         </nz-form-control>
       </div>
-  
+
       <div nz-row nzGutter="8">
         <nz-form-label nzSpan="5" nzRequired>报警电话</nz-form-label>
         <nz-form-control nzSpan="19">
           <div>
-            <nz-tag
-              nzColor="#108ee9"
-              nzMode="closeable"
-              *ngFor="let num of getPhoneNums(group); index as i"
-              (nzOnClose)="onPhoneRemove(group, i)"
-            >{{ num }}</nz-tag>
+            <nz-tag nzColor="#108ee9" nzMode="closeable" *ngFor="let num of getPhoneNums(group); index as i"
+              (nzOnClose)="onPhoneRemove(group, i)">{{ num }}</nz-tag>
           </div>
           <div>
-            <input
-              nz-input
-              placeholder="输入回车键添加手机号, 请至少添加三个报警电话"
-              (keyup.enter)="onPhoneAdd(group, $event.target)"
-            >
+            <input nz-input placeholder="输入回车键添加手机号, 请至少添加三个报警电话" (keyup.enter)="onPhoneAdd(group, $event.target)">
           </div>
         </nz-form-control>
       </div>
       <div nz-row nzGutter="8">
         <nz-form-label nzSpan="5" nzRequired>预警类型</nz-form-label>
         <nz-form-control nzSpan="19">
-          <nz-select
-            nzAllowClear
-            nzMode="multiple"
-            nzPlaceHolder="可多选"
-            formControlName="Warning_type_name"
-          >
-            <nz-option
-              *ngFor="let item of warnTypes"
-              [nzLabel]="item.label"
-              [nzValue]="item.value"
-            >
+          <nz-select nzAllowClear nzMode="multiple" nzPlaceHolder="可多选" formControlName="warning_type_name">
+            <nz-option *ngFor="let item of warnTypes" [nzLabel]="item.label" [nzValue]="item.value">
             </nz-option>
           </nz-select>
         </nz-form-control>
       </div>
-  
+
       <div nz-row nzGutter="8">
         <nz-form-label nzSpan="5" nzRequired>预警延时(>30)</nz-form-label>
         <nz-form-control nzSpan="7">
-          <nz-input-number
-            class="full-width"
-            formControlName="Warning_delay"
-            [nzMin]="30"
-            [nzStep]="1"
-            [nzPrecision]="0"
-            [nzPlaceHolder]="'单位: 秒'"
-          ></nz-input-number>
+          <nz-input-number class="full-width" formControlName="warning_delay" [nzMin]="30" [nzStep]="1"
+            [nzPrecision]="0" [nzPlaceHolder]="'单位: 秒'"></nz-input-number>
         </nz-form-control>
         <nz-form-label nzSpan="5" nzRequired>预警间隔(>30)</nz-form-label>
         <nz-form-control nzSpan="7">
-          <nz-input-number
-            class="full-width"
-            formControlName="Warning_span"
-            [nzMin]="30"
-            [nzStep]="1"
-            [nzPrecision]="0"
-            [nzPlaceHolder]="'单位: 秒'"
-          ></nz-input-number>
+          <nz-input-number class="full-width" formControlName="warning_span" [nzMin]="30" [nzStep]="1" [nzPrecision]="0"
+            [nzPlaceHolder]="'单位: 秒'"></nz-input-number>
         </nz-form-control>
       </div>
-  
+
       <div nz-row nzGutter="8">
         <nz-form-label nzSpan="5" nzRequired>预警电话</nz-form-label>
         <nz-form-control nzSpan="19">
           <div>
-            <nz-tag
-              nzColor="#108ee9"
-              nzMode="closeable"
-              *ngFor="let Warning_nums of getPhoneNums1(group); index as i"
-              (nzOnClose)="onPhoneRemove1(group, i)"
-            >{{ Warning_nums }}</nz-tag>
+            <nz-tag nzColor="#108ee9" nzMode="closeable" *ngFor="let warning_nums of getPhoneNums1(group); index as i"
+              (nzOnClose)="onPhoneRemove1(group, i)">{{ warning_nums }}</nz-tag>
           </div>
           <div>
-            <input
-              nz-input
-              placeholder="输入回车键添加手机号, 请至少添加三个预警电话"
-              (keyup.enter)="onPhoneAdd1(group, $event.target)"
-            >
+            <input nz-input placeholder="输入回车键添加手机号, 请至少添加三个预警电话" (keyup.enter)="onPhoneAdd1(group, $event.target)">
           </div>
         </nz-form-control>
       </div>
     </ng-container>
   </ng-template>
 </form>
-

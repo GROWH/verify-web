@@ -1,24 +1,12 @@
 <div class="wrapper">
   <grid-action [actions]="gridActions"></grid-action>
 
-  <nz-table
-    #nzTable
-    class="table"
-    [nzData]="uniSer.data"
-    libClientRect
-    [libHeightMinus]="54"
-    [nzScroll]="{y: tableHeight}"
-    [nzShowPagination]="false"
-    [nzFrontPagination]="false"
-  >
+  <nz-table #nzTable class="table" [nzData]="uniSer.data" libClientRect [libHeightMinus]="54"
+    [nzScroll]="{y: tableHeight}" [nzShowPagination]="false" [nzFrontPagination]="false">
     <thead>
       <tr>
-        <th nzWidth="2%" nzLeft="0"
-            nzShowCheckbox
-            [(nzChecked)]="isAllDisplayDataChecked"
-            [nzIndeterminate]="isIndeterminate"
-            (nzCheckedChange)="checkAll($event)"
-        ></th>
+        <th nzWidth="2%" nzLeft="0" nzShowCheckbox [(nzChecked)]="isAllDisplayDataChecked"
+          [nzIndeterminate]="isIndeterminate" (nzCheckedChange)="checkAll($event)"></th>
         <th nzWidth="200px">库房名称</th>
         <th nzWidth="320px">报警监控范围</th>
         <th nzWidth="320px">预警监控范围</th>
@@ -57,21 +45,21 @@
           T:
           <span class="point point-top">
             <i nz-icon nzType="arrow-up" nzTheme="outline"></i>
-            {{ i.Warning_temp_up }} ℃
+            {{ i.warning_temp_up }} ℃
           </span>
           <span class="point point-down">
             <i nz-icon nzType="arrow-down" nzTheme="outline"></i>
-            {{ i.Warning_temp_down }} ℃
+            {{ i.warning_temp_down }} ℃
           </span>
           &nbsp;&nbsp;
           RH:
           <span class="point point-top">
             <i nz-icon nzType="arrow-up" nzTheme="outline"></i>
-            {{ i.Warning_humi_up }} %
+            {{ i.warning_humi_up }} %
           </span>
           <span class="point point-down">
             <i nz-icon nzType="arrow-down" nzTheme="outline"></i>
-            {{ i.Warning_humi_down }} %
+            {{ i.warning_humi_down }} %
           </span>
         </td>
         <td>{{ i.thermometer.length }}</td>
@@ -88,18 +76,10 @@
     </tbody>
   </nz-table>
 
-  <nz-pagination
-    class="pagination"
-    [ngClass]="{ blur: uniSer.loading }"
-    [nzTotal]="uniSer.totalCount"
-    [nzShowTotal]="totalTemplate"
-    [nzShowSizeChanger]="true"
-    [nzPageSizeOptions]="[10, 50, 100, 500]"
-    [(nzPageIndex)]    ="uniSer.page"
-    [(nzPageSize)]     ="uniSer.size"
-    (nzPageIndexChange)="uniSer.pageParamsCh$.next()"
-    (nzPageSizeChange) ="uniSer.pageParamsCh$.next(true)"
-  ></nz-pagination>
+  <nz-pagination class="pagination" [ngClass]="{ blur: uniSer.loading }" [nzTotal]="uniSer.totalCount"
+    [nzShowTotal]="totalTemplate" [nzShowSizeChanger]="true" [nzPageSizeOptions]="[10, 50, 100, 500]"
+    [(nzPageIndex)]="uniSer.page" [(nzPageSize)]="uniSer.size" (nzPageIndexChange)="uniSer.pageParamsCh$.next()"
+    (nzPageSizeChange)="uniSer.pageParamsCh$.next(true)"></nz-pagination>
 </div>
 
 

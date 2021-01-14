@@ -10,14 +10,14 @@ export class Thermometer extends DataBase {
   model:               any;               // 
   humi_alarm_high:     any;               // 
   humi_alarm_low:      any;               //
-  Warning_humi_up:     any;               //
-  Warning_humi_down:   any;               //
+  warning_humi_up:     any;               //
+  warning_humi_down:   any;               //
   re_start_time:       any;               // 
   startmode:           any;               // 
   temp_alarm_high:     any;               //
   temp_alarm_low:      any;               // 
-  Warning_temp_up:     any;               // 
-  Warning_temp_down:   any;               //  
+  warning_temp_up:     any;               // 
+  warning_temp_down:   any;               //  
   workmode:            any;               // 
   re_end_time:         any;               // 
   purchase_price:      any;               // 

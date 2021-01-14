@@ -1,10 +1,6 @@
 <nz-layout id="menuWidth" class="app-layout">
-  <nz-sider class="menu-sidebar"
-            nzCollapsible
-            nzWidth="256px"
-            nzBreakpoint="md"
-            [(nzCollapsed)]="isCollapsed"
-            [nzTrigger]="null">
+  <nz-sider class="menu-sidebar" nzCollapsible nzWidth="256px" nzBreakpoint="md" [(nzCollapsed)]="isCollapsed"
+    [nzTrigger]="null">
     <div class="sidebar-logo">
       <a href="javascript:(0)">
         <!-- <img src="https://ng.ant.design/assets/img/logo.svg" alt="logo"> -->
@@ -12,8 +8,9 @@
       </a>
     </div>
     <ul nz-menu [nzMode]="'inline'" nzTheme="light" [nzInlineCollapsed]="isCollapsed">
-      <li nz-submenu *ngFor="let item of menuList;let key=index;" [(nzOpen)]="openMap['sub'+key]" (nzOpenChange)="openHandler('sub'+key)">
-<!--        home-->
+      <li nz-submenu *ngFor="let item of menuList;let key=index;" [(nzOpen)]="openMap['sub'+key]"
+        (nzOpenChange)="openHandler('sub'+key)">
+        <!--        home-->
         <a class="homeMenu" title *ngIf="item.key_word == 'home'" routerLink="{{item.module_url}}">
           <i nz-icon type="{{item.icon}}"></i>
           <span>{{item.module_name}}</span>
@@ -36,23 +33,15 @@
     <nz-header>
       <div class="app-header">
         <span class="header-trigger" (click)="navScaling()">
-          <i class="trigger"
-             nz-icon
-             [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
-          ></i>
+          <i class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></i>
         </span>
-        <div class="header-tab"  [style.width.px]="conWidth">
-          <nz-tabset
-            nzType="card"
-            nzSize="small"
-          >
-            <nz-tab
-              *ngFor="let menu of tabList; index as i"
-              [nzTitle]="titleTemplate"
-            >
+        <div class="header-tab" [style.width.px]="conWidth">
+          <nz-tabset nzType="card" nzSize="small">
+            <nz-tab *ngFor="let menu of tabList; index as i" [nzTitle]="titleTemplate">
               <ng-template #titleTemplate>
                 <div class="self-tab">
-                  <a [ngClass]="{'a-active':menu.isSelect,'.a-normal':!menu.isSelect}" routerLink="/{{ menu.module }}">{{ menu.title }}</a>
+                  <a [ngClass]="{'a-active':menu.isSelect,'.a-normal':!menu.isSelect}"
+                    routerLink="/{{ menu.module }}">{{ menu.title }}</a>
                   <i class="anticon anticon-close ant-tabs-close-x" (click)="closeUrl(menu.module,menu.isSelect)"></i>
                 </div>
               </ng-template>
@@ -60,9 +49,10 @@
           </nz-tabset>
         </div>
         <div class="alert-list">
-          <span  [style.display]="isShowTip ? 'inline-block':'none'" class="alert-mask" (click)="noticeClick()"></span><!--  提示遮罩层-->
+          <span [style.display]="isShowTip ? 'inline-block':'none'" class="alert-mask" (click)="noticeClick()"></span>
+          <!--  提示遮罩层-->
           <span class="bellStyle" title="新的通知">
-          <i nz-icon nzType="bell" nzTheme="outline"></i>
+            <i nz-icon nzType="bell" nzTheme="outline"></i>
           </span>
           <span class="count" [style.display]="isShowTip ? 'inline-block':'none'"></span><!--  小红点-->
           <div class="alert-ul" [style.display]="isShow ? 'inline-block':'none'">

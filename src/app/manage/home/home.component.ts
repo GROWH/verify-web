@@ -144,20 +144,28 @@ export class HomeComponent implements OnInit {
   isSetColor(record, type) {
     let theColor = 'success-color';
     if (type === 'temp') {
-      if (record.temp > record.temp_down && record.temp < record.temp_up) {
+      const tempD = record.temp_down;
+      const tempU = record.temp_up;
+      const warnD = record.warning_temp_down;
+      const warnU = record.warning_temp_up;
+      if (record.temp > warnD || record.temp < warnU) {
         theColor = 'success-color';
-      } else if (record.temp < record.warning_temp_down || record.temp > record.warning_temp_up) {
-        theColor = 'warn-color';
-      } else {
+      } else if (record.temp < tempD || record.temp > tempU) {
         theColor = 'error-color';
+      } else {
+        theColor = 'warn-color';
       }
     } else {
-      if (record.humi > record.humi_down && record.humi < record.humi_up) {
+      const humiD = record.humi_down;
+      const humiU = record.humi_up;
+      const warnD = record.warning_humi_down;
+      const warnU = record.warning_humi_up;
+      if (record.humi > warnD || record.humi < warnU) {
         theColor = 'success-color';
-      } else if (record.humi < record.warning_humi_down || record.humi > record.warning_humi_up) {
-        theColor = 'warn-color';
-      } else {
+      } else if (record.humi < humiD || record.humi > humiU) {
         theColor = 'error-color';
+      } else {
+        theColor = 'warn-color';
       }
     }
     return theColor;

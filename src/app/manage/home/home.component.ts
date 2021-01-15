@@ -148,10 +148,10 @@ export class HomeComponent implements OnInit {
       const tempU = record.temp_up;
       const warnD = record.warning_temp_down;
       const warnU = record.warning_temp_up;
-      if (record.temp > warnD || record.temp < warnU) {
-        theColor = 'success-color';
-      } else if (record.temp < tempD || record.temp > tempU) {
+      if (record.temp < tempD || record.temp > tempU) {
         theColor = 'error-color';
+      } else if (record.temp > warnD && record.temp < warnU) {
+        theColor = 'success-color';
       } else {
         theColor = 'warn-color';
       }
@@ -160,10 +160,10 @@ export class HomeComponent implements OnInit {
       const humiU = record.humi_up;
       const warnD = record.warning_humi_down;
       const warnU = record.warning_humi_up;
-      if (record.humi > warnD || record.humi < warnU) {
-        theColor = 'success-color';
-      } else if (record.humi < humiD || record.humi > humiU) {
+      if (record.humi < humiD || record.humi > humiU) {
         theColor = 'error-color';
+      } else if (record.humi > warnD && record.humi < warnU) {
+        theColor = 'success-color';
       } else {
         theColor = 'warn-color';
       }

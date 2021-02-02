@@ -68,7 +68,8 @@
                   <p>度</p>
                 </div>
                 <div class="item2">
-                  <span [ngClass]="isSetColor(item,'humi')" >{{item.humi}}</span>%
+                  <span *ngIf="item.humi == 0">--</span>
+                  <span *ngIf="item.humi != 0" [ngClass]="isSetColor(item,'humi')">{{item.humi}}</span>%
                 </div>
                 <div class="item3">
                   <p>湿度范围</p>

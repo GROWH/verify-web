@@ -155,6 +155,7 @@ export class AlarmHandlComponent implements OnInit {
     const params = this.condition;
     const start = '\'' + format(params.start, 'YYYY-MM-DD HH:mm:ss.SSS') + '\'';
     const end = '\'' + format(params.end, 'YYYY-MM-DD HH:mm:ss.SSS') + '\'';
+    const type = '\'' + params.type + '\'';
     const searchParam =
       '&pid=' +
       params.cId +
@@ -163,7 +164,7 @@ export class AlarmHandlComponent implements OnInit {
       '&end_time=' +
       end +
       '&alarm_type=' +
-      params.type +
+      type +
       '&processing=' +
       params.status;
     this.loading = true;

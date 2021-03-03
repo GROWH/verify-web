@@ -14,7 +14,7 @@ export class ThermometerFormComponent implements OnInit {
   unitList = [];
   purposeList =[
     {
-      label:'库房检测'
+      label:'库房监测'
     },
     {
       label:'验证'

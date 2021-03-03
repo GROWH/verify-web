@@ -52,7 +52,7 @@ export class NavComponent implements OnInit, OnDestroy {
   timer() {
     this.setTimer = setInterval(() => {
       this.getRemind();
-    }, 60000);
+    }, 0);
   }
 
   ngOnDestroy() {

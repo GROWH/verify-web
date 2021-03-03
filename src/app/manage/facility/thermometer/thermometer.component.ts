@@ -359,6 +359,7 @@ export class ThermometerComponent implements OnInit {
       .get<any>(`${this.baseUrl}?page=${this.page}&size=${this.size}`)
       .subscribe((res) => {
         this.loading = false;
+        console.log(res);
         if (res.code === 0) {
           this.listOfDisplayData = res.data.list;
           this.refreshStatus();

@@ -54,22 +54,20 @@
 
     .con-main{
       .card-inner{
-        display: flex;
-        justify-content: center;
         padding: 5px 10px;
         height: 500px;
-        overflow-y: scroll;
-
         .card{
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-          grid-column-gap: 15px;
-          grid-row-gap: 15px;
-          width: 100%;
-          justify-content: center;
+          display: flex;
+          justify-content: flex-start;
+          align-items: flex-start;
+          flex-wrap: wrap;
+          width:100%;
+          // background-color: rgb(240, 164, 164);
         }
         .card-item{
           height: 200px;
+          margin: 5px 10px;
+          // background-color: rgb(231, 210, 114);
           box-shadow:0px 0px 10px #AAAAAA;
           border-radius: 8px;
           overflow: hidden;
@@ -90,7 +88,6 @@
               display: inline-block;
               margin: 0 10px;
               text-align: center;
-
             }
             .opera-btn{
               padding-right: 10px;
@@ -130,18 +127,20 @@
           }
 
           .card-item-con:last-child{
+            display:flex;
+            justify-content: space-around;
+            align-items: center;
             padding: 4px 8px;
             font-size: 12px;
             font-weight: 600;
             span{
               display: inline-block;
-              padding: 0 8px;
-              width: 50%;
               white-space: nowrap;
               text-overflow: ellipsis;
               overflow: hidden;
               word-break: break-all;
             }
+            
           }
         }
       }

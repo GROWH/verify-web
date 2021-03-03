@@ -131,7 +131,7 @@ export class AlarmHandlComponent implements OnInit {
                 const params = {
                   ...formVal,
                   id: house.id,
-                  version: 1,
+                  version: house.version,
                 };
                 this.http.put(this.baseUrl, params).subscribe((res) => {
                   if (res.code !== 0) {
@@ -224,5 +224,6 @@ export class TableList {
   method: string; // 处理方法
   remarks: string; // 处理人
   processor: string; // 备注
+  version: string;
   id: any;
 }

@@ -123,6 +123,7 @@ export class UnitAuditComponent implements OnInit {
                     this.msg.error(res.message);
                     return
                   }
+                  
                   this.msg.success(res.message);
                   this.getData();
                 })
@@ -147,6 +148,7 @@ export class UnitAuditComponent implements OnInit {
     this.http.get<any>(`${this.baseUrl}?page=${this.page}&size=${this.size}`).subscribe(res => {
       this.loading = false;
       if(res.code === 0) {
+        console.log(res);
         this.listOfDisplayData = res.data.list;
         this.refreshStatus()
       }

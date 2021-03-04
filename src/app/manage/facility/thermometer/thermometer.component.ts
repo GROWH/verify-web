@@ -359,7 +359,6 @@ export class ThermometerComponent implements OnInit {
       .get<any>(`${this.baseUrl}?page=${this.page}&size=${this.size}`)
       .subscribe((res) => {
         this.loading = false;
-        console.log(res);
         if (res.code === 0) {
           this.listOfDisplayData = res.data.list;
           this.refreshStatus();
@@ -375,6 +374,21 @@ export class ThermometerComponent implements OnInit {
     this.size = pageSize;
     this.getData();
   }
+  //在线状态判断
+  isOnlineStatus(status){
+    let onStaatus = ''
+    if(status == true){
+      onStaatus= '在线'
+    }else if(status == false){
+      onStaatus= '不在线'
+    }else if(status == null){
+      onStaatus= '未绑定'
+    }
+    return onStaatus
+  }
+
+
+
 }
 class params {
   id: number;

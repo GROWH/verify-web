@@ -154,9 +154,8 @@ export class AlarmHandlComponent implements OnInit {
   getData() {
     
     const params = this.condition;
-    const start = '\'' + format(params.start, 'YYYY-MM-DD HH:mm:ss.SSS') + '\'';
-    const end = '\'' + format(params.end, 'YYYY-MM-DD HH:mm:ss.SSS') + '\'';
-    console.log(params.type);
+    const start = params.start==null? params.start :'\'' + format(params.start, 'YYYY-MM-DD HH:mm:ss.SSS') + '\'';
+    const end = params.end==null? params.end :'\'' + format(params.end, 'YYYY-MM-DD HH:mm:ss.SSS') + '\'';
     const type =params.type==null? params.type : '\''+ encodeURIComponent(params.type) +'\'' ;
     const searchParam =
       '&pid=' +
@@ -178,7 +177,6 @@ export class AlarmHandlComponent implements OnInit {
         this.loading = false;
         if (res.code === 0) {
           this.listOfData = res.data.list;
-          console.log(this.listOfData);
         }
       });
   }

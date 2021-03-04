@@ -157,7 +157,7 @@ export class AlarmHandlComponent implements OnInit {
     const start = '\'' + format(params.start, 'YYYY-MM-DD HH:mm:ss.SSS') + '\'';
     const end = '\'' + format(params.end, 'YYYY-MM-DD HH:mm:ss.SSS') + '\'';
     console.log(params.type);
-    const type =params.type==null? params.type : '\''+ (params.type) +'\'' ;
+    const type =params.type==null? params.type : '\''+ encodeURIComponent(params.type) +'\'' ;
     const searchParam =
       '&pid=' +
       params.cId +

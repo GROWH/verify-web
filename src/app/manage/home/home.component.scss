@@ -62,17 +62,18 @@
 
         .card{
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(280px, 300px));
+          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
           grid-column-gap: 15px;
           grid-row-gap: 15px;
           width: 100%;
-          justify-content: flex-start;
+          justify-content: center;
         }
         .card-item{
           height: 200px;
           box-shadow:0px 0px 10px #AAAAAA;
           border-radius: 8px;
           overflow: hidden;
+          max-width: 300px;
           border: 2px solid #2E37B7;
           box-sizing: border-box;
           .card-item-con:first-child{
@@ -129,13 +130,14 @@
           }
 
           .card-item-con:last-child{
+            display:flex;
+            justify-content: space-around;
+            align-items: center;
             padding: 4px 8px;
             font-size: 12px;
             font-weight: 600;
             span{
               display: inline-block;
-              padding: 0 8px;
-              width: 50%;
               white-space: nowrap;
               text-overflow: ellipsis;
               overflow: hidden;

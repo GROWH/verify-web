@@ -356,11 +356,12 @@ export class ThermometerComponent implements OnInit {
     this.mapOfCheckedId = {};
     this.loading = true;
     this.http
-      .get<any>(`${this.baseUrl}?page=${this.page}&size=${this.size}`)
+      .get<any>(`${this.baseUrl}?pageIndex=${this.page}&pageSize=${this.size}`)
       .subscribe((res) => {
         this.loading = false;
         if (res.code === 0) {
-          this.listOfDisplayData = res.data.list;
+          this.listOfDisplayData = res.data;
+          this.total = res.data.length;
           this.refreshStatus();
         }
       });

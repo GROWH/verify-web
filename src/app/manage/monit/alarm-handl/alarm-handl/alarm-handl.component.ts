@@ -152,10 +152,12 @@ export class AlarmHandlComponent implements OnInit {
 
   // 初始出请求
   getData() {
+    
     const params = this.condition;
     const start = '\'' + format(params.start, 'YYYY-MM-DD HH:mm:ss.SSS') + '\'';
     const end = '\'' + format(params.end, 'YYYY-MM-DD HH:mm:ss.SSS') + '\'';
-    const type = '\'' + params.type + '\'';
+    console.log(params.type);
+    const type =params.type==null? params.type : '\''+ (params.type) +'\'' ;
     const searchParam =
       '&pid=' +
       params.cId +
@@ -176,6 +178,7 @@ export class AlarmHandlComponent implements OnInit {
         this.loading = false;
         if (res.code === 0) {
           this.listOfData = res.data.list;
+          console.log(this.listOfData);
         }
       });
   }
@@ -224,6 +227,6 @@ export class TableList {
   method: string; // 处理方法
   remarks: string; // 处理人
   processor: string; // 备注
-  version: string;
+  version: string;  //版本
   id: any;
 }

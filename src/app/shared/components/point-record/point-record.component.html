@@ -4,6 +4,7 @@
       <nz-tab nzTitle="数据曲线">
         <div class="range">
           <nz-range-picker
+            nzShowTime
             [nzRanges]="ranges"
             [nzDisabledDate]="rangeDisableDate"
             [(ngModel)]="datas"
@@ -20,6 +21,7 @@
       <nz-tab nzTitle="历史数据查询">
         <div class="range">
           <nz-range-picker
+            nzShowTime
             [nzRanges]="ranges"
             [nzDisabledDate]="rangeDisableDate"
             [(ngModel)]="datas1"

@@ -10,7 +10,6 @@ import {delayWhen} from 'rxjs/operators';
 import {NzMessageService, NzModalRef, NzModalService} from 'ng-zorro-antd';
 import {GridAction} from '@/model/GridAction';
 import {buttonAccess} from '@/config.const';
-import * as $ from  'jquery';
 
 const rangeCount = (offset: number) => {
   const end = new Date();
@@ -218,9 +217,8 @@ export class PointRecordComponent implements OnInit {
   async dateCh() {
     DebugLog(this.datas);
     const [ start, end ] = this.datas;
-
-    start.setHours(0, 0, 0, 0);
-    end.setHours(23, 59, 59, 999);
+    // start.setHours(0, 0, 0, 0);
+    // end.setHours(23, 59, 59, 999);
 
     const { messageId: msgID } = this.msg.loading('数据加载中...', {nzDuration: 0});
     const res = await this.http.get<PointRecord[]>(Apis.pointRecord, {
@@ -268,8 +266,8 @@ export class PointRecordComponent implements OnInit {
   // 初始出请求
   getTableData() {
     const [ start, end ] = this.datas1;
-    start.setHours(0, 0, 0, 0);
-    end.setHours(23, 59, 59, 999);
+    // start.setHours(0, 0, 0, 0);
+    // end.setHours(23, 59, 59, 999);
     const baseUrl = '/position/queryHistoricalData';
     this.loading = true;
     const params = {

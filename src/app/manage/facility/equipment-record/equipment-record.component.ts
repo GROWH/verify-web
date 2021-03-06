@@ -240,7 +240,7 @@ export class EquipmentRecordComponent implements OnInit {
     this.http.get<any>(this.equipmentUrl).subscribe(res => {
       if (res.code === 0) {
         this.equipmentList = res.data
-        this.selectedItem = res.data[0]
+        this.selectedItem = res.data[0] || {}
         this.nodeClick(this.selectedItem)
       }
     })
@@ -249,9 +249,9 @@ export class EquipmentRecordComponent implements OnInit {
   nodeClick(node) {
     this.selectedItem = node;
     //查询选中所属单位的设备操作记录
-    this.http.get<any>(`${this.equipmentUrl}/${node.id}`).subscribe(res => {
+    this.http.get<any>(`${this.equipmentUrl}/${node.id || ''}`).subscribe(res => {
       if (res.code === 0) {
-        this.listOfDisplayData = res.data.record;
+        this.listOfDisplayData = node.id ? res.data.record : [];
         this.isAllDisplayDataChecked = false;
         this.mapOfCheckedId = {};
       }

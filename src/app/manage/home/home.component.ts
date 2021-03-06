@@ -77,6 +77,7 @@ export class HomeComponent implements OnInit {
     this.loading = true;
     this.http.get<any>(`${this.dataUrl}?pid=${this.checkVal}&page=${this.page}&size=${this.size}`).subscribe(res => {
       this.loading = false;
+      console.log(res);
       if (res.code === 0) {
         this.total = res.data.totalRow;
         this.listOfData = res.data.list;
@@ -94,7 +95,6 @@ export class HomeComponent implements OnInit {
     this.checkVal = value;
     this.getData();
   }
-  
   showStyle(value) {
     this.isShow = value;
     if (value) {

@@ -232,7 +232,9 @@ export class NavComponent implements OnInit, OnDestroy {
       if ((event instanceof RouterEvent)) {
         this.tabList.forEach(p => p.isSelect = false);
         const titArr = menuArr.filter((ele) => {
-          return event.url.indexOf(ele.module_url) > -1;
+          const urlArr = event.url.split('/');
+          const currentUrl = urlArr[urlArr.length - 1];
+          return currentUrl === ele.module_code;
         }); // 获取Tab => title
         const tabArr = this.tabList.filter((ele) => {
           return titArr[0].module_name === ele.title;

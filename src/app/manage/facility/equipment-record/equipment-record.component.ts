@@ -251,7 +251,7 @@ export class EquipmentRecordComponent implements OnInit {
     //查询选中所属单位的设备操作记录
     this.http.get<any>(`${this.equipmentUrl}/${node.id || ''}`).subscribe(res => {
       if (res.code === 0) {
-        this.listOfDisplayData = res.data.record;
+        this.listOfDisplayData = node.id ? res.data.record : [];
         this.isAllDisplayDataChecked = false;
         this.mapOfCheckedId = {};
       }

@@ -69,7 +69,6 @@ export class HomeComponent implements OnInit {
         const id = res.data[0].id;
         this.checkVal = id || null;
         this.getData();
-
       }
     });
   }

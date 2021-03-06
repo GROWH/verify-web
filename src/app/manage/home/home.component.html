@@ -6,6 +6,7 @@
         <label>监测区域 ：</label>
         <nz-select class="option-val" nzShowSearch nzAllowClear nzPlaceHolder="请选择" style="width: 200px"
           [ngModel]="checkVal" (ngModelChange)="storeChange($event)">
+          <nz-option nzValue="null" nzLabel="所有区域"></nz-option>
           <nz-option *ngFor="let item of storeList" [nzLabel]="item.name" [nzValue]="item.id"></nz-option>
         </nz-select>
       </div>

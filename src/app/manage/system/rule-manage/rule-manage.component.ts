@@ -242,7 +242,7 @@ export class RuleManageComponent implements OnInit {
 
   //下载
   uploadDom(record) {
-    let downloadUrl = 'api/' + this.baseUrl + '/download?file=' + record.filename;
+    let downloadUrl = 'api' + this.baseUrl + '/download?file=' + record.filename;
     let modalRef: NzModalRef = this.modal.create({
       nzTitle: '请确认是否下载?',
       nzWidth: 400,

@@ -1,0 +1,16 @@
+{
+  "id": "2405519",
+  "name": "verify-web",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "20230214",
+      "name": "数据",
+      "font_class": "shuju-copy",
+      "unicode": "e824",
+      "unicode_decimal": 59428
+    }
+  ]
+}

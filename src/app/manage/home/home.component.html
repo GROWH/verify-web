@@ -17,11 +17,14 @@
           <span *ngIf="isShow === false" (click)="showStyle(true)"><i nz-icon nzType="bars"
               nzTheme="outline"></i></span>
         </li>
-        <li><span style="background: #FF7747">未处理报警数 ：{{alarmData.unproceNum}}</span></li>
-        <li><span style="background: #A4A5B0">离线测点 ：{{alarmData.offLineNum}}</span></li>
-        <li><span style="background: #EF252C">报警测点 ：{{alarmData.alarmNum}}</span></li>
-        <li><span style="background: #FFCB1C">预警测点 ：{{alarmData.warnNum}}</span></li>
-        <li><span style="background: #3D9A23">测点总数 ：{{alarmData.allNum}}</span></li>
+        <li><span style="background: #FF7747;cursor: pointer" (click)="pointC()">未处理报警数 ：{{alarmData.unproceNum}}</span>
+        </li>
+        <li><span style="background: #A4A5B0;cursor: pointer" (click)="pointC()">离线测点 ：{{alarmData.offLineNum}}</span>
+        </li>
+        <li><span style="background: #EF252C;cursor: pointer" (click)="pointC()">报警测点 ：{{alarmData.alarmNum}}</span>
+        </li>
+        <li><span style="background: #FFCB1C;cursor: pointer" (click)="pointC()">预警测点 ：{{alarmData.warnNum}}</span></li>
+        <li><span style="background: #3D9A23;cursor: pointer" (click)="pointC()">测点总数 ：{{alarmData.allNum}}</span></li>
       </ul>
     </div>
     <div class="con-main">
@@ -35,7 +38,9 @@
         <div class="card" *ngIf="listOfData.length !== 0">
           <div class="card-item" *ngFor="let item of listOfData;let key=index;">
             <div class="card-item-con">
-              <span class="wifi-icon"><i nz-icon nzType="wifi" nzTheme="outline"
+              <!-- nz-icon nzType="wifi" nzTheme="outline" -->
+
+              <span class="wifi-icon"><i class="iconfont icon-shuju-copy"
                   [ngClass]="{'success-color':isState(item.time),'default-color':!isState(item.time)}"></i></span>
               <div class="date-time">
                 <span style="margin-right: 15px;">日期 : {{ item.time | date:'yyyy-MM-dd' }}</span>

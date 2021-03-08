@@ -1,0 +1,29 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" >
+<!--
+2013-9-30: Created.
+-->
+<svg>
+<metadata>
+Created by iconfont
+</metadata>
+<defs>
+
+<font id="iconfont" horiz-adv-x="1024" >
+  <font-face
+    font-family="iconfont"
+    font-weight="500"
+    font-stretch="normal"
+    units-per-em="1024"
+    ascent="896"
+    descent="-128"
+  />
+    <missing-glyph />
+    
+    <glyph glyph-name="shuju-copy" unicode="&#59428;" d="M96 10V352c0 35.346 28.654 64 64 64h192l1-0.008V522c0 35.346 28.654 64 64 64h191V692c0 35.346 28.654 64 64 64h192c35.346 0 64-28.654 64-64v-682H96z m256 342H160v-278h192V352z m256 170H417v-448h191V522z m256 170H672v-158.672c0.657-3.677 1-7.462 1-11.328v-448h191V692z"  horiz-adv-x="1024" />
+
+    
+
+
+  </font>
+</defs></svg>

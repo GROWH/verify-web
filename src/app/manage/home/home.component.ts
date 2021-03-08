@@ -120,6 +120,11 @@ export class HomeComponent implements OnInit {
       nzFooter: null,
     });
   }
+  pointC(){
+
+  }
+
+
   changePageIndex(pageIndex) {
     this.page = pageIndex;
     this.getData();

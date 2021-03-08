@@ -292,6 +292,7 @@ export class UnitManageComponent implements OnInit {
     this.http.get<any>(`${this.baseUrl}?page=${this.page}&size=${this.size}`).subscribe(res => {
       this.loading = false;
       if (res.code === 0) {
+
         this.listOfDisplayData = res.data.list;
         this.refreshStatus()
       }

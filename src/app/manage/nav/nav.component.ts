@@ -43,7 +43,7 @@ export class NavComponent implements OnInit, OnDestroy {
     const tabArr = localStorage.getItem('tabList');
     if (tabArr !== null) { this.tabList = JSON.parse(tabArr); }
     this.menuAddIcon();
-    // this.getRemind();
+    this.getRemind();
     this.tabRouter();
     this.timer();
   }
@@ -52,7 +52,7 @@ export class NavComponent implements OnInit, OnDestroy {
   timer() {
     this.setTimer = setInterval(() => {
       this.getRemind();
-    }, 2500);
+    }, 60000);
   }
 
   ngOnDestroy() {

@@ -18,7 +18,7 @@ export class HomeComponent implements OnInit {
   listOfData: TableList[] = [];
   page = 1;
   size = 22;
-  total = 1;
+  total = 0;
   loading = true;
   tableHeight = 0;
   cardConHeight = 0;
@@ -31,7 +31,7 @@ export class HomeComponent implements OnInit {
   offLineList = []; 　//离线数
   dataTime = "";
   nowTime ="";
-  checkVal = '';
+  checkVal = null;
   alarmData = {
     allNum: 0,
     warnNum: 0,
@@ -53,6 +53,7 @@ export class HomeComponent implements OnInit {
     this.cardConHeight = document.body.offsetHeight - 146;
     this.userCode = localStorage.getItem('LOGINED_USER_UNIT_KEY');
     this.getStorehouseData();
+    this.getData();
   }
   // 滚动加载事件
   divScrollFun() {
@@ -71,9 +72,6 @@ export class HomeComponent implements OnInit {
       this.loading = false;
       if (res.code === 0) {
         this.storeList = res.data;
-        const id = res.data[0].id;
-        this.checkVal = null;
-        this.getData();
       }
     });
   }
@@ -96,13 +94,13 @@ export class HomeComponent implements OnInit {
 
           //预警
           this.warningList = this.listOfData.filter(value => {
-            return ((value.humi > value.humi_down && value.humi < value.warning_humi_down) || (value.humi > value.warning_humi_up && value.humi < value.humi_up)) 
+            return ((value.humi > value.humi_down && value.humi < value.warning_humi_down) || (value.humi > value.warning_humi_up && value.humi < value.humi_up))
             || ((value.temp > value.temp_down && value.temp < value.warning_temp_down) || (value.temp > value.warning_temp_up && value.temp < value.temp_up))
           })
 
           this.offLineList = this.listOfData.filter(value => {
             return format(value.time, 'YYYY-MM-DD HH:mm:ss.SSS') < format(new Date().getTime() - (10 * 60 * 1000), 'YYYY-MM-DD HH:mm:ss.SSS');
-          })  
+          })
       }
     });
   }
@@ -164,7 +162,7 @@ export class HomeComponent implements OnInit {
     }
     return cbVal;
   }
- 
+
   isSetColor(record, type) {
     let theColor = 'success-color';
     if (type === 'temp') {
@@ -197,7 +195,7 @@ export class HomeComponent implements OnInit {
 
   getAlarmData(type) {
     if(type === 'a') {
-      this.getData(); 
+      this.getData();
     }else if(type === 'b') {
       this.listOfData =this.warningList
     }else if (type === 'c') {
@@ -205,7 +203,7 @@ export class HomeComponent implements OnInit {
     } else if(type === 'd'){
       this.listOfData =this.offLineList
     }
-    
+
   }
 
 }

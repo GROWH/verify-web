@@ -28,12 +28,14 @@
           color: white;
           margin-right: 10px;
           float: right;
+        
           span{
             display: inline-block;
             font-weight: bold;
             padding: 5px 15px;
             height: 30px;
             line-height: 20px;
+            outline:none;
           }
         }
         li:first-child{
@@ -89,7 +91,7 @@
             }
             .date-time{
               display: inline-block;
-              margin: 0 10px;
+              margin: 0 16px;
               text-align: center;
 
             }
@@ -143,6 +145,7 @@
               text-overflow: ellipsis;
               overflow: hidden;
               word-break: break-all;
+
             }
           }
         }
@@ -160,7 +163,7 @@
       color: #1890ff;
     }
     .success-color{
-      color: #3D9A23;
+      color: #00ff00;
       font-weight: 600;
     }
     .warn-color{

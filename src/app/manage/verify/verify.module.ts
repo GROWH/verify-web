@@ -12,7 +12,7 @@ import {
   NzDividerModule, NzEmptyModule, NzIconModule, NzPopoverModule,
   NzRadioModule,
   NzSelectModule,
-  NzTableModule, NzTabsModule
+  NzTableModule, NzTabsModule,NzSpinModule
 } from "ng-zorro-antd";
 import {VerifyOperatComponent} from './verify-task/verify-operat/verify-operat.component';
 import {NgxEchartsModule} from "ngx-echarts";
@@ -45,6 +45,7 @@ import {BaseInfoAddComponent} from "@/manage/verify/base-info/base-info-add/base
     NzTabsModule,
     NzEmptyModule,
     NzPopoverModule,
+    NzSpinModule
   ],
   providers: [
     {

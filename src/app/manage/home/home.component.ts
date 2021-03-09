@@ -12,7 +12,7 @@ export const LOGINED_USER_UNIT_KEY = 'LOGINED_USER_UNIT_KEY';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-
+  public isSpinning: any = false;
   userCode = '1';
   isShow = false;
   listOfData: TableList[] = [];
@@ -67,9 +67,11 @@ export class HomeComponent implements OnInit {
   }
   // 获取仓库下拉框
   getStorehouseData() {
-    this.loading = true;
+    // this.loading = true;
+    this.isSpinning = true;
     this.http.get<any>(`${this.storehouseUrl}`).subscribe(res => {
-      this.loading = false;
+      // this.loading = false;
+      this.isSpinning = false;
       if (res.code === 0) {
         this.storeList = res.data;
       }
@@ -80,9 +82,9 @@ export class HomeComponent implements OnInit {
 
   // 获取表格数据
   getData() {
-    this.loading = true;
+    this.isSpinning = true;
     this.http.get<any>(`${this.dataUrl}?pid=${this.checkVal}&page=${this.page}&size=${this.size}`).subscribe(res => {
-      this.loading = false;
+      this.isSpinning = false;
       if (res.code === 0) {
         this.total = res.data.totalRow;
         this.listOfData = res.data.list;

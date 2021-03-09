@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {LOGGER_SERVICE_PROVIDER} from "ng-zorro-antd";
 
 @Component({
   selector: 'app-handle-state-form',
@@ -9,6 +10,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 export class HandleStateFormComponent implements OnInit {
   @Input() house: {};
   form: FormGroup;
+  processorB = JSON.parse(localStorage.getItem('userInfo')).account;
   constructor(private fb: FormBuilder) {}
 
   ngOnInit() {
@@ -27,7 +29,7 @@ export class HandleStateFormComponent implements OnInit {
       cause: [house.cause, [Validators.required]],
       method: [house.method, [Validators.required]],
       remarks: [house.remarks],
-      processor: [house.processor, [Validators.required]],
+      processor: [house.processor === '' ? this.processorB : house.processor, [Validators.required]],
     });
   }
 }

@@ -21,7 +21,7 @@
     <nz-form-item>
       <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="processor">处理人</nz-form-label>
       <nz-form-control [nzSm]="14" [nzXs]="24">
-        <input nz-input formControlName="processor" id="processor" />
+        <input disabled nz-input formControlName="processor" id="processor" />
         <nz-form-explain *ngIf="form.get('processor')?.dirty && form.get('processor')?.errors">
           请输入
         </nz-form-explain>

@@ -89,16 +89,19 @@ export class HomeComponent implements OnInit {
         this.total = res.data.totalRow;
         this.listOfData = res.data.list;
 
+        　//报警
           this.humiList = this.listOfData.filter(value => {
-            return value.humi >=value.humi_down && value.humi <=value.humi_up || value.humi>=value.temp_down && value.humi<=value.temp_up
+            return (((value.humi <value.humi_down || value.humi >=value.humi_up) && (value.humi!= '0') ) || (value.temp<=value.temp_down || value.temp>=value.temp_up))
           })
 
+          //预警
           this.warningList = this.listOfData.filter(value => {
-            return value.temp >=value.warning_humi_down && value.temp<=value.warning_humi_up || value.temp>=value.warning_temp_down && value.temp<=value.warning_temp_up
+            return ((value.humi > value.humi_down && value.humi < value.warning_humi_down) || (value.humi > value.warning_humi_up && value.humi < value.humi_up)) 
+            || ((value.temp > value.temp_down && value.temp < value.warning_temp_down) || (value.temp > value.warning_temp_up && value.temp < value.temp_up))
           })
 
           this.offLineList = this.listOfData.filter(value => {
-            return format(value.time, 'YYYY-MM-DD HH:mm:ss.SSS') > format(new Date().getTime() - (10 * 60 * 1000), 'YYYY-MM-DD HH:mm:ss.SSS');
+            return format(value.time, 'YYYY-MM-DD HH:mm:ss.SSS') < format(new Date().getTime() - (10 * 60 * 1000), 'YYYY-MM-DD HH:mm:ss.SSS');
           })  
       }
     });
@@ -154,7 +157,7 @@ export class HomeComponent implements OnInit {
     let cbVal = false;
    this.dataTime = format(time, 'YYYY-MM-DD HH:mm:ss.SSS');
    this.nowTime = format(new Date().getTime() - (10 * 60 * 1000), 'YYYY-MM-DD HH:mm:ss.SSS');
-    if (this.dataTime < this.nowTime) {
+    if (this.dataTime > this.nowTime) {
       cbVal = true;
     } else {
       cbVal = false;
@@ -169,9 +172,9 @@ export class HomeComponent implements OnInit {
       const tempU = record.temp_up;
       const warnD = record.warning_temp_down;
       const warnU = record.warning_temp_up;
-      if (record.temp < tempD || record.temp > tempU) {
+      if (record.temp <= tempD || record.temp >= tempU) {
         theColor = 'error-color';
-      } else if (record.temp > warnD && record.temp < warnU) {
+      } else if (record.temp >= warnD && record.temp <= warnU) {
         theColor = 'success-color';
       } else {
         theColor = 'warn-color';
@@ -181,9 +184,9 @@ export class HomeComponent implements OnInit {
       const humiU = record.humi_up;
       const warnD = record.warning_humi_down;
       const warnU = record.warning_humi_up;
-      if (record.humi < humiD || record.humi > humiU) {
-        theColor = 'error-color';
-      } else if (record.humi > warnD && record.humi < warnU) {
+      if (record.humi < humiD || record.humi >= humiU) {
+        theColor = 'error-color';  //报警
+      } else if (record.humi >= warnD && record.humi <= warnU) {
         theColor = 'success-color';
       } else {
         theColor = 'warn-color';

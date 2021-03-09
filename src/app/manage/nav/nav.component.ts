@@ -98,8 +98,6 @@ export class NavComponent implements OnInit, OnDestroy {
     const findArr: any = [];
     this.http.get<any>(this.remindUrl).subscribe(res => {
       if (res.code === 0) {
-        console.log(res);
-        
         const resDate = res.data || {};
         this.menuList.map(item => {
           item.children.map(iItem => {

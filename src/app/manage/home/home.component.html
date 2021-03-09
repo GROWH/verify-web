@@ -5,7 +5,7 @@
       <div style="display: inline-block">
         <label>监测区域 ：</label>
         <nz-select class="option-val" nzShowSearch nzAllowClear nzPlaceHolder="请选择" style="width: 200px"
-          [ngModel]="checkVal" (ngModelChange)="storeChange($event)">
+          [ngModel]="'null'" (ngModelChange)="storeChange($event)">
           <nz-option nzValue="null" nzLabel="所有区域"></nz-option>
           <nz-option *ngFor="let item of storeList" [nzLabel]="item.name" [nzValue]="item.id"></nz-option>
         </nz-select>
@@ -17,14 +17,18 @@
           <span *ngIf="isShow === false" (click)="showStyle(true)"><i nz-icon nzType="bars"
               nzTheme="outline"></i></span>
         </li>
-        <li><span style="background: #FF7747;cursor: pointer" (click)="pointC()">未处理报警数 ：{{alarmData.unproceNum}}</span>
+        <li><span style="background: #FF7747;cursor: pointer" routerLink="/manage/monit/alarm-handl"
+            routerLinkActive="active">未处理报警数</span>
         </li>
-        <li><span style="background: #A4A5B0;cursor: pointer" (click)="pointC()">离线测点 ：{{alarmData.offLineNum}}</span>
+        <li><span style="background: #A4A5B0;cursor: pointer" (click)="getAlarmData('d')">离线测点
+            ：{{this.offLineList.length}}</span>
         </li>
-        <li><span style="background: #EF252C;cursor: pointer" (click)="pointC()">报警测点 ：{{alarmData.alarmNum}}</span>
+        <li><span style="background: #EF252C;cursor: pointer" (click)="getAlarmData('c')">报警测点
+            ：{{this.humiList.length}}</span>
         </li>
-        <li><span style="background: #FFCB1C;cursor: pointer" (click)="pointC()">预警测点 ：{{alarmData.warnNum}}</span></li>
-        <li><span style="background: #3D9A23;cursor: pointer" (click)="pointC()">测点总数 ：{{alarmData.allNum}}</span></li>
+        <li><span style="background: #FFCB1C;cursor: pointer" (click)="getAlarmData('b')">预警测点
+            ：{{this.warningList.length}}</span></li>
+        <li><span style="background: #3D9A23;cursor: pointer" (click)="getAlarmData('a')">测点总数 ：{{total}}</span></li>
       </ul>
     </div>
     <div class="con-main">

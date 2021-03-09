@@ -25,6 +25,12 @@ export class HomeComponent implements OnInit {
   storehouseUrl = '/home/storehouse'; // 启用
   dataUrl = '/home/queryHistoricalData'; // 启用
   storeList = [];
+  totalList = [];  　//测点总数
+  warningList = [];　　//预警数(warning_temp)
+  humiList = []; 　//报警数(humi)
+  offLineList = []; 　//离线数
+  dataTime = "";
+  nowTime ="";
   checkVal = '';
   alarmData = {
     allNum: 0,
@@ -47,7 +53,6 @@ export class HomeComponent implements OnInit {
     this.cardConHeight = document.body.offsetHeight - 146;
     this.userCode = localStorage.getItem('LOGINED_USER_UNIT_KEY');
     this.getStorehouseData();
-    this.getAlarmData();
   }
   // 滚动加载事件
   divScrollFun() {
@@ -67,20 +72,34 @@ export class HomeComponent implements OnInit {
       if (res.code === 0) {
         this.storeList = res.data;
         const id = res.data[0].id;
-        this.checkVal = id || null;
+        this.checkVal = null;
         this.getData();
       }
     });
   }
+
+
+
   // 获取表格数据
   getData() {
     this.loading = true;
     this.http.get<any>(`${this.dataUrl}?pid=${this.checkVal}&page=${this.page}&size=${this.size}`).subscribe(res => {
       this.loading = false;
-      console.log(res);
       if (res.code === 0) {
         this.total = res.data.totalRow;
         this.listOfData = res.data.list;
+
+          this.humiList = this.listOfData.filter(value => {
+            return value.humi >=value.humi_down && value.humi <=value.humi_up || value.humi>=value.temp_down && value.humi<=value.temp_up
+          })
+
+          this.warningList = this.listOfData.filter(value => {
+            return value.temp >=value.warning_humi_down && value.temp<=value.warning_humi_up || value.temp>=value.warning_temp_down && value.temp<=value.warning_temp_up
+          })
+
+          this.offLineList = this.listOfData.filter(value => {
+            return format(value.time, 'YYYY-MM-DD HH:mm:ss.SSS') > format(new Date().getTime() - (10 * 60 * 1000), 'YYYY-MM-DD HH:mm:ss.SSS');
+          })  
       }
     });
   }
@@ -120,10 +139,6 @@ export class HomeComponent implements OnInit {
       nzFooter: null,
     });
   }
-  pointC(){
-
-  }
-
 
   changePageIndex(pageIndex) {
     this.page = pageIndex;
@@ -137,15 +152,16 @@ export class HomeComponent implements OnInit {
 
   isState(time) {
     let cbVal = false;
-    const dataTime = format(time, 'YYYY-MM-DD HH:mm:ss.SSS');
-    const nowTime = format(new Date().getTime() - (10 * 60 * 1000), 'YYYY-MM-DD HH:mm:ss.SSS');
-    if (dataTime > nowTime) {
+   this.dataTime = format(time, 'YYYY-MM-DD HH:mm:ss.SSS');
+   this.nowTime = format(new Date().getTime() - (10 * 60 * 1000), 'YYYY-MM-DD HH:mm:ss.SSS');
+    if (this.dataTime < this.nowTime) {
       cbVal = true;
     } else {
       cbVal = false;
     }
     return cbVal;
   }
+ 
   isSetColor(record, type) {
     let theColor = 'success-color';
     if (type === 'temp') {
@@ -176,29 +192,19 @@ export class HomeComponent implements OnInit {
     return theColor;
   }
 
-  getAlarmData() {
-    this.http.get<any>(`/home/positions`).subscribe(res => {
-      if (res.code === 0) {
-        this.alarmData.allNum = res.data;
-      }
-    });
-    this.http.get<any>(`/home/alarm`).subscribe(res => {
-      if (res.code === 0) {
-        this.alarmData.unproceNum = res.data;
-      }
-    });
-    this.http.get<any>(`/home/AlarmProbe`).subscribe(res => {
-      if (res.code === 0) {
-        this.alarmData.alarmNum = res.data;
-        this.alarmData.warnNum = this.alarmData.alarmNum;
-      }
-    });
-    this.http.get<any>(`/home/Offline`).subscribe(res => {
-      if (res.code === 0) {
-        this.alarmData.offLineNum = res.data;
-      }
-    });
+  getAlarmData(type) {
+    if(type === 'a') {
+      this.getData(); 
+    }else if(type === 'b') {
+      this.listOfData =this.warningList
+    }else if (type === 'c') {
+      this.listOfData =this.humiList
+    } else if(type === 'd'){
+      this.listOfData =this.offLineList
+    }
+    
   }
+
 }
 export class TableList {
   cname: string;
@@ -212,4 +218,8 @@ export class TableList {
   humi_up: string;
   humi_down: string;
   state: string;
+  warning_humi_down: string;
+  warning_humi_up: string;
+  warning_temp_down: string;
+  warning_temp_up: string;
 }
